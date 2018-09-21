@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import frame.Biz;
 import vo.BiddingVO;
 
-@Repository("bdao")
+@Repository("bbiz")
 public class BiddingBiz implements Biz<BiddingVO,String>{
 
 	@Override

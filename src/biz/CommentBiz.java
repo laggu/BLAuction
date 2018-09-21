@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import frame.Biz;
 import vo.CommentVO;
 
-@Repository("cdao")
+@Repository("cbiz")
 public class CommentBiz implements Biz<CommentVO,String>{
 
 	@Override

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import frame.Biz;
 import vo.UserVO;
 
-@Repository("udao")
+@Repository("ubiz")
 public class UserBiz implements Biz<UserVO,String> {
 
 	@Override
