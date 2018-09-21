@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import frame.Biz;
 import vo.AuctionVO;
 
-@Repository("adao")
+@Repository("abiz")
 public class AuctionBiz implements Biz<AuctionVO, String>{
 
 	@Override
