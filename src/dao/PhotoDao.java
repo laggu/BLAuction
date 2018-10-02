@@ -1,41 +1,41 @@
-package biz;
+package dao;
 
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import frame.Biz;
-import vo.UserVO;
+import frame.Dao;
+import vo.PhotoVO;
 
-@Repository("ubiz")
-public class UserBiz implements Biz<UserVO,Integer> {
+@Repository("pdao")
+public class PhotoDao implements Dao<PhotoVO,Integer>{
 
 	@Override
-	public void register(UserVO t) throws Exception {
+	public void insert(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modify(UserVO t) throws Exception {
+	public void update(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void remove(Integer v) throws Exception {
+	public void delete(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public UserVO get(Integer v) throws Exception {
+	public PhotoVO select(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<UserVO> get() throws Exception {
+	public ArrayList<PhotoVO> select() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

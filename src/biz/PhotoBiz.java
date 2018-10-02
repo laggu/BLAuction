@@ -5,37 +5,37 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Biz;
-import vo.CommentVO;
+import vo.PhotoVO;
 
-@Repository("cbiz")
-public class CommentBiz implements Biz<CommentVO,String>{
+@Repository("pbiz")
+public class PhotoBiz implements Biz<PhotoVO,Integer>{
 
 	@Override
-	public void register(CommentVO t) throws Exception {
+	public void register(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modify(CommentVO t) throws Exception {
+	public void modify(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void remove(String v) throws Exception {
+	public void remove(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public CommentVO get(String v) throws Exception {
+	public PhotoVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<CommentVO> get() throws Exception {
+	public ArrayList<PhotoVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
