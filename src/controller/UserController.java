@@ -62,5 +62,10 @@ public class UserController {
 	public ModelAndView pwdupdateimpl(HttpServletRequest request,UserVO user) {
 		return null;
 	}
+	
+	@RequestMapping("/userupdateimpl.bla")
+	public ModelAndView userupdateimpl() {
+		return null;
+	}
 
 }
