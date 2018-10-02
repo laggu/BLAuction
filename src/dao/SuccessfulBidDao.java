@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Dao;
-import vo.CommentVO;
+import vo.SuccessfulBidVO;
 
-@Repository("cdao")
-public class CommentDao implements Dao<CommentVO,String>{
+@Repository("sdao")
+public class SuccessfulBidDao implements Dao<SuccessfulBidVO,String>{
 
 	@Override
-	public void insert(CommentVO t) throws Exception {
+	public void insert(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(CommentVO t) throws Exception {
+	public void update(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -29,13 +29,13 @@ public class CommentDao implements Dao<CommentVO,String>{
 	}
 
 	@Override
-	public CommentVO select(String v) throws Exception {
+	public SuccessfulBidVO select(String v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<CommentVO> select() throws Exception {
+	public ArrayList<SuccessfulBidVO> select() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
