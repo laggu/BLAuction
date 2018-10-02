@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Biz;
-import vo.CommentVO;
+import vo.SuccessfulBidVO;
 
-@Repository("cbiz")
-public class CommentBiz implements Biz<CommentVO,String>{
+@Repository("sbiz")
+public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,String>{
 
 	@Override
-	public void register(CommentVO t) throws Exception {
+	public void register(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modify(CommentVO t) throws Exception {
+	public void modify(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -29,13 +29,13 @@ public class CommentBiz implements Biz<CommentVO,String>{
 	}
 
 	@Override
-	public CommentVO get(String v) throws Exception {
+	public SuccessfulBidVO get(String v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<CommentVO> get() throws Exception {
+	public ArrayList<SuccessfulBidVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
