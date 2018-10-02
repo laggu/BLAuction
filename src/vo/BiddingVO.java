@@ -7,11 +7,11 @@ public class BiddingVO {
 	private int bid_id;
 	private int bidder_id;
 	private int auct_id;
-	private int price;
+	private long price;
 	private Date time;
 	private String bidder_account;
 	
-	public BiddingVO(int bid_id, int bidder_id, int auct_id, int price, Date time, String bidder_account) {
+	public BiddingVO(int bid_id, int bidder_id, int auct_id, long price, Date time, String bidder_account) {
 		super();
 		this.bid_id = bid_id;
 		this.bidder_id = bidder_id;
@@ -43,10 +43,10 @@ public class BiddingVO {
 	public void setAuct_id(int auct_id) {
 		this.auct_id = auct_id;
 	}
-	public int getPrice() {
+	public long getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 	public Date getTime() {

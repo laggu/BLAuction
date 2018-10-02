@@ -3,27 +3,27 @@ package vo;
 import java.sql.Date;
 
 public class AuctionVO {
-
 	private int auct_id;
 	private int seller_id;
 	private Date duedate;
 	private int type;
 	private String auct_title;
-	private int start_price;
+	private long start_price;
 	private String seller_account;
 	private int category;
 	private String description;
-	private int down_price;
+	private long down_price;
 	private int down_term;
+	private String auction_status;//auction의 상태는 before, proceeding, end
 	private String auction_address;
 	
 	public AuctionVO() {
 		super();
 	}
 
-	public AuctionVO(int auct_id, int seller_id, Date duedate, int type, String auct_title, int start_price,
-			String seller_account, int category, String description, int down_price, int down_term,
-			String auction_address) {
+	public AuctionVO(int auct_id, int seller_id, Date duedate, int type, String auct_title, long start_price,
+			String seller_account, int category, String description, long down_price, int down_term,
+			String auction_status, String auction_address) {
 		super();
 		this.auct_id = auct_id;
 		this.seller_id = seller_id;
@@ -36,6 +36,7 @@ public class AuctionVO {
 		this.description = description;
 		this.down_price = down_price;
 		this.down_term = down_term;
+		this.auction_status = auction_status;
 		this.auction_address = auction_address;
 	}
 
@@ -79,11 +80,11 @@ public class AuctionVO {
 		this.auct_title = auct_title;
 	}
 
-	public int getStart_price() {
+	public long getStart_price() {
 		return start_price;
 	}
 
-	public void setStart_price(int start_price) {
+	public void setStart_price(long start_price) {
 		this.start_price = start_price;
 	}
 
@@ -111,11 +112,11 @@ public class AuctionVO {
 		this.description = description;
 	}
 
-	public int getDown_price() {
+	public long getDown_price() {
 		return down_price;
 	}
 
-	public void setDown_price(int down_price) {
+	public void setDown_price(long down_price) {
 		this.down_price = down_price;
 	}
 
@@ -125,6 +126,14 @@ public class AuctionVO {
 
 	public void setDown_term(int down_term) {
 		this.down_term = down_term;
+	}
+
+	public String getAuction_status() {
+		return auction_status;
+	}
+
+	public void setAuction_status(String auction_status) {
+		this.auction_status = auction_status;
 	}
 
 	public String getAuction_address() {
@@ -142,14 +151,15 @@ public class AuctionVO {
 		result = prime * result + auct_id;
 		result = prime * result + ((auct_title == null) ? 0 : auct_title.hashCode());
 		result = prime * result + ((auction_address == null) ? 0 : auction_address.hashCode());
+		result = prime * result + ((auction_status == null) ? 0 : auction_status.hashCode());
 		result = prime * result + category;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + down_price;
+		result = prime * result + (int) (down_price ^ (down_price >>> 32));
 		result = prime * result + down_term;
 		result = prime * result + ((duedate == null) ? 0 : duedate.hashCode());
 		result = prime * result + ((seller_account == null) ? 0 : seller_account.hashCode());
 		result = prime * result + seller_id;
-		result = prime * result + start_price;
+		result = prime * result + (int) (start_price ^ (start_price >>> 32));
 		result = prime * result + type;
 		return result;
 	}
@@ -174,6 +184,11 @@ public class AuctionVO {
 			if (other.auction_address != null)
 				return false;
 		} else if (!auction_address.equals(other.auction_address))
+			return false;
+		if (auction_status == null) {
+			if (other.auction_status != null)
+				return false;
+		} else if (!auction_status.equals(other.auction_status))
 			return false;
 		if (category != other.category)
 			return false;
@@ -210,7 +225,8 @@ public class AuctionVO {
 		return "AuctionVO [auct_id=" + auct_id + ", seller_id=" + seller_id + ", duedate=" + duedate + ", type=" + type
 				+ ", auct_title=" + auct_title + ", start_price=" + start_price + ", seller_account=" + seller_account
 				+ ", category=" + category + ", description=" + description + ", down_price=" + down_price
-				+ ", down_term=" + down_term + ", auction_address=" + auction_address + "]";
+				+ ", down_term=" + down_term + ", auction_status=" + auction_status + ", auction_address="
+				+ auction_address + "]";
 	}
 	
 }
