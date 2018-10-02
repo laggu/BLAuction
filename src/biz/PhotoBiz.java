@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Biz;
-import vo.BiddingVO;
+import vo.PhotoVO;
 
-@Repository("bbiz")
-public class BiddingBiz implements Biz<BiddingVO,Integer>{
+@Repository("pbiz")
+public class PhotoBiz implements Biz<PhotoVO,Integer>{
 
 	@Override
-	public void register(BiddingVO t) throws Exception {
+	public void register(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modify(BiddingVO t) throws Exception {
+	public void modify(PhotoVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -29,13 +29,13 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	}
 
 	@Override
-	public BiddingVO get(Integer v) throws Exception {
+	public PhotoVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<BiddingVO> get() throws Exception {
+	public ArrayList<PhotoVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

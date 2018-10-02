@@ -5,37 +5,37 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Biz;
-import vo.BiddingVO;
+import vo.DeliveryVO;
 
-@Repository("bbiz")
-public class BiddingBiz implements Biz<BiddingVO,Integer>{
+@Repository("dbiz")
+public class DeliveryBiz  implements Biz<DeliveryVO,String>{
 
 	@Override
-	public void register(BiddingVO t) throws Exception {
+	public void register(DeliveryVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modify(BiddingVO t) throws Exception {
+	public void modify(DeliveryVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void remove(Integer v) throws Exception {
+	public void remove(String v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public BiddingVO get(Integer v) throws Exception {
+	public DeliveryVO get(String v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<BiddingVO> get() throws Exception {
+	public ArrayList<DeliveryVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

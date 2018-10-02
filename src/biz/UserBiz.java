@@ -8,7 +8,7 @@ import frame.Biz;
 import vo.UserVO;
 
 @Repository("ubiz")
-public class UserBiz implements Biz<UserVO,String> {
+public class UserBiz implements Biz<UserVO,Integer> {
 
 	@Override
 	public void register(UserVO t) throws Exception {
@@ -23,13 +23,13 @@ public class UserBiz implements Biz<UserVO,String> {
 	}
 
 	@Override
-	public void remove(String v) throws Exception {
+	public void remove(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public UserVO get(String v) throws Exception {
+	public UserVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

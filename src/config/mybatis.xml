@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<typeAlias type="vo.PhotoVO" alias="photo"/>
 		<typeAlias type="vo.SuccessfulBidVO" alias="successfulbid"/>
 		<typeAlias type="vo.TagVO" alias="tag"/>
+		<typeAlias type="vo.DeliveryVO" alias="delivery"/>
 	</typeAliases>
 	
 	<mappers>
@@ -19,6 +20,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<mapper resource="config/photomapper.xml"/>
 		<mapper resource="config/successfulbidmapper.xml"/>
 		<mapper resource="config/tagmapper.xml"/>
+		<mapper resource="config/deliverymapper.xml"/>
 	</mappers>
 	
 </configuration>

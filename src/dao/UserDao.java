@@ -8,7 +8,7 @@ import frame.Dao;
 import vo.UserVO;
 
 @Repository("udao")
-public class UserDao implements Dao<UserVO,String> {
+public class UserDao implements Dao<UserVO,Integer> {
 
 	@Override
 	public void insert(UserVO t) throws Exception {
@@ -23,13 +23,13 @@ public class UserDao implements Dao<UserVO,String> {
 	}
 
 	@Override
-	public void delete(String v) throws Exception {
+	public void delete(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public UserVO select(String v) throws Exception {
+	public UserVO select(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
