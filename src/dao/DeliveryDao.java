@@ -5,37 +5,37 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import frame.Dao;
-import vo.SuccessfulBidVO;
+import vo.DeliveryVO;
 
-@Repository("sdao")
-public class SuccessfulBidDao implements Dao<SuccessfulBidVO,Integer>{
+@Repository("ddao")
+public class DeliveryDao implements Dao<DeliveryVO,String>{
 
 	@Override
-	public void insert(SuccessfulBidVO t) throws Exception {
+	public void insert(DeliveryVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(SuccessfulBidVO t) throws Exception {
+	public void update(DeliveryVO t) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Integer v) throws Exception {
+	public void delete(String v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public SuccessfulBidVO select(Integer v) throws Exception {
+	public DeliveryVO select(String v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<SuccessfulBidVO> select() throws Exception {
+	public ArrayList<DeliveryVO> select() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -8,7 +8,7 @@ import frame.Biz;
 import vo.AuctionVO;
 
 @Repository("abiz")
-public class AuctionBiz implements Biz<AuctionVO, String>{
+public class AuctionBiz implements Biz<AuctionVO, Integer>{
 
 	@Override
 	public void register(AuctionVO t) throws Exception {
@@ -21,12 +21,12 @@ public class AuctionBiz implements Biz<AuctionVO, String>{
 	}
 
 	@Override
-	public void remove(String v) throws Exception {
+	public void remove(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public AuctionVO get(String v) throws Exception {
+	public AuctionVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -8,7 +8,7 @@ import frame.Biz;
 import vo.SuccessfulBidVO;
 
 @Repository("sbiz")
-public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,String>{
+public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 
 	@Override
 	public void register(SuccessfulBidVO t) throws Exception {
@@ -23,13 +23,13 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,String>{
 	}
 
 	@Override
-	public void remove(String v) throws Exception {
+	public void remove(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public SuccessfulBidVO get(String v) throws Exception {
+	public SuccessfulBidVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

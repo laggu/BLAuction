@@ -8,7 +8,7 @@ import frame.Dao;
 import vo.BiddingVO;
 
 @Repository("bdao")
-public class BiddingDao implements Dao<BiddingVO,String>{
+public class BiddingDao implements Dao<BiddingVO,Integer>{
 
 	@Override
 	public void insert(BiddingVO t) throws Exception {
@@ -23,13 +23,13 @@ public class BiddingDao implements Dao<BiddingVO,String>{
 	}
 
 	@Override
-	public void delete(String v) throws Exception {
+	public void delete(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public BiddingVO select(String v) throws Exception {
+	public BiddingVO select(Integer v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
