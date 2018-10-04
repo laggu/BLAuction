@@ -3,6 +3,7 @@ package com.bla.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,18 @@ public class UserController {
 
 	@RequestMapping("/main.bla")
 	public ModelAndView main() {
-		return null;
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		mv.addObject("centerpage", "main");
+		return mv;
 	}
 
 	@RequestMapping("/login.bla")
 	public ModelAndView login() {
-		return null;
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		mv.addObject("centerpage", "user/login");
+		return mv;
 	}
 
 	@RequestMapping("/loginimpl.bla")
@@ -35,12 +42,23 @@ public class UserController {
 
 	@RequestMapping("/logout.bla")
 	public String logout(HttpServletRequest request) {
-		return null;
+		HttpSession session = request.getSession();
+
+		if (session != null) {
+			session.invalidate();
+		}
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		return "redirect:/main.st"; 
 	}
 
 	@RequestMapping("/register.bla")
 	public ModelAndView register() {
-		return null;
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		mv.addObject("centerpage", "user/register");
+		return mv;
 	}
 
 	@RequestMapping("/idcheck.bla")

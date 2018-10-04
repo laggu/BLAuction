@@ -76,7 +76,7 @@ public class AuctionController {
 	
 	//입찰을 할때 Bidding 테이블에 INSERT
 	@RequestMapping("/biddingimpl.bla")
-	public String biddingimpl(Map<String, Object> map,HttpServletRequest request) {
+	public String biddingimpl(HttpServletRequest request) {
 		return null;
 	}
 	
@@ -100,7 +100,7 @@ public class AuctionController {
 	
 	//내가 낙찰됬을 때
 	@RequestMapping("/successfulbiddingimpl.bla")
-	public String successfulbiddingimpl(Map<String, Object> map,HttpServletRequest request) {
+	public String successfulbiddingimpl(HttpServletRequest request) {
 		return null;
 	}
 	
@@ -112,7 +112,7 @@ public class AuctionController {
 	
 	// 최고 입찰자가 바꼈을 경우 환불해주는 함수
 	@RequestMapping("/failbiddingimpl.bla")
-	public String failbiddingimpl(Map<String, Object> map,HttpServletRequest request) {
+	public String failbiddingimpl(HttpServletRequest request) {
 		return null;
 	}
 	
@@ -124,13 +124,13 @@ public class AuctionController {
 	
 	//회원 등급?
 	@RequestMapping("/rateimpl.bla")
-	public String rateimpl(Map<String, Object> map,HttpServletRequest request) {
+	public String rateimpl(HttpServletRequest request) {
 		return null;
 	}
 	
 	//경매 찾는 함수
 	@RequestMapping("/searchimpl.bla")
-	public String searchimpl(Map<String, Object> map,HttpServletRequest request) {
+	public String searchimpl(HttpServletRequest request) {
 		return null;
 	}
 	
