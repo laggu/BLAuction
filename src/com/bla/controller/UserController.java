@@ -37,7 +37,34 @@ public class UserController {
 
 	@RequestMapping("/loginimpl.bla")
 	public String loginimpl(HttpServletRequest request) {
-		return null;
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		String loginState = "0";
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		UserVO user = null;
+		try {
+			/*user = service.get(id);
+			if (pwd.equals(user.getPwd())) {
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", id);
+				System.out.println("login success!");
+				System.out.println("ID:" + id + "Pwd:" + pwd);
+				return "redirect:/main.bla"; 
+			} else {
+				request.setAttribute("loginState", loginState);
+				mv.addObject("centerpage", "user/login");
+				System.out.println("login failed...");
+				System.out.println("ID:" + id + "Pwd:" + pwd + "loginState:" + loginState);
+				return "redirect:/main.bla"; 
+			}*/
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("loginState", loginState);
+			return "redirect:/main.bla"; 
+		}
 	}
 
 	@RequestMapping("/logout.bla")
@@ -50,7 +77,7 @@ public class UserController {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-		return "redirect:/main.st"; 
+		return "redirect:/main.bla"; 
 	}
 
 	@RequestMapping("/register.bla")
