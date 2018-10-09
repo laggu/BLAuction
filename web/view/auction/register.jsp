@@ -6,59 +6,89 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BLAuction 의류/잡화</title>
+<title>BLAuction_경매 등록</title>
 </head>
 <body>
 
 <!-- Content -->
-<div id="list_area">
+<div id="register_area">
 	<div class="col-sm-10 text-left">
-	<div class="card group" id="card_group">
-	  <div class="card" style="width: 18rem;">
-	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
-		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
-		  <div class="card-body">
-		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
-		    <p class="card-text" id="auction_price">38</p>
-		  </div>
-	  </div>
-	  <div class="card" style="width: 18rem;">
-	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
-		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
-		  <div class="card-body">
-		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
-		    <p class="card-text" id="auction_price">38</p>
-		  </div>
-	  </div>
-	</div>
+		<!-- Page Start -->
+		<h3><img src="img/auction.png" id="register_logo"></img>경매 등록</h3>
+		<div class="panel panel-default" id="register_panel">
+  			<div class="panel-body">
+  			
+	  			<div id="register_top">
+		  				<div id="register_pic1"><button type="button" class="btn btn-default">사진등록</button></div>
+		  				<div id="register_pic2"><button type="button" class="btn btn-default">사진등록</button></div>
+		  				<div id="register_info1">
+		  					<div>
+		  						<div class="form-group">
+								  <h4>#카테고리 </h4>
+								  <select class="form-control" id="registerCategory">
+								    <option>의류/잡화</option>
+								    <option>뷰티/미용</option>
+								    <option>스포츠/레저</option>
+								    <option>디지털/가전</option>
+								    <option>생활/가구</option>
+								    <option>기타</option>
+								  </select>
+								</div>
+		  					</div>
+		  					<div>
+		  						<div class="form-group">
+								  <h4>#경매종류 </h4>
+								  <select class="form-control" id="registerKind">
+								    <option>올림경매</option>
+								    <option>내림경매</option>
+								    <option>비밀경매</option>
+								  </select>
+								</div>
+		  					</div>
+		  					
+		  				</div>
+	  				</div>
+	  				
+	  				<div id="register_bottom">
+		  				<form class="form-horizontal" action="">
+		  					<div class="form-group" id="register_title">
+							    <h4>경매 제목: </h4>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" id="registerTitle" placeholder="원하는 제목을 20자 내로 작성해주세요:)">
+							    </div>
+							</div>
+		 
+		  					<div style="margin-left:-2%;margin-bottom:4%;">
+		  						<h4>경매 시작 가격: 0.001 Ether</h4>
+		  					</div>
+		  					
+		  					<div>
+		  						<div class="form-group">
+								  <h4>상세 내용</h4>
+								  <textarea class="form-control" rows="9" id="comment"></textarea>
+								</div>
+		  					</div>
+		  					
+		  					<div class="form-group">
+							    <h4>연관 태그</h4>
+							    <input type="text" class="form-control" id="registerTags" placeholder="#패션 #시계 #저렴이 #고렴이 #명품">
+							  </div>
+		  					
+		  						<div class="form-group"> 
+								    <div class="col-sm-offset-2 col-sm-10">
+								      <button type="submit" class="btn btn-danger" id="register_btn"><h4>등 록 하 기</h4></button>
+								    </div>
+								</div>
+		  					</form>
+		  				</div>
+	  				</div>
+	  					
+  				
+  			</div>
+		</div>
+	  
+
 </div>
     
-    <!-- Pagination -->
-	<div class="container" id="pagination_area">
-	  <ul class="pagination">
-	    <li class="page-item disabled">
-	      <a class="page-link" href="#" tabindex="-1"aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	        <span class="sr-only">Previous</span>
-	      </a>
-	    </li>
-	    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item"><a class="page-link" href="#">4</a></li>
-	    <li class="page-item"><a class="page-link" href="#">5</a></li>
-	    <li class="page-item"><a class="page-link" href="#">6</a></li>
-	    <li class="page-item"><a class="page-link" href="#">7</a></li>
-	    <li class="page-item"><a class="page-link" href="#">8</a></li>
-	    <li class="page-item"><a class="page-link" href="#">9</a></li>
-	    <li class="page-item"><a class="page-link" href="#">10</a></li>
-	    <li class="page-item">
-	      <a class="page-link" href="#"aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	        <span class="sr-only">Next</span>
-	      </a>
-	    </li>
-	  </ul>
-	</div>
 </body>
 </html>

@@ -6,59 +6,50 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BLAuction 의류/잡화</title>
+<title>BLAuction_물품 상세</title>
 </head>
 <body>
 
 <!-- Content -->
-<div id="list_area">
+<div id="detail_area">
 	<div class="col-sm-10 text-left">
-	<div class="card group" id="card_group">
-	  <div class="card" style="width: 18rem;">
-	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
-		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
-		  <div class="card-body">
-		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
-		    <p class="card-text" id="auction_price">38</p>
-		  </div>
-	  </div>
-	  <div class="card" style="width: 18rem;">
-	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
-		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
-		  <div class="card-body">
-		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
-		    <p class="card-text" id="auction_price">38</p>
-		  </div>
-	  </div>
+		<!-- Page Start -->
+		<h3><img src="img/auction.png" id="detail_logo"></img>물품 상세</h3>
+		<div class="panel panel-default" id="detail_panel">
+  			<div class="panel-body">
+  			
+  				<div id="detail_top">
+	  				<div id="detail_pic"><img src="img/se.jpg"></div>
+	  				<div id="first_info">
+	  					<div><h4>카테고리: <span id="detailCategory"></span></h4></div>
+	  					<div><h4>경매종류: <span id="detailKind"></span></h4></div>
+	  					<div><h4>경매제목: <span id="detailTitle"></span></h4></div>
+	  				</div>
+  				</div>
+  				
+  				<div id="detail_bottom">
+	  				<div id="second_info">
+	  					<div id="oneLine">
+	  						<div><h4>현재 입찰가: <span id="currentPrice"></span></h4></div>
+	  						<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
+	  					</div>
+	  					<div style="border-bottom:1px solid #A6A6A6"><h4>연관태그: <span id="relatedTags"></span></h4></div>
+	  					<div>
+	  						<div class="form-group">
+							  <h4>상세 내용</h4>
+							  <textarea class="form-control" rows="9" id="comment" disabled></textarea>
+							</div>
+	  					</div>
+	  				</div>
+  				</div>
+  				
+  				<button type="button" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
+  				
+  			</div>
+		</div>
+	  
 	</div>
 </div>
     
-    <!-- Pagination -->
-	<div class="container" id="pagination_area">
-	  <ul class="pagination">
-	    <li class="page-item disabled">
-	      <a class="page-link" href="#" tabindex="-1"aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	        <span class="sr-only">Previous</span>
-	      </a>
-	    </li>
-	    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item"><a class="page-link" href="#">4</a></li>
-	    <li class="page-item"><a class="page-link" href="#">5</a></li>
-	    <li class="page-item"><a class="page-link" href="#">6</a></li>
-	    <li class="page-item"><a class="page-link" href="#">7</a></li>
-	    <li class="page-item"><a class="page-link" href="#">8</a></li>
-	    <li class="page-item"><a class="page-link" href="#">9</a></li>
-	    <li class="page-item"><a class="page-link" href="#">10</a></li>
-	    <li class="page-item">
-	      <a class="page-link" href="#"aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	        <span class="sr-only">Next</span>
-	      </a>
-	    </li>
-	  </ul>
-	</div>
 </body>
 </html>
