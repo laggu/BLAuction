@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		
 	</resultMap>
 
-	<select id="select" parameterType="String" resultMap="tagDetail">
+	<select id="select" parameterType="String" resultMap="tagList">
 		SELECT * FROM TAG WHERE TAG_ID = #{obj}
 	</select>
 	<select id="selectall" resultMap="tagList">

@@ -1,6 +1,7 @@
 package com.bla.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -17,8 +18,8 @@ import com.bla.vo.AuctionVO;
 
 @Controller
 public class AuctionController {
-	@Resource(name = "mbiz")
-	Biz<AuctionVO, String> biz;
+	@Resource(name = "abiz")
+	Biz<AuctionVO, Integer> biz;
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
@@ -32,8 +33,22 @@ public class AuctionController {
 
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl.bla")
-	public String createAuctionimpl(AuctionVO auction, HttpServletRequest request) {
-		return null;
+	public ModelAndView createAuctionimpl(HttpServletRequest request) {//원래면 매개변수로 받음
+		//test 용 데이터
+		AuctionVO auction = new AuctionVO(11,new Date().getTime(),7,"iphone",1000000l,"0xelke1e4f5E1F1E1E15525E",1,"좋은 아이폰","before","0xelke1e4f5Eg11Efd15d25F");
+		ModelAndView mv = new ModelAndView();
+		System.out.println("???");
+		mv.setViewName("main");
+		try {
+			biz.register(auction);
+			System.out.println("성공");
+			mv.addObject("centerpage", "center");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mv.addObject("centerpage", "center");
+			e.printStackTrace();
+		}
+		return mv;
 	}
 
 	// 옥션 상세 페이지 넘기기
@@ -54,6 +69,23 @@ public class AuctionController {
 	}
 
 	// 각종 카테고리 리스트 뿌려주기/////////////////////////////////
+	@RequestMapping("/allCategory.bla")
+	public ModelAndView allCategory(HttpServletRequest request) {
+		ArrayList<AuctionVO> list = null;
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		try {
+
+			mv.addObject("centerpage", "center");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "center");
+		}
+
+		return mv;
+	}
+	
 	@RequestMapping("/clothing.bla")
 	public ModelAndView clothing(HttpServletRequest request) {
 		String category = request.getParameter("category");

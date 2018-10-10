@@ -2,17 +2,23 @@ package com.bla.dao;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import com.bla.frame.Dao;
+import com.bla.mapper.AuctionMapper;
 import com.bla.vo.AuctionVO;
 
 @Repository("adao")
 public class AuctionDao implements Dao<AuctionVO, Integer>{
 
+	@Resource(name="amapper")
+	AuctionMapper amapper;
+	
 	@Override
 	public void insert(AuctionVO t) throws Exception {
-		// TODO Auto-generated method stub
+		amapper.insert(t);
 	}
 
 	@Override
