@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	</resultMap> 
 
-	<select id="select" parameterType="String" resultMap="moimDetail">
+	<select id="select" parameterType="Integer" resultMap="memberList">
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{obj}
 	</select>
 	<select id="selectall" resultMap="memberList">
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET WHERE MEMBER_ID = #{member_id}
 	</update>
 	<!-- Need a update parameter add.. -->
-	<delete id="delete" parameterType="String">
+	<delete id="delete" parameterType="Integer">
 		DELETE * FROM MEMBER WHERE MEMBER_ID=#{obj}
 	</delete>
 

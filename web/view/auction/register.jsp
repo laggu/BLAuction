@@ -50,7 +50,7 @@
 	  				</div>
 	  				
 	  				<div id="register_bottom">
-		  				<form class="form-horizontal" action="">
+		  				<form class="form-horizontal" action="createAuctionimpl.bla">
 		  					<div class="form-group" id="register_title">
 							    <h4>경매 제목: </h4>
 							    <div class="col-sm-10">

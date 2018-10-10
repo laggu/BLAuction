@@ -1,16 +1,16 @@
 package com.bla.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class AuctionVO {
 	private int auct_id;
-	private int seller_id;
-	private Date duedate;
+	private int member_id;
+	private long duedate;
 	private int type;
 	private String auct_title;
 	private long start_price;
 	private String seller_account;
-	private int category;
+	private int category_id;
 	private String description;
 	private long down_price;
 	private int down_term;
@@ -21,21 +21,35 @@ public class AuctionVO {
 		super();
 	}
 
-	public AuctionVO(int auct_id, int seller_id, Date duedate, int type, String auct_title, long start_price,
-			String seller_account, int category, String description, long down_price, int down_term,
-			String auction_status, String auction_address) {
+	public AuctionVO(int member_id, long duedate, int type, String auct_title, long start_price, String seller_account,
+			int category_id, String description, long down_price, int down_term, String auction_status,
+			String auction_address) {
 		super();
-		this.auct_id = auct_id;
-		this.seller_id = seller_id;
+		this.member_id = member_id;
 		this.duedate = duedate;
 		this.type = type;
 		this.auct_title = auct_title;
 		this.start_price = start_price;
 		this.seller_account = seller_account;
-		this.category = category;
+		this.category_id = category_id;
 		this.description = description;
 		this.down_price = down_price;
 		this.down_term = down_term;
+		this.auction_status = auction_status;
+		this.auction_address = auction_address;
+	}
+
+	public AuctionVO(int member_id, long duedate, int type, String auct_title, long start_price, String seller_account,
+			int category_id, String description, String auction_status, String auction_address) {
+		super();
+		this.member_id = member_id;
+		this.duedate = duedate;
+		this.type = type;
+		this.auct_title = auct_title;
+		this.start_price = start_price;
+		this.seller_account = seller_account;
+		this.category_id = category_id;
+		this.description = description;
 		this.auction_status = auction_status;
 		this.auction_address = auction_address;
 	}
@@ -48,19 +62,19 @@ public class AuctionVO {
 		this.auct_id = auct_id;
 	}
 
-	public int getSeller_id() {
-		return seller_id;
+	public int getMember_id() {
+		return member_id;
 	}
 
-	public void setSeller_id(int seller_id) {
-		this.seller_id = seller_id;
+	public void setMember_id(int member_id) {
+		this.member_id = member_id;
 	}
 
-	public Date getDuedate() {
+	public long getDuedate() {
 		return duedate;
 	}
 
-	public void setDuedate(Date duedate) {
+	public void setDuedate(long duedate) {
 		this.duedate = duedate;
 	}
 
@@ -96,12 +110,12 @@ public class AuctionVO {
 		this.seller_account = seller_account;
 	}
 
-	public int getCategory() {
-		return category;
+	public int getCategory_id() {
+		return category_id;
 	}
 
-	public void setCategory(int category) {
-		this.category = category;
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
 	}
 
 	public String getDescription() {
@@ -143,7 +157,7 @@ public class AuctionVO {
 	public void setAuction_address(String auction_address) {
 		this.auction_address = auction_address;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -152,13 +166,13 @@ public class AuctionVO {
 		result = prime * result + ((auct_title == null) ? 0 : auct_title.hashCode());
 		result = prime * result + ((auction_address == null) ? 0 : auction_address.hashCode());
 		result = prime * result + ((auction_status == null) ? 0 : auction_status.hashCode());
-		result = prime * result + category;
+		result = prime * result + category_id;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + (int) (down_price ^ (down_price >>> 32));
 		result = prime * result + down_term;
-		result = prime * result + ((duedate == null) ? 0 : duedate.hashCode());
+		result = prime * result + (int) (duedate ^ (duedate >>> 32));
+		result = prime * result + member_id;
 		result = prime * result + ((seller_account == null) ? 0 : seller_account.hashCode());
-		result = prime * result + seller_id;
 		result = prime * result + (int) (start_price ^ (start_price >>> 32));
 		result = prime * result + type;
 		return result;
@@ -190,7 +204,7 @@ public class AuctionVO {
 				return false;
 		} else if (!auction_status.equals(other.auction_status))
 			return false;
-		if (category != other.category)
+		if (category_id != other.category_id)
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -201,17 +215,14 @@ public class AuctionVO {
 			return false;
 		if (down_term != other.down_term)
 			return false;
-		if (duedate == null) {
-			if (other.duedate != null)
-				return false;
-		} else if (!duedate.equals(other.duedate))
+		if (duedate != other.duedate)
+			return false;
+		if (member_id != other.member_id)
 			return false;
 		if (seller_account == null) {
 			if (other.seller_account != null)
 				return false;
 		} else if (!seller_account.equals(other.seller_account))
-			return false;
-		if (seller_id != other.seller_id)
 			return false;
 		if (start_price != other.start_price)
 			return false;
@@ -222,9 +233,9 @@ public class AuctionVO {
 
 	@Override
 	public String toString() {
-		return "AuctionVO [auct_id=" + auct_id + ", seller_id=" + seller_id + ", duedate=" + duedate + ", type=" + type
+		return "AuctionVO [auct_id=" + auct_id + ", member_id=" + member_id + ", duedate=" + duedate + ", type=" + type
 				+ ", auct_title=" + auct_title + ", start_price=" + start_price + ", seller_account=" + seller_account
-				+ ", category=" + category + ", description=" + description + ", down_price=" + down_price
+				+ ", category=" + category_id + ", description=" + description + ", down_price=" + down_price
 				+ ", down_term=" + down_term + ", auction_status=" + auction_status + ", auction_address="
 				+ auction_address + "]";
 	}
