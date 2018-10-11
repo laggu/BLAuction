@@ -13,6 +13,16 @@
 <!-- Content -->
 <div id="list_area">
 	<div class="col-sm-10 text-left">
+	<!-- sorting method -->
+	<div class="dropdown">
+	  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">경매 정렬 기준
+	  <span class="caret"></span></button>
+	  <ul class="dropdown-menu">
+	    <li><a href="#">최신 등록순</a></li>
+	    <li><a href="#">마감 입박순</a></li>
+	  </ul>
+	</div>
+	<!-- Cards -->
 	<div class="card group" id="card_group">
 	  <div class="card" style="width: 18rem;">
 	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
