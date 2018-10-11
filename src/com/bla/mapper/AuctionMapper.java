@@ -12,6 +12,5 @@ public interface AuctionMapper {
 	public ArrayList<AuctionVO> selectAll();
 	public void insert(AuctionVO obj);
 	public void insertDown(AuctionVO obj);
-	public void update(AuctionVO obj);
-	public void delete(Integer id);
+	public void updateStatus(AuctionVO obj);
 }

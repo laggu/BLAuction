@@ -1,7 +1,5 @@
 package com.bla.vo;
 
-import java.util.Date;
-
 public class AuctionVO {
 	private int auct_id;
 	private int member_id;
@@ -14,7 +12,7 @@ public class AuctionVO {
 	private String description;
 	private long down_price;
 	private int down_term;
-	private String auction_status;//auction의 상태는 before, proceeding, end
+	private String auction_status;//auction의 상태는 before, proceeding, end, cancel
 	private String auction_address;
 	
 	public AuctionVO() {
@@ -157,7 +155,8 @@ public class AuctionVO {
 	public void setAuction_address(String auction_address) {
 		this.auction_address = auction_address;
 	}
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -235,7 +234,7 @@ public class AuctionVO {
 	public String toString() {
 		return "AuctionVO [auct_id=" + auct_id + ", member_id=" + member_id + ", duedate=" + duedate + ", type=" + type
 				+ ", auct_title=" + auct_title + ", start_price=" + start_price + ", seller_account=" + seller_account
-				+ ", category=" + category_id + ", description=" + description + ", down_price=" + down_price
+				+ ", category_id=" + category_id + ", description=" + description + ", down_price=" + down_price
 				+ ", down_term=" + down_term + ", auction_status=" + auction_status + ", auction_address="
 				+ auction_address + "]";
 	}
