@@ -35,9 +35,8 @@ public class AuctionController {
 	@RequestMapping("/createAuctionimpl.bla")
 	public ModelAndView createAuctionimpl(HttpServletRequest request) {//원래면 매개변수로 받음
 		//test 용 데이터
-		AuctionVO auction = new AuctionVO(11,new Date().getTime(),7,"iphone",1000000l,"0xelke1e4f5E1F1E1E15525E",1,"좋은 아이폰","before","0xelke1e4f5Eg11Efd15d25F");
+		AuctionVO auction = new AuctionVO(1,new Date().getTime(),7,"iphone",1000000l,"0x9671652cf6fba11f7576b341b95bff03ad27d581",1,"좋은 아이폰","before","0x9671652cf6fba11f7578d341b95bff03ad27d581");
 		ModelAndView mv = new ModelAndView();
-		System.out.println("???");
 		mv.setViewName("main");
 		try {
 			biz.register(auction);
@@ -48,7 +47,7 @@ public class AuctionController {
 			mv.addObject("centerpage", "center");
 			e.printStackTrace();
 		}
-		return mv;
+		return mv;	
 	}
 
 	// 옥션 상세 페이지 넘기기
