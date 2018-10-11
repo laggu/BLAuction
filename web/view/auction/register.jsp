@@ -57,9 +57,12 @@
 							      <input type="text" class="form-control" id="registerTitle" placeholder="원하는 제목을 20자 내로 작성해주세요:)">
 							    </div>
 							</div>
-		 
-		  					<div style="margin-left:-2%;margin-bottom:4%;">
-		  						<h4>경매 시작 가격: 0.001 Ether</h4>
+
+		  					<div style="margin-left:-2%;margin-bottom:4%;" class="form-group" id="start_price">
+		  						<h4>경매 시작 가격: </h4>
+		  						<div class="col-sm-6">
+							      <input type="text" class="form-control" id="startPrice" placeholder="0.001 Ether">
+							    </div>
 		  					</div>
 		  					
 		  					<div>

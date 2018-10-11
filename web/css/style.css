@@ -401,6 +401,13 @@
 	
 	
 	#register_title h4{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
+	#start_price h4{
+		position:relative;
 		display:inline;
 		float:left;
 	}
@@ -419,9 +426,11 @@
 	
 /* mypage.jsp */
 /*****************************************************************/
+
+	/* My Info */
 	#mypage_area{
 		/* font-family: 'Nanum Myeongjo', serif; */
-		font-family: 'Nanum Gothic Coding', monospace;
+		/*font-family: 'Nanum Gothic Coding', monospace; */
 		margin-top:2%;
 	}
 	
@@ -431,6 +440,54 @@
 		position:relative;
 		width:80%;
 		margin-left:4%;	
+	}
+	
+	#rightInfo{
+		position:relative;
+		float:left;
+		margin-left:-2%;
+		margin-top:-2%;
+		width:35%;
+		height:299px;
+		background-color:#C3C3C3;
+		
+	}
+	
+	#rightInfo div{
+		position:relative;
+		width:100%;
+		text-align:center;
+		margin-bottom:6%;
+	}
+	
+	#mygrade img{
+		margin-top:20%;
+	}
+	
+	#myname{
+		color:white;
+	}
+	
+	#leftInfo{
+		position:relative;
+		float:left;
+		width:65%;
+		height:299px;
+		padding-left:3%;
+		padding-top:2%;
+		margin-top:-2%;
+	}
+	
+	#leftInfo div:first-child{
+		position:relative;
+		width:100%;
+		border-bottom:1px solid #C3C3C3;
+	}
+	
+	#leftInfo div:second-child,third-child{
+		position:relative;
+		width:100%;
+		margin-top:2%;
 	}
 	
 	#mylist_area{
@@ -459,9 +516,113 @@
 	}
 	
 	#mybidding_panel,#winningbid_panel,#myauction_panel{
-		font-family: 'Nanum Gothic Coding', monospace;
 		margin-top:3%;
 		position:relative;
 		width:100%;
 		height:220px;
 	}
+	
+	
+	#mybiddingImg,#winningbidImg,#myauctionImg,#reviewImg,#sellingImg{
+		position:relative;
+		float:left;
+		width:30%;
+		height:220px;
+	}
+	
+	#mybiddingImg img{	
+		width:220px;
+		height:200px;
+	}
+	
+	#winningbidImg img{	
+		width:220px;
+		height:200px;
+	}
+	
+	#myauctionImg img{	
+		width:220px;
+		height:200px;
+	}
+
+	
+	#mybiddingInfo{
+		position:relative;
+		width:70%;
+		height:220px;
+		float:left;
+	}
+	
+	#mybiddingInfo div:first-child{
+		position:relative;
+		margin-bottom:4%;
+	}
+	
+	#mybiddingInfo button{
+		position:relative;
+		margin-right:0;
+	}
+	
+	#winningbidStatus{
+		color:red;
+	}
+	
+	
+	
+	/* seller Info*/
+	#like_btn{
+		background-color:#FF85CA;
+		color:white;
+		width:100px;
+		display:none;
+	}
+	
+	#sellerlist_area{
+		font-family: 'Nanum Gothic Coding', monospace;
+		position:relative;
+		margin-left:4%;
+		width:90%;
+	}
+	
+	#sellerlist_tabs a{
+		color:gray;
+		text-align:center;
+	}
+	
+	#sellerlist_tabs a:hover{
+		color:black;
+	}
+	
+	#sellerlist_tabs>li.active>a{
+		color:black;
+	}
+	
+	#sellerlist_tabs li{
+		position:relative;
+		width:50%;
+	}
+	
+	#review_panel,#selling_panel{
+		margin-top:3%;
+		position:relative;
+		width:100%;
+		height:220px;
+	}
+	
+	#reviewImg,#sellingImg{
+		position:relative;
+		float:left;
+		width:30%;
+		height:220px;
+	}
+	
+	#reviewComment{
+		position:relative;
+		float:left;
+		width:60%;
+	}
+	
+	#sellingbidStatus{
+		color:red;
+	}
+	
