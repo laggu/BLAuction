@@ -4,22 +4,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bla.mapper.DeliveryMapper">
 
-	<!-- Need a update -->
-	<resultMap type="delivery" id="deliverDetail">
-		<result column="delivery_code" property="delivery_code" />
-		<result column="delivery_status" property="delivery_status" />
-		<result column="payment_status" property="payment_status" />
-	
-	</resultMap>
-
-	<resultMap type="delivery" id="deliverList">
-		<result column="delivery_code" property="delivery_code" />
-		<result column="delivery_status" property="delivery_status" />
-		<result column="payment_status" property="payment_status" />
-	
-	</resultMap>
-
-	<select id="select" parameterType="String" resultMap="deliverDetail">
+	<select id="select" parameterType="String" resultType="delivery">
 		SELECT * FROM WHERE DELIVERY_CODE = #{obj}
 	</select>
 	<select id="selectall" resultMap="deliverList">

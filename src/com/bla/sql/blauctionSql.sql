@@ -16,8 +16,8 @@ name   varchar2(20) not null,
 address varchar2(100) not null,
 phone   varchar2(13) not null,
 birth   varchar2(7) not null,
-score   number(4) null,
-likes   number(4) null,
+score   number(4) default 0,
+likes   number(4) default 0,
 member_account   varchar2(160) not null
 );
 
@@ -48,9 +48,8 @@ cate_type_id number(5) not null,
 description varchar2(255) not null,
 down_price number(10) null,
 down_term number(10) null,
-auction_status varchar2(10) not null,
-auction_address varchar2(160) not null,
-auct_conf_status number(1) default 0 not null,
+auction_status varchar2(10) default 'before' check(auction_status in ('before','proceeding','end','cancel')),
+auction_address varchar2(160) null,
 CONSTRAINT FK_AUCTION_member FOREIGN KEY(member_id)
 REFERENCES MEMBER(member_id),
 CONSTRAINT FK_AUCTION_auct_type FOREIGN KEY(auct_type_id)

@@ -3,60 +3,38 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bla.mapper.MemberMapper">
-
-	<!-- Need a update -->
-	<resultMap type="member" id="memberDetail">
-		<result column="member_id" property="member_id" />
-		<result column="email" property="email" />
-		<result column="pw" property="pw" />
-		<result column="name" property="name" />
-		<result column="address" property="address" />
-		<result column="phone" property="phone" />
-		<result column="birth" property="birth" />
-		<result column="score" property="score" />
-		<result column="likes" property="likes" />
-		<result column="member_account" property="member_account" />
-
-	</resultMap>
-
-	<resultMap type="member" id="memberList">
-		<result column="member_id" property="member_id" />
-		<result column="email" property="email" />
-		<result column="pw" property="pw" />
-		<result column="name" property="name" />
-		<result column="address" property="address" />
-		<result column="phone" property="phone" />
-		<result column="birth" property="birth" />
-		<result column="score" property="score" />
-		<result column="likes" property="likes" />
-		<result column="member_account" property="member_account" />
-
-	</resultMap> 
-
-	<select id="select" parameterType="Integer" resultMap="memberList">
-		SELECT * FROM MEMBER WHERE MEMBER_ID = #{obj}
+	<select id="select" parameterType="Integer" resultType="member">
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id}
 	</select>
-	<select id="selectall" resultMap="memberList">
+	
+	<select id="selectall" resultType="member">
 		SELECT * FROM MEMBER ORDER BY MEMBER_ID
 	</select>
-	<insert id="insertSCORE" parameterType="member">
-		INSERT INTO MEMBER (SCORE) VALUES (#{score})       
-	</insert>
-	<insert id="insertLIKES" parameterType="member">
-		INSERT INTO MEMBER (LIKES) VALUES (#{likes})       
-	</insert>
+	
 	<insert id="insert" parameterType="member">
 		INSERT INTO MEMBER
 		(EMAIL,PW,NAME,ADDRESS,PHONE,BIRTH,MEMBER_ACCOUNT)
 		VALUES (#{email},#{pw},#{name},#{address},#{phone},#{birth},#{member_account})       
 	</insert>
-	<!-- Need a update, parameter -->
-	<update id="update" parameterType="member">
-		UPDATE MEMBER SET WHERE MEMBER_ID = #{member_id}
+	
+	<update id="updatePw" parameterType="member">
+		UPDATE MEMBER SET PW=#{pw}  WHERE MEMBER_ID = #{member_id}
 	</update>
-	<!-- Need a update parameter add.. -->
-	<delete id="delete" parameterType="Integer">
-		DELETE * FROM MEMBER WHERE MEMBER_ID=#{obj}
-	</delete>
-
+	
+	<update id="updatePhone" parameterType="member">
+		UPDATE MEMBER SET PHONE=#{phone}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateAddress" parameterType="member">
+		UPDATE MEMBER SET ADDRESS=#{address}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateScore" parameterType="member">
+		UPDATE MEMBER SET SCORE=#{score}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateLikes" parameterType="member">
+		UPDATE MEMBER SET LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
 </mapper>
