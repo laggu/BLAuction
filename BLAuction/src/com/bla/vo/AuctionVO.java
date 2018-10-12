@@ -14,6 +14,8 @@ public class AuctionVO {
 	private int down_term;
 	private String auction_status;//auction의 상태는 before, proceeding, end, cancel
 	private String auction_address;
+	private String tag;
+	private long register_date;
 	
 	public AuctionVO() {
 		super();
@@ -21,7 +23,7 @@ public class AuctionVO {
 
 	public AuctionVO(int member_id, long duedate, int type, String auct_title, long start_price, String seller_account,
 			int category_id, String description, long down_price, int down_term, String auction_status,
-			String auction_address) {
+			String auction_address, String tag, long register_date) {
 		super();
 		this.member_id = member_id;
 		this.duedate = duedate;
@@ -35,10 +37,12 @@ public class AuctionVO {
 		this.down_term = down_term;
 		this.auction_status = auction_status;
 		this.auction_address = auction_address;
+		this.tag = tag;
+		this.register_date = register_date;
 	}
 
 	public AuctionVO(int member_id, long duedate, int type, String auct_title, long start_price, String seller_account,
-			int category_id, String description, String auction_status, String auction_address) {
+			int category_id, String description, String auction_status, String auction_address, String tag, long register_date) {
 		super();
 		this.member_id = member_id;
 		this.duedate = duedate;
@@ -50,6 +54,8 @@ public class AuctionVO {
 		this.description = description;
 		this.auction_status = auction_status;
 		this.auction_address = auction_address;
+		this.tag = tag;
+		this.register_date = register_date;
 	}
 
 	public int getAuct_id() {
@@ -156,6 +162,21 @@ public class AuctionVO {
 		this.auction_address = auction_address;
 	}
 
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	
+	public long getRegister_date() {
+		return register_date;
+	}
+
+	public void setRegister_date(long register_date) {
+		this.register_date = register_date;
+	}
 
 	@Override
 	public int hashCode() {
@@ -171,8 +192,10 @@ public class AuctionVO {
 		result = prime * result + down_term;
 		result = prime * result + (int) (duedate ^ (duedate >>> 32));
 		result = prime * result + member_id;
+		result = prime * result + (int) (register_date ^ (register_date >>> 32));
 		result = prime * result + ((seller_account == null) ? 0 : seller_account.hashCode());
 		result = prime * result + (int) (start_price ^ (start_price >>> 32));
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
 		result = prime * result + type;
 		return result;
 	}
@@ -218,12 +241,19 @@ public class AuctionVO {
 			return false;
 		if (member_id != other.member_id)
 			return false;
+		if (register_date != other.register_date)
+			return false;
 		if (seller_account == null) {
 			if (other.seller_account != null)
 				return false;
 		} else if (!seller_account.equals(other.seller_account))
 			return false;
 		if (start_price != other.start_price)
+			return false;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
 			return false;
 		if (type != other.type)
 			return false;
@@ -236,7 +266,7 @@ public class AuctionVO {
 				+ ", auct_title=" + auct_title + ", start_price=" + start_price + ", seller_account=" + seller_account
 				+ ", category_id=" + category_id + ", description=" + description + ", down_price=" + down_price
 				+ ", down_term=" + down_term + ", auction_status=" + auction_status + ", auction_address="
-				+ auction_address + "]";
+				+ auction_address + ", tag=" + tag + ", register_date=" + register_date + "]";
 	}
 	
 }

@@ -7,18 +7,20 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<!-- Need a update -->
 	 <resultMap type="auction" id="auctList">
 		<result column="auct_id" property="auct_id" />
-		<result column="seller_id" property="seller_id" />
+		<result column="member_id" property="member_id" />
 		<result column="duedate" property="duedate" />
 		<result column="auct_type_id" property="type" />
 		<result column="auct_title" property="auct_title" />
 		<result column="start_price" property="start_price" />
 		<result column="seller_account" property="seller_account" />
-		<result column="category" property="category" />
+		<result column="cate_type_id" property="category_id" />
 		<result column="description" property="description" />
 		<result column="down_price" property="down_price" />
 		<result column="down_term" property="down_term" />
 		<result column="auction_status" property="auction_status" />
 		<result column="auction_address" property="auction_address" />
+		<result column="tag" property="tag" />
+		<result column="register_date" property="register_date" />
 	</resultMap>
 
 	<select id="select" parameterType="Integer" resultMap="auctList">
@@ -31,14 +33,14 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="auction">
 		INSERT INTO AUCTION 
-		(AUCT_ID,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,AUCTION_STATUS,AUCTION_ADDRESS) 
-		VALUES (SEQ_AUCT.NEXTVAL, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{auction_status},#{auction_address})         
+		(AUCT_ID,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,AUCTION_STATUS,AUCTION_ADDRESS,TAG) 
+		VALUES (SEQ_AUCT.NEXTVAL, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{auction_status},#{auction_address},#{tag})         
 	</insert>
 
 	<insert id="insertDown" parameterType="auction">
 		INSERT INTO AUCTION 
-		(AUCT_ID,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,DOWN_PRICE,DOWN_TERM,AUCTION_STATUS,AUCTION_ADDRESS) 
-		VALUES (SEQ_AUCT.NEXTVAL, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{down_price}, #{down_term},#{auction_status},#{auction_address})   
+		(AUCT_ID,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,DOWN_PRICE,DOWN_TERM,AUCTION_STATUS,AUCTION_ADDRESS,TAG) 
+		VALUES (SEQ_AUCT.NEXTVAL, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{down_price}, #{down_term},#{auction_status},#{auction_address},#{tag})   
 	</insert>
 
 	<update id="updateStatus" parameterType="auction">

@@ -9,8 +9,6 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<typeAlias type="com.bla.vo.BiddingVO" alias="bidding"/>
 		<typeAlias type="com.bla.vo.PhotoVO" alias="photo"/>
 		<typeAlias type="com.bla.vo.SuccessfulBidVO" alias="successfulbid"/>
-		<typeAlias type="com.bla.vo.TagVO" alias="tag"/>
-		<typeAlias type="com.bla.vo.DeliveryVO" alias="delivery"/>
 	</typeAliases>
 	
 	<mappers>
@@ -19,8 +17,6 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<mapper resource="com/bla/config/biddingmapper.xml"/>
 		<mapper resource="com/bla/config/photomapper.xml"/>
 		<mapper resource="com/bla/config/successfulbidmapper.xml"/>
-		<mapper resource="com/bla/config/tagmapper.xml"/>
-		<mapper resource="com/bla/config/deliverymapper.xml"/>
 	</mappers>
 	
 </configuration>
