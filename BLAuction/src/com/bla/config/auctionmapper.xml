@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		<result column="auction_status" property="auction_status" />
 		<result column="auction_address" property="auction_address" />
 		<result column="tag" property="tag" />
+		<result column="register_date" property="register_date" />
 	</resultMap>
 
 	<select id="select" parameterType="Integer" resultMap="auctList">
