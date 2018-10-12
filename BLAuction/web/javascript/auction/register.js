@@ -4,7 +4,7 @@
 //     ------             블로그 소스방식은 게시판이 만들어지기 전에 이미지를 업로드 하게 됨.. 취소하면?
 // 2.
 
-var IMAGE_PATH = 'http://localhost:80/summernote-develop/examples/';
+var photo_id = [];
 
 $(document).ready(function() {
 	$('#summernote').summernote({
@@ -30,7 +30,7 @@ function sendFile(file, el) {
     $.ajax({
       data: form_data,
       type: "POST",
-      url: '/photoupload.bla',
+      url: '/BLAuction/photoupload.bla',
       cache: false,
       contentType: false,
       enctype: 'multipart/form-data',

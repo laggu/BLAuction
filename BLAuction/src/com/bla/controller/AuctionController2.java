@@ -22,7 +22,7 @@ import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
 
 @Controller
-public class AuctionController {
+public class AuctionController2 {
 	@Resource(name = "abiz")
 	Biz<AuctionVO, Integer> biz;
 
