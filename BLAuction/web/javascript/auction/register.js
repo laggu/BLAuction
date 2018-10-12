@@ -12,30 +12,32 @@ $(document).ready(function() {
 		minHeight: 250,             // set minimum height of editor
 		maxHeight: null,             // set maximum height of editor
 		// 이 함수가 실행되는 시점이 최종 submit일때면 일이 쉬워짐
-		onImageUpload : function(files, editor, welEditable) { 
-	    	alert("function in")
-	    	console.log("function in")
-	        sendFile(files[0], editor, welEditable);
-	    },
-	    
+		callbacks: {
+	          onImageUpload: function(files, editor, welEditable) {
+	            for (var i = files.length - 1; i >= 0; i--) {
+	              sendFile(files[i], this);
+	            }
+	          }
+	        }
+		,
 	    lang : 'ko-KR'
 	});
 });
 
-function sendFile(file, editor, welEditable) {
-    data = new FormData();
-    data.append("image", file);
-    console.log('image upload:', file, editor, welEditable);
-    console.log(data);
+function sendFile(file, el) {
+    var form_data = new FormData();
+    form_data.append('file', file);
     $.ajax({
-        data : data,
-        type : "POST",
-        url : "/imageUpload.bla",
-        cache : false,
-        contentType : false,
-        processData : false,
-        success : function(data) {
-            editor.insertImage(welEditable, data.url);
-        }
+      data: form_data,
+      type: "POST",
+      url: '/photoupload.bla',
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(url) {
+        $(el).summernote('editor.insertImage', url);
+        $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+      }
     });
-}
+  }
