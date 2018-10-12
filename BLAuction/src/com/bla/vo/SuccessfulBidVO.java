@@ -6,17 +6,17 @@ public class SuccessfulBidVO {
 	private int bid_id;
 	private String review;
 	private String delivery_code;
+	private String delivery_status;
+	private int company_code;
 	
 	public SuccessfulBidVO() {
 		super();
 	}
 
-	public SuccessfulBidVO(int auct_id, int bid_id, String review, String delivery_code) {
+	public SuccessfulBidVO(int auct_id, int bid_id) {
 		super();
 		this.auct_id = auct_id;
 		this.bid_id = bid_id;
-		this.review = review;
-		this.delivery_code = delivery_code;
 	}
 
 	public int getAuct_id() {
@@ -51,10 +51,20 @@ public class SuccessfulBidVO {
 		this.delivery_code = delivery_code;
 	}
 
-	@Override
-	public String toString() {
-		return "SuccessfulBidVO [auct_id=" + auct_id + ", bid_id=" + bid_id + ", review=" + review + ", delivery_code="
-				+ delivery_code + "]";
+	public String getDelivery_status() {
+		return delivery_status;
+	}
+
+	public void setDelivery_status(String delivery_status) {
+		this.delivery_status = delivery_status;
+	}
+
+	public int getCompany_code() {
+		return company_code;
+	}
+
+	public void setCompany_code(int company_code) {
+		this.company_code = company_code;
 	}
 
 	@Override
@@ -63,7 +73,9 @@ public class SuccessfulBidVO {
 		int result = 1;
 		result = prime * result + auct_id;
 		result = prime * result + bid_id;
+		result = prime * result + company_code;
 		result = prime * result + ((delivery_code == null) ? 0 : delivery_code.hashCode());
+		result = prime * result + ((delivery_status == null) ? 0 : delivery_status.hashCode());
 		result = prime * result + ((review == null) ? 0 : review.hashCode());
 		return result;
 	}
@@ -81,10 +93,17 @@ public class SuccessfulBidVO {
 			return false;
 		if (bid_id != other.bid_id)
 			return false;
+		if (company_code != other.company_code)
+			return false;
 		if (delivery_code == null) {
 			if (other.delivery_code != null)
 				return false;
 		} else if (!delivery_code.equals(other.delivery_code))
+			return false;
+		if (delivery_status == null) {
+			if (other.delivery_status != null)
+				return false;
+		} else if (!delivery_status.equals(other.delivery_status))
 			return false;
 		if (review == null) {
 			if (other.review != null)
@@ -93,5 +112,11 @@ public class SuccessfulBidVO {
 			return false;
 		return true;
 	}
-		
+
+	@Override
+	public String toString() {
+		return "SuccessfulBidVO [auct_id=" + auct_id + ", bid_id=" + bid_id + ", review=" + review + ", delivery_code="
+				+ delivery_code + ", delivery_status=" + delivery_status + ", company_code=" + company_code + "]";
+	}
+			
 }
