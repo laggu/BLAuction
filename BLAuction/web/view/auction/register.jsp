@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Summernote API -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="javascript/auction/register.js"></script>
+
 <title>BLAuction_경매 등록</title>
 </head>
 <body>
@@ -68,7 +74,8 @@
 		  					<div>
 		  						<div class="form-group">
 								  <h4>상세 내용</h4>
-								  <textarea class="form-control" rows="9" id="comment"></textarea>
+								  <!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
+								  <div id="summernote">summernote</div>
 								</div>
 		  					</div>
 		  					
