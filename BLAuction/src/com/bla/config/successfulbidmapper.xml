@@ -4,52 +4,20 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bla.mapper.SuccessfulBidMapper">
 
-	<!-- Need a update -->
-	<resultMap type="successfulbid" id="successDetail">
-		<result column="auct_id" property="auct_id" />
-		<result column="bid_id" property="bid_id" />
-		<result column="review" property="review" />
-		<result column="delivery_code" property="delivery_code" />
-	</resultMap>
-
-	<resultMap type="successfulbid" id="successList">
-		<result column="auct_id" property="auct_id" />
-		<result column="bid_id" property="bid_id" />
-		<result column="review" property="review" />
-		<result column="delivery_code" property="delivery_code" />
-	</resultMap>
-
-	<select id="select" parameterType="String" resultMap="successDetail">
-		SELECT * FROM SUCCESSFUL_BID WHERE AUCT_ID = #{obj}
+	<select id="select" parameterType="Integer" resultType="successfulbid">
+		SELECT * FROM SUCCESSFUL_BID WHERE BID_ID = #{bid_id}
 	</select>
-	<select id="selectall" resultMap="successList">
+	
+	<select id="selectall" resultType="successfulbid">
 		SELECT * FROM SUCCESSFUL_BID ORDER BY AUCT_ID
 	</select>
-	<insert id="insertBIDID" parameterType="successfulbid">
-		INSERT INTO SUCCESSFUL_BID (BID_ID) VALUES (#{bid_id})
+	
+	<insert id="insert" parameterType="successfulbid">
+		INSERT INTO SUCCESSFUL_BID (AUCT_ID, BID_ID, REVIEW, DELIVERY_CODE, DELIVERY_STATUS, COMPANY_CODE) VALUES (#{auct_id},#{bid_id},#{review},#{delivery_code},#{delivery_status},#{company_code})
 	</insert>
-	<insert id="insertREV" parameterType="successfulbid">
-		INSERT INTO SUCCESSFUL_BID (REVIEW) VALUES (#{review})
-	</insert>
-	<insert id="insertDELICODE" parameterType="successfulbid">
-		INSERT INTO SUCCESSFUL_BID(DELIVERY_CODE) VALUES (#{delivery_code})
-	</insert>
-	<!-- Need a delete -->
-	<update id="updateBIDID" parameterType="successfulbid">
-		UPDATE SUCCESSFUL_BID SET BID_ID = #{bid_id} DELIVERY_CODE = #{delivery_code}
-	</update>
-	<!-- Need a delete -->
-	<update id="updateREV" parameterType="successfulbid">
-		UPDATE SUCCESSFUL_BID SET REVIEW = #{review} DELIVERY_CODE = #{delivery_code}
-	</update>
-	<!-- Need a delete -->
-	<update id="updateDELICODE" parameterType="successfulbid">
-		UPDATE SUCCESSFUL_BID SET DELIVERY_CODE = #{delivery_code}
-	</update>
 
-	<!-- Need a update parameter add.. -->
-	<delete id="delete" parameterType="String">
-		DELETE * FROM SUCCESSFUL_BID WHERE AUCT_ID = #{obj}
-	</delete>
+	<update id="update" parameterType="successfulbid">
+		UPDATE SUCCESSFUL_BID SET REVIEW = #{review}, DELIVERY_CODE = #{delivery_code}, DELIVERY_STATUS = #{delivery_status}, COMPANY_CODE = #{company_code} WHERE AUCT_ID = #{auct_id} 
+	</update>
 
 </mapper>
