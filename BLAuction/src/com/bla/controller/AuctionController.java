@@ -13,18 +13,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bla.biz.PhotoBiz;
 import com.bla.frame.Biz;
 import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
+import com.bla.vo.PhotoVO;
 
 @Controller
 public class AuctionController {
 	@Resource(name = "abiz")
-	Biz<AuctionVO, Integer> biz;
+	Biz<AuctionVO, Integer> abiz;
+	
+	@Resource(name = "pbiz")
+	PhotoBiz pbiz;
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
@@ -46,7 +50,7 @@ public class AuctionController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			//biz.register(auction);
+			//abiz.register(auction);
 			System.out.println("성공");
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
@@ -105,102 +109,6 @@ public class AuctionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "auction/category/clothing");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/beauty.bla")
-	public ModelAndView beauty(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/beauty");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/beauty");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/sports.bla")
-	public ModelAndView sports(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/sports");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/sports");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/digital.bla")
-	@ResponseBody
-	public ModelAndView digital(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/digital");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/digital");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/furniture.bla")
-	public ModelAndView furniture(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/furniture");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/furniture");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/etc.bla")
-	public ModelAndView etc(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/etc");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/etc");
 		}
 
 		return mv;
@@ -288,7 +196,7 @@ public class AuctionController {
 		System.out.println(imgName);
 		//String seller_id = (String) session.getAttribute("id");
 		String seller_id = "1";
-		String newImgName = seller_id + System.currentTimeMillis();
+		String newImgName = seller_id + "_" + System.currentTimeMillis();
 		
 		newImgName += imgName.substring(imgName.indexOf("."));
 		
@@ -299,6 +207,15 @@ public class AuctionController {
 		//파일 저장
 		FileSave.save(path, file, newImgName);
 		//디비 insert, select(photo_id, photo_name, photo_path)
+		PhotoVO photo = new PhotoVO(newImgName,path,0);
+		try {
+			pbiz.register(photo);
+			int photo_id = pbiz.getPhotoId(photo);
+			System.out.println(photo_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return null;
 	}
