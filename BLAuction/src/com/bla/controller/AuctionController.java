@@ -1,6 +1,7 @@
 
 package com.bla.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +28,7 @@ import com.bla.vo.PhotoVO;
 public class AuctionController {
 	@Resource(name = "abiz")
 	Biz<AuctionVO, Integer> abiz;
-	
+
 	@Resource(name = "pbiz")
 	PhotoBiz pbiz;
 
@@ -42,15 +44,16 @@ public class AuctionController {
 
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl.bla")
-	public ModelAndView createAuctionimpl(@RequestParam("upload1") MultipartFile img1,@RequestParam("upload2") MultipartFile img2,HttpServletRequest request) {// 원래면 매개변수로 받음
+	public ModelAndView createAuctionimpl(@RequestParam("upload1") MultipartFile img1,
+			@RequestParam("upload2") MultipartFile img2, HttpServletRequest request) {// 원래면 매개변수로 받음
 		// test 용 데이터
 		AuctionVO auction = new AuctionVO(1, new Date().getTime(), 7, "iphone", 1000000l,
 				"0x9671652cf6fba11f7576b341b95bff03ad27d581", 1, "좋은 아이폰", "before",
-				"0x9671652cf6fba11f7578d341b95bff03ad27d581", "#패션",151231212l);
+				"0x9671652cf6fba11f7578d341b95bff03ad27d581", "#패션", 151231212l);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			//abiz.register(auction);
+			// abiz.register(auction);
 			System.out.println("성공");
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
@@ -188,35 +191,52 @@ public class AuctionController {
 
 	// 사진 업로드 하는 함수(Photo)
 	@RequestMapping("/photoupload.bla")
-	public String photoUpload(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
+	public void photoUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request,
+			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		
+
 		// 회원id+timestamp => 이름 설정
 		String imgName = file.getOriginalFilename();
 		System.out.println(imgName);
-		//String seller_id = (String) session.getAttribute("id");
+		// String seller_id = (String) session.getAttribute("id");
 		String seller_id = "1";
 		String newImgName = seller_id + "_" + System.currentTimeMillis();
-		
+
 		newImgName += imgName.substring(imgName.indexOf("."));
-		
+
 		// 상대경로로 가져오기
 		String path = session.getServletContext().getRealPath("/");
 		path += "SummernoteImg";
 		System.out.println(path);
-		//파일 저장
+		// 파일 저장
 		FileSave.save(path, file, newImgName);
-		//디비 insert, select(photo_id, photo_name, photo_path)
-		PhotoVO photo = new PhotoVO(newImgName,path,0);
+		// 디비 insert, select(photo_id, photo_name, photo_path)
+		path = "SummernoteImg\\";
+		PhotoVO photo = new PhotoVO(newImgName, path, 0);
+
+		// photo_id, name, path JSON화 해서 AJAX로 보내기
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
 		try {
+			out = response.getWriter();
+			
 			pbiz.register(photo);
 			int photo_id = pbiz.getPhotoId(photo);
 			System.out.println(photo_id);
+			
+			JSONObject jo = new JSONObject();
+			
+			jo.put("photo_id", photo_id);
+			jo.put("photo_name", photo.getPhoto_name());
+			jo.put("photo_path",path);
+			
+			System.out.println(jo.toJSONString());
+			out.print(jo.toJSONString());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return null;
+
 	}
 }
