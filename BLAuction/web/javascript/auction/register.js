@@ -18,11 +18,13 @@ $(document).ready(function() {
 	              sendFile(files[i], this);
 	            }
 	          },
-	          onMediaDelete : function($target, editor, $editable) {
-	              console.log($target[0].src); // img 
+	          onMediaDelete : function(files, editor, $editable) {
+	              console.log(files[0].src); // img 
 
 	             // remove element in editor 
-	             $target.remove();
+	              deleteFile(files[0],this);
+	              files.remove();
+	             
 	          }
 	        }
 		,
@@ -50,6 +52,30 @@ function sendFile(file, el) {
       },
       error: function(data){
     	  alert(data);
+      }
+    });
+  }
+
+function deleteFile(file, el) {
+    var form_data = new FormData();
+    form_data.append('deletefile', file);
+    $.ajax({
+      data: form_data,
+      type: "POST",
+      url: '/BLAuction/photoDelete.bla',
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(data) {
+    	  console.log(data);/*
+    	  photo_id.push(data.photo_id);
+    	  var url = data.photo_path+'\\'+data.photo_name;
+        $(el).summernote('editor.insertImage', url);
+        $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');*/
+      },
+      error: function(data){
+    	  alert('오류'+data);
       }
     });
   }
