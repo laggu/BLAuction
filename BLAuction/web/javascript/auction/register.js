@@ -17,6 +17,12 @@ $(document).ready(function() {
 	            for (var i = files.length - 1; i >= 0; i--) {
 	              sendFile(files[i], this);
 	            }
+	          },
+	          onMediaDelete : function($target, editor, $editable) {
+	              console.log($target[0].src); // img 
+
+	             // remove element in editor 
+	             $target.remove();
 	          }
 	        }
 		,
@@ -35,9 +41,15 @@ function sendFile(file, el) {
       contentType: false,
       enctype: 'multipart/form-data',
       processData: false,
-      success: function(url) {
+      success: function(data) {
+    	  console.log(data);
+    	  photo_id.push(data.photo_id);
+    	  var url = data.photo_path+'\\'+data.photo_name;
         $(el).summernote('editor.insertImage', url);
         $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+      },
+      error: function(data){
+    	  alert(data);
       }
     });
   }
