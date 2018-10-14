@@ -7,9 +7,8 @@ public class PhotoVO {
 	private String photo_path;
 	private int auct_id;
 	
-	public PhotoVO(int photo_id, String photo_name, String photo_path, int auct_id) {
+	public PhotoVO(String photo_name, String photo_path, int auct_id) {
 		super();
-		this.photo_id = photo_id;
 		this.photo_name = photo_name;
 		this.photo_path = photo_path;
 		this.auct_id = auct_id;

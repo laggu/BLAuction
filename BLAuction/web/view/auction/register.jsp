@@ -13,7 +13,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-<script src="javascript/auction/register.js"></script>
+<script src="javascript/auction/register.js?version=20121221"></script>
 
 <style>
 input.upload1 {
