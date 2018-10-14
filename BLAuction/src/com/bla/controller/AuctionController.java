@@ -219,24 +219,37 @@ public class AuctionController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			
+
 			pbiz.register(photo);
 			int photo_id = pbiz.getPhotoId(photo);
 			System.out.println(photo_id);
-			
+
 			JSONObject jo = new JSONObject();
-			
+
 			jo.put("photo_id", photo_id);
 			jo.put("photo_name", photo.getPhoto_name());
-			jo.put("photo_path",path);
-			
+			jo.put("photo_path", path);
+
 			System.out.println(jo.toJSONString());
 			out.print(jo.toJSONString());
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	// 사진 삭제하는 함수(Photo)
+	@RequestMapping("/photoDelete.bla")
+	public void photoDelete(@RequestParam("deletefile") MultipartFile file, HttpServletRequest request,
+			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+
+		// 파일 이름 가져오기
+		String imgName = file.getOriginalFilename();
+		System.out.println("파일 이름 " +imgName);
+		
+		
 	}
 }
