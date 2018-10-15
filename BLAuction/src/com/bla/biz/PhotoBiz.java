@@ -50,8 +50,5 @@ public class PhotoBiz implements Biz<PhotoVO,Integer>{
 		return pdao.selectAll(auct_id);
 	}
 	
-	public Integer getPhotoId(PhotoVO obj) throws Exception{
-		return pdao.selectPhotoId(obj);
-	}
 
 }
