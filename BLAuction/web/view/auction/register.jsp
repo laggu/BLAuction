@@ -34,79 +34,6 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 	position: absolute;
 }
 </style>
-
-<script>
-	$(document).ready(function() {
-		$("#replace1").click(function() {
-			$("#upload1").trigger('click');
-		});
-		$("#replace2").click(function() {
-			$("#upload2").trigger('click');
-		});
-		
-		$("#upload1").on('change', function() {
-	        //Get count of selected files
-	        var countFiles = $(this)[0].files.length;
-	        var imgPath = $(this)[0].value;
-	        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-	        var image_holder = $("#register_pic1");
-	        image_holder.empty();
-	        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-	          if (typeof(FileReader) != "undefined") {
-	            //loop for each file selected for uploaded.
-	            for (var i = 0; i < countFiles; i++) 
-	            {
-	              var reader = new FileReader();
-	              reader.onload = function(e) {
-	                $("<img />", {
-	                  "src": e.target.result,
-	                  "class": "thumb-image",
-	                  "style" : "height: 248.021px; width:288.021px;"
-	                }).appendTo(image_holder);
-	              }
-	              image_holder.show();
-	              reader.readAsDataURL($(this)[0].files[i]);
-	            }
-	          } else {
-	            alert("지원되지 않는 브라우저 입니다.");
-	          }
-	        } else {
-	          alert("사진형식의 파일만 첨부해주세요.");
-	        }
-	      });
-		
-		$("#upload2").on('change', function() {
-	        //Get count of selected files
-	        var countFiles = $(this)[0].files.length;
-	        var imgPath = $(this)[0].value;
-	        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-	        var image_holder = $("#register_pic2");
-	        image_holder.empty();
-	        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-	          if (typeof(FileReader) != "undefined") {
-	            //loop for each file selected for uploaded.
-	            for (var i = 0; i < countFiles; i++) 
-	            {
-	              var reader = new FileReader();
-	              reader.onload = function(e) {
-	                $("<img />", {
-	                  "src": e.target.result,
-	                  "class": "thumb-image",
-	                  "style" : "height: 248.021px; width:288.021px;"
-	                }).appendTo(image_holder);
-	              }
-	              image_holder.show();
-	              reader.readAsDataURL($(this)[0].files[i]);
-	            }
-	          } else {
-	            alert("지원되지 않는 브라우저 입니다.");
-	          }
-	        } else {
-	          alert("사진형식의 파일만 첨부해주세요.");
-	        }
-	      });
-	});
-</script>
 <title>BLAuction_경매 등록</title>
 </head>
 <body>
@@ -135,7 +62,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 									<div class="form-group">
 										<h4>#카테고리</h4>
 										<select class="form-control" id="registerCategory"
-											name="registerCategory">
+											name="category_id">
 											<option value="1">의류/잡화</option>
 											<option value="2">뷰티/미용</option>
 											<option value="3">스포츠/레저</option>
@@ -149,7 +76,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 									<div class="form-group">
 										<h4>#경매종류</h4>
 										<select class="form-control" id="registerKind"
-											name="registerKind">
+											name="type">
 											<option value="1">올림경매</option>
 											<option value="2">내림경매</option>
 											<option value="3">비밀경매</option>
@@ -164,7 +91,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							<div class="form-group" id="register_title">
 								<h4>경매 제목:</h4>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="registerTitle" name="registerTitle"
+									<input type="text" class="form-control" id="registerTitle" name="auct_title"
 										placeholder="원하는 제목을 20자 내로 작성해주세요:)">
 								</div>
 							</div>
@@ -173,7 +100,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" id="startPrice" name="startPrice"
+									<input type="text" class="form-control" id="startPrice" name="start_price"
 										placeholder="0.001 Ether">
 								</div>
 							</div>
@@ -182,7 +109,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<div class="form-group">
 									<h4>상세 내용</h4>
 									<!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
-									<div id="summernote">summernote</div>
+									<div id="summernote" name="description">summernote</div>
 								</div>
 							</div>
 

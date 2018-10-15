@@ -38,27 +38,21 @@ function makeAuction(){
 	var description = $("#description").val()
 	var down_price = $("#down_price").val()
 	var down_term = $("#down_term").val()
-	var auction_address = ''
-	var auction_status = ''
 	
 	var params = {
-		"bidder_id":bidder_id,
 		"due_date":due_date,
 		"auction_type":auction_type,
 		"start_price":start_price,
-		"seller_account":client_address,
 		"cate_type_id":cate_type_id,
 		"description":description,
 		"down_price":down_price,
-		"down_term":down_term,
-		"auction_status":auction_status,
-		"auction_address":auction_address
+		"down_term":down_term
 	}
 		
 	$.ajax({
 		type:'POST',
-		url:'createAuction.bla',
-		data:params,
+		url:'createAuctionimpl.bla',
+		data:JSON.stringify(params),
 		datatype:'json',
 		success:function(data){
 			auction_id = data
