@@ -8,13 +8,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM PHOTO WHERE AUCT_ID = #{auct_id}
 	</select>
 	
-	<select id="selectPhotoId" parameterType="photo" resultType="Integer">
-		SELECT * FROM SUMMERNOTE WHERE SUMMERNOTE_PHOTO_NAME = #{photo_name} AND SUMMERNOTE_PHOTO_PATH = #{photo_path}
-	</select>
-	
 	<insert id="insert" parameterType="photo">
-		INSERT INTO SUMMERNOTE 
-		(SUMMERNOTE_ID,SUMMERNOTE_PHOTO_NAME,SUMMERNOTE_PHOTO_PATH,AUCT_ID)
+		INSERT INTO PHOTO
+		(PHOTO_ID,PHOTO_NAME,PHOTO_PATH,AUCT_ID)
 		VALUES (SEQ_PHOTO.NEXTVAL,#{photo_name},#{photo_path},#{auct_id})
 	</insert>
 	

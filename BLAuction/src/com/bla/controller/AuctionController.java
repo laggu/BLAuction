@@ -22,6 +22,7 @@ import com.bla.biz.PhotoBiz;
 import com.bla.frame.Biz;
 import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
+import com.bla.vo.BiddingVO;
 import com.bla.vo.PhotoVO;
 
 @Controller
@@ -31,6 +32,9 @@ public class AuctionController {
 
 	@Resource(name = "pbiz")
 	PhotoBiz pbiz;
+	
+	@Resource(name = "bbiz")
+	Biz<BiddingVO, Integer> bbiz;
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
@@ -73,6 +77,7 @@ public class AuctionController {
 		mv.setViewName("main");
 		try {
 
+			//mv.addObject("auct_id",auct_id);로 다시 넘겨준다.
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,6 +131,20 @@ public class AuctionController {
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")
 	public String biddingimpl(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		//session에 저장시킨 member_id와 bidder_account를 받는다.
+		String member_id = (String) session.getAttribute("member_id");
+		String bidder_account = (String) session.getAttribute("member_account");
+		
+		//request로 price, time, auct_id를 넘겨받는다.
+		String price = (String) request.getParameter("price");
+		String time = (String) request.getParameter("time");
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		
+		//DB insert
+		//BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
+		
 		return null;
 	}
 
@@ -220,13 +239,8 @@ public class AuctionController {
 		try {
 			out = response.getWriter();
 
-			pbiz.register(photo);
-			int photo_id = pbiz.getPhotoId(photo);
-			System.out.println(photo_id);
-
 			JSONObject jo = new JSONObject();
 
-			jo.put("photo_id", photo_id);
 			jo.put("photo_name", photo.getPhoto_name());
 			jo.put("photo_path", path);
 
@@ -245,7 +259,7 @@ public class AuctionController {
 	public void photoDelete(@RequestParam("deletefile") MultipartFile file, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-
+		
 		// 파일 이름 가져오기
 		String imgName = file.getOriginalFilename();
 		System.out.println("파일 이름 " +imgName);
