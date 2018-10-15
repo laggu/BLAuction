@@ -2,7 +2,6 @@
 package com.bla.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,11 +38,39 @@ public class AuctionController2 {
 
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl2.bla")
-	public ModelAndView createAuctionimpl(@RequestParam("upload1") MultipartFile img1,@RequestParam("upload2") MultipartFile img2,HttpServletRequest request) {// 원래면 매개변수로 받음
-		// test 용 데이터
-		AuctionVO auction = new AuctionVO(1, new Date().getTime(), 7, "iphone", 1000000l,
-				"0x9671652cf6fba11f7576b341b95bff03ad27d581", 1, "좋은 아이폰", "before",
-				"0x9671652cf6fba11f7578d341b95bff03ad27d581", "#패션",151231212l);
+	@ResponseBody
+	public ModelAndView createAuctionimpl(@RequestBody Map<String, Object> params, HttpServletRequest request) {// 원래면 매개변수로 받음
+		AuctionVO auction = new AuctionVO();
+		HttpSession session = request.getSession();
+		
+		// 올림경매
+		if(((String)params.get("auction_type")).equals("1")) {
+			
+		}
+		
+		// 내림경매
+		if(((String)params.get("auction_type")).equals("2")) {
+			
+		}
+		
+		// 비밀경매
+		if(((String)params.get("auction_type")).equals("3")) {
+			
+		}
+		
+		// Session에서 member_id 추출
+		System.out.println("AUCTION : " + auction);
+		
+		int member_id = (Integer)session.getAttribute("member_id");
+		String seller_account = (String)session.getAttribute("seller_account");
+		
+		auction.setMember_id(member_id);
+		auction.setSeller_account(seller_account);
+		
+		System.out.println("AUCTION : " + auction);
+		
+		
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
