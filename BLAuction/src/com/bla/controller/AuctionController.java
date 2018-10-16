@@ -76,7 +76,8 @@ public class AuctionController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-
+			//상세 뿌려주기
+			
 			//mv.addObject("auct_id",auct_id);로 다시 넘겨준다.
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
@@ -130,39 +131,60 @@ public class AuctionController {
 
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")
-	public String biddingimpl(HttpServletRequest request) {
+	public void biddingimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
 		//session에 저장시킨 member_id와 bidder_account를 받는다.
-		String member_id = (String) session.getAttribute("member_id");
-		String bidder_account = (String) session.getAttribute("member_account");
+		
+		//int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
+		//String bidder_account = (String) session.getAttribute("member_account");
 		
 		//request로 price, time, auct_id를 넘겨받는다.
-		String price = (String) request.getParameter("price");
-		String time = (String) request.getParameter("time");
-		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		//long price = Long.parseLong(request.getParameter("price"));
+		long time = System.currentTimeMillis();
+		//int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		
+		//BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
+		BiddingVO bid = new BiddingVO(3,1,2000000l,time,"0x9671652cf6fba11f7576b341b95bff03ad27d581");
 		
 		//DB insert
-		//BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
+		try {
+			bbiz.register(bid);
+			System.out.println("bid 성공");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
 		
-		return null;
 	}
 
 	// 내가 입찰한 list SELECT
 	@RequestMapping("/mybiddinglist.bla")
 	public String mybiddinglist() {
+		//먼저 bidding 테이블에서 member_id로 auct_id를 찾고,
+		//auct_id로 경매가 무엇이 있는 지 확인후,
+		//Auction 객체들을 가져오는데,..member_id로 찾은 auction에서 최고가와
+		//모든 bidding에서 auct_id로 그루핑해서 최고가를 찾아야하는데..
 		return null;
 	}
 
 	// 내가 올린 경매 리스트 SELECT
 	@RequestMapping("/myauctionlist.bla")
 	public String myauctionlist() {
+		//Auction테이블에서 member_id로 select (ArrayList<AuctionVO>)
+		
 		return null;
 	}
 
 	// 내가 낙찰한 물품 리스트 SELECT
 	@RequestMapping("/mysuccessbidlist.bla")
 	public String mysuccessbidlist() {
+		return null;
+	}
+	
+	// 옥션 비딩 리스트 SELECT
+	@RequestMapping("/auctionbidlist.bla")
+	public String auctionbidlist() {
 		return null;
 	}
 
@@ -250,6 +272,8 @@ public class AuctionController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			out.close();
 		}
 
 	}

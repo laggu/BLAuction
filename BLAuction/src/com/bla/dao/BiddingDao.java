@@ -2,18 +2,24 @@ package com.bla.dao;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import com.bla.frame.Dao;
+import com.bla.mapper.BiddingMapper;
 import com.bla.vo.BiddingVO;
 
 @Repository("bdao")
 public class BiddingDao implements Dao<BiddingVO,Integer>{
 
+	@Resource(name="bmapper")
+	BiddingMapper bmapper;
+	
 	@Override
 	public void insert(BiddingVO t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		bmapper.insert(t);
 	}
 
 	@Override
