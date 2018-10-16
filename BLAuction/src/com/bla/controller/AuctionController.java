@@ -4,6 +4,7 @@ package com.bla.controller;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -169,17 +170,29 @@ public class AuctionController {
 		
 		//int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
 		
+		int member_id = 2;
+		
 		ArrayList<Integer> auct_ids = null;
 		ArrayList<AuctionVO> aucts = new ArrayList<>();
+		ArrayList<Long> bidMaxPrice = new ArrayList<>();
+		ArrayList<Long> memberBidMaxPrice = new ArrayList<>();
+		
+		Map<String,Integer> map = new HashMap<>();
+		map.put("member_id", member_id);
 		
 		try {
 			//회원이 입찰한 경매 id들(중복제거)
 			auct_ids = bbiz.selectAuctIdByMemberId(2);
 			
-			//
+			//회원이 입찰한 경매의 최고가와 그 경매에서 내가 입찰한 최고가 가져오기.
 			for(Integer auct_id : auct_ids) {
 				aucts.add(abiz.get(auct_id));
+				map.put("auct_id", auct_id);
 				//비딩의 최고가와 멤버 비딩의 최고가를 가져와야함.
+				bidMaxPrice.add(bbiz.selectBidMaxPrice(auct_id));
+				memberBidMaxPrice.add(bbiz.selectMemberMaxPrice(map));
+				//json 객체 및 배열화 해서 AJAX로 내보내야할듯!
+				
 			}
 			
 			

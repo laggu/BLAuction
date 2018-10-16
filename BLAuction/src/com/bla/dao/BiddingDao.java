@@ -1,6 +1,7 @@
 package com.bla.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -49,4 +50,12 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
 		return bmapper.selectAuctIdByMemberId(member_id);
 	};
+	
+	public Long selectBidMaxPrice(Integer auct_id) {
+		return bmapper.selectMaxPrice(auct_id);
+	}
+	
+	public Long selectMemberBidMaxPrice(Map<String,Integer> obj) {
+		return bmapper.selectMemberBidMaxPrice(obj);
+	}
 }

@@ -1,6 +1,7 @@
 package com.bla.biz;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -49,4 +50,13 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
 		return bdao.selectAuctIdByMemberId(member_id);
 	}
+	
+	public Long selectBidMaxPrice(Integer auct_id) {
+		return bdao.selectBidMaxPrice(auct_id);
+	}
+	
+	public Long selectMemberMaxPrice(Map<String,Integer> obj) {
+		return bdao.selectMemberBidMaxPrice(obj);
+	}
+	
 }
