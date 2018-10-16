@@ -32,7 +32,6 @@ $(document).ready(function() {
 	    lang : 'ko-KR'
 	});
 	
-	
 	// Thumbnail 사진 업로드시 실시간 변경 부분
 	$("#replace1").click(function() {
 		$("#upload1").trigger('click');
