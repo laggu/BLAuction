@@ -40,6 +40,8 @@ function makeAuction(){
 	
 	var register_date = new Date().getTime();
 	form.append("register_date", register_date);
+	var description = $('#summernote').summernote('code');
+	form.append("description", description);
 	
 	$.ajax({
 		type:'POST',
@@ -48,7 +50,10 @@ function makeAuction(){
         contentType: false,
 		data:form,
 		success:function(data){
-			auction_id = data
+			alert(data)
+			auction_id = data.auct_id;
+			location.href="/BLAuction/createAuction_success.bla"
+			alert("1")
 			manager.makeAuction(function(err,res){
 			}, auction_id, seller_id, due_date, start_price, auction_type, down_price, down_term)
 		},

@@ -6,15 +6,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
 
+import com.bla.dao.AuctionDao;
 import com.bla.frame.Biz;
-import com.bla.frame.Dao;
 import com.bla.vo.AuctionVO;
 
 @Repository("abiz")
 public class AuctionBiz implements Biz<AuctionVO, Integer>{
 
 	@Resource(name="adao")
-	Dao<AuctionVO, Integer> adao;
+	AuctionDao adao;
 	
 	@Override
 	public void register(AuctionVO t) throws Exception {
@@ -41,6 +41,10 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public ArrayList<AuctionVO> get() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public int get(Long register_date) throws Exception {
+		return adao.select(register_date);
 	}
 
 }

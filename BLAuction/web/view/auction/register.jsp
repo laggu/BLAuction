@@ -13,8 +13,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-<script src="javascript/auction/register.js?version=20121221"></script>
-<script src="javascript/web3.js"></script>
+<script src="javascript/auction/register.js"></script>
 
 <style>
 input.upload1 {
@@ -110,7 +109,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<div class="form-group">
 									<h4>상세 내용</h4>
 									<!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
-									<div id="summernote" name="description">summernote</div>
+									<div id="summernote">summernote</div>
 								</div>
 							</div>
 
@@ -121,7 +120,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button class="btn btn-danger" id="register_btn">
+									<button type="button" class="btn btn-danger" id="register_btn">
 										<h4>등 록 하 기</h4>
 									</button>
 								</div>
