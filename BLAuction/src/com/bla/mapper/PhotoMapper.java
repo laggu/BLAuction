@@ -11,5 +11,5 @@ public interface PhotoMapper {
 	public ArrayList<PhotoVO> select(Integer auct_id);
 	public void insert(PhotoVO obj);
 	public void update(PhotoVO obj);
-	public void delete(PhotoVO obj);
+	public void delete(Integer photo_id);
 }

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="photo">
-		INSERT INTO PHOTO 
+		INSERT INTO PHOTO
 		(PHOTO_ID,PHOTO_NAME,PHOTO_PATH,AUCT_ID)
 		VALUES (SEQ_PHOTO.NEXTVAL,#{photo_name},#{photo_path},#{auct_id})
 	</insert>
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- Need a update parameter add.. -->
-	<delete id="delete" parameterType="String">
+	<delete id="delete" parameterType="Integer">
 		DELETE * FROM PHOTO WHERE PHOTO_ID =#{photo_id}
 	</delete>
 

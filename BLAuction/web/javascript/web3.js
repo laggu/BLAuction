@@ -11,6 +11,10 @@ $(document).ready(function(){
         alert('없으면 수동으로 이더리움넷에 접속합니다.')
         web3 = new Web3(Web3.providers.HttpProvider('이더리움 넷 주소'))
     }
+    
+    $("#register_btn").click(function(){
+    	makeAuction();
+    })
 })
 
 	<!-- Variables -->
@@ -31,41 +35,25 @@ var manager = web3.eth.contract(manager_ABI).at(manager_address)
  * 4. makeAuctionEvent를 통해서 경매등록 시 이벤트 처리
  */
 function makeAuction(){
-	var due_date = $("#due_date").val()
-	var auction_type = $("#auction_type").val()
-	var start_price = $("#start_price").val()
-	var cate_type_id = $("#cate_type_id").val()
-	var description = $("#description").val()
-	var down_price = $("#down_price").val()
-	var down_term = $("#down_term").val()
-	var auction_address = ''
-	var auction_status = ''
 	
-	var params = {
-		"bidder_id":bidder_id,
-		"due_date":due_date,
-		"auction_type":auction_type,
-		"start_price":start_price,
-		"seller_account":client_address,
-		"cate_type_id":cate_type_id,
-		"description":description,
-		"down_price":down_price,
-		"down_term":down_term,
-		"auction_status":auction_status,
-		"auction_address":auction_address
-	}
-		
+	var form = new FormData(document.getElementById('auction_form'));
+	
+	var register_date = new Date().getTime();
+	form.append("register_date", register_date);
+	
 	$.ajax({
 		type:'POST',
-		url:'createAuction.bla',
-		data:params,
-		datatype:'json',
+		url:'/BLAuction/createAuctionimpl2.bla',
+		processData: false,
+        contentType: false,
+		data:form,
 		success:function(data){
 			auction_id = data
 			manager.makeAuction(function(err,res){
 			}, auction_id, seller_id, due_date, start_price, auction_type, down_price, down_term)
 		},
 		error:function(data){
+			alert("fail")
 			alert(data)
 		}
 	})
