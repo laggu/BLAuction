@@ -1,7 +1,9 @@
 
 package com.bla.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bla.frame.Biz;
@@ -38,50 +40,74 @@ public class AuctionController2 {
 
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl2.bla")
-	@ResponseBody
-	public ModelAndView createAuctionimpl(@RequestBody Map<String, Object> params, HttpServletRequest request) {// 원래면 매개변수로 받음
+	public ModelAndView createAuctionimpl(MultipartHttpServletRequest multi) {// 원래면 매개변수로 받음
+		
+		// Session에서 정보 추출
+		HttpSession session = multi.getSession();
+//		int member_id = (Integer)session.getAttribute("member_id");
+//		String seller_account = (String)session.getAttribute("seller_account");
+		
+//		// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
-		HttpSession session = request.getSession();
-		
-		// 올림경매
-		if(((String)params.get("auction_type")).equals("1")) {
-			
+//		auction.setMember_id(member_id);
+//		auction.setDuedate((Long)multi.getParameter("due_date")); 페이지 구현 필요
+		auction.setType(Integer.parseInt(multi.getParameter("type")));
+		auction.setAuct_title(multi.getParameter("auct_title"));
+		auction.setStart_price(Integer.parseInt(multi.getParameter("start_price")));
+//		auction.setSeller_account(seller_account);
+		auction.setCategory_id(Integer.parseInt(multi.getParameter("category_id")));
+		auction.setDescription(multi.getParameter("description"));
+		auction.setRegister_date(Long.parseLong(multi.getParameter("register_date")));
+//		
+//		// 내림경매
+		if((multi.getParameter("type")).equals("2")) {
+			auction.setDown_price(Integer.parseInt(multi.getParameter("down_price")));
+			auction.setDown_term(Integer.parseInt(multi.getParameter("down_term")));;
 		}
-		
-		// 내림경매
-		if(((String)params.get("auction_type")).equals("2")) {
-			
-		}
-		
-		// 비밀경매
-		if(((String)params.get("auction_type")).equals("3")) {
-			
-		}
-		
-		// Session에서 member_id 추출
 		System.out.println("AUCTION : " + auction);
 		
-		int member_id = (Integer)session.getAttribute("member_id");
-		String seller_account = (String)session.getAttribute("seller_account");
-		
-		auction.setMember_id(member_id);
-		auction.setSeller_account(seller_account);
-		
-		System.out.println("AUCTION : " + auction);
-		
-		
-		
+		// 화면이동
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			//biz.register(auction);
+//			biz.register(auction);
 			System.out.println("성공");
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			mv.addObject("centerpage", "center");
 			e.printStackTrace();
 		}
+		
+		// DB select로 auction_id 추출
+		
+		// 저장 경로 설정
+        String root = multi.getSession().getServletContext().getRealPath("/");
+        String path = root+"resources/thumbnail/";
+		String newFileName = ""; // 업로드 되는 파일명
+		
+		File dir = new File(path);
+        if(!dir.isDirectory()){
+            dir.mkdir();
+        }
+
+		Iterator<String> files = multi.getFileNames();
+        while(files.hasNext()){
+            String uploadFile = files.next();
+            System.out.println("uploadfile : " + uploadFile);
+            MultipartFile mFile = multi.getFile(uploadFile);
+            System.out.println("mFile : " + mFile);
+            String fileName = mFile.getOriginalFilename();
+            System.out.println("fileName : " +fileName);
+            newFileName = System.currentTimeMillis()+"."
+                    +fileName.substring(fileName.lastIndexOf(".")+1);
+            try {
+                mFile.transferTo(new File(path+newFileName));
+                FileSave.save(path, mFile, newFileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
 		return mv;
 	}
 

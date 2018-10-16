@@ -14,6 +14,7 @@
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="javascript/auction/register.js?version=20121221"></script>
+<script src="javascript/web3.js"></script>
 
 <style>
 input.upload1 {
@@ -47,16 +48,16 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 			</h3>
 			<div class="panel panel-default" id="register_panel">
 				<div class="panel-body">
-					<form class="form-horizontal" enctype="multipart/form-data" action="createAuctionimpl.bla">
+					<form id="auction_form" class="form-horizontal" enctype="multipart/form-data">
 						<div id="register_top">
 							<div id="register_pic1">
 								<button type="button" class="btn btn-default" id="replace1">사진등록</button>
-								<input type="file" value="파일 업로드" class="upload1" id="upload1" name="upload1">
 							</div>
+								<input type="file" class="upload1" id="upload1" name="upload1">
 							<div id="register_pic2">
 								<button type="button" class="btn btn-default" id="replace2">사진등록</button>
-								<input type="file" value="파일 업로드" class="upload2" id="upload2" name="upload2">
 							</div>
+								<input type="file" class="upload2" id="upload2" name="upload2">
 							<div id="register_info1">
 								<div>
 									<div class="form-group">
@@ -118,10 +119,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<input type="text" class="form-control" id="registerTags" name="registerTags"
 									placeholder="#패션 #시계 #저렴이 #고렴이 #명품">
 							</div>
-
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" class="btn btn-danger" id="register_btn">
+									<button class="btn btn-danger" id="register_btn">
 										<h4>등 록 하 기</h4>
 									</button>
 								</div>
