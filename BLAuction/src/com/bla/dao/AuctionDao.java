@@ -42,5 +42,9 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public int select(Long register_date) throws Exception {
+		return amapper.selectByRegdate(register_date);
+	}
 
 }
