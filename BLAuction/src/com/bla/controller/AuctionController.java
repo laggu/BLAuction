@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bla.biz.BiddingBiz;
 import com.bla.biz.PhotoBiz;
 import com.bla.frame.Biz;
 import com.bla.util.FileSave;
@@ -34,7 +35,7 @@ public class AuctionController {
 	PhotoBiz pbiz;
 	
 	@Resource(name = "bbiz")
-	Biz<BiddingVO, Integer> bbiz;
+	BiddingBiz bbiz;
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
@@ -160,11 +161,34 @@ public class AuctionController {
 
 	// 내가 입찰한 list SELECT
 	@RequestMapping("/mybiddinglist.bla")
-	public String mybiddinglist() {
+	public String mybiddinglist(HttpServletRequest request) {
 		//먼저 bidding 테이블에서 member_id로 auct_id를 찾고,
-		//auct_id로 경매가 무엇이 있는 지 확인후,
-		//Auction 객체들을 가져오는데,..member_id로 찾은 auction에서 최고가와
-		//모든 bidding에서 auct_id로 그루핑해서 최고가를 찾아야하는데..
+		//auct_id로 경매가 무엇이 있는 지 select 후 title과 사진 가져오기,
+		//가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
+		HttpSession session = request.getSession();
+		
+		//int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
+		
+		ArrayList<Integer> auct_ids = null;
+		ArrayList<AuctionVO> aucts = new ArrayList<>();
+		
+		try {
+			//회원이 입찰한 경매 id들(중복제거)
+			auct_ids = bbiz.selectAuctIdByMemberId(2);
+			
+			//
+			for(Integer auct_id : auct_ids) {
+				aucts.add(abiz.get(auct_id));
+				//비딩의 최고가와 멤버 비딩의 최고가를 가져와야함.
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return null;
 	}
 

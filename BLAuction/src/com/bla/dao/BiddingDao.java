@@ -46,4 +46,7 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 		return null;
 	}
 
+	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
+		return bmapper.selectAuctIdByMemberId(member_id);
+	};
 }
