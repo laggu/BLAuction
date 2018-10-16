@@ -173,8 +173,9 @@ public class AuctionController2 {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-
+			list = biz.get();
 			mv.addObject("centerpage", "center");
+			mv.addObject("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "center");
@@ -183,115 +184,21 @@ public class AuctionController2 {
 		return mv;
 	}
 
-	@RequestMapping("/clothing2.bla")
+	@RequestMapping("/category.bla")
 	public ModelAndView clothing(HttpServletRequest request) {
-		String category = request.getParameter("category");
+		int category_id = Integer.parseInt(request.getParameter("category"));
 		ArrayList<AuctionVO> list = null;
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-
-			mv.addObject("centerpage", "auction/category/clothing");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/clothing");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/beauty2.bla")
-	public ModelAndView beauty(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
+			biz.getByCategory(category_id);
 			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/beauty");
+			mv.addObject("category_id", category_id);
+			mv.addObject("centerpage", "auction/category");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/beauty");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/sports2.bla")
-	public ModelAndView sports(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/sports");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/sports");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/digital2.bla")
-	@ResponseBody
-	public ModelAndView digital(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/digital");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/digital");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/furniture2.bla")
-	public ModelAndView furniture(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/furniture");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/furniture");
-		}
-
-		return mv;
-	}
-
-	@RequestMapping("/etc2.bla")
-	public ModelAndView etc(HttpServletRequest request) {
-		String category = request.getParameter("category");
-		ArrayList<AuctionVO> list = null;
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-
-		try {
-			mv.addObject("list", list);
-			mv.addObject("centerpage", "auction/category/etc");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("centerpage", "auction/category/etc");
+			mv.addObject("centerpage", "auction/category");
 		}
 
 		return mv;
