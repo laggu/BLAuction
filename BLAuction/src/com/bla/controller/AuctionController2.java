@@ -80,32 +80,35 @@ public class AuctionController2 {
 		
 		// DB select로 auction_id 추출
 		
+		
 		// 저장 경로 설정
         String root = multi.getSession().getServletContext().getRealPath("/");
         String path = root+"resources/thumbnail/";
 		String newFileName = ""; // 업로드 되는 파일명
 		
+		// 경로 폴더 없을 시 폴더 생성
 		File dir = new File(path);
         if(!dir.isDirectory()){
             dir.mkdir();
         }
 
+        // 넘어온 데이터에서 파일추출 후 저장
 		Iterator<String> files = multi.getFileNames();
+		int i = 0;
         while(files.hasNext()){
             String uploadFile = files.next();
-            System.out.println("uploadfile : " + uploadFile);
+            if(uploadFile.equals("files")) break;
             MultipartFile mFile = multi.getFile(uploadFile);
-            System.out.println("mFile : " + mFile);
             String fileName = mFile.getOriginalFilename();
-            System.out.println("fileName : " +fileName);
-            newFileName = System.currentTimeMillis()+"."
-                    +fileName.substring(fileName.lastIndexOf(".")+1);
+            String typeName = fileName.substring(fileName.indexOf("."));
+            newFileName = "auction_id"+"_"+ i
+                    +typeName;
             try {
-                mFile.transferTo(new File(path+newFileName));
                 FileSave.save(path, mFile, newFileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            i++;
         }
         
 		return mv;
