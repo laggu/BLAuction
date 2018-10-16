@@ -46,5 +46,9 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	public int select(Long register_date) throws Exception {
 		return amapper.selectByRegdate(register_date);
 	}
+	
+	public ArrayList<AuctionVO> selectByCategory(int category_id) throws Exception {
+		return amapper.selectByCategory(category_id);
+	}
 
 }
