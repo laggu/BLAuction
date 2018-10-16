@@ -20,6 +20,10 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public void register(AuctionVO t) throws Exception {
 		adao.insert(t);
 	}
+	
+	public void registerDown(AuctionVO t) throws Exception {
+		adao.insertDown(t);
+	}
 
 	@Override
 	public void modify(AuctionVO t) throws Exception {
@@ -33,18 +37,24 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 
 	@Override
 	public AuctionVO get(Integer v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return adao.select(v);
 	}
 
 	@Override
 	public ArrayList<AuctionVO> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return adao.select();
 	}
 	
 	public int get(Long register_date) throws Exception {
 		return adao.select(register_date);
+	}
+	
+	public ArrayList<AuctionVO> getByCategory(int category_id) throws Exception {
+		return adao.selectByCategory(category_id);
+	}
+	
+	public void updateStatus(AuctionVO obj) throws Exception{
+		adao.updateStatus(obj);
 	}
 
 }
