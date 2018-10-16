@@ -50,7 +50,4 @@ public class PhotoDao implements Dao<PhotoVO,Integer>{
 		return pmapper.select(auct_id);
 	}
 	
-	public Integer selectPhotoId(PhotoVO obj) throws Exception{
-		return pmapper.selectPhotoId(obj);
-	}
 }
