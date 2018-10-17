@@ -96,7 +96,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 1000px;position:relative;}
+    .row.content {height: 1500px;position:relative;}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -529,7 +529,7 @@
 	
 	#register_panel{
 		position:relative;
-		height:900px;
+		height:1300px;
 		width:96%;
 		margin-left:2%;
 		
@@ -592,6 +592,24 @@
 	}
 	
 	#start_price h4{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
+	#due_date h4{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
+	#dueDate,#dueTime,#downPrice,#downTerm{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
+	#down_price h4{
 		position:relative;
 		display:inline;
 		float:left;
