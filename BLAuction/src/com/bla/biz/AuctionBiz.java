@@ -56,5 +56,9 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public void updateStatus(AuctionVO obj) throws Exception{
 		adao.updateStatus(obj);
 	}
+	
+	public ArrayList<AuctionVO> selectAuctionByMember(int member_id) throws Exception{
+		return adao.selectAuctionByMember(member_id);
+	}
 
 }

@@ -58,5 +58,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<update id="updateTag" parameterType="auction">
 		UPDATE AUCTION SET TAG=#{tag} WHERE AUCT_ID=#{auct_id}  
 	</update>
-		
+	
+	<select id="selectAuctionByMember" parameterType="Integer" resultType="auction">
+		SELECT * FROM AUCTION WHERE MEMBER_ID = ${member_id}
+	</select>	
 </mapper>

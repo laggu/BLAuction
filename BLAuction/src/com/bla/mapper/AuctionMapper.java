@@ -16,4 +16,5 @@ public interface AuctionMapper {
 	public void insertDown(AuctionVO obj);
 	public void updateStatus(AuctionVO obj);
 	public void updateTag(AuctionVO obj); // 삭제?
+	public ArrayList<AuctionVO> selectAuctionByMember(Integer member_id);//mypage 나의 경매 리스트
 }
