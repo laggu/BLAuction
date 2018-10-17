@@ -48,8 +48,9 @@
       <ul class="nav navbar-nav navbar-right" id="rightNav">
       	
       	<c:choose>
-        	<c:when test="${loginStatus == null}">
+        	<c:when test="${loginStatus == null}">    		
         		<li><a href="login.bla"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        		<li><a href="register.bla"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
         	</c:when>
         	<c:otherwise>
         		<li><a href="createAuction.bla"><img src="img/auction.png"></img>경매등록</a></li>
