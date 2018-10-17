@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bla.mapper.MemberMapper">
+	<select id="select" parameterType="Integer" resultType="member">
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="selectall" resultType="member">
+		SELECT * FROM MEMBER ORDER BY MEMBER_ID
+	</select>
+	
+	<insert id="insert" parameterType="member">
+		INSERT INTO MEMBER
+		(EMAIL,PW,NAME,ADDRESS,PHONE,BIRTH,MEMBER_ACCOUNT)
+		VALUES (#{email},#{pw},#{name},#{address},#{phone},#{birth},#{member_account})       
+	</insert>
+	
+	<update id="updatePw" parameterType="member">
+		UPDATE MEMBER SET PW=#{pw}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updatePhone" parameterType="member">
+		UPDATE MEMBER SET PHONE=#{phone}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateAddress" parameterType="member">
+		UPDATE MEMBER SET ADDRESS=#{address}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateScore" parameterType="member">
+		UPDATE MEMBER SET SCORE=#{score}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="updateLikes" parameterType="member">
+		UPDATE MEMBER SET LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+</mapper>

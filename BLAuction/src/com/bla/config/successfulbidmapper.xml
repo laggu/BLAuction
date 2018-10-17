@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bla.mapper.SuccessfulBidMapper">
+
+	<select id="select" parameterType="Integer" resultType="successfulbid">
+		SELECT * FROM SUCCESSFUL_BID WHERE BID_ID = #{bid_id}
+	</select>
+	
+	<select id="selectall" resultType="successfulbid">
+		SELECT * FROM SUCCESSFUL_BID ORDER BY AUCT_ID
+	</select>
+	
+	<insert id="insert" parameterType="successfulbid">
+		INSERT INTO SUCCESSFUL_BID (AUCT_ID, BID_ID, REVIEW, DELIVERY_CODE, DELIVERY_STATUS, COMPANY_CODE) VALUES (#{auct_id},#{bid_id},#{review},#{delivery_code},#{delivery_status},#{company_code})
+	</insert>
+
+	<update id="update" parameterType="successfulbid">
+		UPDATE SUCCESSFUL_BID SET REVIEW = #{review}, DELIVERY_CODE = #{delivery_code}, DELIVERY_STATUS = #{delivery_status}, COMPANY_CODE = #{company_code} WHERE AUCT_ID = #{auct_id} 
+	</update>
+
+</mapper>
