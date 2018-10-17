@@ -100,9 +100,36 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" id="startPrice" name="start_price"
-										placeholder="0.001 Ether">
+									<input type="number" class="form-control" id="startPrice" name="start_price"
+										min="0.001"  step="0.001">
 								</div>
+							</div>
+							
+							<div style="margin-left: -2%; margin-bottom: 4%;"
+								class="form-group" id="due_date">
+								<h4>경매 마감 시간:</h4>
+								<div class="col-sm-8">
+									<div class="col-sm-4">
+										<input type="date" class="form-control" id="dueDate" name="due_date">
+									</div>
+									<div class="col-sm-4">
+										<input type="time" class="form-control" id="dueTime" name="due_time">
+									</div>	
+								</div>
+							</div>
+							
+							<div style="margin-bottom: 4%;"
+								class="form-group" id="down_price">
+									<h4>내림 가격:</h4>
+									<div class="col-sm-4">
+										<input type="number" class="form-control" id="downPrice" name="down_price"
+										min="0.001"  step="0.001">
+									</div>
+									<h4>내림 시간 간격(시):</h4>
+									<div class="col-sm-4">
+										<input type="number" class="form-control" id="downTerm" name="down_term" 
+										min="1" max="6">
+									</div>	
 							</div>
 
 							<div>
