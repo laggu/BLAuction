@@ -61,7 +61,7 @@ public class MemberController {
 				return mv;
 			}
 			if(member == null || !(member.getPw().equals(pw))) {
-				//null�϶� ó�����ָ��
+				//null占싹띰옙 처占쏙옙占쏙옙占쌍몌옙占�
 				mv.setViewName("main");
 				mv.addObject("centerpage","user/fail");
 //				mv.addObject("resultt", "asdf");
@@ -92,7 +92,7 @@ public class MemberController {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-		return "redirect:/main.st"; 
+		return "redirect:/main.bla"; 
 	}
 
 	@RequestMapping("/register.bla")
@@ -155,7 +155,7 @@ public class MemberController {
 
 	@RequestMapping("/mypage.bla")
 	public ModelAndView mypage(HttpServletRequest request) {
-		//memeberid瑜� 媛��졇���꽌 �쉶�썝 �젙蹂� select�븳 �젙蹂� mv.addObject濡� 異붽�
+		//memeberid�몴占� 揶쏉옙占쎌죬占쏙옙占쎄퐣 占쎌돳占쎌뜚 占쎌젟癰귨옙 select占쎈립 占쎌젟癰귨옙 mv.addObject嚥∽옙 �빊遺쏙옙
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		mv.addObject("centerpage", "user/mypage");
