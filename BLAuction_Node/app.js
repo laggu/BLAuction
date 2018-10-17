@@ -1,6 +1,6 @@
 var http = require('http');
 var Web3 = require('web3');
-//var db = require('oracleConnection');
+var db = require('./oracleConnection');
 var auction = require('./auction');
 
 http.createServer(function (req, res) {
@@ -19,6 +19,8 @@ var web3 = new Web3(
 var address = "";
 var key = '';
 
+//db.auctionConfirm("asdf", 1);
+//db.bidConfirm(2, 1, 200000, 15123141);
 function makeAuction(address){
     var temp = new web3.eth.Contract(auction.ABI, address);
     return temp;
@@ -39,7 +41,7 @@ var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
             console.log('bidding event');
             console.log(res.returnValues);
             console.log();
-            //db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price, res.returnValues.time);
+            db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price, res.returnValues.time);
         });
         tempAuction.events.ownerWithdrawEvent(function(err, res){
             // auction.biddingEvent().stopWatching();
@@ -50,7 +52,7 @@ var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
         });
 
         auction_map.set(res.returnValues.auction_address, auction);
-        //db.auctionConfirm(res.returnValues.auction_address, res.returnValues.auction_id);
+        db.auctionConfirm(res.returnValues.auction_address, res.returnValues.auction_id);
     }
 ).on('data', event => {
     //console.log('new event:', event)
@@ -60,11 +62,6 @@ var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
 }).on('error', error => {
     console.error(error)
 });
-
-//auction_manager_contract.makeAuctionEvent().watc
-
-//console.log(auction_manager_contract.events);
-//console.log(makeAuctionEvent);
 
 
 //http://blog.semo.io/21 geth 설치

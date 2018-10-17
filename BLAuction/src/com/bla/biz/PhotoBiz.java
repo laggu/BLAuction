@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.bla.dao.PhotoDao;
 import com.bla.frame.Biz;
 import com.bla.vo.PhotoVO;
 
-@Repository("pbiz")
+@Service("pbiz")
 public class PhotoBiz implements Biz<PhotoVO,Integer>{
 	
 	@Resource(name="pdao")
