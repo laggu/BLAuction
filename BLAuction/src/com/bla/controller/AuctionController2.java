@@ -172,12 +172,14 @@ public class AuctionController2 {
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail2.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
-		String auctionId = request.getParameter("auctionid");// list로 받아온 객체의 auctionid를 저장시켜서 넘겨 받아서 select해온다.
-
+		int auction_id = Integer.parseInt(request.getParameter("auction_id"));// list로 받아온 객체의 auctionid를 저장시켜서 넘겨 받아서 select해온다.
+		AuctionVO auction = null;
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-
+			auction = biz.get(auction_id);
+			mv.addObject("auction", auction);
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
 			e.printStackTrace();
