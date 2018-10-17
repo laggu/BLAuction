@@ -76,3 +76,4 @@ local.properties
 
 target
 .idea
+web/WEB-INF/config/spring-view.xml

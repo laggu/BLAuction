@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_물품 상세</title>
+<script src="javascript/auction/detail.js"></script>
 </head>
 <body>
 
