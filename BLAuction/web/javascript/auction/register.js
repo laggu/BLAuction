@@ -152,3 +152,12 @@ function deleteFile(file, el) {
       }
     });
   }
+
+function setWei(){
+	$('#startPrice').on('change',function(){
+		var ether = $('#startPrice').val();
+		//#startPrice  type="number" min="0"  step="0.001"
+		alert(ether);
+		//$('#????').val(ether * 1000000000000000000);
+	})
+}

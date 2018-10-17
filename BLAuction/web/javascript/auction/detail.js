@@ -10,16 +10,24 @@
 
 alert("test");
 
-var xmlHttp;
-function srvTime(){
-	xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-	xmlHttp.open('HEAD',window.location.href.toString(),false);
-	xmlHttp.setRequestHeader("Content-Type", "text/html");
-	xmlHttp.send('');
+//var xmlHttp;
+//function srvTime(){
+//	xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+//	xmlHttp.open('HEAD',window.location.href.toString(),false);
+//	xmlHttp.setRequestHeader("Content-Type", "text/html");
+//	xmlHttp.send('');
+//	var date = new Date(xmlHttp.getResponseHeader("Date"));
+//	alert(date);
+//}
+
+function getServerTime(){
+	var xhr = new XMLHttpRequest();  
+	xhr.open("GET", window.location.href.toString(), false);  
+	xhr.send(null);
 	var date = new Date(xmlHttp.getResponseHeader("Date"));
 	alert(date);
 }
 
-window.setInterval("srvTime();",1000);
+window.setInterval("getServerTime();",1000);
 
 
