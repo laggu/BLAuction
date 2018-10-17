@@ -104,7 +104,7 @@ $(document).ready(function() {
 	
 	$('#startPrice').on('change keyup mouseup',function(){
 		var ether = $('#startPrice').val();
-		$('#startPriceFinnei').text(ether * 1000);
+		$('#startPriceFinney').val(ether * 1000);
 	})
 });
 
@@ -167,6 +167,3 @@ function deleteFile(file, el) {
       }
     });
   }
-
-
-alert('test');
