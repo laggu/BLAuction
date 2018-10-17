@@ -1,4 +1,4 @@
-﻿pragma solidity ^0.4.24;
+pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
 contract Auction{
@@ -20,7 +20,7 @@ contract Auction{
     
     event biddingEvent(uint member_id, uint auct_id, uint price, uint time);
     event refundEvent();
-    event ownerWithdrawEvent();
+    event ownerWithdrawEvent(uint auction_id);
     event auctionEndEvent();
     
     modifier auction_progress(uint _time){
@@ -73,7 +73,7 @@ contract Auction{
         uint money = user_balances[owner];
         user_balances[owner] = 0;
         owner.transfer(money);
-        emit ownerWithdrawEvent();
+        emit ownerWithdrawEvent(auction_id);
     }
     function get_bid_list() view public returns (Bid[]){
         return bid_list;
@@ -86,7 +86,6 @@ contract Up_Auction is Auction{
     }
     
     function bidding(uint _bid_id, uint bidder_id, uint _time) auction_progress(_time) notOwner minimum_measure public payable {
-        emit startbidding();
         require(current_price < msg.value);
         bid_list.push(Bid({
             bid_id: _bid_id,
@@ -99,6 +98,7 @@ contract Up_Auction is Auction{
         current_price = msg.value;
         current_winner = msg.sender;
         user_balances[owner] = current_price;
+        emit biddingEvent(bidder_id, auction_id, current_price, _time);
     }
     
     function withdraw() notOwner public payable{
@@ -131,6 +131,7 @@ contract Down_Auction is Auction{
         current_winner = msg.sender;
         due_date = _time;
         user_balances[owner] = current_price;
+        emit biddingEvent(bidder_id, auction_id, current_price, _time);
     }
     
     function withdraw() public payable{
@@ -159,6 +160,7 @@ contract Secret_Auction is Auction{
         } else {
             user_balances[msg.sender] += msg.value;
         }
+        emit biddingEvent(bidder_id, auction_id, current_price, _time);
     }
     
     function withdraw() auction_end(now) notOwner public payable{
@@ -195,7 +197,7 @@ contract Auction_Manager {
         if(_auction_type == 2){
             auctions[_auction_id] = new Secret_Auction(_auction_id, _seller_id, _auction_type, _due_date, _start_price, msg.sender);
         }
-        emit makeAuctionEvent(auctions[_auction_id]);
+        emit makeAuctionEvent(auctions[_auction_id], _auction_id);
         return auctions[_auction_id];
     }
     
