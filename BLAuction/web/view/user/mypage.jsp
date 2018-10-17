@@ -21,20 +21,20 @@
  				<div id="personalInfo">
   					<div id="rightInfo">
   						<div id="mygrade"><img src="img/customer.png"></div>
-  						<div><span id="myname"><strong>김다은</strong></span></div>
-  						<div><span id="myemail"><strong>eileenkim1208@gmail.com</strong></span></div>
+  						<div><span id="myname"><strong>${member.name }</strong></span></div>
+  						<div><span id="myemail"><strong>${member.email }</strong></span></div>
   						<div><button type="button" class="btn btn-warning" id="changePw_btn"><strong>비밀번호 변경</strong></button></div>
   						<div><button type="button" class="btn btn" id="like_btn"><strong>좋아요</strong></button></div>
   					</div>
   					<div id="leftInfo">
   						<div><h4><strong>내 정보</strong></h4></div>
   						<div>
-  						핸드폰 번호: <span id="myphone">010-0000-0000</span>
-  						<button type="button" class="btn btn-warning" id="changePhone_btn"><strong>번호 변경</strong></button>
+  						핸드폰 번호: <span id="myphone">${member.phone }</span>
+  						<a href="phoneupdateimpl.bla"><button type="button" class="btn btn-warning" id="changePhone_btn"><strong>번호 변경</strong></button></a>
   						</div>
   						<div>
-  						주소: <span id="myaddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span>
-  						<button type="button" class="btn btn-warning" id="changeAddress_btn"><strong>주소 변경</strong></button>
+  						주소: <span id="myaddress">${member.address }</span>
+  						<a href="addressupdateimpl.bla"><button type="button" class="btn btn-warning" id="changeAddress_btn"><strong>주소 변경</strong></button></a>
   						</div>
   						<div>
   							등록한 경매:  <span id="numofRegauction">0</span>회
