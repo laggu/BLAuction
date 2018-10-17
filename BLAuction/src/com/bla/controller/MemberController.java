@@ -22,14 +22,6 @@ public class MemberController {
 	@Resource(name = "mbiz")
 	Biz<MemberVO, String> biz;
 
-	@RequestMapping("/main.bla")
-	public ModelAndView main() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-		mv.addObject("centerpage", "center");
-		return mv;
-	}
-
 	@RequestMapping("/login.bla")
 	public String login() {
 		return "user/login";
