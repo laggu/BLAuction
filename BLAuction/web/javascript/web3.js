@@ -593,11 +593,13 @@ function set_auction(auction_address){
  * 3. 반환받은 bid_id 및 입찰자 정보로 Auction의 bidding을 실행
  * 4. biddingEvent를 통해서 입찰 성공 시 이벤트 처리
  */
-function bidding(price){
-	var auction_id /* 쿠키에서 정보를 받아옴*/
-	var price = $("#price").val()
-	var time = new Date().getTime()
-	
+function bidding(auction_id, price){
+	//var auction_id /* 쿠키에서 정보를 받아옴*/
+	//var price = $("#price").val();
+	var time = new Date().getTime();
+    var client_address = web3.eth.accounts[0];
+    bidder_id = 1; //get from session
+    
 	var params = {
 		"bidder_id":bidder_id,
 		"auction_id":auction_id,
@@ -605,6 +607,8 @@ function bidding(price){
 		"time":time,
 		"client_address":client_address
 	}
+	
+	alert(params.bidder_id + "\n" + params.auction_id + "\n" + params.price + "\n" + params.time + "\n" + params.client_address);	
 	
 	$.ajax({
 		type:'POST',

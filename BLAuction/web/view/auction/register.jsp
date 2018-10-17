@@ -34,6 +34,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 	position: absolute;
 }
 </style>
+<script>
+
+</script>
 <title>BLAuction_경매 등록</title>
 </head>
 <body>
@@ -76,7 +79,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 									<div class="form-group">
 										<h4>#경매종류</h4>
 										<select class="form-control" id="registerKind"
-											name="type">
+											name="type" onchange="checkRegisterKind(this)">
 											<option value="1">올림경매</option>
 											<option value="2">내림경매</option>
 											<option value="3">비밀경매</option>
@@ -100,8 +103,8 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="number" class="form-control" id="startPrice" name="start_price"
-										min="0.001"  step="0.001">
+									<input type="number" class="form-control" id="startPrice" min="0.001"  step="0.001">
+									<input type="text" class="form-control" id="startPriceFinney" name="start_price">
 								</div>
 							</div>
 							
@@ -119,25 +122,22 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							</div>
 							
 							<div style="margin-bottom: 4%;"
-								class="form-group" id="down_price">
-								<div class="col-sm-12">
+								class="form-group" id="down_price" hidden="false">
 									<h4>내림 가격:</h4>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="downPrice" name="down_price"
-										placeholder="0.001 Ether">
+										<input type="number" class="form-control" id="downPrice" name="down_price"
+										min="0.001"  step="0.001">
 									</div>
 									<h4>내림 시간 간격(시):</h4>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="downTerm" name="down_term" 
 										min="1" max="6">
 									</div>	
-								</div>
 							</div>
 
 							<div>
 								<div class="form-group">
 									<h4>상세 내용</h4>
-									<!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
 									<div id="summernote">summernote</div>
 								</div>
 							</div>
