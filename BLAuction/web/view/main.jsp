@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
+
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -17,6 +19,9 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Web3.js -->
+<script src="javascript/web3.js?ver=1"></script>
 </head>
 
 <body>
@@ -60,12 +65,12 @@
       	<p><a href="main.bla"><strong>전체 카테고리</strong></a></p>
       </div>
       <div id="menu_category">
-	    <p><a href="clothing.bla?category=0">의류/잡화</a></p>
-	    <p><a href="beauty.bla?category=1">뷰티/미용</a></p>
-	    <p><a href="sports.bla?category=2">스포츠/레저</a></p>
-	    <p><a href="digital.bla?category=3">디지털/가전</a></p>
-	    <p><a href="furniture.bla?category=4">생활/가구</a></p>
-	    <p><a href="etc.bla?category=5">기타</a></p>
+	    <p><a href="category.bla?category=1">의류/잡화</a></p>
+	    <p><a href="category.bla?category=2">뷰티/미용</a></p>
+	    <p><a href="category.bla?category=3">스포츠/레저</a></p>
+	    <p><a href="category.bla?category=4">디지털/가전</a></p>
+	    <p><a href="category.bla?category=5">생활/가구</a></p>
+	    <p><a href="category.bla?category=6">기타</a></p>
       </div>
     </div>
     <!-- Content -->
