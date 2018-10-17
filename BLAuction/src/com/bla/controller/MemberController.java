@@ -32,7 +32,7 @@ public class MemberController {
 	public String login() {
 		return "user/login";
 	}
-	
+
 	@RequestMapping("/failMeta.bla")
 	public String failMeta() {
 		return "user/failMeta";
@@ -47,19 +47,18 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		ModelAndView mv2 = new ModelAndView();
 		MemberVO member = null;
-		
+
 		try {
 			member = mbiz.get(email);
-			if(!(member.getMember_account().equals(member_account)))
-			{
+			if (!(member.getMember_account().equals(member_account))) {
 				mv.setViewName("main");
-				mv.addObject("centerpage","user/failMeta");
+				mv.addObject("centerpage", "user/failMeta");
 				return mv;
 			}
 			if(member == null || !(member.getPw().equals(pw))) {
 				//null�϶� ó�����ָ��
 				mv.setViewName("main");
-				mv.addObject("centerpage","user/fail");
+				mv.addObject("centerpage", "user/fail");
 //				mv.addObject("resultt", "asdf");
 				return mv;
 			}
@@ -70,16 +69,16 @@ public class MemberController {
 		
 		
 		mv2.setViewName("main");
-		mv2.addObject("centerpage","center");
+		mv2.addObject("centerpage", "center");
 		System.out.println("로그인성공");
 		session.setAttribute("member_id", member.getMember_id());
-		session.setAttribute("name",member.getName());
+		session.setAttribute("name", member.getName());
 		session.setAttribute("address", member.getAddress());
 		session.setAttribute("member_account", member.getMember_account());
 		session.setAttribute("loginStatus", "loginSuccess");
 		
 		return mv2;
-		
+
 	}
 
 	@RequestMapping("/logout.bla")
@@ -92,7 +91,7 @@ public class MemberController {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-		return "redirect:/main.bla"; 
+		return "redirect:/main.bla";
 	}
 
 	@RequestMapping("/register.bla")
@@ -102,19 +101,18 @@ public class MemberController {
 
 	@RequestMapping("/idcheck.bla")
 	@ResponseBody
-	public void idCheck(String id,HttpServletResponse response) {
+	public void idCheck(String id, HttpServletResponse response) {
 	}
-	
+
 	@RequestMapping("/jusoPopup.bla")
-	public String jusoPopup()
-	{
+	public String jusoPopup() {
 		return "user/jusoPopup";
 	}
 
 	@RequestMapping("/registerimpl.bla")
 	@ResponseBody
 	public ModelAndView registerimpl(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e3) {
@@ -126,21 +124,21 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO member = new MemberVO();
-		
+
 		member.setEmail(request.getParameter("email"));
 		member.setPw(request.getParameter("pw"));
 		member.setName(request.getParameter("name"));
 		member.setAddress(request.getParameter("address"));
 		member.setPhone(request.getParameter("phone"));
-		System.out.println("date : "+ request.getParameter("birth"));
-		String bi = request.getParameter("birth").replace("-","").substring(2, 8);
-		System.out.println("bi:"+bi);
+		System.out.println("date : " + request.getParameter("birth"));
+		String bi = request.getParameter("birth").replace("-", "").substring(2, 8);
+		System.out.println("bi:" + bi);
 		member.setBirth(bi);
 		member.setMember_account(request.getParameter("member_account"));
-		
+
 		mv.setViewName("main");
 		try {
-			biz.register(member);	
+			biz.register(member);
 			mv.addObject("centerpage", "center");
 			session.setAttribute("email", member.getEmail());
 			session.setAttribute("loginStatus", "loginSuccess");
@@ -150,33 +148,64 @@ public class MemberController {
 			e.printStackTrace();
 			return mv;
 		}
-		
+
 	}
 
 	@RequestMapping("/mypage.bla")
-	public ModelAndView mypage(HttpServletRequest request) {
-		//memeberid를 가져와서 회원 정보 select한 정보 mv.addObject로 추가
+	public ModelAndView mypage(HttpServletRequest request, MemberVO member) {
+
+		HttpSession session = request.getSession();
+		int member_id = (Integer) session.getAttribute("member_id");
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-		mv.addObject("centerpage", "user/mypage");
+
+		try {
+			member = mbiz.get(member_id);
+			mv.addObject("member", member);
+			mv.addObject("centerpage", "user/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return mv;
 	}
 
+	@RequestMapping("/mypageimpl.bla")
+	public ModelAndView mypageimpl(HttpServletRequest request, MemberVO member) {
+		// memeberid를 가져와서 회원 정보 select한 정보 mv.addObject로 추가
+		HttpSession session = request.getSession();
+		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
+		System.out.println("meber_id"+member_id);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+
+		try {
+			member = mbiz.get(member_id);
+			mv.addObject("member", member);
+			mv.addObject("centerpage", "user/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return mv;
+	}
 
 	@RequestMapping("/pwdupdateimpl.bla")
-	public ModelAndView pwdupdateimpl(HttpServletRequest request,MemberVO user) {
+	public ModelAndView pwdupdateimpl(HttpServletRequest request, MemberVO user) {
 		HttpSession session = request.getSession();
-		//String npwd = request.getParameter("pw");
+		// String npwd = request.getParameter("pw");
 		MemberVO userTest = new MemberVO();
-		
+
 		userTest.setPw("12345");
-		
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
 			biz.modify(userTest);
 			System.out.println(user.getPw());
-			mv.addObject("member",user);
+			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
 			mv.addObject("centerpage", "user/mypage");
@@ -184,28 +213,45 @@ public class MemberController {
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("/phoneupdateimpl.bla")
-	public ModelAndView phoneupdateimpl(HttpServletRequest request,MemberVO user) {
+	public ModelAndView phoneupdateimpl(HttpServletRequest request, MemberVO member) {
 		HttpSession session = request.getSession();
-		String nphone = request.getParameter("phone");
-		user.setAddress(nphone);
+		//String nphone = request.getParameter("phone");
+		MemberVO userTest = new MemberVO(25,"qwer@naver.com","1234","하이룽","화랑로11길 5-10","01012345678","040526",0,0,"0x50aa8cf9fddca8d60cc1e70f498a1829a4962c1f");
+		userTest.setPhone("01022223333");
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-		
+
 		try {
-			biz.modify(user);
+			biz.modify(userTest);
+			mv.addObject("member", userTest);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("/addressupdateimpl.bla")
-	public ModelAndView addressupdateimpl() {
-		return null;
+	public ModelAndView addressupdateimpl(HttpServletRequest request, MemberVO member) {
+		HttpSession session = request.getSession();
+		//String nphone = request.getParameter("phone");
+		MemberVO userTest = new MemberVO(25,"qwer@naver.com","1234","하이룽","화랑로11길 5-10","01012345678","040526",0,0,"0x50aa8cf9fddca8d60cc1e70f498a1829a4962c1f");
+		userTest.setAddress("역삼 멀티캠퍼스");
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+
+		try {
+			biz.modify(userTest);
+			mv.addObject("member", userTest);
+			mv.addObject("centerpage", "user/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
 	}
 
 }
