@@ -4,43 +4,30 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bla.mapper.BiddingMapper">
 
-	<!-- Need a update -->
-	<resultMap type="bidding" id="bidDetail">
-		<result column="bid_id" property="bid_id" />
-		<result column="member_id" property="member_id" />
-		<result column="auct_id" property="auct_id" />
-		<result column="price" property="price" />
-		<result column="time" property="time" />
-		<result column="bidder_account" property="bidder_account" />
-		
-	</resultMap>
-
-	<resultMap type="bidding" id="bidList">
-		<result column="bid_id" property="bid_id" />
-		<result column="member_id" property="member_id" />
-		<result column="auct_id" property="auct_id" />
-		<result column="price" property="price" />
-		<result column="time" property="time" />
-		<result column="bidder_account" property="bidder_account" />
-	</resultMap>
-
-	<select id="select" parameterType="String" resultMap="bidDetail">
-		SELECT * FROM BIDDING WHERE ID=#{obj}
+	<select id="selectAuctIdByMemberId" parameterType="Integer" resultType="Integer">
+		SELECT DISTINCT AUCT_ID FROM BIDDING WHERE MEMBER_ID = #{member_id}
 	</select>
-	<select id="selectall" resultMap="bidList">
+
+	<select id="selectBidMaxPrice" parameterType="Integer" resultType="Long">
+		SELECT MAX(price) FROM BIDDING GROUP BY AUCT_ID HAVING AUCT_ID = ${auct_id}
+	</select>
+	
+	<select id="selectMemberBidMaxPrice" parameterType="Map" resultType="Long">
+		SELECT MAX(price) FROM BIDDING WHERE MEMBER_ID=#{member_id} AND AUCT_ID=#{auct_id}
+	</select>
+	
+	<select id="selectMemberBidding" parameterType="Integer" resultType="bidding">
 		SELECT * FROM BIDDING ORDER BY BID_ID
 	</select>
+	
+	<select id="selectAuctionBiddingList" parameterType="Integer" resultType="bidding">
+		SELECT * FROM BIDDING WHERE AUCT_ID = {#auct_id}
+	</select>
+	
 	<insert id="insert" parameterType="bidding">
 		INSERT INTO BIDDING 
-		(MEMBER_ID,AUCT_ID,PRICE,TIME,BIDDER_ACCOUNT)
-		VALUES (#{member_id},#{auct_id},#{price},#{time},#{bidder_account})
+		(BID_ID,MEMBER_ID,AUCT_ID,PRICE,TIME,BIDDER_ACCOUNT)
+		VALUES (SEQ_BID.NEXTVAL,#{member_id},#{auct_id},#{price},#{time},#{bidder_account})
 	</insert>
-	<!-- Need a update -->
-	<update id="update" parameterType="bidding">
-	</update>
-	<!-- Need a update parameter add.. -->
-	<delete id="delete" parameterType="String">
-		DELETE * FROM WHERE BID_ID = #{obj}
-	</delete>
-
+	
 </mapper>

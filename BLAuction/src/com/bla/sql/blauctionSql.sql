@@ -53,6 +53,7 @@ down_term number(10) null,
 auction_status varchar2(10) default 'before' check(auction_status in ('before','proceeding','end','cancel')),
 auction_address varchar2(160) null,
 tag varchar2(255) null,
+register_date number(20) not null,
 CONSTRAINT FK_AUCTION_member FOREIGN KEY(member_id)
 REFERENCES MEMBER(member_id),
 CONSTRAINT FK_AUCTION_auct_type FOREIGN KEY(auct_type_id)
@@ -66,7 +67,7 @@ create table PHOTO(
 photo_id number(5) not null PRIMARY KEY,
 photo_name varchar2(20) not null,
 photo_path varchar2(255) not null,
-auct_id number(5) not null,
+auct_id number(5) null,
 CONSTRAINT FK_PHOTO_auct FOREIGN KEY(auct_id)
 REFERENCES AUCTION(auct_id)
 );

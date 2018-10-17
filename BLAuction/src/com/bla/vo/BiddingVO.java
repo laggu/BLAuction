@@ -8,7 +8,7 @@ public class BiddingVO {
 	private int member_id;
 	private int auct_id;
 	private long price;
-	private Date time;
+	private long time;
 	private String bidder_account;
 	private int bid_conf_status;//0 is false, 1 is true;
 	
@@ -16,14 +16,13 @@ public class BiddingVO {
 		super();
 	}
 
-	public BiddingVO(int member_id, int auct_id, long price, Date time, String bidder_account, int bid_conf_status) {
+	public BiddingVO(int member_id, int auct_id, long price, long time, String bidder_account) {
 		super();
 		this.member_id = member_id;
 		this.auct_id = auct_id;
 		this.price = price;
 		this.time = time;
 		this.bidder_account = bidder_account;
-		this.bid_conf_status = bid_conf_status;
 	}
 
 	public int getBid_id() {
@@ -58,11 +57,11 @@ public class BiddingVO {
 		this.price = price;
 	}
 
-	public Date getTime() {
+	public long getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 
@@ -92,7 +91,7 @@ public class BiddingVO {
 		result = prime * result + ((bidder_account == null) ? 0 : bidder_account.hashCode());
 		result = prime * result + member_id;
 		result = prime * result + (int) (price ^ (price >>> 32));
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		result = prime * result + (int) (time ^ (time >>> 32));
 		return result;
 	}
 
@@ -120,10 +119,7 @@ public class BiddingVO {
 			return false;
 		if (price != other.price)
 			return false;
-		if (time == null) {
-			if (other.time != null)
-				return false;
-		} else if (!time.equals(other.time))
+		if (time != other.time)
 			return false;
 		return true;
 	}

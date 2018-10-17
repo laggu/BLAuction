@@ -2,12 +2,12 @@ package com.bla.biz;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.bla.frame.Biz;
 import com.bla.vo.SuccessfulBidVO;
 
-@Repository("sbiz")
+@Service("sbiz")
 public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 
 	@Override
