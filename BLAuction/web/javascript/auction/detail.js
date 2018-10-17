@@ -8,8 +8,6 @@
 // 6. 입찰 버튼 클릭시 입찰 모달 보여주기 ----- 경매 종류에 따라 다르게
 
 
-alert("test");
-
 //var xmlHttp;
 //function srvTime(){
 //	xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
@@ -28,6 +26,5 @@ function getServerTime(){
 	alert(date);
 }
 
-window.setInterval("getServerTime();",1000);
 
 
