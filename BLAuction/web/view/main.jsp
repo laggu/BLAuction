@@ -54,7 +54,7 @@
         	</c:when>
         	<c:otherwise>
         		<li><a href="createAuction.bla"><img src="img/auction.png"></img>경매등록</a></li>
-      			<li><a href="mypage.bla"><img src="img/customer.png"></img>마이페이지</a></li>
+      			<li><a href="mypage.bla"><img src="img/info.png"></img>마이페이지</a></li>
         		<li><a href="logout.bla"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         	</c:otherwise>
         </c:choose>

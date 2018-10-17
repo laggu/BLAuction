@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(){
     $("#bidding_btn").click(function(){
-         $("#biddingModal").modal();
+         //$("#biddingModal").modal();
     });
 });
 </script>
@@ -53,27 +53,27 @@ $(document).ready(function(){
   				</div>
   				
   				<!-- Trigger the modal with a button -->
-  				<button type="button" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
+  				<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
 				
 				  <!-- Modal -->
-				  <div class="modal fade" id="biddingModal" role="dialog">
-				    <div class="modal-dialog">
+				  <div class="modal" id="biddingModal">
+				    <div class="modal-dialog modal-lg modal-dialog-centered">
 				    
 				      <!-- Modal content-->
 				      <div class="modal-content">
 				        <div class="modal-header">
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				          <h4 class="modal-title">입찰하기</h4>
+				          <h4 class="modal-title"></h4>
 				        </div>
-				        <div class="modal-body">
-				          
+				        
+				        <div class="modal-body">  
 							<form action="biddingimpl.bla?auct_id=">
 								<div>
 									<h4>현재 입찰가: <span id="currentPrice"></span></h4>
 								</div>
 							
 								<div id="inputPriceArea">
-									<h4>입찰할 가격:</h4>
+									<h4>입찰 제시 가격:&nbsp;</h4>
 									<div>
 										<input id="suggestedPrice" type="number" class="form-control" 
 										min="0.001"  step="0.001" name="suggested_price">
@@ -92,6 +92,7 @@ $(document).ready(function(){
 							</form>
 
 				        </div>
+				        
 				        <div class="modal-footer">
 				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				        </div>
@@ -107,17 +108,42 @@ $(document).ready(function(){
 	
 	<div class="col-sm-10 text-left">
 		<!-- Page Start -->
-		<h3><span class="glyphicon glyphicon-list-alt"></span>입찰 리스트</h3>
+		<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트</h3>
 		<div class="panel panel-default" id="biddingList_panel">
   			<div class="panel-body">
-  				<div>
-  					
+  				<div class="panel panel-default" id="DBlist">
+  				<h4><strong>DataBase Info</strong></h4>
+  				<table border="1">
+  					<tr>
+	  					<th>입찰자</th>
+	  					<th>입찰가</th>
+	  					<th>입찰 시간</th>
+	  					<th>트랜잭션 상태</th>
+  					</tr>
+  					<tr>
+  						<td id="BidderName">회원1</td>
+  						<td id="BiddersPrice">10</td>
+  						<td id="BiddingTimestamp">12:00</td>
+  						<td id="transactionStatus">Confirmed</td>
+  					</tr>
+  				</table>
   				</div>
-  				<div>
-  				</div>
-  				<div>
-  				</div>
-  				<div>
+  				
+  				<div class="panel panel-default" id="Contractlist">
+  				<h4><strong>Contract Info</strong></h4>
+  				<table border="1">
+  					<tr>
+	  					<th>입찰자</th>
+	  					<th>입찰가</th>
+	  					<th>입찰 시간</th>
+  					</tr>
+  					<tr>
+  						<td id="Bidder_Name">회원1</td>
+  						<td id="Bidders_Price">10</td>
+  						<td id="Bidding_Timestamp">12:00</td>
+  					</tr>
+  				</table>
+  				
   				</div>
   			</div>
   		</div>
