@@ -421,9 +421,9 @@
 		position:relative;
 	}
 	
-	#detail_panel{
+	#detail_panel,#biddingList_panel{
 		position:relative;
-		height:900px;
+		height:1000px;
 		width:96%;
 		margin-left:2%;
 	}
@@ -505,20 +505,24 @@
 	
 	#bidding_btn{
 		width:300px;
-		margin:0 35%;
+		margin:10% 35%;
 	}
 	
 	#bidding_btn h4{
 		color:white;
 	}
 	
+	
+	/* bidding Modal */
 	#inputPriceArea h4{
 		position:relative;
 		display:inline;
 		float:left;
 	}
 	
-	
+	#bidding_submit_btn{
+		margin:0 auto;
+	}
 	
 /* register.jsp */
 /*****************************************************************/
