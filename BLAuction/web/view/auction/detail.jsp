@@ -14,7 +14,7 @@
 <div id="detail_area">
 	<div class="col-sm-10 text-left">
 		<!-- Page Start -->
-		<form method="POST" action="/biddingimpl.bla">
+		<form method="POST" action="biddingimpl.bla">
 		<h3><img src="img/auction.png" id="detail_logo"></img>물품 상세</h3>
 		<div class="panel panel-default" id="detail_panel">
   			<div class="panel-body">
@@ -44,7 +44,7 @@
 	  				</div>
   				</div>
   				
-  				<button type="button" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
+  				<button type="submit" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
   				
   			</div>
 		</div>
