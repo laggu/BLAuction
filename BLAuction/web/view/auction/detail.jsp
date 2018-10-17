@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(){
     $("#bidding_btn").click(function(){
-        $("#biddingModal").modal();
+         $("#biddingModal").modal();
     });
 });
 </script>
@@ -38,9 +38,10 @@ $(document).ready(function(){
   				<div id="detail_bottom">
 	  				<div id="second_info">
 	  					<div id="oneLine">
+	  						<div><h4>경매 마감 시간: <span id="auctionDuedate"></span></h4></div>
 	  						<div><h4>현재 입찰가: <span id="currentPrice"></span></h4></div>
-	  						<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
 	  					</div>
+	  					<div style="border-bottom:1px solid #A6A6A6"><h4>마감까지 남은 시간: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4>연관태그: <span id="relatedTags"></span></h4></div>
 	  					<div>
 	  						<div class="form-group">
@@ -73,18 +74,18 @@ $(document).ready(function(){
 							
 								<div id="inputPriceArea">
 									<h4>입찰할 가격:</h4>
-									<div class="col-sm-8">
+									<div>
 										<input id="suggestedPrice" type="number" class="form-control" 
 										min="0.001"  step="0.001" name="suggested_price">
 									</div>
 								</div>
-							
+								
 								<div>
-									<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
+									<h4>경매 마감 시간: <span id="auctionDuedate"></span></h4>
 								</div>
 								
 								<div>
-									<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
+									<h4>마감까지 남은 시간: <span id="currentTimelimit"></span></h4>
 								</div>
 							
 								<button type="submit" class="btn btn-danger" id="bidding_submit_btn">입찰하기</button>
@@ -102,6 +103,27 @@ $(document).ready(function(){
   			</div>
 		</div>
 	</div>
+	
+	
+	<div class="col-sm-10 text-left">
+		<!-- Page Start -->
+		<h3><span class="glyphicon glyphicon-list-alt"></span>입찰 리스트</h3>
+		<div class="panel panel-default" id="biddingList_panel">
+  			<div class="panel-body">
+  				<div>
+  					
+  				</div>
+  				<div>
+  				</div>
+  				<div>
+  				</div>
+  				<div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+	
+	
 </div>
 
 
