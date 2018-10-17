@@ -102,7 +102,22 @@ $(document).ready(function() {
         }
       });
 	
+	$('#startPrice').on('change keyup mouseup',function(){
+		var ether = $('#startPrice').val();
+		$('#startPriceFinney').val(ether * 1000);
+	})
 });
+
+// Auction Kind checking function
+function checkRegisterKind(auction_kind){
+	if(auction_kind.value == 2){
+		document.getElementById("down_price").hidden = false;
+	}else{
+		document.getElementById("down_price").hidden = true;
+		document.getElementById("downPrice").value = 0;
+		document.getElementById("downTerm").value = 0;
+	}
+}
 
 // Summernote API
 function sendFile(file, el) {
@@ -152,12 +167,3 @@ function deleteFile(file, el) {
       }
     });
   }
-
-function setWei(){
-	$('#startPrice').on('change',function(){
-		var ether = $('#startPrice').val();
-		//#startPrice  type="number" min="0"  step="0.001"
-		alert(ether);
-		//$('#????').val(ether * 1000000000000000000);
-	})
-}
