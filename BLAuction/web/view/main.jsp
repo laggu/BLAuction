@@ -21,7 +21,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Web3.js -->
-<script src="javascript/web3.js?ver=1"></script>
+<script src="javascript/web3.js"></script>
 </head>
 
 <body>
