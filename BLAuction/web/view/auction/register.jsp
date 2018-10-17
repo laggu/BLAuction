@@ -120,18 +120,16 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							
 							<div style="margin-bottom: 4%;"
 								class="form-group" id="down_price">
-								<div class="col-sm-12">
 									<h4>내림 가격:</h4>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="downPrice" name="down_price"
-										placeholder="0.001 Ether">
+										<input type="number" class="form-control" id="downPrice" name="down_price"
+										min="0.001"  step="0.001">
 									</div>
 									<h4>내림 시간 간격(시):</h4>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="downTerm" name="down_term" 
 										min="1" max="6">
 									</div>	
-								</div>
 							</div>
 
 							<div>
