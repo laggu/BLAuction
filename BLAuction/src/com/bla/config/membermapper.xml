@@ -3,8 +3,12 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bla.mapper.MemberMapper">
-	<select id="select" parameterType="String" resultType="member">
+	<select id="selectbyemail" parameterType="String" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
+	<select id="select" parameterType="Integer" resultType="member">
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id}
 	</select>
 	
 	<select id="selectall" resultType="member">
@@ -16,8 +20,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email},#{pw},#{name},#{address},#{phone},#{birth},0, 0, #{member_account})       
 	</insert>
 	
-	<update id="updatePw" parameterType="member">
-		UPDATE MEMBER SET PW=#{pw}  WHERE MEMBER_ID = #{member_id}
+	<update id="update" parameterType="member">
+		UPDATE MEMBER SET PW=#{pw}, PHONE=#{phone}, ADDRESS=#{address}, SCORE=#{score}, LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
 	</update>
 	
 	<update id="updatePhone" parameterType="member">
