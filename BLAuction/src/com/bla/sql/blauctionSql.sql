@@ -15,19 +15,11 @@ pw   varchar2(10) not null,
 name   varchar2(20) not null,
 address varchar2(100) not null,
 phone   varchar2(13) not null,
-birth   varchar2(7) not null,
+birth   varchar2(30) not null,
 score   number(4) default 0,
 likes   number(4) default 0,
 member_account   varchar2(160) not null
 );
-
-DROP SEQUENCE MEMBER_ID_SEQ;
-
--- 5개의 값 미리 넣어둘 경우 START WIT 6
-CREATE SEQUENCE MEMBER_ID_SEQ START WITH 6 NOMAXVALUE NOCACHE NOORDER NOCYCLE;
-
-
-alter table	MEMBER modify(birth varchar2(30));
 
 create table CATEGORY_TYPE(
 cate_type_id number(5) not null PRIMARY KEY,
@@ -48,7 +40,7 @@ start_price number(10) not null,
 seller_account varchar2(160) not null,
 cate_type_id number(5) not null,
 description varchar2(255) not null,
-down_price number(10) null,
+down_price number(20) null,
 down_term number(10) null,
 auction_status varchar2(10) default 'before' check(auction_status in ('before','proceeding','end','cancel')),
 auction_address varchar2(160) null,
@@ -76,7 +68,7 @@ create table BIDDING(
 bid_id      number(5) not null PRIMARY KEY,
 member_id   number(5) not null,
 auct_id      number(5) not null,
-price      number(10) not null,
+price      number(20) not null,
 time      number(10) not null,
 bidder_account   varchar2(160) not null,
 bid_conf_status	number(1) default 0 not null,
