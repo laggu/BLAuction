@@ -512,6 +512,12 @@
 		color:white;
 	}
 	
+	#inputPriceArea h4{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
 	
 	
 /* register.jsp */

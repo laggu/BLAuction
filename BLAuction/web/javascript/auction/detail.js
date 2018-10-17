@@ -34,6 +34,7 @@ function srvTime() {
     var date = new Date(xmlHttp.getResponseHeader("Date"));
     $("#currentTimelimit").text(date);
 }
+
 window.setInterval("srvTime();",100);
 
 function makeBid(){
