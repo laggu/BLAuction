@@ -192,13 +192,20 @@ public class AuctionController2 {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			biz.getByCategory(category_id);
+			list = biz.getByCategory(category_id);
 			mv.addObject("list", list);
 			mv.addObject("category_id", category_id);
 			mv.addObject("centerpage", "auction/category");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "auction/category");
+		}
+		
+		Iterator<AuctionVO> itr = list.iterator();
+		
+		while (itr.hasNext()) {
+			AuctionVO auction = itr.next();
+			System.out.println(auction);
 		}
 
 		return mv;
