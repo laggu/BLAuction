@@ -27,14 +27,6 @@ public class MemberController {
 
 	@Resource(name = "mbiz")
 	MemberBiz mbiz;
-	
-	@RequestMapping("/main.bla")
-	public ModelAndView main() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-		mv.addObject("centerpage", "center");
-		return mv;
-	}
 
 	@RequestMapping("/login.bla")
 	public String login() {
@@ -65,7 +57,7 @@ public class MemberController {
 				return mv;
 			}
 			if(member == null || !(member.getPw().equals(pw))) {
-				//null占싹띰옙 처占쏙옙占쏙옙占쌍몌옙占�
+				//null�϶� ó�����ָ��
 				mv.setViewName("main");
 				mv.addObject("centerpage","user/fail");
 //				mv.addObject("resultt", "asdf");
@@ -75,6 +67,8 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		mv2.setViewName("main");
 		mv2.addObject("centerpage","center");
 		System.out.println("로그인성공");
@@ -82,6 +76,7 @@ public class MemberController {
 		session.setAttribute("name",member.getName());
 		session.setAttribute("address", member.getAddress());
 		session.setAttribute("member_account", member.getMember_account());
+		session.setAttribute("loginStatus", "loginSuccess");
 		
 		return mv2;
 		
@@ -148,6 +143,7 @@ public class MemberController {
 			biz.register(member);	
 			mv.addObject("centerpage", "center");
 			session.setAttribute("email", member.getEmail());
+			session.setAttribute("loginStatus", "loginSuccess");
 			return mv;
 		} catch (Exception e) {
 			mv.addObject("resultt", "asdd");

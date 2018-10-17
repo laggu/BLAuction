@@ -7,14 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_물품 상세</title>
+<script src="javascript/auction/detail.js"></script>
 </head>
+<script>
+$(document).ready(function(){
+    $("#bidding_btn").click(function(){
+        $("#biddingModal").modal();
+    });
+});
+</script>
 <body>
 
 <!-- Content -->
 <div id="detail_area">
 	<div class="col-sm-10 text-left">
 		<!-- Page Start -->
-		<form method="POST" action="biddingimpl.bla">
 		<h3><img src="img/auction.png" id="detail_logo"></img>물품 상세</h3>
 		<div class="panel panel-default" id="detail_panel">
   			<div class="panel-body">
@@ -44,13 +51,60 @@
 	  				</div>
   				</div>
   				
-  				<button type="submit" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
+  				<!-- Trigger the modal with a button -->
+  				<button type="button" class="btn btn-danger" id="bidding_btn"><h4>입 찰 하 기</h4></button>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" id="biddingModal" role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 class="modal-title">입찰하기</h4>
+				        </div>
+				        <div class="modal-body">
+				          
+							<form action="biddingimpl.bla?auct_id=">
+								<div>
+									<h4>현재 입찰가: <span id="currentPrice"></span></h4>
+								</div>
+							
+								<div id="inputPriceArea">
+									<h4>입찰할 가격:</h4>
+									<div class="col-sm-8">
+										<input id="suggestedPrice" type="number" class="form-control" 
+										min="0.001"  step="0.001" name="suggested_price">
+									</div>
+								</div>
+							
+								<div>
+									<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
+								</div>
+								
+								<div>
+									<div><h4>경매 남은 시간: <span id="currentTimelimit"></span></h4></div>
+								</div>
+							
+								<button type="submit" class="btn btn-danger" id="bidding_submit_btn">입찰하기</button>
+							</form>
+
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				      
+				    </div>
+				  </div>
   				
   			</div>
 		</div>
-	  	</form>
 	</div>
 </div>
-    
+
+
+
 </body>
 </html>
