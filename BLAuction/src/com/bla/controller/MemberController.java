@@ -1,7 +1,6 @@
 package com.bla.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bla.biz.MemberBiz;
+import com.bla.biz.PhotoBiz;
+import com.bla.dao.MemberDao;
 import com.bla.frame.Biz;
 import com.bla.vo.MemberVO;
 
@@ -22,6 +25,9 @@ public class MemberController {
 	@Resource(name = "mbiz")
 	Biz<MemberVO, String> biz;
 
+	@Resource(name = "mbiz")
+	MemberBiz mbiz;
+	
 	@RequestMapping("/main.bla")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
@@ -39,7 +45,6 @@ public class MemberController {
 	public String failMeta() {
 		return "user/failMeta";
 	}
-	
 
 	@RequestMapping("/loginimpl.bla")
 	public ModelAndView loginimpl(HttpServletRequest request) {
@@ -51,9 +56,8 @@ public class MemberController {
 		ModelAndView mv2 = new ModelAndView();
 		MemberVO member = null;
 		
-		
 		try {
-			member = biz.get(email);
+			member = mbiz.get(email);
 			if(!(member.getMember_account().equals(member_account)))
 			{
 				mv.setViewName("main");
@@ -73,6 +77,7 @@ public class MemberController {
 		}
 		mv2.setViewName("main");
 		mv2.addObject("centerpage","center");
+		System.out.println("로그인성공");
 		session.setAttribute("member_id", member.getMember_id());
 		session.setAttribute("name",member.getName());
 		session.setAttribute("address", member.getAddress());
@@ -104,14 +109,13 @@ public class MemberController {
 	@ResponseBody
 	public void idCheck(String id,HttpServletResponse response) {
 	}
-
+	
 	@RequestMapping("/jusoPopup.bla")
 	public String jusoPopup()
 	{
 		return "user/jusoPopup";
 	}
-	
-	
+
 	@RequestMapping("/registerimpl.bla")
 	@ResponseBody
 	public ModelAndView registerimpl(HttpServletRequest request, HttpServletResponse response) {
@@ -155,20 +159,56 @@ public class MemberController {
 
 	@RequestMapping("/mypage.bla")
 	public ModelAndView mypage(HttpServletRequest request) {
-		//memeberid�몴占� 揶쏉옙占쎌죬占쏙옙占쎄퐣 占쎌돳占쎌뜚 占쎌젟癰귨옙 select占쎈립 占쎌젟癰귨옙 mv.addObject嚥∽옙 �빊遺쏙옙
+		//memeberid를 가져와서 회원 정보 select한 정보 mv.addObject로 추가
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		mv.addObject("centerpage", "user/mypage");
 		return mv;
 	}
-	
+
+
 	@RequestMapping("/pwdupdateimpl.bla")
 	public ModelAndView pwdupdateimpl(HttpServletRequest request,MemberVO user) {
-		return null;
+		HttpSession session = request.getSession();
+		//String npwd = request.getParameter("pw");
+		MemberVO userTest = new MemberVO();
+		
+		userTest.setPw("12345");
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		try {
+			biz.modify(userTest);
+			System.out.println(user.getPw());
+			mv.addObject("member",user);
+			mv.addObject("centerpage", "user/mypage");
+		} catch (Exception e) {
+			mv.addObject("centerpage", "user/mypage");
+			e.printStackTrace();
+		}
+		return mv;
 	}
 	
-	@RequestMapping("/userupdateimpl.bla")
-	public ModelAndView userupdateimpl() {
+	@RequestMapping("/phoneupdateimpl.bla")
+	public ModelAndView phoneupdateimpl(HttpServletRequest request,MemberVO user) {
+		HttpSession session = request.getSession();
+		String nphone = request.getParameter("phone");
+		user.setAddress(nphone);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		
+		try {
+			biz.modify(user);
+			mv.addObject("centerpage", "user/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/addressupdateimpl.bla")
+	public ModelAndView addressupdateimpl() {
 		return null;
 	}
 
