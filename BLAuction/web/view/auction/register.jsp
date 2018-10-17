@@ -34,6 +34,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 	position: absolute;
 }
 </style>
+<script>
+
+</script>
 <title>BLAuction_경매 등록</title>
 </head>
 <body>
@@ -76,7 +79,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 									<div class="form-group">
 										<h4>#경매종류</h4>
 										<select class="form-control" id="registerKind"
-											name="type">
+											name="type" onchange="checkRegisterKind(this)">
 											<option value="1">올림경매</option>
 											<option value="2">내림경매</option>
 											<option value="3">비밀경매</option>
@@ -119,7 +122,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							</div>
 							
 							<div style="margin-bottom: 4%;"
-								class="form-group" id="down_price">
+								class="form-group" id="down_price" hidden="false">
 									<h4>내림 가격:</h4>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="downPrice" name="down_price"
@@ -135,7 +138,6 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							<div>
 								<div class="form-group">
 									<h4>상세 내용</h4>
-									<!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
 									<div id="summernote">summernote</div>
 								</div>
 							</div>
