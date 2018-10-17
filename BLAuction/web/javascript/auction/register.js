@@ -104,6 +104,17 @@ $(document).ready(function() {
 	
 });
 
+// Auction Kind checking function
+function checkRegisterKind(auction_kind){
+	if(auction_kind.value == 2){
+		document.getElementById("down_price").hidden = false;
+	}else{
+		document.getElementById("down_price").hidden = true;
+		document.getElementById("downPrice").value = 0;
+		document.getElementById("downTerm").value = 0;
+	}
+}
+
 // Summernote API
 function sendFile(file, el) {
     var form_data = new FormData();
