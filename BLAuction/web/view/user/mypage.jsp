@@ -10,11 +10,6 @@
 
 <script src="javascript/user/delivery.js"></script>
 
-<script>
-	getDeliveryStatus();
-</script>
-
-
 </head>
 <body>
 

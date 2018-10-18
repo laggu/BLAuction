@@ -32,11 +32,11 @@ function srvTime() {
     xmlHttp.setRequestHeader("Content-Type", "text/html");
     xmlHttp.send('');
     var date = new Date(xmlHttp.getResponseHeader("Date"));
-    var dtA = new Date('10/19/2018 12:00:00');
     var timediff = dtA.getTime() - date.getTime();
     
     if(timediff <= 0){
         $("#currentTimelimit").text('경매완료');
+        return;
     }
     
     timediff /= 1000;
@@ -59,7 +59,6 @@ function srvTime() {
     //alert(timediff);
 }
 
-window.setInterval("srvTime();",1000);
 
 function makeBid(){
 	var price = 5//$('#??').text();
