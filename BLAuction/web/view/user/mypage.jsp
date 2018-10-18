@@ -102,7 +102,7 @@
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
 	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus("+ index + "," + auction_address +");">택배 상태 조회</button>	
+	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">택배 상태 조회</button>	
 	  							<span id="Delivery_Status"+index></span>
 	  						</div>
 		  				</div>
