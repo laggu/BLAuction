@@ -49,4 +49,8 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	public ArrayList<SuccessfulBidVO> selectMySuccessfulBid(Integer member_id) throws Exception{
 		return sdao.selectMySuccessfulBid(member_id);
 	}
+	
+	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id) throws Exception{
+		return sdao.oneSelectMySuccessfulBid(auct_id);
+	}
 }
