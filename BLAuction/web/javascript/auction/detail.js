@@ -32,10 +32,33 @@ function srvTime() {
     xmlHttp.setRequestHeader("Content-Type", "text/html");
     xmlHttp.send('');
     var date = new Date(xmlHttp.getResponseHeader("Date"));
-    $("#currentTimelimit").text(date);
+    var timediff = dtA.getTime() - date.getTime();
+    
+    if(timediff <= 0){
+        $("#currentTimelimit").text('경매완료');
+        return;
+    }
+    
+    timediff /= 1000;
+    var s = '';
+    
+    if(parseInt(timediff/86400) >= 1){
+    	s += parseInt(timediff/86400) + '일 '
+        timediff %= 86400;
+    }
+    if(parseInt(timediff/3600) >= 1){
+    	s += parseInt(timediff/3600) + '시간 '
+        timediff %= 3600;
+    }
+    if(parseInt(timediff/60) >= 1){
+    	s += parseInt(timediff/60) + '분 '
+        timediff %= 60;
+    }
+    s += Math.floor(timediff) + '초';
+    $("#currentTimelimit").text(s);
+    //alert(timediff);
 }
 
-window.setInterval("srvTime();",100);
 
 function makeBid(){
 	var price = 5//$('#??').text();
@@ -43,4 +66,26 @@ function makeBid(){
 	alert("makeBid");
 	bidding(auction_id, price);
 }
-//makeBid();
+
+function getTimeStamp(d) {
+	  var s =
+	    leadingZeros(d.getMonth() + 1, 2) + '-' +
+	    leadingZeros(d.getDate(), 2) + ' ' +
+
+	    leadingZeros(d.getHours(), 2) + ':' +
+	    leadingZeros(d.getMinutes(), 2) + ':' +
+	    leadingZeros(d.getSeconds(), 2);
+
+	  return s;
+	}
+
+function leadingZeros(n, digits) {
+var zero = '';
+n = n.toString();
+
+if (n.length < digits) {
+  for (i = 0; i < digits - n.length; i++)
+    zero += '0';
+}
+return zero + n;
+}

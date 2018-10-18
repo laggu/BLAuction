@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT DISTINCT AUCT_ID FROM BIDDING WHERE MEMBER_ID = #{member_id}
 	</select>
 
-	<select id="selectBidMaxPrice" parameterType="Integer" resultType="Long">
-		SELECT MAX(price) FROM BIDDING GROUP BY AUCT_ID HAVING AUCT_ID = ${auct_id}
+	<select id="selectBidMaxPrice" parameterType="auction" resultType="Long">
+		SELECT MAX(price) FROM BIDDING GROUP BY AUCT_ID HAVING AUCT_ID = ${auct_id }
 	</select>
 	
 	<select id="selectMemberBidMaxPrice" parameterType="Map" resultType="Long">
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectAuctionBiddingList" parameterType="Integer" resultType="bidding">
-		SELECT * FROM BIDDING WHERE AUCT_ID = {#auct_id} ORDER BY AUCT_ID
+		SELECT * FROM BIDDING WHERE AUCT_ID = {#auct_id} ORDER BY PRICE
 	</select>
 	
 	<insert id="insert" parameterType="bidding">
