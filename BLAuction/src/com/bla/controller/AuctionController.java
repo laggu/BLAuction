@@ -98,8 +98,9 @@ public class AuctionController {
 
 		// Session에서 정보 추출
 		HttpSession session = multi.getSession();
-//			int member_id = (Integer)session.getAttribute("member_id");
-//			String seller_account = (String)session.getAttribute("seller_account");
+		int member_id = (Integer)session.getAttribute("member_id");
+		System.out.println(member_id);
+		String seller_account = (String)session.getAttribute("member_account");
 
 //			// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
@@ -107,11 +108,11 @@ public class AuctionController {
 		auction.setDuedate(duedate);
 		Long start_price = Long.parseLong(multi.getParameter("start_price"));
 		int auction_type = Integer.parseInt(multi.getParameter("type"));
-		auction.setMember_id(2);
+		auction.setMember_id(member_id);
 		auction.setType(auction_type);
 		auction.setAuct_title(multi.getParameter("auct_title"));
 		auction.setStart_price(start_price);
-		auction.setSeller_account("seller_account");
+		auction.setSeller_account(seller_account);
 		auction.setCategory_id(Integer.parseInt(multi.getParameter("category_id")));
 		System.out.println("DESCRIPTION : " + multi.getParameter("description"));
 		auction.setDescription(multi.getParameter("description"));
@@ -271,13 +272,19 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 
+			
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
 			mv.addObject("category", category);
 			mv.addObject("auction_type", auction_type);
 			mv.addObject("due_date", due_date);
-			mv.addObject("photo1", photos.get(0).getPhoto_path() + photos.get(0).getPhoto_name());
-			mv.addObject("photo2", photos.get(1).getPhoto_path() + photos.get(1).getPhoto_name());
+			mv.addObject("timestamp", (Long) auction.getDuedate());
+			try {
+				mv.addObject("photo1", photos.get(0).getPhoto_path() + photos.get(0).getPhoto_name());
+				mv.addObject("photo2", photos.get(1).getPhoto_path() + photos.get(1).getPhoto_name());
+			}catch(Exception e) {
+				
+			}
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -609,6 +616,11 @@ public class AuctionController {
 		return null;
 	}
 
+	@RequestMapping("/timestamp.bla")
+	public String timeStamp(HttpServletRequest request) {
+		return "hi";
+	}
+	
 	// 판매자 정보의 페이지 넘기기
 	@RequestMapping("/sellerinfo.bla")
 	public String sellerinfo(HttpServletResponse response) {

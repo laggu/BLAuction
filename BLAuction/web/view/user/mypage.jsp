@@ -10,11 +10,6 @@
 
 <script src="javascript/user/delivery.js"></script>
 
-<script>
-	getDeliveryStatus();
-</script>
-
-
 </head>
 <body>
 
@@ -107,7 +102,8 @@
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
 	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">택배 상태 조회</button>	
+	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">
+	  							<strong>택배 상태 조회</strong></button>	
 	  							<span id="Delivery_Status"></span>
 	  						</div>
 		  				</div>
@@ -370,12 +366,11 @@
 	        </div>
 	        
 	        <div class="modal-body">  
-				<form action="">
+				<form action="" class="form-horizontal">
 					<div>						
 						<div class="dropdown">
 						  <button class="btn btn-default dropdown-toggle" type="button" id="selectedDeliveryCompany" 
-						  data-toggle="dropdown" aria-expanded="true">
-						    택배사 선택
+						  data-toggle="dropdown" aria-expanded="true">택배사를 선택하세요
 						    <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -385,12 +380,15 @@
 						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">로젠택배 (06)</a></li>
 						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">롯데택배 (08)</a></li>
 						  </ul>
-						</div>
+						</div>							
 					</div>
 					
-					
+					<div>
+						<h4>운송장 번호:</h4>
+						<input type="text" class="form-control" id="invoiceNum" name="invoice_num">
+					</div>
 				
-					<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">입 력</button>
+					<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">택배 정보 등록</button>
 				</form>
 
 	        </div>

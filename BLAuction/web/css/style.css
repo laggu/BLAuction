@@ -559,6 +559,12 @@
 		margin-left:4%;
 	}
 	
+	#sellerInfoCheck_btn{
+		position:relative;
+		width:32%;
+		margin-top:-10%;
+	}
+	
 	#second_info div{
 		margin-bottom:8%;
 	}
@@ -779,7 +785,7 @@
 /*****************************************************************/
 
 	/* My Info */
-	#mypage_area{
+	#mypage_area, #sellerpage_area{
 		/* font-family: 'Nanum Myeongjo', serif; */
 		/*font-family: 'Nanum Gothic Coding', monospace; */
 		margin-top:2%;
@@ -1022,4 +1028,15 @@
 		position:relative;
 		margin-top:2%;
 		margin-bottom:2%;
+	}
+	
+	#deliveryInfo_Btn{
+		width:40%;
+		position:relative;
+		margin-top:2%;
+		margin-bottom:2%;
+	}
+	
+	#selectedDeliveryCompany{
+		
 	}

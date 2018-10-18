@@ -12,11 +12,11 @@
 <body>
 
 <!-- Content -->
-<div id="mypage_area">
+<div id="sellerpage_area">
 	<div class="col-sm-10 text-left">
 	
 		<!-- Page Start -->	
-		<!-- Myinfo Panel -->
+		<!-- SellerInfo Panel -->
 		<div class="panel panel-default" id="myinfo_panel">
   			<div class="panel-body">
  				<div id="personalInfo">
@@ -242,65 +242,6 @@
 	  
 	  
 	  
-	  
-	  <!-- ChangePhone Modal -->
-	<div class="modal" id="ChangePhoneModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="">
-					<h4>변경된 핸드폰 번호:</h4>
-					<input type="text" id="changedPhone" name="changed_phone">
-					<button type="submit" class="btn btn-danger" id="changePhone_Btn">변경하기</button>
-				</form>
-
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
-	  
-	  
-	  <!-- ChangeAddress Modal -->
-	<div class="modal" id="ChangeAddressModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="">
-					<h4>변경된 주소 입력:</h4>
-					<input type="text" id="changedAddress" name="changed_address">
-					<button type="submit" class="btn btn-danger" id="changeAddress_Btn">변경하기</button>
-				</form>
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
-	  
-	  
-	  
 	  <!-- Re-bidding Modal -->
 	<div class="modal" id="RebiddingModal">
 	    <div class="modal-dialog">
@@ -339,46 +280,7 @@
 	    </div>
 	  </div>
 	  
-	  
-	    <!-- Input DeliveryInfo Modal -->
-	<div class="modal" id="ChangePwModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="">
-					<div>
-						<h4>현재 비밀번호:</h4>
-						<input type="text" id="currentPw" name="userPasswd">
-					</div>
-					<div>
-						<h4>변경할 비밀번호:</h4>
-						<input type="text" id="changedPw" name="changed_Pw">
-					</div>
-					
-					<div>
-						<h4>비밀번호 확인:</h4>
-						<input type="text" id="rechangedPw" name="rechanged_Pw">
-					</div>
-				
-					<button type="submit" class="btn btn-danger" id="changePasswd_btn">변경하기</button>
-				</form>
-
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
+	
 	  
 	  
     
