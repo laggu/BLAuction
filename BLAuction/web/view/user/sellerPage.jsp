@@ -7,7 +7,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-
+<script type="text/javascript">
+// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
+// (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
+//document.domain = "abc.go.kr";
+function goPopup(){
+//경로는 시스템에 맞게 수정하여 사용
+//호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를
+//호출하게 됩니다.
+var pop = window.open("jusoPopup.bla","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+//** 2017년 5월 모바일용 팝업 API 기능 추가제공 **/
+// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서
+// 실제 주소검색 URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+// var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
+}
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+// 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
+document.form.roadFullAddr.value = roadFullAddr;
+document.form.roadAddrPart1.value = roadAddrPart1;
+document.form.roadAddrPart2.value = roadAddrPart2;
+documentform.addrDetail.value = addrDetail;
+document.form.zipNo.value = zipNo;
+}
+</script>
 </head>
 <body>
 
@@ -17,130 +39,30 @@
 	
 		<!-- Page Start -->	
 		<!-- SellerInfo Panel -->
-		<div class="panel panel-default" id="myinfo_panel">
+		<div class="panel panel-default" id="sellerinfo_panel">
   			<div class="panel-body">
  				<div id="personalInfo">
   					<div id="rightInfo">
-  						<div id="mygrade"><img src="img/info.png"></div>
-  						<div><span id="myname"><strong>${member.name }</strong></span></div>
+  						<div id="sellergrade"><img src="img/info.png"></div>
+  						<div><span id="sellerName"><strong>${member.name }</strong></span></div>
   						<div><span id="myemail"><strong>${member.email }</strong></span></div>
-  				
-		  				<!-- Trigger the modal with a button -->
-		  				<div><button type="button" class="btn btn-warning" id="changePw_btn" 
-		  				data-toggle="modal" data-target="#ChangePwModal"><strong>비밀번호 변경</strong></button></div>
   						
   					</div>
   					<div id="leftInfo">
-  						<div><h4><strong>내 정보</strong></h4></div>
-  						<div>
-  						핸드폰 번호: <span id="myphone">${member.phone }</span>
-  						<button type="button" class="btn btn-warning" id="changePhone_btn"
-  						data-toggle="modal" data-target="#ChangePhoneModal"><strong>번호 변경</strong></button>
+  						<div><h4><strong>판매자 정보</strong></h4></div>
+  						<div id="numofSellerInfo">
+  							<h4>등록한 경매:  <span id="numofRegauction">0</span>회</h4>
+  							<h4>완료된 경매:  <span id="numofComplitedauction">0</span>회</h4>
   						</div>
   						<div>
-  						주소: <span id="myaddress">${member.address }</span>
-  						<button type="button" class="btn btn-warning" id="changeAddress_btn"
-  						data-toggle="modal" data-target="#ChangeAddressModal"><strong>주소 변경</strong></button>
-  						</div>
-  						<div>
-  							등록한 경매:  <span id="numofRegauction">0</span>회
-  							 ♥좋아요  <span id="numofLikes">0</span>회
-  						</div>
-  						<div>
-  							완료된 경매:  <span id="numofComplitedauction">0</span>회
+  							<button type="button" class="btn btn-link" id="report_btn">신고하기</button>
   						</div>
   					</div>
   				</div>
   			</div>
 		</div>
 		
-		<!-- MyLists -->
-		<!-- Tabs -->
-		<div id="mylist_area">
-		
-			<ul class="nav nav-tabs" id="mylist_tabs">
-			  <li class="active"><a data-toggle="tab" href="#home">입찰 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu1">낙찰 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu2">내가 올린 경매</a></li>
-			</ul>
-			
-			<div class="tab-content" id="mylist_panel">
-			  <div id="mybiddinglists" class="tab-pane fade in active">
-			  	<!-- Panel -->
-			    <div class="panel panel-default" id="mybidding_panel">
-		  			<div class="panel-body">
-		  				<div id="mybiddingImg"><img src="img/se.jpg"></div>
-		  				<div id="mybiddingInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
-	  						<div>내 입찰가: <span id="mybiddingPrice">0.1 Ether</span></div>
-	  						<div>현재 최고가: <span id="currenthighestPrice">10.0 Ether</span>
-	  						<button type="button" class="btn btn-danger" id="rebidding_btn" 
-	  						data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				<div class="panel panel-default" id="winningbid_panel">
-		  			<div class="panel-body">
-		  				<div id="winningbidImg"><img src="img/se.jpg"></div>
-		  				<div id="winningbidInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
-	  						<div>
-	  							낙찰가: <span id="winningbidPrice">0.1 Ether</span>
-	  							<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>	
-	  						</div>
-	  						<div>
-	  							판매자 이름: <span id="bidsellerName">한나영</span>
-	  							/   판매자 전화번호: <span id="bidsellerPhone">010-1234-5678</span>
-	  						</div>
-	  						<div>
-	  							택배사: <span id="deliverycompany">cj 대한통운</span>
-	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				<div class="panel panel-default" id="myauction_panel">
-		  			<div class="panel-body">
-		  				<div id="myauctionImg"><img src="img/se.jpg"></div>
-		  				<div id="myauctionInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
-	  						<div>낙찰가: <span id="myauctionPrice">0.1 Ether</span></div>
-	  						<div>
-		  						낙찰자 이름: <span id="winnerName">한나영</span> 
-		  						/   낙찰자 전화번호: <span id="winnerPhone">010-1234-5678</span>
-	  						</div>
-	  						<div>낙찰자 주소: <span id="winnerAddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span></div>
-	  						<div>운송장 정보: <span id="winnerInvoice">777-777777-7</span>&nbsp;(<span id="winnerDeliverycompany">cj 대한통운</span>)
-	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"><strong>택배 정보 입력</strong></button>
-	  						</div>
-		  				</div>
-		  				
-		  			</div>
-				</div>
-				
-			  </div>
-			  <div id="winningbidlists" class="tab-pane fade">
-			    <!-- Panel -->
-			    <div class="panel panel-default" id="winningbid_panel">
-		  			<div class="panel-body">
-		  				
-		  			</div>
-				</div>
-			  </div>
-			  <div id="myauctionlists" class="tab-pane fade">
-			    <!-- Panel -->
-			    <div class="panel panel-default" id="myauction_panel">
-		  			<div class="panel-body">
-		  				
-		  			</div>
-				</div>
-			  </div>
-			  
-			</div>
-		
-		</div>
-		
+
 		<!-- Seller Lists -->
 		<!-- Tabs -->
 		<div id="sellerlist_area">
@@ -169,10 +91,12 @@
 		  			<div class="panel-body">
 		  				<div id="sellingImg"><img src="img/se.jpg"></div>
 		  				<div id="sellingInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
+		  					<div>
+		  						<h4><strong>경매 물품 이름</strong></h4>
+		  						<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>경매 완료</button>	
+		  					</div>
 	  						<div>
 	  							낙찰가: <span id="sellingbidPrice">1.0 Ether</span>
-	  							<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>경매 완료</button>	
 	  						</div>
 		  				</div>
 		  			</div>
