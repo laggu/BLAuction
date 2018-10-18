@@ -82,9 +82,6 @@ document.form.zipNo.value = zipNo;
 			f.submit();
 		}
 	};
-	
-
-		
 
 	function registerPhone(f){
 		var nphone = document.querySelector('#changedPhone');
@@ -95,7 +92,18 @@ document.form.zipNo.value = zipNo;
 			f.submit();
 		}
 		
-	}
+	};
+	
+	function registerAddress(f){
+		var naddress = document.querySelector('#changedAddress');
+		
+		if(naddress.value.length != 0) {
+			f.method = 'post';
+			f.action = 'addressupdateimpl.bla';
+			f.submit();
+		}
+		
+	};
 </script>
 <body>
 
@@ -322,7 +330,7 @@ document.form.zipNo.value = zipNo;
 							고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
 							참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
 							우편번호<input type="text" id="zipNo" name="zipNo" /> -->
-					<button type="submit" class="btn btn-danger" id="changeAddress_Btn">변경하기</button>
+					<button type="submit" class="btn btn-danger" id="changeAddress_Btn" onclick="registerAddress(this.form);">변경하기</button>
 				</form>
 	        </div>
 	        
