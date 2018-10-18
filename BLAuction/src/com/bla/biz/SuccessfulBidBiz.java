@@ -2,14 +2,20 @@ package com.bla.biz;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import com.bla.dao.SuccessfulBidDao;
 import com.bla.frame.Biz;
 import com.bla.vo.SuccessfulBidVO;
 
 @Service("sbiz")
 public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 
+	@Resource(name = "sdao")
+	SuccessfulBidDao sdao;
+	
 	@Override
 	public void register(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
@@ -40,4 +46,7 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 		return null;
 	}
 
+	public ArrayList<SuccessfulBidVO> selectMySuccessfulBid(Integer member_id) throws Exception{
+		return sdao.selectMySuccessfulBid(member_id);
+	}
 }
