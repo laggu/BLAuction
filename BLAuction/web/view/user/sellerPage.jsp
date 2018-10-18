@@ -8,17 +8,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
-<script src="javascript/user/delivery.js"></script>
-
 </head>
 <body>
 
 <!-- Content -->
-<div id="mypage_area">
+<div id="sellerpage_area">
 	<div class="col-sm-10 text-left">
 	
 		<!-- Page Start -->	
-		<!-- Myinfo Panel -->
+		<!-- SellerInfo Panel -->
 		<div class="panel panel-default" id="myinfo_panel">
   			<div class="panel-body">
  				<div id="personalInfo">
@@ -86,12 +84,10 @@
 		  			<div class="panel-body">
 		  				<div id="winningbidImg"><img src="img/se.jpg"></div>
 		  				<div id="winningbidInfo">
-		  					<div>
-			  					<h4><strong>경매 물품 이름</strong></h4>
-			  					<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>
-		  					</div>
+		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
 	  						<div>
-	  							낙찰가: <span id="winningbidPrice">0.1 Ether</span>		
+	  							낙찰가: <span id="winningbidPrice">0.1 Ether</span>
+	  							<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>	
 	  						</div>
 	  						<div>
 	  							판매자 이름: <span id="bidsellerName">한나영</span>
@@ -101,11 +97,6 @@
 	  							택배사: <span id="deliverycompany">cj 대한통운</span>
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
-	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">
-	  							<strong>택배 상태 조회</strong></button>	
-	  							<span id="Delivery_Status"></span>
-	  						</div>
 		  				</div>
 		  			</div>
 				</div>
@@ -113,11 +104,7 @@
 		  			<div class="panel-body">
 		  				<div id="myauctionImg"><img src="img/se.jpg"></div>
 		  				<div id="myauctionInfo">
-		  					<div id="myauctionTitle">
-			  					<h4><strong>경매 물품 이름</strong></h4>
-			  					<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button>
-		  					</div>
-		 
+		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
 	  						<div>낙찰가: <span id="myauctionPrice">0.1 Ether</span></div>
 	  						<div>
 		  						낙찰자 이름: <span id="winnerName">한나영</span> 
@@ -125,8 +112,7 @@
 	  						</div>
 	  						<div>낙찰자 주소: <span id="winnerAddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span></div>
 	  						<div>운송장 정보: <span id="winnerInvoice">777-777777-7</span>&nbsp;(<span id="winnerDeliverycompany">cj 대한통운</span>)
-	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"
-	  						data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>
+	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"><strong>택배 정보 입력</strong></button>
 	  						</div>
 		  				</div>
 		  				
@@ -256,65 +242,6 @@
 	  
 	  
 	  
-	  
-	  <!-- ChangePhone Modal -->
-	<div class="modal" id="ChangePhoneModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="">
-					<h4>변경된 핸드폰 번호:</h4>
-					<input type="text" id="changedPhone" name="changed_phone">
-					<button type="submit" class="btn btn-danger" id="changePhone_Btn">변경하기</button>
-				</form>
-
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
-	  
-	  
-	  <!-- ChangeAddress Modal -->
-	<div class="modal" id="ChangeAddressModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="">
-					<h4>변경된 주소 입력:</h4>
-					<input type="text" id="changedAddress" name="changed_address">
-					<button type="submit" class="btn btn-danger" id="changeAddress_Btn">변경하기</button>
-				</form>
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
-	  
-	  
-	  
 	  <!-- Re-bidding Modal -->
 	<div class="modal" id="RebiddingModal">
 	    <div class="modal-dialog">
@@ -353,53 +280,7 @@
 	    </div>
 	  </div>
 	  
-	  
-	    <!-- Input DeliveryInfo Modal -->
-	<div class="modal" id="deliveryInfoModal">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title"></h4>
-	        </div>
-	        
-	        <div class="modal-body">  
-				<form action="" class="form-horizontal">
-					<div>						
-						<div class="dropdown">
-						  <button class="btn btn-default dropdown-toggle" type="button" id="selectedDeliveryCompany" 
-						  data-toggle="dropdown" aria-expanded="true">택배사를 선택하세요
-						    <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">우체국택배 (01)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CJ대한통운 (04)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">한진택배 (05)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">로젠택배 (06)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">롯데택배 (08)</a></li>
-						  </ul>
-						</div>							
-					</div>
-					
-					<div>
-						<h4>운송장 번호:</h4>
-						<input type="text" class="form-control" id="invoiceNum" name="invoice_num">
-					</div>
-				
-					<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">택배 정보 등록</button>
-				</form>
-
-	        </div>
-	        
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
+	
 	  
 	  
     

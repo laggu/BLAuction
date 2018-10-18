@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bla.frame.Dao;
 import com.bla.mapper.BiddingMapper;
+import com.bla.vo.AuctionVO;
 import com.bla.vo.BiddingVO;
 
 @Repository("bdao")
@@ -51,8 +52,8 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 		return bmapper.selectAuctIdByMemberId(member_id);
 	};
 	
-	public Long selectBidMaxPrice(Integer auct_id) throws Exception{
-		return bmapper.selectMaxPrice(auct_id);
+	public Long selectBidMaxPrice(AuctionVO auction) throws Exception{
+		return bmapper.selectBidMaxPrice(auction);
 	}
 	
 	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id) throws Exception{

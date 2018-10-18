@@ -559,6 +559,12 @@
 		margin-left:4%;
 	}
 	
+	#sellerInfoCheck_btn{
+		position:relative;
+		width:32%;
+		margin-top:-10%;
+	}
+	
 	#second_info div{
 		margin-bottom:8%;
 	}
@@ -677,7 +683,7 @@
 		height:270px;
 	}
 	
-	#register_pic1,#register_pic2{
+	#register_pic1{
 		float:left;
 		display:inline;
 		position:relative;
@@ -686,6 +692,17 @@
 		border:1px solid #A6A6A6;
 		margin-left:4%;
 		margin-top:2%;	
+	}
+	
+	#register_pic2{
+		float:left;
+		display:inline;
+		position:relative;
+		width:290px;
+		height:250px;
+		border:1px solid #A6A6A6;
+		margin-left:4%;
+		margin-top:-0.5%;	
 	}
 	
 	#register_top button{
@@ -700,7 +717,8 @@
 		float:left;
 		height:250px;
 		width:250px;
-		margin-left:4%;	
+		margin-left:2%;
+		margin-top:-6%;
 	}
 	
 	#register_info1 div{
@@ -767,7 +785,7 @@
 /*****************************************************************/
 
 	/* My Info */
-	#mypage_area{
+	#mypage_area, #sellerpage_area{
 		/* font-family: 'Nanum Myeongjo', serif; */
 		/*font-family: 'Nanum Gothic Coding', monospace; */
 		margin-top:2%;
@@ -897,15 +915,25 @@
 		margin-bottom:4%;
 	}
 	
-	#mybiddingInfo button{
-		position:relative;
-		margin-right:0;
-	}
 	
 	#winningbidStatus{
 		color:red;
+		display:inline;
+		float:right;
 	}
 	
+	#Delivery_Status{
+		color:red;
+	}
+	
+	#myauctionTitle{
+		display:inline;
+	}
+	#myauctionbidStatus{
+		display:inline;
+		float:right;
+		color:red;
+	}
 	
 	
 	/* seller Info*/
@@ -974,4 +1002,41 @@
 
 	#changedAddress{
 		width:350px;
+	}
+
+	#sgbidding_area{
+		position:relative;
+		display:inline;
+		width:100%;
+	}
+	#sgbidding_area h4{
+		position:relative;
+		display:inline;
+		float:left;
+		width:30%;
+		margin-left:10%;
+	}	
+	
+	#SuggestedPrice{
+		position:relative;
+		width:40%;
+		margin-left:0;
+	}
+	
+	#Bidding_Submit_btn{
+		width:40%;
+		position:relative;
+		margin-top:2%;
+		margin-bottom:2%;
+	}
+	
+	#deliveryInfo_Btn{
+		width:40%;
+		position:relative;
+		margin-top:2%;
+		margin-bottom:2%;
+	}
+	
+	#selectedDeliveryCompany{
+		
 	}
