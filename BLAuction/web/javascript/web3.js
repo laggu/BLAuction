@@ -652,7 +652,23 @@ function withdraw(){
 	})
 }
 
+function getBid(auction, index){
+	auction.getBid(index, function(err,res){
+		alert(index + "\n" + res);
+		var temp = {name:res[0], price:res[1], time:res[2]}
+	})
+}
 
+function getBidList(auctionAddress){
+	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
+	
+	auction.getBidCount(function(err,res){
+		var count = res;
+		for(var i = 0; i < count; ++i){
+			getBid(auction, i);
+		}
+	})
+}
 
 	
 	

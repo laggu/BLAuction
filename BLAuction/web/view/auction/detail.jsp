@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(){
     $("#bidding_btn").click(function(){
-         //$("#biddingModal").modal();
+         $("#biddingModal").modal();
     });
 });
 </script>
