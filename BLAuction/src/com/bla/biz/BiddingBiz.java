@@ -38,7 +38,7 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	@Override
 	public BiddingVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return bdao.select(v);
 	}
 
 	@Override
@@ -51,12 +51,16 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 		return bdao.selectAuctIdByMemberId(member_id);
 	}
 	
-	public Long selectBidMaxPrice(Integer auct_id) {
+	public Long selectBidMaxPrice(Integer auct_id) throws Exception{
 		return bdao.selectBidMaxPrice(auct_id);
 	}
 	
-	public Long selectMemberMaxPrice(Map<String,Integer> obj) {
+	public Long selectMemberMaxPrice(Map<String,Integer> obj) throws Exception{
 		return bdao.selectMemberBidMaxPrice(obj);
+	}
+	
+	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id) throws Exception{
+		return bdao.selectAuctionBiddingList(auct_id);
 	}
 	
 }

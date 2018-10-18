@@ -14,4 +14,5 @@ public interface BiddingMapper {
 	public Long selectMemberBidMaxPrice(Map<String,Integer> obj);
 	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id);
 	public void insert(BiddingVO obj);
+	public BiddingVO select(Integer bid_id);
 }

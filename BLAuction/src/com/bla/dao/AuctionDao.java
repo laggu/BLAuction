@@ -61,4 +61,8 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectAuctionByMember(member_id);
 	}
 	
+	public int selectMemberIdByAuct(Integer auct_id) throws Exception{//경매 올린 member_id 가져올려고 함
+		return amapper.selectMemberIdByAuct(auct_id);
+	}
+	
 }
