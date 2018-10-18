@@ -34,6 +34,7 @@ import com.bla.biz.SuccessfulBidBiz;
 import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
 import com.bla.vo.BiddingVO;
+import com.bla.vo.ListVO;
 import com.bla.vo.MemberVO;
 import com.bla.vo.PhotoVO;
 import com.bla.vo.SuccessfulBidVO;
@@ -297,34 +298,54 @@ public class AuctionController {
 	// 각종 카테고리 리스트 뿌려주기/////////////////////////////////
 	@RequestMapping("/main.bla")
 	public ModelAndView allCategory(HttpServletRequest request) {
-		ArrayList<AuctionVO> list = null;
+		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> auction_list = null;
 
 		System.out.println("###################### GET ALL ######################");
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			list = abiz.get();
-			mv.addObject("centerpage", "center");
+			auction_list = abiz.get();
+			
+			for(int i = 0 ; i < auction_list.size() ; i++) {
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
+						.format(new Date((Long) auction_list.get(i).getDuedate()));
+				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				newlist.setAuction(auction_list.get(i));
+				newlist.setDuedate(due_date);
+				newlist.setPhoto_path_1(photo1.getPhoto_path()+photo1.getPhoto_name());
+				newlist.setPhoto_path_2(photo2.getPhoto_path()+photo2.getPhoto_name());
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
+				if(newlist.getMax_price() == null) {
+					newlist.setMax_price(auction_list.get(i).getStart_price());
+				}
+				list.add(newlist);
+			}
+			
 			mv.addObject("list", list);
+			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "center");
 		}
-
-		Iterator<AuctionVO> itr = list.iterator();
+		
+		Iterator<ListVO> itr = list.iterator();
 		while (itr.hasNext()) {
-			AuctionVO auction = itr.next();
-			System.out.println(auction);
+			ListVO listVO = (ListVO) itr.next();
+			System.out.println(listVO);
 		}
 
 		return mv;
 	}
 
 	@RequestMapping("/category.bla")
-	public ModelAndView clothing(HttpServletRequest request) {
+	public ModelAndView category(HttpServletRequest request) {
 		int category_id = Integer.parseInt(request.getParameter("category"));
-		ArrayList<AuctionVO> list = null;
+		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> auction_list = null;
 
 		System.out.println("###################### GET BY CATEGORY ######################");
 		System.out.println("CAETGORY ID : " + category_id);
@@ -332,7 +353,25 @@ public class AuctionController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			list = abiz.getByCategory(category_id);
+			auction_list = abiz.getByCategory(category_id);
+			
+			for(int i = 0 ; i < auction_list.size() ; i++) {
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
+						.format(new Date((Long) auction_list.get(i).getDuedate()));
+				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				newlist.setAuction(auction_list.get(i));
+				newlist.setDuedate(due_date);
+				newlist.setPhoto_path_1(photo1.getPhoto_path()+photo1.getPhoto_name());
+				newlist.setPhoto_path_2(photo2.getPhoto_path()+photo2.getPhoto_name());
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
+				if(newlist.getMax_price() == null) {
+					newlist.setMax_price(auction_list.get(i).getStart_price());
+				}
+				list.add(newlist);
+			}
+			
 			mv.addObject("list", list);
 			mv.addObject("category_id", category_id);
 			mv.addObject("centerpage", "auction/category");
@@ -340,11 +379,11 @@ public class AuctionController {
 			e.printStackTrace();
 			mv.addObject("centerpage", "auction/category");
 		}
-
-		Iterator<AuctionVO> itr = list.iterator();
+		
+		Iterator<ListVO> itr = list.iterator();
 		while (itr.hasNext()) {
-			AuctionVO auction = itr.next();
-			System.out.println(auction);
+			ListVO listVO = (ListVO) itr.next();
+			System.out.println(listVO);
 		}
 
 		return mv;
