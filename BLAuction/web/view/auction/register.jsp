@@ -105,6 +105,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<div class="col-sm-6">
 									<input type="number" class="form-control" id="startPrice" min="0.001"  step="0.001">
 								</div>
+								<input type="number" class="form-control" name="start_price" id="startPriceFinney">
 							</div>
 							
 							<div style="margin-left: -2%; margin-bottom: 4%;"

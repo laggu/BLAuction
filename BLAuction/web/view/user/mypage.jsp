@@ -8,6 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
+<script src="javascript/user/delivery.js"></script>
+
+<script>
+	getDeliveryStatus();
+</script>
+
+
 </head>
 <body>
 

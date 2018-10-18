@@ -70,9 +70,10 @@ public class AuctionController2 {
 //		// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
 		Long register_date = Long.parseLong(multi.getParameter("register_date"));
+		System.out.println();
 		Long start_price = Long.parseLong(multi.getParameter("start_price"));
 		int auction_type = Integer.parseInt(multi.getParameter("type"));
-		auction.setMember_id(1);
+		auction.setMember_id(21);
 //		auction.setDuedate((Long)multi.getParameter(2)); 페이지 구현 필요
 		auction.setDuedate(2);
 		auction.setType(auction_type);
@@ -127,6 +128,9 @@ public class AuctionController2 {
             if(uploadFile.equals("files")) break;
             MultipartFile mFile = multi.getFile(uploadFile);
             String fileName = mFile.getOriginalFilename();
+            if(fileName.length() == 0) {
+            	break;
+            }
             String typeName = fileName.substring(fileName.indexOf("."));
             newFileName = auct_id +"_"+ i
                     +typeName;
