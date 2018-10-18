@@ -2,7 +2,10 @@
 package com.bla.controller;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bla.biz.AuctionBiz;
+import com.bla.biz.BiddingBiz;
 import com.bla.biz.PhotoBiz;
 import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
@@ -34,6 +38,8 @@ public class AuctionController2 {
 	@Resource(name = "pbiz")
 	PhotoBiz p_biz;
 	
+	@Resource(name = "bbiz")
+	BiddingBiz b_biz;
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction2.bla")
@@ -61,6 +67,19 @@ public class AuctionController2 {
 	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi, HttpServletResponse response) {// 원래면 매개변수로 받음
 		
 		System.out.println("###################### CREATING AUCTION !!! ######################");
+		String date = multi.getParameter("due_date");
+		String time = multi.getParameter("due_time");
+		
+		// Get time
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-ddhh:mm");
+		Date newdate = null;
+		Long duedate = 0l;
+		try {
+			newdate = form.parse(date+time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		duedate = newdate.getTime();
 		
 		// Session에서 정보 추출
 		HttpSession session = multi.getSession();
@@ -69,13 +88,11 @@ public class AuctionController2 {
 		
 //		// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
-		Long register_date = Long.parseLong(multi.getParameter("register_date"));
-		System.out.println();
+		Long register_date = System.currentTimeMillis();
+		auction.setDuedate(duedate);
 		Long start_price = Long.parseLong(multi.getParameter("start_price"));
 		int auction_type = Integer.parseInt(multi.getParameter("type"));
-		auction.setMember_id(21);
-//		auction.setDuedate((Long)multi.getParameter(2)); 페이지 구현 필요
-		auction.setDuedate(2);
+		auction.setMember_id(2);
 		auction.setType(auction_type);
 		auction.setAuct_title(multi.getParameter("auct_title"));
 		auction.setStart_price(start_price);
@@ -87,24 +104,30 @@ public class AuctionController2 {
 		auction.setTag(multi.getParameter("registerTags"));
 		auction.setAuction_address("tmp");
 		
-		// 내림경매
+		// DB 저장 및 DB select로 auction_id 추출
 		Long down_price = 0L;
 		int down_term = 0;
-		if((multi.getParameter("type")).equals("2")) {
-			down_price = Long.parseLong(multi.getParameter("down_price"));
-			down_term = Integer.parseInt(multi.getParameter("down_term"));
-			auction.setDown_price(down_price);
-			auction.setDown_term(down_term);
-		}
-		
-		// DB 저장 및 DB select로 auction_id 추출
 		int auct_id = 0;
+		
 		try {
-			System.out.println("AUCTION : " + auction);
-			biz.register(auction);
-			System.out.println("AUCTION UPLOADED");
-			auct_id = biz.get(register_date);
-			System.out.println("AUCT_ID : " + auct_id);
+			// 내림경매
+			if((multi.getParameter("type")).equals("2")) {
+				System.out.println("AUCTION : " + auction);
+				down_price = Long.parseLong(multi.getParameter("down_price"));
+				down_term = Integer.parseInt(multi.getParameter("down_term"));
+				auction.setDown_price(down_price);
+				auction.setDown_term(down_term);
+				biz.registerDown(auction);
+				System.out.println("AUCTION UPLOADED");
+				auct_id = biz.get(register_date);
+				System.out.println("AUCT_ID : " + auct_id);
+			} else{
+				System.out.println("AUCTION : " + auction);
+				biz.register(auction);
+				System.out.println("AUCTION UPLOADED");
+				auct_id = biz.get(register_date);
+				System.out.println("AUCT_ID : " + auct_id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -176,14 +199,51 @@ public class AuctionController2 {
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail2.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
-		int auction_id = Integer.parseInt(request.getParameter("auction_id"));// list로 받아온 객체의 auctionid를 저장시켜서 넘겨 받아서 select해온다.
+		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
+		ArrayList<PhotoVO> photos = null;
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			auction = biz.get(auction_id);
+			auction = biz.get(auct_id);
+			photos = p_biz.getAll(auct_id);
+			System.out.println(photos);
+			Long cur_price = b_biz.selectBidMaxPrice(auction);
+			if(cur_price == null) {
+				cur_price = auction.getStart_price();
+			}
+			System.out.println(cur_price);
+			
+			// 카테고리 구하기
+			String category = "";
+			switch(auction.getCategory_id()) {
+				case 1 : category = "의류 / 잡화"; break;
+				case 2 : category = "뷰티 / 미용"; break;
+				case 3 : category = "스포츠 / 레저"; break;
+				case 4 : category = "디지털 / 가전"; break;
+				case 5 : category = "생활 / 가구"; break;
+				case 6 : category = "기타"; break;
+			}
+			
+			// 옥션타입 구하기
+			String auction_type = "";
+			switch(auction.getType()) {
+				case 1 : auction_type = "올림경매"; break;
+				case 2 : auction_type = "내림경매"; break;
+				case 3 : auction_type = "비밀경매"; break;
+			}
+			
+			// 마감일자 구하기
+			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분").format(new Date((Long)auction.getDuedate()));
+			
 			mv.addObject("auction", auction);
+			mv.addObject("cur_price", cur_price);
+			mv.addObject("category",category);
+			mv.addObject("auction_type", auction_type);
+			mv.addObject("due_date", due_date);
+			mv.addObject("photo1", photos.get(0).getPhoto_path()+photos.get(0).getPhoto_name());
+			mv.addObject("photo2", photos.get(1).getPhoto_path()+photos.get(1).getPhoto_name());
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
 			e.printStackTrace();
