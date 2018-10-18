@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bla.biz.AuctionBiz;
 import com.bla.biz.BiddingBiz;
+import com.bla.biz.MemberBiz;
 import com.bla.biz.PhotoBiz;
 import com.bla.biz.SuccessfulBidBiz;
 import com.bla.util.FileSave;
@@ -44,6 +45,9 @@ public class AuctionController {
 
 	@Resource(name = "sbiz")
 	SuccessfulBidBiz sbiz;
+	
+	@Resource(name = "mbiz")
+	MemberBiz mbiz;
 	
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
@@ -153,7 +157,7 @@ public class AuctionController {
 		// int auct_id = Integer.parseInt(request.getParameter("auct_id"));
 
 		// BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
-		BiddingVO bid = new BiddingVO(3, 1, 2000000l, time, "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+		BiddingVO bid = new BiddingVO(3, 1, 2l, time, "0x9671652cf6fba11f7576b341b95bff03ad27d581");
 
 		// DB insert
 		try {
@@ -199,11 +203,12 @@ public class AuctionController {
 		try {
 			// 회원이 입찰한 경매 id들(중복제거)
 			auct_ids = bbiz.selectAuctIdByMemberId(2);
-
+			ja = new JSONArray();
 			// 회원이 입찰한 경매의 최고가와 그 경매에서 내가 입찰한 최고가 가져오기.
 			for (Integer auct_id : auct_ids) {
 				// json 객체 및 배열화 해서 AJAX로 내보내야할듯!
 				auct = abiz.get(auct_id);
+				jo = new JSONObject();
 				jo.put("auct_id", auct_id);
 				jo.put("title", auct.getAuct_title());
 				jo.put("auction_status", auct.getAuction_status());
@@ -262,12 +267,19 @@ public class AuctionController {
 
 	// 내가 낙찰한 물품 리스트 SELECT
 	@RequestMapping("/mysuccessbidlist.bla")
-	public void mysuccessbidlist(HttpServletRequest request) {
+	public void mysuccessbidlist(HttpServletRequest request,HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
 		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
 		int member_id = 1;
 		ArrayList<SuccessfulBidVO> successfulBids = null;
+
+		//json 배열과 객체 선언
+		JSONObject jo = null;
+		JSONArray ja = null;
+		
+		//json 넘겨주기위함
+		PrintWriter out = null;
 		
 		try {
 			// 처음 한 쿼리로
@@ -285,12 +297,33 @@ public class AuctionController {
 			// 다른 쿼리로 member_id로 판매자 이름, 판매자 전화번호 
 			MemberVO sellerInfo = null;
 			
+			ja = new JSONArray();
 			for(SuccessfulBidVO successfulBid : successfulBids) {
+				jo = new JSONObject();
 				price = bbiz.get(successfulBid.getBid_id()).getPrice();
 				photos = pbiz.getAll(successfulBid.getAuct_id());
 				auct_member_id = abiz.selectMemberIdByAuct(successfulBid.getAuct_id());
+				sellerInfo = mbiz.get(auct_member_id);
+				jo.put("price", price);
+				for(PhotoVO photoVO : photos) {
+					int i=0;
+					String pathKey = "photoPath"+i;
+					String nameKey = "photoName"+i;
+					jo.put(pathKey,photoVO.getPhoto_path());
+					jo.put(nameKey, photoVO.getPhoto_name());
+					i++;
+				}
+				jo.put("seller-name", sellerInfo.getName());
+				jo.put("seller_phone", sellerInfo.getPhone());
+				jo.put("delivery_code", successfulBid.getDelivery_code());
+				jo.put("delivery_status", successfulBid.getDelivery_status());
+				jo.put("company_code", successfulBid.getCompany_code());
 				
+				ja.add(jo);
 			}
+			
+			out = response.getWriter();
+			out.print(ja.toJSONString());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -301,7 +334,7 @@ public class AuctionController {
 
 	// 옥션 비딩 리스트 SELECT
 	@RequestMapping("/auctionbidlist.bla")
-	public String auctionbidlist() {
+	public String auctionbidlist(HttpServletRequest request,HttpServletResponse response) {
 		//입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
 		//해당하는 입찰자의 정보를 가져온다.
 		int auct_id = 0;
