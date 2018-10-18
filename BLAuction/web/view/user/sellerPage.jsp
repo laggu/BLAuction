@@ -84,12 +84,10 @@
 		  			<div class="panel-body">
 		  				<div id="winningbidImg"><img src="img/se.jpg"></div>
 		  				<div id="winningbidInfo">
-		  					<div>
-			  					<h4><strong>경매 물품 이름</strong></h4>
-			  					<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>
-		  					</div>
+		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
 	  						<div>
-	  							낙찰가: <span id="winningbidPrice">0.1 Ether</span>		
+	  							낙찰가: <span id="winningbidPrice">0.1 Ether</span>
+	  							<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>	
 	  						</div>
 	  						<div>
 	  							판매자 이름: <span id="bidsellerName">한나영</span>
@@ -99,10 +97,6 @@
 	  							택배사: <span id="deliverycompany">cj 대한통운</span>
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
-	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">택배 상태 조회</button>	
-	  							<span id="Delivery_Status"></span>
-	  						</div>
 		  				</div>
 		  			</div>
 				</div>
@@ -110,11 +104,7 @@
 		  			<div class="panel-body">
 		  				<div id="myauctionImg"><img src="img/se.jpg"></div>
 		  				<div id="myauctionInfo">
-		  					<div id="myauctionTitle">
-			  					<h4><strong>경매 물품 이름</strong></h4>
-			  					<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button>
-		  					</div>
-		 
+		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
 	  						<div>낙찰가: <span id="myauctionPrice">0.1 Ether</span></div>
 	  						<div>
 		  						낙찰자 이름: <span id="winnerName">한나영</span> 
@@ -122,8 +112,7 @@
 	  						</div>
 	  						<div>낙찰자 주소: <span id="winnerAddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span></div>
 	  						<div>운송장 정보: <span id="winnerInvoice">777-777777-7</span>&nbsp;(<span id="winnerDeliverycompany">cj 대한통운</span>)
-	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"
-	  						data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>
+	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"><strong>택배 정보 입력</strong></button>
 	  						</div>
 		  				</div>
 		  				
@@ -352,7 +341,7 @@
 	  
 	  
 	    <!-- Input DeliveryInfo Modal -->
-	<div class="modal" id="deliveryInfoModal">
+	<div class="modal" id="ChangePwModal">
 	    <div class="modal-dialog">
 	    
 	      <!-- Modal content-->
@@ -364,26 +353,21 @@
 	        
 	        <div class="modal-body">  
 				<form action="">
-					<div>						
-						<div class="dropdown">
-						  <button class="btn btn-default dropdown-toggle" type="button" id="selectedDeliveryCompany" 
-						  data-toggle="dropdown" aria-expanded="true">
-						    택배사 선택
-						    <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">우체국택배 (01)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CJ대한통운 (04)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">한진택배 (05)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">로젠택배 (06)</a></li>
-						    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">롯데택배 (08)</a></li>
-						  </ul>
-						</div>
+					<div>
+						<h4>현재 비밀번호:</h4>
+						<input type="text" id="currentPw" name="userPasswd">
+					</div>
+					<div>
+						<h4>변경할 비밀번호:</h4>
+						<input type="text" id="changedPw" name="changed_Pw">
 					</div>
 					
-					
+					<div>
+						<h4>비밀번호 확인:</h4>
+						<input type="text" id="rechangedPw" name="rechanged_Pw">
+					</div>
 				
-					<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">입 력</button>
+					<button type="submit" class="btn btn-danger" id="changePasswd_btn">변경하기</button>
 				</form>
 
 	        </div>

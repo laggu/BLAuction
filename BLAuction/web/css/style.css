@@ -897,15 +897,25 @@
 		margin-bottom:4%;
 	}
 	
-	#mybiddingInfo button{
-		position:relative;
-		margin-right:0;
-	}
 	
 	#winningbidStatus{
 		color:red;
+		display:inline;
+		float:right;
 	}
 	
+	#Delivery_Status{
+		color:red;
+	}
+	
+	#myauctionTitle{
+		display:inline;
+	}
+	#myauctionbidStatus{
+		display:inline;
+		float:right;
+		color:red;
+	}
 	
 	
 	/* seller Info*/
@@ -974,4 +984,30 @@
 
 	#changedAddress{
 		width:350px;
+	}
+
+	#sgbidding_area{
+		position:relative;
+		display:inline;
+		width:100%;
+	}
+	#sgbidding_area h4{
+		position:relative;
+		display:inline;
+		float:left;
+		width:30%;
+		margin-left:10%;
+	}	
+	
+	#SuggestedPrice{
+		position:relative;
+		width:40%;
+		margin-left:0;
+	}
+	
+	#Bidding_Submit_btn{
+		width:40%;
+		position:relative;
+		margin-top:2%;
+		margin-bottom:2%;
 	}
