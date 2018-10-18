@@ -53,7 +53,7 @@
  		<property name="username" value="team20s"/>
  		<property name="password" value="blauction"/> 
 
- 		<!-- <property name="url" value="jdbc:oracle:thin:@70.12.110.164:1521:xe"/>
+ 		<!--  <property name="url" value="jdbc:oracle:thin:@70.12.110.164:1521:xe"/>
  		<property name="username" value="BLAuction"/>
  		<property name="password" value="1234"/>  -->
  	</bean>

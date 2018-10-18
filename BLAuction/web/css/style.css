@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding:700|Nanum+Myeongjo:700');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
 
 /* index.html */
 /*****************************************************************/
@@ -14,9 +15,22 @@
 	width:33.3%;
 	height:100%;
 }
+
+.col-sm-4 h2{
+	text-align:center;
+	position:absolute;
+	top:100px;
+	left:110px;
+	z-index:100;
+}
+
 .col-sm-4 img{
 	width:100%;
 	height:100%;
+}
+
+.col-sm-4 img:hover{
+	opacity:0.5;
 }
 
 @media (max-width:480px) {
@@ -37,11 +51,11 @@
 	}
 }
 .container a:link {
-	 text-decoration:none; 
+	 text-decoration:none;
 	 color:white;
 }
 .container a:hover {
-	 text-decoration:none; 
+	 text-decoration:none;
 	 color:black;
 }
 #northArea{
@@ -178,14 +192,57 @@
     
 /* center.jsp */
 /*****************************************************************/
-	#carousel-example-generic{
-		width:1050px;
-		height:500px;
-		margin-left:210px;
+
+	#list_area{
+		position:relative;
+		width:100%;
 	}
+	
+	#carousel-example-generic{
+		position:relative;
+		width:100%;
+		height:600px;
+	}
+	
+	.carousel-inner img{
+		position:relative;
+		width:100%;
+	}
+	
+	.card.group{
+		position:relative;
+		width:100%;
+		margin-top:5%;
+	}
+	
+	#card_group{
+		position:relative;
+		margin-top:10%;
+	}
+	
+	#card_group h2{
+		text-align:center;
+		font-family: 'Oswald', sans-serif;
+	}
+	
+	#card_group .card-columns{
+		position:relative;
+		margin-top:1%;
+	}
+	
+	.card-columns div{
+		position:relative;
+		float:left;
+		display:inline;
+	}
+	
+	.card-columns{
+    	position:relative;
+    	width:100%;
+    }
+	
 	.card{
-		margin-top:2%;
-		margin-left:3%;
+		margin:2% 3%;
 		margin-bottom:4%;
 	}
 	
@@ -193,6 +250,7 @@
     	text-align:center;
     	padding-bottom:1px;
     }
+    
     
     .card img{
     	width:200px;
@@ -229,6 +287,22 @@
     }
     
     
+    /* category.jsp */
+	/*****************************************************************/
+	.dropdown{
+		padding-top:30px;
+		padding-left:50px;
+	}
+	
+	.dropdown-menu{
+		margin-left:50px;
+	}
+	
+	#category_group{
+		margin-top:-0.01%;
+	}
+	
+
     
     /* Modal part*/
 	/*****************************************************************/
@@ -421,9 +495,9 @@
 		position:relative;
 	}
 	
-	#detail_panel{
+	#detail_panel,#biddingList_panel{
 		position:relative;
-		height:900px;
+		height:1000px;
 		width:96%;
 		margin-left:2%;
 	}
@@ -505,20 +579,76 @@
 	
 	#bidding_btn{
 		width:300px;
-		margin:0 35%;
+		margin:10% 35%;
 	}
 	
 	#bidding_btn h4{
 		color:white;
 	}
 	
+	#bidding_submit_btn{
+		width:30%;
+	}
+	
+	#biddingList_panel h4{
+		text-align:center;
+	}
+	
+	#DBlist{
+		position:relative;
+		height:970px;
+		width:48%;
+		float:left;
+		margin-left:2%;
+		border:1px solid lightgray;
+	}
+	
+	#Contractlist{
+		position:relative;
+		height:970px;
+		width:48%;
+		float:left;
+		border:1px solid lightgray;
+	}
+
+	#DBlist table{
+		width:100%;
+		text-align:center;
+	}
+	
+	#Contractlist table{
+		width:100%;
+		text-align:center;
+	}
+	
+	
+	#DBlist th{
+		text-align:center;
+	}
+	
+	#Contractlist th{
+		text-align:center;
+	}
+	
+	/* bidding Modal */
 	#inputPriceArea h4{
 		position:relative;
 		display:inline;
 		float:left;
 	}
 	
+	#bidding_submit_btn{
+		margin:0 40%;
+		width:20%;
+	}
 	
+	#suggestedPrice{
+		width:80%;
+	}
+	
+	#biddingModal .modal-body div{
+		margin:3% 10%;
+	}
 	
 /* register.jsp */
 /*****************************************************************/
@@ -625,7 +755,7 @@
 	
 	#register_btn{
 		width:300px;
-		margin:0 20%;
+		margin:10% 20%;
 	}
 	
 	#register_btn h4{
@@ -834,4 +964,14 @@
 	#sellingbidStatus{
 		color:red;
 	}
+	
+	
+	/* Modal */
+	
+	#changePasswd_btn {
+		margin-top:15px;
+	}
 
+	#changedAddress{
+		width:350px;
+	}

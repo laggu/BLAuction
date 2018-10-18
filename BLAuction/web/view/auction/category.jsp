@@ -13,19 +13,25 @@
 <!-- Content -->
 <div id="list_area">
 	<div class="col-sm-10 text-left">
+	
 	<!-- sorting method -->
-	<div class="dropdown">
-	  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">경매 정렬 기준
+	<div class="dropdown" id="sortingMethod">
+	  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">경매 정렬 기준
 	  <span class="caret"></span></button>
 	  <ul class="dropdown-menu">
 	    <li><a href="#">최신 등록순</a></li>
 	    <li><a href="#">마감 입박순</a></li>
 	  </ul>
 	</div>
-	<!-- Cards -->
 	
-	<div class="card group" id="card_group">
-	  <div class="card" style="width: 18rem;">
+	<!-- Cards -->
+ 	
+	<div class="card group" id="category_group">
+	
+	<!-- Row -->
+	<div class="card-columns">
+	
+	  <div class="card" style="width: 18rem;" id="first_card">
 	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
 		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
 		  <div class="card-body">
@@ -34,7 +40,7 @@
 		  </div>
 	  </div>
 	  
-	  <div class="card" style="width: 18rem;">
+	  <div class="card" style="width: 18rem;" id="second_card">
 	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
 		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
 		  <div class="card-body">
@@ -42,6 +48,66 @@
 		    <p class="card-text" id="auction_price">38</p>
 		  </div>
 	  </div>
+	  
+	  <div class="card" style="width: 18rem;" id="third_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	  <div class="card" style="width: 18rem;" id="forth_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	  <!-- Row -->
+	<div class="card-columns">
+	
+	  <div class="card" style="width: 18rem;" id="first_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	  <div class="card" style="width: 18rem;" id="second_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	  <div class="card" style="width: 18rem;" id="third_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	  <div class="card" style="width: 18rem;" id="forth_card">
+	  	<h5 class="card-title" id="time_limit">12:00:00</h5>
+		  <a href="auctiondetail.bla?auctionid=auctionid"><img class="card-img-top" src="img/se.jpg" alt="Card image cap"></a>
+		  <div class="card-body">
+		    <a href="auctiondetail.bla?auctionid=auctionid" class="card-text" id="auction_name">iPhone SE(rose gold)</a>
+		    <p class="card-text" id="auction_price">38</p>
+		  </div>
+	  </div>
+	  
+	 </div>
+	</div>
 	  
 	</div>
 </div>

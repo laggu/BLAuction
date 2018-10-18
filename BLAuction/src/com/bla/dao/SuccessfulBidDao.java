@@ -2,14 +2,19 @@ package com.bla.dao;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bla.frame.Dao;
+import com.bla.mapper.SuccessfulBidMapper;
 import com.bla.vo.SuccessfulBidVO;
 
 @Repository("sdao")
 public class SuccessfulBidDao implements Dao<SuccessfulBidVO,Integer>{
 
+	@Autowired
+	SuccessfulBidMapper smapper;
+	
 	@Override
 	public void insert(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
@@ -38,6 +43,10 @@ public class SuccessfulBidDao implements Dao<SuccessfulBidVO,Integer>{
 	public ArrayList<SuccessfulBidVO> select() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public ArrayList<SuccessfulBidVO> selectMySuccessfulBid(Integer member_id) throws Exception{
+		return smapper.selectMySuccessfulBid(member_id);
 	}
 
 }
