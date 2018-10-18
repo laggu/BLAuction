@@ -99,9 +99,9 @@ public class AuctionController {
 
 		// Session에서 정보 추출
 		HttpSession session = multi.getSession();
-		int member_id = (Integer)session.getAttribute("member_id");
+		int member_id = (Integer) session.getAttribute("member_id");
 		System.out.println(member_id);
-		String seller_account = (String)session.getAttribute("member_account");
+		String seller_account = (String) session.getAttribute("member_account");
 
 //			// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
@@ -273,7 +273,6 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 
-			
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
 			mv.addObject("category", category);
@@ -283,8 +282,8 @@ public class AuctionController {
 			try {
 				mv.addObject("photo1", photos.get(0).getPhoto_path() + photos.get(0).getPhoto_name());
 				mv.addObject("photo2", photos.get(1).getPhoto_path() + photos.get(1).getPhoto_name());
-			}catch(Exception e) {
-				
+			} catch (Exception e) {
+
 			}
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
@@ -508,6 +507,18 @@ public class AuctionController {
 			// 경매 중-입찰전, 입찰 중, 낙찰, 취소 => 쿼리문 조건으로 날려서 따로 가지고와서 json화 한다.
 			auctions = abiz.selectAuctionByMember(member_id);
 
+			for (AuctionVO auction : auctions) {
+				if (auction.getAuction_status().equals("before")) {
+					// 입찰전
+					//
+				} else if (auction.getAuction_status().equals("proceeding")) {
+
+				} else if (auction.getAuction_status().equals("end")) {
+
+				} else if (auction.getAuction_status().equals("cancel")) {
+
+				}
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -582,14 +593,57 @@ public class AuctionController {
 
 	}
 
-	// 옥션 비딩 리스트 SELECT
+	// 옥션 비딩 리스트 SELECT AJAX로 보냄
 	@RequestMapping("/auctionbidlist.bla")
-	public String auctionbidlist(HttpServletRequest request, HttpServletResponse response) {
-		// 입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
-		// 해당하는 입찰자의 정보를 가져온다.
+	public void auctionbidlist(HttpServletRequest request, HttpServletResponse response) {
+		// view에서 auct_id를 받아온다.
 		int auct_id = 0;
 
-		return null;
+		// 입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
+		ArrayList<BiddingVO> biddings = null;
+		// 해당하는 입찰자의 정보를 가져온다.
+		MemberVO bid_member = null;
+
+		// json 배열과 객체 선언
+		JSONObject jo = null;
+		JSONArray ja = null;
+
+		// json 넘겨주기위함
+		PrintWriter out = null;
+
+		try {
+			biddings = bbiz.selectAuctionBiddingList(auct_id);
+			ja = new JSONArray();
+			for (BiddingVO bid : biddings) {
+				System.out.println("옥션 비딩 리스트" + bid);
+				jo = new JSONObject();
+				// 입찰가, 입찰시간, 컨펌 상태를 get으로 꺼내와서 json 저장
+				jo.put("bid_price", bid.getPrice());
+				jo.put("bid_time", bid.getTime());
+				jo.put("bid_conf_status", bid.getBid_conf_status());
+				// 입찰자 정보 가져오기, 입찰자 이름만 가져와서 json 객체화
+				bid_member = mbiz.get(bid.getMember_id());
+				jo.put("bid_member_name", bid_member.getName());
+
+				ja.add(jo);
+			}
+			out = response.getWriter();
+			out.print(ja.toJSONString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	// 판매자 페이지
+	@RequestMapping("/sellerpage.bla")
+	public ModelAndView sellerpage() {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		mv.addObject("centerpage", "user/sellerPage");
+		return mv;
 	}
 
 	// 낙찰 됬을 때 실행하는 함수
@@ -614,7 +668,7 @@ public class AuctionController {
 	public String timeStamp(HttpServletRequest request) {
 		return "hi";
 	}
-	
+
 	// 판매자 정보의 페이지 넘기기
 	@RequestMapping("/sellerinfo.bla")
 	public String sellerinfo(HttpServletResponse response) {

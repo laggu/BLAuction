@@ -35,24 +35,29 @@ $(document).ready(function(){
   			
   				<div id="detail_top">
 	  				<div id="detail_pic"><img src="${photo1 }"></div>
+	  				
 	  				<div id="first_info">
-	  					<div><h4>카테고리: <span id="detailCategory">${category }</span></h4></div>
-	  					<div><h4>경매종류: <span id="detailKind">${auction_type }</span></h4></div>
-	  					<div><h4>경매제목: <span id="detailTitle">${auction.auct_title }</span></h4></div>
+	  					<div><h4><strong>카테고리</strong>: <span id="detailCategory">${category }</span></h4></div>
+	  					<div><h4><strong>경매종류</strong>: <span id="detailKind">${auction_type }</span></h4></div>
+	  					<div><h4><strong>경매제목</strong>: <span id="detailTitle">${auction.auct_title }</span></h4></div>
 	  				</div>
   				</div>
   				
   				<div id="detail_bottom">
 	  				<div id="second_info">
-	  					<div id="oneLine">
-	  						<div><h4>경매 마감 시간: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
-	  						<div><h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4></div>
+	  					<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-warning" id="sellerInfoCheck_btn">
+	  					<strong>판매자 정보 확인</strong></button></a>
+	  					
+	  					<div id="oneLine">	
+	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
+	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></h4></div>
+
 	  					</div>
-	  					<div style="border-bottom:1px solid #A6A6A6"><h4>마감까지 남은 시간: <span id="currentTimelimit"></span></h4></div>
-	  					<div style="border-bottom:1px solid #A6A6A6"><h4>연관태그: <span id="relatedTags">${auction.tag }</span></h4></div>
+	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
+	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
 	  					<div>
 	  						<div class="form-group">
-							  <h4>상세 내용</h4>
+							  <h4><strong>상세 내용</strong></h4>
 							  <div class="form-control" rows="9" id="comment" disabled>${auction.description }</div>
 							</div>
 	  					</div>
