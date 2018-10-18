@@ -455,7 +455,7 @@ function makeAuction(){
 	
 	$.ajax({
 		type:'POST',
-		url:'/BLAuction/createAuctionimpl2.bla',
+		url:'/BLAuction/createAuctionimpl.bla',
 		processData: false,
         contentType: false,
 		data:form,
