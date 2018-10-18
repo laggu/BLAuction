@@ -59,7 +59,7 @@ function srvTime() {
     //alert(timediff);
 }
 
-window.setInterval("srvTime();",100);
+window.setInterval("srvTime();",1000);
 
 function makeBid(){
 	var price = 5//$('#??').text();

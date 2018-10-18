@@ -14,6 +14,11 @@ $(document).ready(function(){
     $("#bidding_btn").click(function(){
          $("#biddingModal").modal();
     });
+    alert($("#auctionDuedate").text());
+    
+    //var dtA = new Date($("#auctionDuedate").text());
+    
+    //alert(dtA);
 });
 
 </script>
