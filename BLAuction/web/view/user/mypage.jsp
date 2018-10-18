@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
+
 </head>
 <body>
 
@@ -20,21 +21,26 @@
   			<div class="panel-body">
  				<div id="personalInfo">
   					<div id="rightInfo">
-  						<div id="mygrade"><img src="img/customer.png"></div>
-  						<div><span id="myname"><strong>김다은</strong></span></div>
-  						<div><span id="myemail"><strong>eileenkim1208@gmail.com</strong></span></div>
-  						<div><button type="button" class="btn btn-warning" id="changePw_btn"><strong>비밀번호 변경</strong></button></div>
-  						<div><button type="button" class="btn btn" id="like_btn"><strong>좋아요</strong></button></div>
+  						<div id="mygrade"><img src="img/info.png"></div>
+  						<div><span id="myname"><strong>${member.name }</strong></span></div>
+  						<div><span id="myemail"><strong>${member.email }</strong></span></div>
+  				
+		  				<!-- Trigger the modal with a button -->
+		  				<div><button type="button" class="btn btn-warning" id="changePw_btn" 
+		  				data-toggle="modal" data-target="#ChangePwModal"><strong>비밀번호 변경</strong></button></div>
+  						
   					</div>
   					<div id="leftInfo">
   						<div><h4><strong>내 정보</strong></h4></div>
   						<div>
-  						핸드폰 번호: <span id="myphone">010-0000-0000</span>
-  						<button type="button" class="btn btn-warning" id="changePhone_btn"><strong>번호 변경</strong></button>
+  						핸드폰 번호: <span id="myphone">${member.phone }</span>
+  						<button type="button" class="btn btn-warning" id="changePhone_btn"
+  						data-toggle="modal" data-target="#ChangePhoneModal"><strong>번호 변경</strong></button>
   						</div>
   						<div>
-  						주소: <span id="myaddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span>
-  						<button type="button" class="btn btn-warning" id="changeAddress_btn"><strong>주소 변경</strong></button>
+  						주소: <span id="myaddress">${member.address }</span>
+  						<button type="button" class="btn btn-warning" id="changeAddress_btn"
+  						data-toggle="modal" data-target="#ChangeAddressModal"><strong>주소 변경</strong></button>
   						</div>
   						<div>
   							등록한 경매:  <span id="numofRegauction">0</span>회
@@ -187,6 +193,195 @@
 	  
 	</div>
 </div>
+
+
+  <!-- Modal -->
+
+  	<!-- ChangePw Modal -->
+	<div class="modal" id="ChangePwModal">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        
+	        <div class="modal-body">  
+				<form action="">
+					<div>
+						<h4>현재 비밀번호:</h4>
+						<input type="text" id="currentPw" name="userPasswd">
+					</div>
+					<div>
+						<h4>변경할 비밀번호:</h4>
+						<input type="text" id="changedPw" name="changed_Pw">
+					</div>
+					
+					<div>
+						<h4>비밀번호 확인:</h4>
+						<input type="text" id="rechangedPw" name="rechanged_Pw">
+					</div>
+				
+					<button type="submit" class="btn btn-danger" id="changePasswd_btn">변경하기</button>
+				</form>
+
+	        </div>
+	        
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	  
+	  
+	  
+	  
+	  
+	  
+	  <!-- ChangePhone Modal -->
+	<div class="modal" id="ChangePhoneModal">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        
+	        <div class="modal-body">  
+				<form action="">
+					<h4>변경된 핸드폰 번호:</h4>
+					<input type="text" id="changedPhone" name="changed_phone">
+					<button type="submit" class="btn btn-danger" id="changePhone_Btn">변경하기</button>
+				</form>
+
+	        </div>
+	        
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	  
+	  
+	  <!-- ChangeAddress Modal -->
+	<div class="modal" id="ChangeAddressModal">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        
+	        <div class="modal-body">  
+				<form action="">
+					<h4>변경된 주소 입력:</h4>
+					<input type="text" id="changedAddress" name="changed_address">
+					<button type="submit" class="btn btn-danger" id="changeAddress_Btn">변경하기</button>
+				</form>
+	        </div>
+	        
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	  
+	  
+	  
+	  <!-- Re-bidding Modal -->
+	<div class="modal" id="ChangePwModal">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        
+	        <div class="modal-body">  
+				<form action="">
+					<div>
+						<h4>현재 비밀번호:</h4>
+						<input type="text" id="currentPw" name="userPasswd">
+					</div>
+					<div>
+						<h4>변경할 비밀번호:</h4>
+						<input type="text" id="changedPw" name="changed_Pw">
+					</div>
+					
+					<div>
+						<h4>비밀번호 확인:</h4>
+						<input type="text" id="rechangedPw" name="rechanged_Pw">
+					</div>
+				
+					<button type="submit" class="btn btn-danger" id="changePasswd_btn">변경하기</button>
+				</form>
+
+	        </div>
+	        
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	  
+	  
+	    <!-- Input DeliveryInfo Modal -->
+	<div class="modal" id="ChangePwModal">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title"></h4>
+	        </div>
+	        
+	        <div class="modal-body">  
+				<form action="">
+					<div>
+						<h4>현재 비밀번호:</h4>
+						<input type="text" id="currentPw" name="userPasswd">
+					</div>
+					<div>
+						<h4>변경할 비밀번호:</h4>
+						<input type="text" id="changedPw" name="changed_Pw">
+					</div>
+					
+					<div>
+						<h4>비밀번호 확인:</h4>
+						<input type="text" id="rechangedPw" name="rechanged_Pw">
+					</div>
+				
+					<button type="submit" class="btn btn-danger" id="changePasswd_btn">변경하기</button>
+				</form>
+
+	        </div>
+	        
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	  
+	  
     
 </body>
 </html>
