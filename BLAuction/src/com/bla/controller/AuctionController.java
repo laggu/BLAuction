@@ -189,8 +189,8 @@ public class AuctionController {
 				aucts.add(abiz.get(auct_id));
 				map.put("auct_id", auct_id);
 				//비딩의 최고가와 멤버 비딩의 최고가를 가져와야함.
-				bidMaxPrice.add(bbiz.selectBidMaxPrice(auct_id));
-				memberBidMaxPrice.add(bbiz.selectMemberMaxPrice(map));
+//				bidMaxPrice.add(bbiz.selectBidMaxPrice(auct_id));
+//				memberBidMaxPrice.add(bbiz.selectMemberMaxPrice(map));
 				//json 객체 및 배열화 해서 AJAX로 내보내야할듯!
 				
 			}

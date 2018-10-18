@@ -36,8 +36,7 @@ public class PhotoBiz implements Biz<PhotoVO,Integer>{
 
 	@Override
 	public PhotoVO get(Integer v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return pdao.select(v);
 	}
 
 	@Override
