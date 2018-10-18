@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<insert id="insert" parameterType="member">
 		INSERT INTO MEMBER
-		VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email},#{pw},#{name},#{address},#{phone},#{birth},0, 0, #{member_account})       
+		VALUES (SEQ_MEMBER.NEXTVAL, #{email},#{pw},#{name},#{address},#{phone},#{birth},0, 0, #{member_account})       
 	</insert>
 	
 	<update id="update" parameterType="member">

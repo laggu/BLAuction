@@ -49,5 +49,4 @@ public class PhotoBiz implements Biz<PhotoVO,Integer>{
 		return pdao.selectAll(auct_id);
 	}
 	
-
 }

@@ -193,18 +193,19 @@ public class MemberController {
 	}
 
 	@RequestMapping("/pwdupdateimpl.bla")
-	public ModelAndView pwdupdateimpl(HttpServletRequest request, MemberVO user) {
+	public ModelAndView pwdupdateimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		// String npwd = request.getParameter("pw");
-		MemberVO userTest = new MemberVO();
-
-		userTest.setPw("12345");
-
+		int member_id = (Integer) session.getAttribute("member_id");
+		String npwd = request.getParameter("changed_Pw");
+		MemberVO user = null;
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			biz.modify(userTest);
-			System.out.println(user.getPw());
+			user = mbiz.get(member_id);
+			user.setPw(npwd);
+			
+			mbiz.modify(user);
 			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
@@ -215,38 +216,41 @@ public class MemberController {
 	}
 
 	@RequestMapping("/phoneupdateimpl.bla")
-	public ModelAndView phoneupdateimpl(HttpServletRequest request, MemberVO member) {
+	public ModelAndView phoneupdateimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		//String nphone = request.getParameter("phone");
-		MemberVO userTest = new MemberVO(25,"qwer@naver.com","1234","하이룽","화랑로11길 5-10","01012345678","040526",0,0,"0x50aa8cf9fddca8d60cc1e70f498a1829a4962c1f");
-		userTest.setPhone("01022223333");
+		int member_id = (Integer) session.getAttribute("member_id");
+		String nphone = request.getParameter("changed_phone");
+		System.out.println("newphone:" +nphone);
+		MemberVO user = null;
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 
 		try {
-			biz.modify(userTest);
-			mv.addObject("member", userTest);
+			user = mbiz.get(member_id);
+			user.setPhone(nphone);
+			
+			biz.modify(user);
+			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
+			mv.addObject("centerpage", "user/mypage");
 			e.printStackTrace();
 		}
 		return mv;
 	}
 
 	@RequestMapping("/addressupdateimpl.bla")
-	public ModelAndView addressupdateimpl(HttpServletRequest request, MemberVO member) {
+	public ModelAndView addressupdateimpl(HttpServletRequest request, MemberVO user) {
 		HttpSession session = request.getSession();
-		//String nphone = request.getParameter("phone");
-		MemberVO userTest = new MemberVO(25,"qwer@naver.com","1234","하이룽","화랑로11길 5-10","01012345678","040526",0,0,"0x50aa8cf9fddca8d60cc1e70f498a1829a4962c1f");
-		userTest.setAddress("역삼 멀티캠퍼스");
+		String naddress = request.getParameter("address");
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 
 		try {
-			biz.modify(userTest);
-			mv.addObject("member", userTest);
+			biz.modify(user);
+			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
 			e.printStackTrace();
