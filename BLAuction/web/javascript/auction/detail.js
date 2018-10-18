@@ -32,13 +32,33 @@ function srvTime() {
     xmlHttp.setRequestHeader("Content-Type", "text/html");
     xmlHttp.send('');
     var date = new Date(xmlHttp.getResponseHeader("Date"));
-    var dtA = new Date('10/19/2018 12:00:00');
     var timediff = dtA.getTime() - date.getTime();
-    $("#currentTimelimit").text(getTimeStamp(date)  + '\n' + timediff);
+    
+    if(timediff <= 0){
+        $("#currentTimelimit").text('경매완료');
+        return;
+    }
+    
+    timediff /= 1000;
+    var s = '';
+    
+    if(parseInt(timediff/86400) >= 1){
+    	s += parseInt(timediff/86400) + '일 '
+        timediff %= 86400;
+    }
+    if(parseInt(timediff/3600) >= 1){
+    	s += parseInt(timediff/3600) + '시간 '
+        timediff %= 3600;
+    }
+    if(parseInt(timediff/60) >= 1){
+    	s += parseInt(timediff/60) + '분 '
+        timediff %= 60;
+    }
+    s += Math.floor(timediff) + '초';
+    $("#currentTimelimit").text(s);
     //alert(timediff);
 }
 
-window.setInterval("srvTime();",100);
 
 function makeBid(){
 	var price = 5//$('#??').text();
