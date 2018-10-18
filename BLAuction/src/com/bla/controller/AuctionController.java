@@ -271,11 +271,13 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 
+			
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
 			mv.addObject("category", category);
 			mv.addObject("auction_type", auction_type);
 			mv.addObject("due_date", due_date);
+			mv.addObject("timestamp", (Long) auction.getDuedate());
 			mv.addObject("photo1", photos.get(0).getPhoto_path() + photos.get(0).getPhoto_name());
 			mv.addObject("photo2", photos.get(1).getPhoto_path() + photos.get(1).getPhoto_name());
 			mv.addObject("centerpage", "auction/detail");

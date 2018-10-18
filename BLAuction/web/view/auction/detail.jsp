@@ -7,16 +7,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_물품 상세</title>
-<script src="javascript/auction/detail.js"></script>
-</head>
 <script>
+var dtA;
 $(document).ready(function(){
     $("#bidding_btn").click(function(){
          $("#biddingModal").modal();
     });
+    
+    dtA = new Date($("#timestamp").text());
+
+    window.setInterval("srvTime();",1000);
 });
 
 </script>
+<script src="javascript/auction/detail.js"></script>
+</head>
+
 <body>
 
 <!-- Content -->
@@ -43,8 +49,9 @@ $(document).ready(function(){
 	  					<strong>판매자 정보 확인</strong></button></a>
 	  					
 	  					<div id="oneLine">	
-	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span></h4></div>
+	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
 	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></h4></div>
+
 	  					</div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
