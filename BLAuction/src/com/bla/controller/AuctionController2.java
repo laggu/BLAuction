@@ -71,7 +71,7 @@ public class AuctionController2 {
 		String time = multi.getParameter("due_time");
 		
 		// Get time
-		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-ddhh:mm");
 		Date newdate = null;
 		Long duedate = 0l;
 		try {
@@ -89,11 +89,10 @@ public class AuctionController2 {
 //		// Auction 객체 생성 [공통]
 		AuctionVO auction = new AuctionVO();
 		Long register_date = System.currentTimeMillis();
-//		Long start_price = Long.parseLong(multi.getParameter("start_price"));
-		Long start_price = 23L;
-		int auction_type = Integer.parseInt(multi.getParameter("type"));
-		auction.setMember_id(1);
 		auction.setDuedate(duedate);
+		Long start_price = Long.parseLong(multi.getParameter("start_price"));
+		int auction_type = Integer.parseInt(multi.getParameter("type"));
+		auction.setMember_id(2);
 		auction.setType(auction_type);
 		auction.setAuct_title(multi.getParameter("auct_title"));
 		auction.setStart_price(start_price);
@@ -152,6 +151,9 @@ public class AuctionController2 {
             if(uploadFile.equals("files")) break;
             MultipartFile mFile = multi.getFile(uploadFile);
             String fileName = mFile.getOriginalFilename();
+            if(fileName.length() == 0) {
+            	break;
+            }
             String typeName = fileName.substring(fileName.indexOf("."));
             newFileName = auct_id +"_"+ i
                     +typeName;

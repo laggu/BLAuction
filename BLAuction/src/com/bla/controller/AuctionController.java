@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,25 +20,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bla.biz.AuctionBiz;
 import com.bla.biz.BiddingBiz;
 import com.bla.biz.PhotoBiz;
-import com.bla.frame.Biz;
+import com.bla.biz.SuccessfulBidBiz;
 import com.bla.util.FileSave;
 import com.bla.vo.AuctionVO;
 import com.bla.vo.BiddingVO;
+import com.bla.vo.MemberVO;
 import com.bla.vo.PhotoVO;
+import com.bla.vo.SuccessfulBidVO;
 
 @Controller
 public class AuctionController {
 	@Resource(name = "abiz")
-	Biz<AuctionVO, Integer> abiz;
+	AuctionBiz abiz;
 
 	@Resource(name = "pbiz")
 	PhotoBiz pbiz;
-	
+
 	@Resource(name = "bbiz")
 	BiddingBiz bbiz;
 
+	@Resource(name = "sbiz")
+	SuccessfulBidBiz sbiz;
+	
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
 	public ModelAndView createAuction() {
@@ -78,9 +85,9 @@ public class AuctionController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			//상세 뿌려주기
-			
-			//mv.addObject("auct_id",auct_id);로 다시 넘겨준다.
+			// 상세 뿌려주기
+
+			// mv.addObject("auct_id",auct_id);로 다시 넘겨준다.
 			mv.addObject("centerpage", "auction/detail");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,65 +142,115 @@ public class AuctionController {
 	@RequestMapping("/biddingimpl.bla")
 	public void biddingimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		//session에 저장시킨 member_id와 bidder_account를 받는다.
-		
-		//int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-		//String bidder_account = (String) session.getAttribute("member_account");
-		
-		//request로 price, time, auct_id를 넘겨받는다.
-		//long price = Long.parseLong(request.getParameter("price"));
+		// session에 저장시킨 member_id와 bidder_account를 받는다.
+
+		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
+		// String bidder_account = (String) session.getAttribute("member_account");
+
+		// request로 price, time, auct_id를 넘겨받는다.
+		// long price = Long.parseLong(request.getParameter("price"));
 		long time = System.currentTimeMillis();
-		//int auct_id = Integer.parseInt(request.getParameter("auct_id"));
-		
-		//BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
-		BiddingVO bid = new BiddingVO(3,1,2000000l,time,"0x9671652cf6fba11f7576b341b95bff03ad27d581");
-		
-		//DB insert
+		// int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+
+		// BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
+		BiddingVO bid = new BiddingVO(3, 1, 2000000l, time, "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+
+		// DB insert
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
+
 		}
-		
+
 	}
 
 	// 내가 입찰한 list SELECT
 	@RequestMapping("/mybiddinglist.bla")
-	public String mybiddinglist(HttpServletRequest request) {
-		//먼저 bidding 테이블에서 member_id로 auct_id를 찾고,
-		//auct_id로 경매가 무엇이 있는 지 select 후 title과 사진 가져오기,
-		//가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
+	public void mybiddinglist(HttpServletRequest request,HttpServletResponse response) {
+		// 먼저 bidding 테이블에서 member_id로 auct_id를 찾고,
+		// auct_id로 경매가 무엇이 있는 지 select 후 title과 사진 가져오기,
+		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
-		
-		//int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-		
+
+		// int member_id = (Integer)session.getAttribute("member_id");
+
 		int member_id = 2;
-		
+
 		ArrayList<Integer> auct_ids = null;
-		ArrayList<AuctionVO> aucts = new ArrayList<>();
+		AuctionVO auct = null;
+		ArrayList<PhotoVO> photos = null;
 		ArrayList<Long> bidMaxPrice = new ArrayList<>();
 		ArrayList<Long> memberBidMaxPrice = new ArrayList<>();
 		
-		Map<String,Integer> map = new HashMap<>();
+		
+		Map<String, Integer> map = new HashMap<>();
 		map.put("member_id", member_id);
 		
+		//json 배열과 객체 선언
+		JSONObject jo = null;
+		JSONArray ja = null;
+		
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
+
 		try {
-			//회원이 입찰한 경매 id들(중복제거)
+			// 회원이 입찰한 경매 id들(중복제거)
 			auct_ids = bbiz.selectAuctIdByMemberId(2);
-			
-			//회원이 입찰한 경매의 최고가와 그 경매에서 내가 입찰한 최고가 가져오기.
-			for(Integer auct_id : auct_ids) {
-				aucts.add(abiz.get(auct_id));
+
+			// 회원이 입찰한 경매의 최고가와 그 경매에서 내가 입찰한 최고가 가져오기.
+			for (Integer auct_id : auct_ids) {
+				// json 객체 및 배열화 해서 AJAX로 내보내야할듯!
+				auct = abiz.get(auct_id);
+				jo.put("auct_id", auct_id);
+				jo.put("title", auct.getAuct_title());
+				jo.put("auction_status", auct.getAuction_status());
+				jo.put("auction_address", auct.getAuction_address());
+				//사진도 Photo테이블에서 경로랑 이름 들고와야함..
+				photos = pbiz.getAll(auct_id);	
+				for(PhotoVO photoVO : photos) {
+					int i=0;
+					String pathKey = "photoPath"+i;
+					String nameKey = "photoName"+i;
+					jo.put(pathKey,photoVO.getPhoto_path());
+					jo.put(nameKey, photoVO.getPhoto_name());
+					i++;
+				}
 				map.put("auct_id", auct_id);
-				//비딩의 최고가와 멤버 비딩의 최고가를 가져와야함.
-//				bidMaxPrice.add(bbiz.selectBidMaxPrice(auct_id));
-//				memberBidMaxPrice.add(bbiz.selectMemberMaxPrice(map));
+				bidMaxPrice.add(bbiz.selectBidMaxPrice(auct));
+				memberBidMaxPrice.add(bbiz.selectMemberMaxPrice(map));
+
 				//json 객체 및 배열화 해서 AJAX로 내보내야할듯!
-				
+				ja.add(jo);
 			}
+			
+			out = response.getWriter();
+			out.print(ja.toJSONString());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	// 내가 올린 경매 리스트 SELECT, AJAX 써야함
+	@RequestMapping("/myauctionlist.bla")
+	public void myauctionlist(HttpServletRequest request) {
+		// Auction테이블에서 member_id로 select (ArrayList<AuctionVO>)
+		HttpSession session = request.getSession();
+
+		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
+		
+		int member_id =1;
+		ArrayList<AuctionVO> auctions = null;
+		try {
+			//Auction 테이블에서 member_id로 내가 올린경매를 가져온다.
+			//auct_id로 사진을 가져온다. 
+			//경매 중-입찰전, 입찰 중, 낙찰, 취소 => 쿼리문 조건으로 날려서 따로 가지고와서 json화 한다.
+			auctions = abiz.selectAuctionByMember(member_id);
 			
 			
 		} catch (Exception e) {
@@ -201,27 +258,54 @@ public class AuctionController {
 			e.printStackTrace();
 		}
 		
-		
-		return null;
-	}
-
-	// 내가 올린 경매 리스트 SELECT
-	@RequestMapping("/myauctionlist.bla")
-	public String myauctionlist() {
-		//Auction테이블에서 member_id로 select (ArrayList<AuctionVO>)
-		
-		return null;
 	}
 
 	// 내가 낙찰한 물품 리스트 SELECT
 	@RequestMapping("/mysuccessbidlist.bla")
-	public String mysuccessbidlist() {
-		return null;
+	public void mysuccessbidlist(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
+		int member_id = 1;
+		ArrayList<SuccessfulBidVO> successfulBids = null;
+		
+		try {
+			// 처음 한 쿼리로
+			// Bidding 테이블에서 member_id가 가지고 있는 bid_id를 가져와서 
+			// SUCCESSFUL_BID 테이블에서 bid_id가 포함되어있는 것에서 successfulbid 가져오기
+			
+			successfulBids = sbiz.selectMySuccessfulBid(member_id);
+			
+			// successfulbidvo에서 bid_id로 Bidding table에서 price 가져오기
+			Long price = 0l;
+			// 다른 쿼리로 auct_id 로 Photo 테이블에서 사진 가져오고
+			ArrayList<PhotoVO> photos = null;
+			// 다른 쿼리로 auct_id 로 member_id를 가져오고
+			int auct_member_id = 0;
+			// 다른 쿼리로 member_id로 판매자 이름, 판매자 전화번호 
+			MemberVO sellerInfo = null;
+			
+			for(SuccessfulBidVO successfulBid : successfulBids) {
+				price = bbiz.get(successfulBid.getBid_id()).getPrice();
+				photos = pbiz.getAll(successfulBid.getAuct_id());
+				auct_member_id = abiz.selectMemberIdByAuct(successfulBid.getAuct_id());
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
-	
+
 	// 옥션 비딩 리스트 SELECT
 	@RequestMapping("/auctionbidlist.bla")
 	public String auctionbidlist() {
+		//입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
+		//해당하는 입찰자의 정보를 가져온다.
+		int auct_id = 0;
+		
 		return null;
 	}
 
@@ -309,7 +393,7 @@ public class AuctionController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			out.close();
 		}
 
@@ -320,11 +404,10 @@ public class AuctionController {
 	public void photoDelete(@RequestParam("deletefile") MultipartFile file, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		
+
 		// 파일 이름 가져오기
 		String imgName = file.getOriginalFilename();
-		System.out.println("파일 이름 " +imgName);
-		
-		
+		System.out.println("파일 이름 " + imgName);
+
 	}
 }

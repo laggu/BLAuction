@@ -10,7 +10,7 @@ DROP TABLE MEMBER;
 
 create table MEMBER(
 member_id number(5) not null PRIMARY KEY,
-email   varchar2(40) not null,
+email   varchar2(40) not null UNIQUE,
 pw   varchar2(10) not null,
 name   varchar2(20) not null,
 address varchar2(100) not null,
@@ -33,6 +33,7 @@ auct_type_name varchar2(10) not null
 
 create table AUCTION(
 auct_id number(5) not null PRIMARY KEY,
+auct_title VARCHAR2(50) not null,
 member_id number(5) not null,
 duedate number(20) not null,
 auct_type_id number(5) not null,

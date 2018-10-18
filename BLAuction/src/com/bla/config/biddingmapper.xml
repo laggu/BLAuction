@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectAuctionBiddingList" parameterType="Integer" resultType="bidding">
-		SELECT * FROM BIDDING WHERE AUCT_ID = {#auct_id}
+		SELECT * FROM BIDDING WHERE AUCT_ID = {#auct_id} ORDER BY AUCT_ID
 	</select>
 	
 	<insert id="insert" parameterType="bidding">
@@ -29,5 +29,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		(BID_ID,MEMBER_ID,AUCT_ID,PRICE,TIME,BIDDER_ACCOUNT)
 		VALUES (SEQ_BID.NEXTVAL,#{member_id},#{auct_id},#{price},#{time},#{bidder_account})
 	</insert>
+	
+	<select id="select" parameterType="Integer" resultType="bidding">
+		SELECT * FROM BIDDING WHERE BID_ID=#{bid_id}
+	</select>
 	
 </mapper>

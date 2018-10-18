@@ -39,7 +39,7 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	@Override
 	public BiddingVO select(Integer v) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return bmapper.select(v);
 	}
 
 	@Override
@@ -52,11 +52,15 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 		return bmapper.selectAuctIdByMemberId(member_id);
 	};
 	
-	public Long selectBidMaxPrice(AuctionVO auction) {
+	public Long selectBidMaxPrice(AuctionVO auction) throws Exception{
 		return bmapper.selectBidMaxPrice(auction);
 	}
 	
-	public Long selectMemberBidMaxPrice(Map<String,Integer> obj) {
+	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id) throws Exception{
+		return bmapper.selectAuctionBiddingList(auct_id);
+	}
+	
+	public Long selectMemberBidMaxPrice(Map<String,Integer> obj) throws Exception {
 		return bmapper.selectMemberBidMaxPrice(obj);
 	}
 }
