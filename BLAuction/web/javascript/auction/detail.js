@@ -32,7 +32,10 @@ function srvTime() {
     xmlHttp.setRequestHeader("Content-Type", "text/html");
     xmlHttp.send('');
     var date = new Date(xmlHttp.getResponseHeader("Date"));
-    $("#currentTimelimit").text(date);
+    var dtA = new Date('10/19/2018 12:00:00');
+    var timediff = dtA.getTime() - date.getTime();
+    $("#currentTimelimit").text(getTimeStamp(date)  + '\n' + timediff);
+    //alert(timediff);
 }
 
 window.setInterval("srvTime();",100);
@@ -43,4 +46,26 @@ function makeBid(){
 	alert("makeBid");
 	bidding(auction_id, price);
 }
-//makeBid();
+
+function getTimeStamp(d) {
+	  var s =
+	    leadingZeros(d.getMonth() + 1, 2) + '-' +
+	    leadingZeros(d.getDate(), 2) + ' ' +
+
+	    leadingZeros(d.getHours(), 2) + ':' +
+	    leadingZeros(d.getMinutes(), 2) + ':' +
+	    leadingZeros(d.getSeconds(), 2);
+
+	  return s;
+	}
+
+function leadingZeros(n, digits) {
+var zero = '';
+n = n.toString();
+
+if (n.length < digits) {
+  for (i = 0; i < digits - n.length; i++)
+    zero += '0';
+}
+return zero + n;
+}
