@@ -92,7 +92,7 @@ $(document).ready(function(){
 								</div>
 								
 								<div>
-									<h4>경매 마감 시간: <span id="auctionDuedate"></span></h4>
+									<h4>경매 마감 시간: <span id="auctionDuedate">${due_date }</span></h4>
 								</div>
 								
 								<div>
