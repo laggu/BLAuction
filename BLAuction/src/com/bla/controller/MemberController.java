@@ -241,14 +241,22 @@ public class MemberController {
 	}
 
 	@RequestMapping("/addressupdateimpl.bla")
-	public ModelAndView addressupdateimpl(HttpServletRequest request, MemberVO user) {
+	public ModelAndView addressupdateimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String naddress = request.getParameter("address");
+		int member_id = (Integer) session.getAttribute("member_id");
+		String naddress = request.getParameter("changed_address");
+		
+		MemberVO user = null;
+		
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 
 		try {
+			user = mbiz.get(member_id);
+			user.setAddress(naddress);
+			
+			
 			biz.modify(user);
 			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
