@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
-<script src="javascript/user/delivery.js"></script>
+<script src="javascript/user/delivery.js?version=1"></script>
 
 </head>
 <body>
@@ -102,8 +102,8 @@
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
 	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">택배 상태 조회</button>	
-	  							<span id="Delivery_Status"></span>
+	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus("+ index + "," + auction_address +");">택배 상태 조회</button>	
+	  							<span id="Delivery_Status"+index></span>
 	  						</div>
 		  				</div>
 		  			</div>

@@ -592,6 +592,12 @@ function withdraw_for_owner(fee){
 	}, fee)
 }
 
+function setDeliveryStatus(auctionAddress){
+	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
+	auction.set_delivery_status(true, function(err,res){
+	});
+}
+
 /**
  * 유찰자에 대한 환불 함수
  * TODO

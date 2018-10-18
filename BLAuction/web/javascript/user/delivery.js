@@ -26,7 +26,7 @@ function setDeliveryCode(){
 }
 
 
-function getDeliveryStatus(index){
+function getDeliveryStatus(index, auction_address){
 //	var companyCode = $("#companyCode"+index).text();
 //	var deliveryCode = $("#deliveryCode"+index).text();
 	
@@ -44,40 +44,29 @@ function getDeliveryStatus(index){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			var s = 'data.complete ' + data.complete + '\n' +
-					'data.invoiceNo ' + data.invoiceNo + '\n' +
-					'data.orderNumber ' + data.orderNumber + '\n' +
-					'data.itemName ' + data.itemName + '\n' +
-					'data.receiverName ' + data.receiverName + '\n' +
-					'data.receiverAddr ' + data.receiverAddr + '\n' +
-					'data.result ' + data.result + '\n' +
-					'data.productInfo ' + data.productInfo + '\n' +
-					'data.adUrl ' + data.adUrl + '\n' +
-					'data.level ' + data.level + '\n' +
-					'data.lastDetail ' + data.lastDetail + '\n' +
-					'data.lastStateDetail ' + data.lastStateDetail + '\n' +
-					'data.estimate ' + data.estimate + '\n';
-			for(td in data.trackingDetails){
-				var temp = '\n{' + td + ' ';
-				for(t in td){
-					temp += t;
-				}
-				temp += '}\n'; 
-				s += temp;
+			var s;
+			switch (data.level) {
+			  case "1":
+				  s = "배송준비중"
+			    break;
+			  case "2":
+				  s = "집화완료"
+			    break;
+			  case "3":
+				  s = "배송중"
+			    break;
+			  case "4":
+				  s = "지점 도착"
+			    break;
+			  case "5":
+				  s = "배송출발"
+			    break;
+			  case "6":
+				  setDeliveryStatus(auction_address);
+				  s = "배송 완료"
+			    break;
 			}
-			alert(s);
-			var str = '';
-			for(var d in data){
-				if(typeof d == 'object'){
-					for(var f in d){
-						str += d + '.' + f + ' ' + data[d][f] + '\n';
-					}
-				}
-				else{
-					str += d + ' ' + data[d] + '\n';
-				}
-			}
-			alert(str);
+			$("#Delivery_Status"+index).text(s);
 		},
 		error:function(data){
 			alert('error');
