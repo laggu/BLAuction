@@ -792,7 +792,7 @@
 	}
 	
 	
-	#myinfo_panel{
+	#myinfo_panel, #sellerinfo_panel{
 		height:300px;
 		position:relative;
 		width:80%;
@@ -937,11 +937,39 @@
 	
 	
 	/* seller Info*/
-	#like_btn{
-		background-color:#FF85CA;
+	
+	#sellerpage_area{
+		margin-top:2%;
+	}
+	
+	
+	#sellerinfo_panel{
+		height:300px;
+		position:relative;
+		width:80%;
+		margin-left:4%;	
+	}
+	
+	#sellergrade img{
+		margin-top:20%;
+	}
+	
+	#sellerName{
 		color:white;
-		width:100px;
-		display:none;
+	}
+	
+	#numofSellerInfo{
+		position:relative;
+	}
+	
+	#numofSellerInfo h4{
+		position:relative;
+		margin-top:10%;
+	}
+	
+	#report_btn{
+		position:relative;
+		float:right;
 	}
 	
 	#sellerlist_area{
@@ -991,6 +1019,8 @@
 	
 	#sellingbidStatus{
 		color:red;
+		position:relative;
+		float:right;
 	}
 	
 	

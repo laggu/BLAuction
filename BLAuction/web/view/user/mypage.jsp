@@ -10,6 +10,29 @@
 
 <script src="javascript/user/delivery.js"></script>
 
+<script type="text/javascript">
+// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
+// (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
+//document.domain = "abc.go.kr";
+function goPopup(){
+//경로는 시스템에 맞게 수정하여 사용
+//호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를
+//호출하게 됩니다.
+var pop = window.open("jusoPopup.bla","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+//** 2017년 5월 모바일용 팝업 API 기능 추가제공 **/
+// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서
+// 실제 주소검색 URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+// var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
+}
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+// 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
+document.form.roadFullAddr.value = roadFullAddr;
+document.form.roadAddrPart1.value = roadAddrPart1;
+document.form.roadAddrPart2.value = roadAddrPart2;
+documentform.addrDetail.value = addrDetail;
+document.form.zipNo.value = zipNo;
+}
+</script>
 </head>
 <body>
 
@@ -43,13 +66,6 @@
   						주소: <span id="myaddress">${member.address }</span>
   						<button type="button" class="btn btn-warning" id="changeAddress_btn"
   						data-toggle="modal" data-target="#ChangeAddressModal"><strong>주소 변경</strong></button>
-  						</div>
-  						<div>
-  							등록한 경매:  <span id="numofRegauction">0</span>회
-  							 ♥좋아요  <span id="numofLikes">0</span>회
-  						</div>
-  						<div>
-  							완료된 경매:  <span id="numofComplitedauction">0</span>회
   						</div>
   					</div>
   				</div>
@@ -155,55 +171,6 @@
 		
 		</div>
 		
-		<!-- Seller Lists -->
-		<!-- Tabs -->
-		<div id="sellerlist_area">
-		
-			<ul class="nav nav-tabs" id="sellerlist_tabs">
-			  <li class="active"><a data-toggle="tab" href="#home">후기 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu1">판매 리스트</a></li>
-			</ul>
-			
-			<div class="tab-content" id="sellerlist_panel">
-			  <div id="reviewlists" class="tab-pane fade in active">
-			  	<!-- Panel -->
-			    <div class="panel panel-default" id="review_panel">
-		  			<div class="panel-body">
-		  				<div id="reviewImg"><img src="img/se.jpg"></div>
-		  				<div id="reviewInfo">
-		  					<div><h4><strong>낙찰자 이름</strong></h4></div>
-	  						<div>낙찰가: <span id="successfulbidPrice">2.0 Ether</span></div>
-	  						<div class="form-group">
-								<textarea class="form-control" rows="2" id="reviewComment">옷이 너무 잘 맞아요!</textarea>
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				<div class="panel panel-default" id="selling_panel">
-		  			<div class="panel-body">
-		  				<div id="sellingImg"><img src="img/se.jpg"></div>
-		  				<div id="sellingInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
-	  						<div>
-	  							낙찰가: <span id="sellingbidPrice">1.0 Ether</span>
-	  							<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>경매 완료</button>	
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				
-			  </div>
-			  <div id="sellinglists" class="tab-pane fade">
-			    <!-- Panel -->
-			    <div class="panel panel-default" id="selling_panel">
-		  			<div class="panel-body">
-		  				
-		  			</div>
-				</div>
-			  </div>
-			</div>
-		
-		</div>
 		
 	  
 	</div>
@@ -301,6 +268,12 @@
 				<form action="">
 					<h4>변경된 주소 입력:</h4>
 					<input type="text" id="changedAddress" name="changed_address">
+					<button onClick="goPopup();" value="팝업"><img src="img/map.png"></button>
+                     		<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
+							도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
+							고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
+							참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
+							우편번호<input type="text" id="zipNo" name="zipNo" /> -->
 					<button type="submit" class="btn btn-danger" id="changeAddress_Btn">변경하기</button>
 				</form>
 	        </div>
