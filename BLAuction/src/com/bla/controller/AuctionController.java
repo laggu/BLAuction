@@ -215,6 +215,8 @@ public class AuctionController {
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
+		System.out.println(request.getParameter("timestamp"));
+
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
 		ArrayList<PhotoVO> photos = null;

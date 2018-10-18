@@ -105,7 +105,12 @@ $(document).ready(function() {
 	$('#startPrice').on('change keyup mouseup',function(){
 		var ether = $('#startPrice').val();
 		$('#startPriceFinney').val(ether * 1000);
-	})
+	});
+	
+	$('#downPrice').on('change keyup mouseup',function(){
+		var ether = $('#downPrice').val();
+		$('#downPriceFinney').val(ether * 1000);
+	});
 });
 
 // Auction Kind checking function

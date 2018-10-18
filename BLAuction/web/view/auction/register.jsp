@@ -13,7 +13,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-<script src="javascript/auction/register.js"></script>
+<script src="javascript/auction/register.js?version=1"></script>
 
 <style>
 input.upload1 {
@@ -129,9 +129,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="down_price" hidden="false">
 									<h4>내림 가격:</h4>
 									<div class="col-sm-4">
-										<input type="number" class="form-control" id="downPrice" name="down_price"
-										min="0.001"  step="0.001">
+										<input type="number" class="form-control" id="downPrice" min="0.001"  step="0.001">
 									</div>
+									<input type="number" class="form-control" name="down_price" id="downPriceFinney" >
 									<h4>내림 시간 간격(시):</h4>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="downTerm" name="down_term" 

@@ -30,7 +30,7 @@ function srvTime() {
     }
     xmlHttp.open('HEAD', window.location.href.toString(), false);
     xmlHttp.setRequestHeader("Content-Type", "text/html");
-    xmlHttp.send('');
+    xmlHttp.send();
     var date = new Date(xmlHttp.getResponseHeader("Date"));
     var timediff = dtA.getTime() - date.getTime();
     
@@ -56,6 +56,7 @@ function srvTime() {
     }
     s += Math.floor(timediff) + '초';
     $("#currentTimelimit").text(s);
+    $("#currentTimelimitModal").text(s);
     //alert(timediff);
 }
 
