@@ -24,4 +24,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM SUCCESSFUL_BID WHERE BID_ID IN (SELECT BID_ID FROM BIDDING WHERE MEMBER_ID=#{member_id})
 	</select>
 
+	<select id="oneSelectMySuccessfulBid" parameterType="Integer" resultType="successfulbid">
+		SELECT * FROM SUCCESSFUL_BID WHERE AUCT_ID = #{auct_id}
+	</select>
 </mapper>
