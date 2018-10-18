@@ -76,4 +76,4 @@ local.properties
 
 target
 .idea
-web/WEB-INF/config/spring-view.xml
+BLAuction/web/WEB-INF/config/spring-view.xml
