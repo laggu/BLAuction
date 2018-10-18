@@ -45,7 +45,7 @@ $(document).ready(function(){
   				
   				<div id="detail_bottom">
 	  				<div id="second_info">
-	  					<a href=""><button type="submit" class="btn btn-warning" id="sellerInfoCheck_btn">
+	  					<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-warning" id="sellerInfoCheck_btn">
 	  					<strong>판매자 정보 확인</strong></button></a>
 	  					
 	  					<div id="oneLine">	
