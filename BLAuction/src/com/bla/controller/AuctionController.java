@@ -436,10 +436,15 @@ public class AuctionController {
 		PrintWriter out = null;
 		// DB insert
 
+		// 옥션 상태도 바꿔줘야함,
+		AuctionVO auct_update = new AuctionVO();
+		auct_update.setAuct_id(auct_id);
+		auct_update.setAuction_status("proceeding");
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
-
+			
+			abiz.updateStatus(auct_update);
 			out = response.getWriter();
 			jo.put("isBid", true);
 
@@ -462,9 +467,7 @@ public class AuctionController {
 		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
 
-		// int member_id = (Integer)session.getAttribute("member_id");
-
-		int member_id = 2;
+		int member_id = (Integer)session.getAttribute("member_id");
 
 		ArrayList<Integer> auct_ids = null;
 		AuctionVO auct = null;

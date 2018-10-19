@@ -70,7 +70,7 @@ bid_id      number(5) not null PRIMARY KEY,
 member_id   number(5) not null,
 auct_id      number(5) not null,
 price      number(20) not null,
-time      number(10) not null,
+time      number(20) not null,
 bidder_account   varchar2(160) not null,
 bid_conf_status	number(1) default 0 not null,
 CONSTRAINT FK_BIDDING_member FOREIGN KEY(member_id)
@@ -133,5 +133,3 @@ INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'eileenkim1208@gmail.com','1234','�
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'kimsj9484@gmail.com','1234','김선재','서울특별시 관악구 봉천동 1523-22','01092557433','941015',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'hny4813@naver.com','1234','한나영','서울특별시 관악구 봉천동 1523-21','01092557435','950327',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 COMMIT;
-
-ALTER TABLE BIDDING MODIFY(TIME NUMBER(20));

@@ -136,7 +136,7 @@ public class MemberController {
 		}
 		response.setContentType("text/html;charset=UTF-8");
 
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("redirect:/main.bla");
 		HttpSession session = request.getSession();
 		MemberVO member = new MemberVO();
 
@@ -154,6 +154,9 @@ public class MemberController {
 		mv.setViewName("main");
 		try {
 			biz.register(member);
+			System.out.println(member.getEmail());
+			member = mbiz.get(member.getEmail());
+			System.out.println(member);
 			mv.addObject("centerpage", "center");
 			session.setAttribute("member_id", member.getMember_id());
 			session.setAttribute("member_account", member.getMember_account());
