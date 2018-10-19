@@ -217,7 +217,6 @@ public class AuctionController {
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
-		System.out.println(request.getParameter("timestamp"));
 
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
@@ -229,11 +228,14 @@ public class AuctionController {
 			auction = abiz.get(auct_id);
 			photos = pbiz.getAll(auct_id);
 			System.out.println(photos);
-			Long cur_price = bbiz.selectBidMaxPrice(auction);
-			if (cur_price == null) {
-				cur_price = auction.getStart_price();
+			Long cur_priceL = bbiz.selectBidMaxPrice(auction);
+			if (cur_priceL == null) {
+				cur_priceL = auction.getStart_price();
 			}
-			System.out.println(cur_price);
+			System.out.println(cur_priceL);
+			
+			Double cur_price = cur_priceL.doubleValue() * 0.001;
+			cur_price = Math.round(cur_price*1000)/1000.0;
 
 			// 카테고리 구하기
 			String category = "";
@@ -313,12 +315,18 @@ public class AuctionController {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
-				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
-				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
 				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
@@ -360,12 +368,18 @@ public class AuctionController {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
-				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
-				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
 				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
@@ -402,7 +416,7 @@ public class AuctionController {
 		HttpSession session = request.getSession();
 		// session에 저장시킨 member_id와 bidder_account를 받는다.
 
-		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
+		int member_id = (int) session.getAttribute("member_id");
 		String bidder_account = (String) session.getAttribute("member_account");
 
 		// request로 price, time, auct_id를 넘겨받는다.
@@ -738,7 +752,8 @@ public class AuctionController {
 	@RequestMapping("/auctionbidlist.bla")
 	public void auctionbidlist(HttpServletRequest request, HttpServletResponse response) {
 		// view에서 auct_id를 받아온다.
-		int auct_id = 0;
+		int auct_id = Integer.parseInt(request.getParameter("auction_id"));
+		System.out.println(auct_id);
 
 		// 입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
 		ArrayList<BiddingVO> biddings = null;
@@ -751,6 +766,7 @@ public class AuctionController {
 
 		// json 넘겨주기위함
 		PrintWriter out = null;
+		response.setContentType("text/json;charset=utf-8");
 
 		try {
 			biddings = bbiz.selectAuctionBiddingList(auct_id);

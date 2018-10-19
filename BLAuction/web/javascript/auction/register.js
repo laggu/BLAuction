@@ -113,7 +113,14 @@ $(document).ready(function() {
 	
 	$('#startPrice').on('change keyup mouseup',function(){
 		var ether = $('#startPrice').val();
-		$('#startPriceFinney').val(ether * 1000);
+		ether *= 1000;
+		if(ether == 0){
+			startPriceFlag = false;
+		}else{
+			startPriceFlag = true;
+			ether = Math.floor(ether);
+			$('#startPriceFinney').val(ether);
+		}
 	});
 	
 	$('#downPrice').on('change keyup mouseup',function(){
@@ -121,8 +128,13 @@ $(document).ready(function() {
 		$('#downPriceFinney').val(ether * 1000);
 	});
 	
-	
-	
+	$('#registerTitle').on('change',function(){
+		var title = $('#registerTitle').val();
+		if(title.length >= 20){
+			$('#registerTitle').val(title.substring(0,20));
+		}
+		titleFlag = true;
+	});
 	
 	$('#registerTitle').on('change',function(){
 		var title = $('#registerTitle').val();

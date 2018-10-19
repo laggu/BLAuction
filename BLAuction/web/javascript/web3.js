@@ -422,9 +422,7 @@ $(document).ready(function(){
         web3 = new Web3(Web3.providers.HttpProvider('이더리움 넷 주소'))
     }
     
-    $("#register_btn").click(function(){
-    	makeAuction();
-    })
+  
 })
 
 	<!-- Variables -->
@@ -546,10 +544,9 @@ function set_auction(auction_address){
  * 3. 반환받은 bid_id 및 입찰자 정보로 Auction의 bidding을 실행
  * 4. biddingEvent를 통해서 입찰 성공 시 이벤트 처리
  */
-function bidding(auction_id, price){
+function bidding(auction_id, price, time){
 	//var auction_id /* 쿠키에서 정보를 받아옴*/
 	//var price = $("#price").val();
-	var time = new Date().getTime();
     var client_address = web3.eth.accounts[0];
     bidder_id = 1; //get from session
     
@@ -611,15 +608,18 @@ function withdraw(){
 	})
 }
 
+
+var bidListFromContract = [];
 function getBid(auction, index){
 	auction.getBid(index, function(err,res){
-		alert(index + "\n" + res);
-		var temp = {name:res[0], price:res[1], time:res[2]}
+		var temp = {name:res[0], price:res[1], time:res[2]};
+		bidListFromContract.push(temp);
 	})
 }
 
 function getBidList(auctionAddress){
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
+	bidListFromContract = [];
 	
 	auction.getBidCount(function(err,res){
 		var count = res;

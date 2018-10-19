@@ -7,65 +7,66 @@
 //       --- 그러면 올림 경매일 경우에는??
 // 6. 입찰 버튼 클릭시 입찰 모달 보여주기 ----- 경매 종류에 따라 다르게
 
-var xmlHttp;
-function srvTime() {
-    try {
-        //FF, Opera, Safari, Chrome
-        xmlHttp = new XMLHttpRequest();
-    }
-    catch (err1) {
-        //IE
-        try {
-            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-        }
-        catch (err2) {
-            try {
-                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
-            }
-            catch (eerr3) {
-                //AJAX not supported, use CPU time.
-                alert("AJAX not supported");
-            }
-        }
-    }
-    xmlHttp.open('HEAD', window.location.href.toString(), false);
-    xmlHttp.setRequestHeader("Content-Type", "text/html");
-    xmlHttp.send();
-    var date = new Date(xmlHttp.getResponseHeader("Date"));
-    var timediff = dtA.getTime() - date.getTime();
-    
-    if(timediff <= 0){
-        $("#currentTimelimit").text('경매완료');
-        return;
-    }
-    
-    timediff /= 1000;
-    var s = '';
-    
-    if(parseInt(timediff/86400) >= 1){
-    	s += parseInt(timediff/86400) + '일 '
-        timediff %= 86400;
-    }
-    if(parseInt(timediff/3600) >= 1){
-    	s += parseInt(timediff/3600) + '시간 '
-        timediff %= 3600;
-    }
-    if(parseInt(timediff/60) >= 1){
-    	s += parseInt(timediff/60) + '분 '
-        timediff %= 60;
-    }
-    s += Math.floor(timediff) + '초';
-    $("#currentTimelimit").text(s);
-    $("#currentTimelimitModal").text(s);
-    //alert(timediff);
-}
+var date;
+var dtA;
+var timeInterval;
 
 
-function makeBid(){
-	var price = 5//$('#??').text();
-	var auction_id = 1//= "<%=(String)session.getAttribute('member_id')%>";
-	alert("makeBid");
-	bidding(auction_id, price);
+function srvTime(auct_id) {
+	  $.ajax({
+	    type: 'GET',
+	    cache: false,
+	    url: '/timestamp.bla',
+	    complete: function (req, textStatus) {
+	      var dateString = req.getResponseHeader('Date');
+	      if (dateString.indexOf('GMT') === -1) {
+	        dateString += ' GMT';
+	      }
+	      date = new Date(dateString);
+	      var timediff = dtA.getTime() - date.getTime();
+	      
+	      if(timediff <= 0){
+	          $("#currentTimelimit").text('경매완료');
+	          
+	          var params = {
+	      			"auct_id":auct_id
+	      		}
+	          
+	          $.ajax({
+	      		type:'POST',
+	      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
+	      		data:params,
+	      		datatype:'json',
+	      		success:function(data){
+	      			window.clearInterval(timeInterval);
+      			},
+	      		error:function(data){
+	      			alert(data)
+	      		}
+	      	  })
+	          return;
+	      }
+	      
+	      timediff /= 1000;
+	      var s = '';
+	      
+	      if(parseInt(timediff/86400) >= 1){
+	      	s += parseInt(timediff/86400) + '일 '
+	          timediff %= 86400;
+	      }
+	      if(parseInt(timediff/3600) >= 1){
+	      	s += parseInt(timediff/3600) + '시간 '
+	          timediff %= 3600;
+	      }
+	      if(parseInt(timediff/60) >= 1){
+	      	s += parseInt(timediff/60) + '분 '
+	          timediff %= 60;
+	      }
+	      s += Math.floor(timediff) + '초';
+	      $("#currentTimelimit").text(s);
+	      $("#currentTimelimitModal").text(s);
+	    }
+	  });
 }
 
 function getTimeStamp(d) {
@@ -90,3 +91,80 @@ if (n.length < digits) {
 }
 return zero + n;
 }
+
+
+function makebidding(auction_id, secret){
+	var price = $("#suggestedPrice").val();
+	var cur_price = Number($("#currentPrice").text());
+	
+	price *= 1000;
+	
+	if(price ==0){
+		alert("가격을 입력하세요");
+		return;
+	}
+	if(secret==1){
+		if(price < cur_price){
+			alert("현재 가격보다 높은 가격을 입력하세요");
+		}
+	}
+	var params = {
+			"price":price,
+			"auction_id":auction_id,
+			"time":date.getTime(),
+		}
+	
+	$.ajax({
+		type:'POST',
+		url:'biddingimpl.bla', /* DB로 접근 */
+		data:params,
+		datatype:'json',
+		success:function(data){
+			getBidList(auction_id);
+			$("#biddingModal").modal('hide');
+		},
+		error:function(data){
+			alert("biddingimpl.bla error")
+		}
+	})
+
+	bidding(auction_id, price, date.getTime());
+}
+
+function getBidList(auction_id){
+	var databaseTable = $("#databaseTable");
+	databaseTable.empty();
+	databaseTable.append("<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th><th>트랜잭션 상태</th></tr>");
+	
+	var params = {
+			"auction_id":auction_id
+		}
+	
+	$.ajax({
+		type:'POST',
+		url:'auctionbidlist.bla', /* DB로 접근 */
+		data:params,
+		datatype:'json',
+		success:function(data){
+			for(i in data){
+				s = "<tr>";
+				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
+				s += "<td id=BiddersPrice" + i +"> "+ (data[i].bid_price * 0.001).toFixed(3) + "</td>";
+				s += "<td id=BiddingTimestamp" + i +"> "+ getTimeStamp(new Date(data[i].bid_time)) + "</td>";
+				s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				s += "</tr>"
+				databaseTable.append(s);
+			}
+			//"<tr><td id="BidderName">회원1</td><td id="BiddersPrice">10</td><td id="BiddingTimestamp">12:00</td><td id="transactionStatus">Confirmed</td>"
+		},
+		error:function(data){
+			alert(data)
+		}
+	})
+
+}
+
+function getBidListFromContract(){
+	
+}
+
