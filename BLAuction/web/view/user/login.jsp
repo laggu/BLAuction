@@ -20,17 +20,6 @@
 <!-- login and register button font -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 
-<script>
-
-var resultt = "<%=(String)request.getAttribute("resultt")%>"
-
-if(resultt != 'null') {
-	if(resultt == 'asdf') {
-		alert("id 혹은 password가 틀렸습니다. 다시 입력하세요.");
-	}
-}
-</script>
-
 
 
 <script>

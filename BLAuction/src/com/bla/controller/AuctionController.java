@@ -2,6 +2,7 @@
 package com.bla.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -307,8 +308,8 @@ public class AuctionController {
 		mv.setViewName("main");
 		try {
 			auction_list = abiz.get();
-			
-			for(int i = 0 ; i < auction_list.size() ; i++) {
+
+			for (int i = 0; i < auction_list.size(); i++) {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
@@ -316,22 +317,22 @@ public class AuctionController {
 				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path()+photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path()+photo2.getPhoto_name());
+				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
-				if(newlist.getMax_price() == null) {
+				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
 				}
 				list.add(newlist);
 			}
-			
+
 			mv.addObject("list", list);
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "center");
 		}
-		
+
 		Iterator<ListVO> itr = list.iterator();
 		while (itr.hasNext()) {
 			ListVO listVO = (ListVO) itr.next();
@@ -354,8 +355,8 @@ public class AuctionController {
 		mv.setViewName("main");
 		try {
 			auction_list = abiz.getByCategory(category_id);
-			
-			for(int i = 0 ; i < auction_list.size() ; i++) {
+
+			for (int i = 0; i < auction_list.size(); i++) {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
@@ -363,15 +364,15 @@ public class AuctionController {
 				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path()+photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path()+photo2.getPhoto_name());
+				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
-				if(newlist.getMax_price() == null) {
+				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
 				}
 				list.add(newlist);
 			}
-			
+
 			mv.addObject("list", list);
 			mv.addObject("category_id", category_id);
 			mv.addObject("centerpage", "auction/category");
@@ -379,7 +380,7 @@ public class AuctionController {
 			e.printStackTrace();
 			mv.addObject("centerpage", "auction/category");
 		}
-		
+
 		Iterator<ListVO> itr = list.iterator();
 		while (itr.hasNext()) {
 			ListVO listVO = (ListVO) itr.next();
@@ -397,31 +398,46 @@ public class AuctionController {
 
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")
-	public void biddingimpl(HttpServletRequest request) {
+	public void biddingimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// session에 저장시킨 member_id와 bidder_account를 받는다.
 
-		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-		// String bidder_account = (String) session.getAttribute("member_account");
+		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
+		String bidder_account = (String) session.getAttribute("member_account");
 
 		// request로 price, time, auct_id를 넘겨받는다.
-		// long price = Long.parseLong(request.getParameter("price"));
-		long time = System.currentTimeMillis();
-		// int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		long price = Long.parseLong(request.getParameter("price"));
+		long time = Long.parseLong(request.getParameter("time"));
+		int auct_id = Integer.parseInt(request.getParameter("auction_id"));
 
 		// BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
-		BiddingVO bid = new BiddingVO(3, 1, 2l, time, "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+		// BiddingVO bid = new BiddingVO(3, 1, 2l, time,
+		// "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+		BiddingVO bid = new BiddingVO(member_id, auct_id, price, time, bidder_account);
 
+		// json 배열과 객체 선언
+		JSONObject jo = new JSONObject();
+
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
 		// DB insert
+
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
+			
+			out = response.getWriter();
+			jo.put("isBid", true);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+			jo.put("isBid",false);
+		}finally {
+			out.print(jo.toJSONString());
+			out.close();
 		}
-
+		
 	}
 
 	// 내가 입찰한 list SELECT
@@ -474,8 +490,8 @@ public class AuctionController {
 					i++;
 				}
 				map.put("auct_id", auct_id);
-				jo.put("bidMaxPrice",bbiz.selectBidMaxPrice(auct));
-				jo.put("memberMaxPrice",bbiz.selectMemberMaxPrice(map));
+				jo.put("bidMaxPrice", bbiz.selectBidMaxPrice(auct));
+				jo.put("memberMaxPrice", bbiz.selectMemberMaxPrice(map));
 
 				// json 객체 및 배열화 해서 AJAX로 내보내야할듯!
 				ja.add(jo);
@@ -500,28 +516,28 @@ public class AuctionController {
 		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
 
 		int member_id = 1;
-		
+
 		Map<String, Integer> map = new HashMap<>();
 		map.put("member_id", member_id);
-		
+
 		ArrayList<AuctionVO> auctions = null;
-		
-		//json 객체 배열 선언
+
+		// json 객체 배열 선언
 		JSONObject jo = new JSONObject();
-		
+
 		JSONArray beforeJa = new JSONArray();
 		JSONArray proceedingJa = new JSONArray();
 		JSONArray endJa = new JSONArray();
 		JSONArray cancelJa = new JSONArray();
-		
+
 		JSONObject beforeJo = null;
 		JSONObject proceedingJo = null;
 		JSONObject endJo = null;
 		JSONObject cancelJo = null;
-		
+
 		response.setContentType("text/json;charset=utf-8");
 		PrintWriter out = null;
-		
+
 		try {
 			// Auction 테이블에서 member_id로 내가 올린경매를 가져온다.
 			// auct_id로 사진을 가져온다.
@@ -535,7 +551,7 @@ public class AuctionController {
 					// 입찰전 => 취소하기 버튼
 					// 경매 사진과 타이틀도 가져와야함
 					// before이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
-					
+
 					beforeJo.put("auction_status", auction.getAuction_status());
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
 					for (PhotoVO photoVO : photos) {
@@ -547,18 +563,18 @@ public class AuctionController {
 						i++;
 					}
 					beforeJo.put("auct_title", auction.getAuct_title());
-					
+
 					beforeJa.add(beforeJo);
-					
+
 				} else if (auction.getAuction_status().equals("proceeding")) {
 					proceedingJo = new JSONObject();
 					// 입찰중 => 재입찰하기 또는 내가 최고가일때 입찰 ㄴㄴ
-					
+
 					// 내가 입찰한 최고 가격과 비딩의 최고 가격을 가져온다.
 					long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 					long memberMaxPrice = bbiz.selectMemberMaxPrice(map);
-					proceedingJo.put("bidMaxPrice",bidMaxPrice);
-					proceedingJo.put("memberMaxPrice",memberMaxPrice);
+					proceedingJo.put("bidMaxPrice", bidMaxPrice);
+					proceedingJo.put("memberMaxPrice", memberMaxPrice);
 
 					// 경매 사진과 타이틀도 가져와야함
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
@@ -572,9 +588,9 @@ public class AuctionController {
 					}
 					proceedingJo.put("auct_title", auction.getAuct_title());
 					// 그래서 비교하여 최고가격이 같을 경우에는 버튼이 눌러지면 안된다.
-					if(bidMaxPrice == memberMaxPrice) {
+					if (bidMaxPrice == memberMaxPrice) {
 						proceedingJo.put("isReBid", false);
-					}else {
+					} else {
 						proceedingJo.put("isReBid", true);
 					}
 					// proceeding이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
@@ -582,7 +598,7 @@ public class AuctionController {
 				} else if (auction.getAuction_status().equals("end")) {
 					endJo = new JSONObject();
 					// 낙찰 => 경매 완료
-					
+
 					// 경매 사진과 타이틀도 가져와야함
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
 					for (PhotoVO photoVO : photos) {
@@ -594,7 +610,7 @@ public class AuctionController {
 						i++;
 					}
 					endJo.put("auct_title", auction.getAuct_title());
-					
+
 					// 낙찰가, 낙찰된 회원의 이름, 전화번호, 주소 가져오기
 					SuccessfulBidVO successfulBid = sbiz.oneSelectMySuccessfulBid(auct_id);
 					BiddingVO bidding = bbiz.get(successfulBid.getBid_id());
@@ -603,14 +619,14 @@ public class AuctionController {
 					endJo.put("successfulBidMember_name", successfulBidMember.getName());
 					endJo.put("successfulBidMemberPhone", successfulBidMember.getPhone());
 					endJo.put("successfulBidAddress", successfulBidMember.getAddress());
-					
+
 					// 택배 운송장 번호를 SUCCESSFULBID에서 가져오기 auct_id로
-					endJo.put("delivery_code",successfulBid.getDelivery_code());
+					endJo.put("delivery_code", successfulBid.getDelivery_code());
 					endJo.put("delivery_status", successfulBid.getDelivery_status());
 					endJo.put("company_code", successfulBid.getCompany_code());
 
 					// end이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
-					
+
 					endJa.add(endJo);
 				} else if (auction.getAuction_status().equals("cancel")) {
 					cancelJo = new JSONObject();
@@ -626,7 +642,7 @@ public class AuctionController {
 						i++;
 					}
 					cancelJo.put("auct_title", auction.getAuct_title());
-					
+
 					// cancel이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
 					cancelJa.add(cancelJo);
 				}
@@ -636,7 +652,7 @@ public class AuctionController {
 			jo.put("proceeding", proceedingJa.toJSONString());
 			jo.put("end", endJa.toJSONString());
 			jo.put("cancel", cancelJa.toJSONString());
-			
+
 			out = response.getWriter();
 			out.print(jo);
 		} catch (Exception e) {
@@ -785,8 +801,20 @@ public class AuctionController {
 	}
 
 	@RequestMapping("/timestamp.bla")
-	public String timeStamp(HttpServletRequest request) {
-		return "hi";
+	public void timeStamp(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject jo = new JSONObject();
+		// json 넘겨주기위함
+		PrintWriter out = null;
+
+		jo.put("success", "success");
+
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.print(jo);
 	}
 
 	// 판매자 정보의 페이지 넘기기

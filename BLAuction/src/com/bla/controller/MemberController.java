@@ -50,16 +50,31 @@ public class MemberController {
 
 		try {
 			member = mbiz.get(email);
+			if(member == null)
+			{
+				//null�϶� ó�����ָ��
+				mv.setViewName("main");
+				mv.addObject("centerpage", "user/fail");
+				mv.addObject("resultt", "asdd");
+				return mv;
+			}
+			if(!(member.getMember_account().equals(member_account)) && !(member.getPw().equals(pw)))
+			{
+				mv.setViewName("main");
+				mv.addObject("centerpage", "user/failAll");
+				return mv;
+			}
 			if (!(member.getMember_account().equals(member_account))) {
 				mv.setViewName("main");
 				mv.addObject("centerpage", "user/failMeta");
 				return mv;
 			}
-			if(member == null || !(member.getPw().equals(pw))) {
+			
+			if(!(member.getPw().equals(pw))) {
 				//null�϶� ó�����ָ��
 				mv.setViewName("main");
 				mv.addObject("centerpage", "user/fail");
-//				mv.addObject("resultt", "asdf");
+				mv.addObject("resultt", "asdf");
 				return mv;
 			}
 		} catch (Exception e) {
@@ -144,6 +159,9 @@ public class MemberController {
 			session.setAttribute("loginStatus", "loginSuccess");
 			return mv;
 		} catch (Exception e) {
+			mv.setViewName("main");
+			mv.addObject("centerpage", "user/register");
+			
 			mv.addObject("resultt", "asdd");
 			e.printStackTrace();
 			return mv;
