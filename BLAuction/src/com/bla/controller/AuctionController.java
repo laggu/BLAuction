@@ -425,19 +425,19 @@ public class AuctionController {
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
-			
+
 			out = response.getWriter();
 			jo.put("isBid", true);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			jo.put("isBid",false);
-		}finally {
+			jo.put("isBid", false);
+		} finally {
 			out.print(jo.toJSONString());
 			out.close();
 		}
-		
+
 	}
 
 	// 내가 입찰한 list SELECT
@@ -784,7 +784,35 @@ public class AuctionController {
 
 	// 낙찰 됬을 때 실행하는 함수
 	@RequestMapping("/successfulbiddingimpl.bla")
-	public String successfulbiddingimpl(HttpServletRequest request) {
+	public String successfulbiddingimpl(HttpServletRequest request, HttpServletResponse response) {
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		//int auct_id =2;
+		// auct_id를 받아서 BIDDING 정보를 가져와서 bid_id를 가져오기
+		BiddingVO bid = null;
+		int bid_id=0;
+		
+		// auct_id, bid_id로만 insert 하기
+		SuccessfulBidVO successfulBid = null;
+				
+		// Auction 테이블에 있는 auction_status를 end로 업데이트
+		AuctionVO auction_update = new AuctionVO();
+		auction_update.setAuct_id(auct_id);
+		auction_update.setAuction_status("end");
+		
+		try {
+			bid = bbiz.selectBididByAuctId(auct_id);
+			bid_id = bid.getBid_id();
+			successfulBid = new SuccessfulBidVO(auct_id,bid.getBid_id());
+			
+			sbiz.register(successfulBid);
+			
+			abiz.updateStatus(auction_update);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 

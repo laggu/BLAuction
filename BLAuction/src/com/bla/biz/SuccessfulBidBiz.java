@@ -19,7 +19,7 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	@Override
 	public void register(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sdao.insert(t);
 	}
 
 	@Override
