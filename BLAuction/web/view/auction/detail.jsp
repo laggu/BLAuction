@@ -14,7 +14,8 @@
 	    $("#bidding_btn").click(function(){
 	         $("#biddingModal").show();
 	    });
-	    
+
+	    getBidList("${auction.auct_id }");
 	    dtA = new Date(parseInt($("#timestamp").text()));
 	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
@@ -23,10 +24,10 @@
 	    }else{
 	    	$("#currentTimelimit").text("경매 완료");	
 	    }
-	    getBidList("${auction.auct_id }");
+	    
 	});
 </script>
-<script src="javascript/auction/detail.js?version=1"></script>
+<script src="javascript/auction/detail.js"></script>
 </head>
 
 <body>
@@ -50,7 +51,7 @@
   				
   				<div id="detail_bottom">
 	  				<div id="second_info">
-	  					<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-warning" id="sellerInfoCheck_btn">
+	  					<a href="sellerpage.bla?seller_id=${auction.member_id }"><button type="button" class="btn btn-warning" id="sellerInfoCheck_btn">
 	  					<strong>판매자 정보 확인</strong></button></a>
 	  					
 	  					<div id="oneLine">	
@@ -70,8 +71,10 @@
   				</div>
   				
   				<!-- Trigger the modal with a button -->
-  				<c:if test="${auction.auction_status ne 'end' && auction.auction_status ne 'cancel'}">
-  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
+  				<c:if test="${member_id ne auction.member_id}">
+	  				<c:if test="${auction.auction_status ne 'end' && auction.auction_status ne 'cancel'}">
+	  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
+		        	</c:if>
 	        	</c:if>
 				  <!-- Modal -->
 				  <div class="modal" id="biddingModal">
@@ -105,7 +108,7 @@
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type} );">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
 						
 
 				        </div>
