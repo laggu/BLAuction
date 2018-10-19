@@ -422,10 +422,15 @@ public class AuctionController {
 		PrintWriter out = null;
 		// DB insert
 
+		// 옥션 상태도 바꿔줘야함,
+		AuctionVO auct_update = new AuctionVO();
+		auct_update.setAuct_id(auct_id);
+		auct_update.setAuction_status("proceeding");
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
-
+			
+			abiz.updateStatus(auct_update);
 			out = response.getWriter();
 			jo.put("isBid", true);
 
