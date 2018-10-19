@@ -39,9 +39,10 @@ function srvTime(auct_id) {
 	      		datatype:'json',
 	      		success:function(data){
 	      			window.clearInterval(timeInterval);
+	    			window.location.reload();
       			},
 	      		error:function(data){
-	      			alert(data)
+	      			alert('successfulbiddingimpl error')
 	      		}
 	      	  })
 	          return;
@@ -93,9 +94,9 @@ return zero + n;
 }
 
 
-function makebidding(auction_id, secret){
+function makebidding(auction_id, secret, user_id, auction_address){
 	var price = $("#suggestedPrice").val();
-	var cur_price = Number($("#currentPrice").text());
+	var cur_price = Number($("#currentPrice").text()) * 1000;
 	
 	price *= 1000;
 	
@@ -106,6 +107,7 @@ function makebidding(auction_id, secret){
 	if(secret==1){
 		if(price < cur_price){
 			alert("현재 가격보다 높은 가격을 입력하세요");
+			return;
 		}
 	}
 	var params = {
@@ -120,15 +122,16 @@ function makebidding(auction_id, secret){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			getBidList(auction_id);
+			//getBidList(auction_id);
 			$("#biddingModal").modal('hide');
+			window.location.reload();
 		},
 		error:function(data){
 			alert("biddingimpl.bla error")
 		}
 	})
-
-	bidding(auction_id, price, date.getTime());
+	
+	bidding(auction_id, price, date.getTime(), user_id, auction_address);
 }
 
 function getBidList(auction_id){
@@ -155,10 +158,10 @@ function getBidList(auction_id){
 				s += "</tr>"
 				databaseTable.append(s);
 			}
-			//"<tr><td id="BidderName">회원1</td><td id="BiddersPrice">10</td><td id="BiddingTimestamp">12:00</td><td id="transactionStatus">Confirmed</td>"
+			
 		},
 		error:function(data){
-			alert(data)
+			alert('auctionbidlist.bla error')
 		}
 	})
 

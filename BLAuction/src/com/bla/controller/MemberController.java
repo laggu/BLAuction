@@ -45,7 +45,7 @@ public class MemberController {
 		String member_account = request.getParameter("member_account");
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
-		ModelAndView mv2 = new ModelAndView();
+		ModelAndView mv2 = new ModelAndView("redirect:/main.bla");
 		MemberVO member = null;
 
 		try {
@@ -158,7 +158,8 @@ public class MemberController {
 			member = mbiz.get(member.getEmail());
 			System.out.println(member);
 			mv.addObject("centerpage", "center");
-			session.setAttribute("email", member.getEmail());
+			session.setAttribute("member_id", member.getMember_id());
+			session.setAttribute("member_account", member.getMember_account());
 			session.setAttribute("loginStatus", "loginSuccess");
 			return mv;
 		} catch (Exception e) {
