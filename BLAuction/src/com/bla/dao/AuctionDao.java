@@ -57,8 +57,8 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		amapper.updateStatus(obj);
 	}
 	
-	public ArrayList<AuctionVO> selectAuctionByMember(int member_id) throws Exception{
-		return amapper.selectAuctionByMember(member_id);
+	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj) throws Exception{
+		return amapper.selectAuctionByMember(obj);
 	}
 	
 	public int selectMemberIdByAuct(Integer auct_id) throws Exception{//경매 올린 member_id 가져올려고 함

@@ -57,8 +57,8 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 		adao.updateStatus(obj);
 	}
 	
-	public ArrayList<AuctionVO> selectAuctionByMember(int member_id) throws Exception{
-		return adao.selectAuctionByMember(member_id);
+	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj) throws Exception{
+		return adao.selectAuctionByMember(obj);
 	}
 	
 	public int selectMemberIdByAuct(Integer auct_id) throws Exception{//경매 올린 member_id 가져올려고 함
