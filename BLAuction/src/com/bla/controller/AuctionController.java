@@ -235,6 +235,7 @@ public class AuctionController {
 			System.out.println(cur_priceL);
 			
 			Double cur_price = cur_priceL.doubleValue() * 0.001;
+			cur_price = Math.round(cur_price*1000)/1000.0;
 
 			// 카테고리 구하기
 			String category = "";
@@ -403,7 +404,7 @@ public class AuctionController {
 		HttpSession session = request.getSession();
 		// session에 저장시킨 member_id와 bidder_account를 받는다.
 
-		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
+		int member_id = (int) session.getAttribute("member_id");
 		String bidder_account = (String) session.getAttribute("member_account");
 
 		// request로 price, time, auct_id를 넘겨받는다.
@@ -734,7 +735,8 @@ public class AuctionController {
 	@RequestMapping("/auctionbidlist.bla")
 	public void auctionbidlist(HttpServletRequest request, HttpServletResponse response) {
 		// view에서 auct_id를 받아온다.
-		int auct_id = 0;
+		int auct_id = Integer.parseInt(request.getParameter("auction_id"));
+		System.out.println(auct_id);
 
 		// 입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
 		ArrayList<BiddingVO> biddings = null;
@@ -747,6 +749,7 @@ public class AuctionController {
 
 		// json 넘겨주기위함
 		PrintWriter out = null;
+		response.setContentType("text/json;charset=utf-8");
 
 		try {
 			biddings = bbiz.selectAuctionBiddingList(auct_id);

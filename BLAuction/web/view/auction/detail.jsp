@@ -7,23 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_물품 상세</title>
-<script>
-var dtA;
-$(document).ready(function(){
-    $("#bidding_btn").click(function(){
-         $("#biddingModal").show();
-    });
-    
-    dtA = new Date(parseInt($("#timestamp").text()));
-    window.setInterval("srvTime();",300);
-});
-
-</script>
 <script src="javascript/auction/detail.js?version=1"></script>
 </head>
-
+<script>
+	var auctionStatus = "${auction.auction_status }";
+</script>
 <body>
-<p>${auction_id }</p>
 <!-- Content -->
 <div id="detail_area">
 	<div class="col-sm-10 text-left">
@@ -98,14 +87,16 @@ $(document).ready(function(){
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id });">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type} );">입찰하기</button>
 						
 
 				        </div>
 				        
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        </div>
+			        	<c:if test="${auction.auction_status ne 'before'}"> 
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					        </div>
+			        	</c:if>
 				      </div>
 				      
 				    </div>
@@ -123,19 +114,8 @@ $(document).ready(function(){
   			<div class="panel-body">
   				<div class="panel panel-default" id="DBlist">
   				<h4><strong>DataBase Info</strong></h4>
-  				<table border="1">
-  					<tr>
-	  					<th>입찰자</th>
-	  					<th>입찰가</th>
-	  					<th>입찰 시간</th>
-	  					<th>트랜잭션 상태</th>
-  					</tr>
-  					<tr>
-  						<td id="BidderName">회원1</td>
-  						<td id="BiddersPrice">10</td>
-  						<td id="BiddingTimestamp">12:00</td>
-  						<td id="transactionStatus">Confirmed</td>
-  					</tr>
+  				<table id="databaseTable" border="1">
+  					
   				</table>
   				</div>
   				
