@@ -108,7 +108,9 @@ $(document).ready(function() {
       });
 	
 	$("#register_btn").click(function(){
-		makeAuction();
+		if(verifyData()){
+			makeAuction();
+		}
 	})
 	
 	$('#startPrice').on('change keyup mouseup',function(){
@@ -116,6 +118,7 @@ $(document).ready(function() {
 		ether *= 1000;
 		if(ether == 0){
 			startPriceFlag = false;
+			$('#startPriceFinney').val(null);
 		}else{
 			startPriceFlag = true;
 			ether = Math.floor(ether);
@@ -125,23 +128,34 @@ $(document).ready(function() {
 	
 	$('#downPrice').on('change keyup mouseup',function(){
 		var ether = $('#downPrice').val();
-		$('#downPriceFinney').val(ether * 1000);
+		ether *= 1000;
+		if(ether == 0){
+			downPriceFlag = false;
+			$('#downPriceFinney').val(null);
+		}else{
+			downPriceFlag = true;
+			ether = Math.floor(ether);
+			$('#downPriceFinney').val(ether);
+		}
 	});
 	
 	$('#registerTitle').on('change',function(){
 		var title = $('#registerTitle').val();
 		if(title.length >= 20){
+			alert("제목은 20자 이상이어야 합니다");
 			$('#registerTitle').val(title.substring(0,20));
 		}
 		titleFlag = true;
 	});
 	
-	$('#registerTitle').on('change',function(){
-		var title = $('#registerTitle').val();
-		if(title.length >= 20){
-			$('#registerTitle').val(title.substring(0,20));
+	$('#downTerm').on('change',function(){
+		var term = $('#downTerm').val();
+		term *= 10;
+		if(term == 0){
+			alert("내림 시간 간격을 입력해주세요");
+			downTermFlag = false;
 		}
-		titleFlag = true;
+		downTermFlag = true;
 	});
 });
 
@@ -152,6 +166,8 @@ function checkRegisterKind(auction_kind){
 		downPriceFlag = false;
 		downTermFlag = false;
 	}else{
+		downPriceFlag = true;
+		downTermFlag = true;
 		document.getElementById("down_price").hidden = true;
 		document.getElementById("downPrice").value = 0;
 		document.getElementById("downTerm").value = 0;
@@ -206,3 +222,37 @@ function deleteFile(file, el) {
       }
     });
   }
+
+
+function verifyData(){
+	if(!titleFlag){
+		alert("제목을 입력하세요");
+		return false;
+	}
+	if(!startPriceFlag){
+		alert("시작가격을 입력하세요");
+		return false;
+	}
+	
+	var due_date = new Date($('#dueDate').val());
+	var due_time = new Date($('#dueTime').val());
+	
+	due_date.setHours(due_time.getHours);
+	due_date.setMinutes(due_time.getMinutes);
+	due_date.setSeconds(due_time.getSeconds);
+	
+	alert(due_date);
+	
+	if(!timeFlag){
+		alert("마감시간을 입력하세요");
+		return false;
+	}
+	if(!downPriceFlag){
+		alert("내림가격을 입력하세요");
+		return false;
+	}if(!downTermFlag){
+		alert("내림시간간격을 입력하세요");
+		return false;
+	}
+	return true;
+}

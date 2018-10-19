@@ -90,7 +90,6 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 										</select>
 									</div>
 								</div>
-
 							</div>
 						</div>
 
@@ -117,7 +116,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<h4>경매 마감 시간:</h4>
 								<div class="col-sm-8">
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="dueDate" name="due_date">
+										<input type="datetime-local" class="form-control" id="dueDate" name="due_date">
 									</div>
 									<div class="col-sm-4">
 										<input type="time" class="form-control" id="dueTime" name="due_time">

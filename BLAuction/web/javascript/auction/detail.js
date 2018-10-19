@@ -122,7 +122,6 @@ function makebidding(auction_id, secret, user_id, auction_address){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			//getBidList(auction_id);
 			$("#biddingModal").modal('hide');
 			window.location.reload();
 		},
@@ -171,3 +170,6 @@ function getBidListFromContract(){
 	
 }
 
+function makebiddingDown(){
+	
+}
