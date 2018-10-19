@@ -13,7 +13,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-<script src="javascript/auction/register.js"></script>
+<script src="javascript/auction/register.js?version=1"></script>
 
 <style>
 input.upload1 {
@@ -34,6 +34,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 	position: absolute;
 }
 </style>
+<script>
+
+</script>
 <title>BLAuction_경매 등록</title>
 </head>
 <body>
@@ -48,15 +51,19 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 			<div class="panel panel-default" id="register_panel">
 				<div class="panel-body">
 					<form id="auction_form" class="form-horizontal" enctype="multipart/form-data">
+					
 						<div id="register_top">
+							<!-- Pic 1 -->
 							<div id="register_pic1">
 								<button type="button" class="btn btn-default" id="replace1">사진등록</button>
 							</div>
 								<input type="file" class="upload1" id="upload1" name="upload1">
+							<!-- Pic 2 -->	
 							<div id="register_pic2">
 								<button type="button" class="btn btn-default" id="replace2">사진등록</button>
 							</div>
 								<input type="file" class="upload2" id="upload2" name="upload2">
+							
 							<div id="register_info1">
 								<div>
 									<div class="form-group">
@@ -76,7 +83,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 									<div class="form-group">
 										<h4>#경매종류</h4>
 										<select class="form-control" id="registerKind"
-											name="type">
+											name="type" onchange="checkRegisterKind(this)">
 											<option value="1">올림경매</option>
 											<option value="2">내림경매</option>
 											<option value="3">비밀경매</option>
@@ -100,9 +107,9 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="number" class="form-control" id="startPrice" name="start_price"
-										min="0.001"  step="0.001">
+									<input type="number" class="form-control" id="startPrice" min="0.001"  step="0.001">
 								</div>
+								<input type="number" class="form-control" name="start_price" id="startPriceFinney">
 							</div>
 							
 							<div style="margin-left: -2%; margin-bottom: 4%;"
@@ -119,12 +126,12 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							</div>
 							
 							<div style="margin-bottom: 4%;"
-								class="form-group" id="down_price">
+								class="form-group" id="down_price" hidden="false">
 									<h4>내림 가격:</h4>
 									<div class="col-sm-4">
-										<input type="number" class="form-control" id="downPrice" name="down_price"
-										min="0.001"  step="0.001">
+										<input type="number" class="form-control" id="downPrice" min="0.001"  step="0.001">
 									</div>
+									<input type="number" class="form-control" name="down_price" id="downPriceFinney" >
 									<h4>내림 시간 간격(시):</h4>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="downTerm" name="down_term" 
@@ -135,7 +142,6 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							<div>
 								<div class="form-group">
 									<h4>상세 내용</h4>
-									<!-- <textarea class="form-control" rows="9" id="comment"></textarea> -->
 									<div id="summernote">summernote</div>
 								</div>
 							</div>

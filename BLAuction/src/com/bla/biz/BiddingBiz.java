@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bla.dao.BiddingDao;
 import com.bla.frame.Biz;
+import com.bla.vo.AuctionVO;
 import com.bla.vo.BiddingVO;
 
 @Service("bbiz")
@@ -38,7 +39,7 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	@Override
 	public BiddingVO get(Integer v) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return bdao.select(v);
 	}
 
 	@Override
@@ -51,12 +52,16 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 		return bdao.selectAuctIdByMemberId(member_id);
 	}
 	
-	public Long selectBidMaxPrice(Integer auct_id) {
-		return bdao.selectBidMaxPrice(auct_id);
+	public Long selectBidMaxPrice(AuctionVO auction) throws Exception{
+		return bdao.selectBidMaxPrice(auction);
 	}
 	
-	public Long selectMemberMaxPrice(Map<String,Integer> obj) {
+	public Long selectMemberMaxPrice(Map<String,Integer> obj) throws Exception{
 		return bdao.selectMemberBidMaxPrice(obj);
+	}
+	
+	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id) throws Exception{
+		return bdao.selectAuctionBiddingList(auct_id);
 	}
 	
 }

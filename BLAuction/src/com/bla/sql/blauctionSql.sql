@@ -10,7 +10,7 @@ DROP TABLE MEMBER;
 
 create table MEMBER(
 member_id number(5) not null PRIMARY KEY,
-email   varchar2(40) not null,
+email   varchar2(40) not null UNIQUE,
 pw   varchar2(10) not null,
 name   varchar2(20) not null,
 address varchar2(100) not null,
@@ -33,6 +33,7 @@ auct_type_name varchar2(10) not null
 
 create table AUCTION(
 auct_id number(5) not null PRIMARY KEY,
+auct_title VARCHAR2(50) not null,
 member_id number(5) not null,
 duedate number(20) not null,
 auct_type_id number(5) not null,
@@ -132,3 +133,5 @@ INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'eileenkim1208@gmail.com','1234','�
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'kimsj9484@gmail.com','1234','김선재','서울특별시 관악구 봉천동 1523-22','01092557433','941015',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'hny4813@naver.com','1234','한나영','서울특별시 관악구 봉천동 1523-21','01092557435','950327',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 COMMIT;
+
+ALTER TABLE BIDDING MODIFY(TIME NUMBER(20));
