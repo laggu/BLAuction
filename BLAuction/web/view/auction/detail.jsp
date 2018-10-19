@@ -11,12 +11,11 @@
 var dtA;
 $(document).ready(function(){
     $("#bidding_btn").click(function(){
-         $("#biddingModal").modal();
+         $("#biddingModal").show();
     });
     
-    dtA = new Date($("#timestamp").text());
-
-    window.setInterval("srvTime();",1000);
+    dtA = new Date(parseInt($("#timestamp").text()));
+    window.setInterval("srvTime();",300);
 });
 
 </script>
@@ -93,11 +92,11 @@ $(document).ready(function(){
 								</div>
 								
 								<div>
-									<h4>경매 마감 시간: <span id="auctionDuedate"></span></h4>
+									<h4>경매 마감 시간: <span id="auctionDuedate">${due_date }</span></h4>
 								</div>
 								
 								<div>
-									<h4>마감까지 남은 시간: <span id="currentTimelimit"></span></h4>
+									<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 								</div>
 							
 								<button type="submit" class="btn btn-danger" id="bidding_submit_btn">입찰하기</button>

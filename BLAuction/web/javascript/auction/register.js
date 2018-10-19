@@ -5,6 +5,11 @@
 // 2.
 
 var photo_id = [];
+var titleFlag = false;
+var startPriceFlag = false;
+var timeFlag = false;
+var downPriceFlag = true;
+var downTermFlag = true;
 
 $(document).ready(function() {
 	
@@ -102,16 +107,38 @@ $(document).ready(function() {
         }
       });
 	
+	$("#register_btn").click(function(){
+		makeAuction();
+	})
+	
 	$('#startPrice').on('change keyup mouseup',function(){
 		var ether = $('#startPrice').val();
 		$('#startPriceFinney').val(ether * 1000);
-	})
+	});
+	
+	$('#downPrice').on('change keyup mouseup',function(){
+		var ether = $('#downPrice').val();
+		$('#downPriceFinney').val(ether * 1000);
+	});
+	
+	
+	
+	
+	$('#registerTitle').on('change',function(){
+		var title = $('#registerTitle').val();
+		if(title.length >= 20){
+			$('#registerTitle').val(title.substring(0,20));
+		}
+		titleFlag = true;
+	});
 });
 
 // Auction Kind checking function
 function checkRegisterKind(auction_kind){
 	if(auction_kind.value == 2){
 		document.getElementById("down_price").hidden = false;
+		downPriceFlag = false;
+		downTermFlag = false;
 	}else{
 		document.getElementById("down_price").hidden = true;
 		document.getElementById("downPrice").value = 0;

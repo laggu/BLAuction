@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
-<script src="javascript/user/delivery.js"></script>
+<script src="javascript/user/delivery.js?version=1"></script>
 
 <script type="text/javascript">
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
@@ -187,9 +187,8 @@ document.form.zipNo.value = zipNo;
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
 	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn">
-	  							<strong>택배 상태 조회</strong></button>	
-	  							<span id="Delivery_Status"></span>
+	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">택배 상태 조회</button>	
+	  							<span id="Delivery_Status"+index></span>
 	  						</div>
 		  				</div>
 		  			</div>
