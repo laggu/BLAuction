@@ -9,55 +9,46 @@
 
 var xmlHttp;
 function srvTime() {
-    try {
-        //FF, Opera, Safari, Chrome
-        xmlHttp = new XMLHttpRequest();
-    }
-    catch (err1) {
-        //IE
-        try {
-            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-        }
-        catch (err2) {
-            try {
-                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
-            }
-            catch (eerr3) {
-                //AJAX not supported, use CPU time.
-                alert("AJAX not supported");
-            }
-        }
-    }
-    xmlHttp.open('HEAD', window.location.href.toString(), false);
-    xmlHttp.setRequestHeader("Content-Type", "text/html");
-    xmlHttp.send();
-    var date = new Date(xmlHttp.getResponseHeader("Date"));
-    var timediff = dtA.getTime() - date.getTime();
-    
-    if(timediff <= 0){
-        $("#currentTimelimit").text('경매완료');
-        return;
-    }
-    
-    timediff /= 1000;
-    var s = '';
-    
-    if(parseInt(timediff/86400) >= 1){
-    	s += parseInt(timediff/86400) + '일 '
-        timediff %= 86400;
-    }
-    if(parseInt(timediff/3600) >= 1){
-    	s += parseInt(timediff/3600) + '시간 '
-        timediff %= 3600;
-    }
-    if(parseInt(timediff/60) >= 1){
-    	s += parseInt(timediff/60) + '분 '
-        timediff %= 60;
-    }
-    s += Math.floor(timediff) + '초';
-    $("#currentTimelimit").text(s);
-    $("#currentTimelimitModal").text(s);
-    //alert(timediff);
+	$(function () {
+		  $.ajax({
+		    type: 'GET',
+		    cache: false,
+		    url: '/timestamp.bla',
+		    complete: function (req, textStatus) {
+		      var dateString = req.getResponseHeader('Date');
+		      if (dateString.indexOf('GMT') === -1) {
+		        dateString += ' GMT';
+		      }
+		      var date = new Date(dateString);
+		      var timediff = dtA.getTime() - date.getTime();
+		      
+		      if(timediff <= 0){
+		          $("#currentTimelimit").text('경매완료');
+		          return;
+		      }
+		      
+		      timediff /= 1000;
+		      var s = '';
+		      
+		      if(parseInt(timediff/86400) >= 1){
+		      	s += parseInt(timediff/86400) + '일 '
+		          timediff %= 86400;
+		      }
+		      if(parseInt(timediff/3600) >= 1){
+		      	s += parseInt(timediff/3600) + '시간 '
+		          timediff %= 3600;
+		      }
+		      if(parseInt(timediff/60) >= 1){
+		      	s += parseInt(timediff/60) + '분 '
+		          timediff %= 60;
+		      }
+		      s += Math.floor(timediff) + '초';
+		      $("#currentTimelimit").text(s);
+		      $("#currentTimelimitModal").text(s);
+		    }
+		  });
+		});
+	
 }
 
 
@@ -89,4 +80,10 @@ if (n.length < digits) {
     zero += '0';
 }
 return zero + n;
+}
+
+
+function makebidding(){
+	// 시간, 옥션id, 가격
+	// /biddingimpl.bla
 }
