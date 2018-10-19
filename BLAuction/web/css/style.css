@@ -792,7 +792,7 @@
 	}
 	
 	
-	#myinfo_panel, #sellerinfo_panel{
+	#myinfo_panel{
 		height:300px;
 		position:relative;
 		width:80%;
@@ -841,10 +841,9 @@
 		border-bottom:1px solid #C3C3C3;
 	}
 	
-	#leftInfo div:second-child,third-child{
+	#leftInfo button{
 		position:relative;
-		width:100%;
-		margin-top:2%;
+		margin-right:0;
 	}
 	
 	#mylist_area{
@@ -915,6 +914,35 @@
 		margin-bottom:4%;
 	}
 	
+	#mybiddingInfo div{
+		position:relative;
+		margin-bottom:3%;
+	}
+	
+	#mybiddingInfo div:first-child{
+		position:relative;
+		display:inline;
+	}
+	
+	#mybiddingInfo h4{
+		position:relative;
+		display:inline;
+	}
+	
+	#mybidding_seller_btn{
+		position:relative;
+		display:inline;
+		width:32%;
+		float:right;
+	}
+	
+	#winningbidding_seller_btn{
+		position:relative;
+		display:inline;
+		width:32%;
+		float:right;
+	}
+	
 	
 	#winningbidStatus{
 		color:red;
@@ -929,10 +957,23 @@
 	#myauctionTitle{
 		display:inline;
 	}
+	
 	#myauctionbidStatus{
 		display:inline;
 		float:right;
 		color:red;
+	}
+	
+	#myauctionCancle{
+		display:inline;
+		float:right;
+	}
+	
+	#myauction_seller_btn{
+		position:relative;
+		display:inline;
+		width:32%;
+		float:right;
 	}
 	
 	
@@ -1021,6 +1062,7 @@
 		color:red;
 		position:relative;
 		float:right;
+		width:
 	}
 	
 	
