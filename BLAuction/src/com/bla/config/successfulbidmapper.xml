@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insert" parameterType="successfulbid">
-		INSERT INTO SUCCESSFUL_BID (AUCT_ID, BID_ID, REVIEW, DELIVERY_CODE, DELIVERY_STATUS, COMPANY_CODE) VALUES (#{auct_id},#{bid_id},#{review},#{delivery_code},#{delivery_status},#{company_code})
+		INSERT INTO SUCCESSFUL_BID (AUCT_ID, BID_ID) VALUES (#{auct_id},#{bid_id})
 	</insert>
 
 	<update id="update" parameterType="successfulbid">
