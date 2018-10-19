@@ -24,7 +24,7 @@ var pop = window.open("jusoPopup.bla","pop","width=570,height=420, scrollbars=ye
 // 실제 주소검색 URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
 // var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
 }
-var 
+
 function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
 // 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
 document.form.roadFullAddr.value = roadFullAddr;
@@ -106,6 +106,18 @@ document.form.zipNo.value = zipNo;
 		
 	};
 </script>
+
+<script>
+//Tab 전환
+$(document).ready(function(){
+	
+	$(".nav-tabs a").click(function(){
+        $(this).tab('show');
+    });
+	
+});
+</script>
+
 <body>
 
 	<!-- Content -->
@@ -132,42 +144,58 @@ document.form.zipNo.value = zipNo;
 	  					<div id="leftInfo">
 	  						<div><h4><strong>내 정보</strong></h4></div>
 	  						<div>
-	  						핸드폰 번호: <span id="myphone">${member.phone }</span>
+	  						<strong>핸드폰 번호: </strong><span id="myphone">${member.phone }</span>
 	  						<button type="button" class="btn btn-warning" id="changePhone_btn"
 	  						data-toggle="modal" data-target="#ChangePhoneModal"><strong>번호 변경</strong></button>
 	  						</div>
 	  						<div>
-	  						주소: <span id="myaddress">${member.address }</span>
+	  						<strong>주소: </strong><span id="myaddress">${member.address }</span>
 	  						<button type="button" class="btn btn-warning" id="changeAddress_btn"
-	  						data-toggle="modal" data-target="" onClick="goPopup();" value="팝업"><strong>주소 변경</strong></button>
+	  						onClick="goPopup();" value="팝업"><strong>주소 변경</strong></button>
 	  						</div>
+	  						
 	  					</div>
 	  				</div>
 	  			</div>
 			</div>
 			
+			
+			<!-- Tabs -->
 			<ul class="nav nav-tabs" id="mylist_tabs">
-			  <li class="active"><a data-toggle="tab" href="#home">입찰 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu1">낙찰 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu2">내가 올린 경매</a></li>
+			  <li class="active"><a data-toggle="tab" href="#mybiddinglists">입찰 리스트</a></li>
+			  <li><a data-toggle="tab" href="#winningbidlists">낙찰 리스트</a></li>
+			  <li><a data-toggle="tab" href="#myauctionlists">내가 올린 경매</a></li>
 			</ul>
 			
+			<!-- First -->
 			<div class="tab-content" id="mylist_panel">
+			
 			  <div id="mybiddinglists" class="tab-pane fade in active">
 			  	<!-- Panel -->
 			    <div class="panel panel-default" id="mybidding_panel">
 		  			<div class="panel-body">
 		  				<div id="mybiddingImg"><img src="img/se.jpg"></div>
 		  				<div id="mybiddingInfo">
-		  					<div><h4><strong>경매 물품 이름</strong></h4></div>
+		  					<div>
+		  						<h4><strong>경매 물품 이름</strong></h4>
+		  						<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-link" id="mybidding_seller_btn">
+	  							<strong>판매자 정보 확인</strong></button></a>
+		  					</div>
 	  						<div>내 입찰가: <span id="mybiddingPrice">0.1 Ether</span></div>
-	  						<div>현재 최고가: <span id="currenthighestPrice">10.0 Ether</span>
-	  						<button type="button" class="btn btn-danger" id="rebidding_btn" 
-	  						data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>
+	  						<div>현재 최고가: <span id="currenthighestPrice">10.0 Ether</span></div>
+	  						<div>
+	  							<button type="button" class="btn btn-danger" id="rebidding_btn" 
+	  							data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>
+	  							<button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button>
 	  						</div>
 		  				</div>
 		  			</div>
 				</div>
+			</div>
+			
+			<!-- Second -->
+			<div id="winningbidlists" class="tab-pane fade">
+			  	<!-- Panel -->
 				<div class="panel panel-default" id="winningbid_panel">
 		  			<div class="panel-body">
 		  				<div id="winningbidImg"><img src="img/se.jpg"></div>
@@ -182,18 +210,26 @@ document.form.zipNo.value = zipNo;
 	  						<div>
 	  							판매자 이름: <span id="bidsellerName">한나영</span>
 	  							/   판매자 전화번호: <span id="bidsellerPhone">010-1234-5678</span>
+	  							<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-link" id="winningbidding_seller_btn">
+	  							<strong>판매자 정보 확인</strong></button></a>
 	  						</div>
 	  						<div>
 	  							택배사: <span id="deliverycompany">cj 대한통운</span>
 	  							/   운송장 번호: <span id="invoice">777-777777-7</span>
 	  						</div>
 	  						<div>
-	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">택배 상태 조회</button>	
+	  							<button type="button" class="btn btn-warning" id="deliveryStatus_Btn" 
+	  							onclick="getDeliveryStatus(index,auction_address);"><strong>택배 상태 조회</strong></button>	
 	  							<span id="Delivery_Status"+index></span>
 	  						</div>
 		  				</div>
 		  			</div>
 				</div>
+			</div>
+			
+			<!-- Third -->
+			<div id="myauctionlists" class="tab-pane fade">
+			  	<!-- Panel -->
 				<div class="panel panel-default" id="myauction_panel">
 		  			<div class="panel-body">
 		  				<div id="myauctionImg"><img src="img/se.jpg"></div>
@@ -207,11 +243,16 @@ document.form.zipNo.value = zipNo;
 	  						<div>
 		  						낙찰자 이름: <span id="winnerName">한나영</span> 
 		  						/   낙찰자 전화번호: <span id="winnerPhone">010-1234-5678</span>
+		  						<a href="sellerpage.bla?auct_id=auct_id"><button type="button" class="btn btn-link" id="myauction_seller_btn">
+	  							<strong>판매자 정보 확인</strong></button></a>
 	  						</div>
 	  						<div>낙찰자 주소: <span id="winnerAddress">서울시 강남구 테헤란로 212 멀티캠퍼스 1004호</span></div>
 	  						<div>운송장 정보: <span id="winnerInvoice">777-777777-7</span>&nbsp;(<span id="winnerDeliverycompany">cj 대한통운</span>)
 	  						<button type="button" class="btn btn-warning" id="deliveryInfo_btn"
 	  						data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>
+	  						</div>
+	  						<div>
+	  						<button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button>
 	  						</div>
 		  				</div>
 		  				
