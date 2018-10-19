@@ -7,11 +7,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_물품 상세</title>
-<script src="javascript/auction/detail.js?version=1"></script>
-</head>
 <script>
 	var auctionStatus = "${auction.auction_status }";
+
+	$(document).ready(function(){
+	    $("#bidding_btn").click(function(){
+	         $("#biddingModal").show();
+	    });
+	    
+	    dtA = new Date(parseInt($("#timestamp").text()));
+	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
+	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
+	    }else if(auctionStatus == "cancel"){
+	    	$("#currentTimelimit").text("경매 취소");
+	    }else{
+	    	$("#currentTimelimit").text("경매 완료");	
+	    }
+	    getBidList("${auction.auct_id }");
+	});
 </script>
+<script src="javascript/auction/detail.js?version=1"></script>
+</head>
+
 <body>
 <!-- Content -->
 <div id="detail_area">
@@ -53,8 +70,9 @@
   				</div>
   				
   				<!-- Trigger the modal with a button -->
-  				<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
-				
+  				<c:if test="${auction.auction_status ne 'end' && auction.auction_status ne 'cancel'}">
+  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
+	        	</c:if>
 				  <!-- Modal -->
 				  <div class="modal" id="biddingModal">
 				    <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -92,11 +110,10 @@
 
 				        </div>
 				        
-			        	<c:if test="${auction.auction_status ne 'before'}"> 
+			        	 
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					        </div>
-			        	</c:if>
 				      </div>
 				      
 				    </div>

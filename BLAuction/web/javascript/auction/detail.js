@@ -11,15 +11,6 @@ var date;
 var dtA;
 var timeInterval;
 
-$(document).ready(function(){
-    $("#bidding_btn").click(function(){
-         $("#biddingModal").show();
-    });
-    
-    dtA = new Date(parseInt($("#timestamp").text()));
-    timeInterval = window.setInterval("srvTime();",300);
-    getBidList(2);
-});
 
 function srvTime(auct_id) {
 	  $.ajax({
@@ -43,13 +34,12 @@ function srvTime(auct_id) {
 	          
 	          $.ajax({
 	      		type:'POST',
-	      		url:'auctionbidlist.bla', /* DB로 접근 */
+	      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
 	      		data:params,
 	      		datatype:'json',
 	      		success:function(data){
-	      			alert("success" + data);
 	      			window.clearInterval(timeInterval);
-	      			},
+      			},
 	      		error:function(data){
 	      			alert(data)
 	      		}
@@ -109,8 +99,6 @@ function makebidding(auction_id, secret){
 	
 	price *= 1000;
 	
-	alert(price + "\n" + cur_price);
-	
 	if(price ==0){
 		alert("가격을 입력하세요");
 		return;
@@ -136,7 +124,7 @@ function makebidding(auction_id, secret){
 			$("#biddingModal").modal('hide');
 		},
 		error:function(data){
-			alert(data)
+			alert("biddingimpl.bla error")
 		}
 	})
 
@@ -158,7 +146,6 @@ function getBidList(auction_id){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			alert("success" + data);
 			for(i in data){
 				s = "<tr>";
 				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
@@ -177,6 +164,7 @@ function getBidList(auction_id){
 
 }
 
+function getBidListFromContract(){
+	
+}
 
-
-//

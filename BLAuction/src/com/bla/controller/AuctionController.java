@@ -315,12 +315,18 @@ public class AuctionController {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
-				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
-				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
 				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
@@ -362,12 +368,18 @@ public class AuctionController {
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 hh:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
-				PhotoVO photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
-				PhotoVO photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
 				newlist.setAuction(auction_list.get(i));
 				newlist.setDuedate(due_date);
-				newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
-				newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
 				if (newlist.getMax_price() == null) {
 					newlist.setMax_price(auction_list.get(i).getStart_price());
