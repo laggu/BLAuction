@@ -24,6 +24,7 @@ var pop = window.open("jusoPopup.bla","pop","width=570,height=420, scrollbars=ye
 // 실제 주소검색 URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
 // var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
 }
+var 
 function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
 // 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
 document.form.roadFullAddr.value = roadFullAddr;
@@ -138,7 +139,7 @@ document.form.zipNo.value = zipNo;
 	  						<div>
 	  						주소: <span id="myaddress">${member.address }</span>
 	  						<button type="button" class="btn btn-warning" id="changeAddress_btn"
-	  						data-toggle="modal" data-target="#ChangeAddressModal"><strong>주소 변경</strong></button>
+	  						data-toggle="modal" data-target="" onClick="goPopup();" value="팝업"><strong>주소 변경</strong></button>
 	  						</div>
 	  					</div>
 	  				</div>
