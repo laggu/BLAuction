@@ -110,9 +110,34 @@ document.form.zipNo.value = zipNo;
 <script>
 //Tab 전환
 $(document).ready(function(){
-	
+	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
+	alert("");
+    $.ajax({
+		type:'POST',
+		url:'mybiddinglist.bla', /* DB로 접근 */
+		datatype:'json',
+		success:function(data){
+			for(i in data){
+				alert("auct_id "+data[i].auct_id);
+				alert("title "+data[i].title);
+				alert("auct_status "+data[i].auction_status);
+				alert("auction_address "+data[i].auction_address);
+				alert("photoPath1 "+data[i].photoPath1);
+				alert("photoName1 "+data[i].photoName1);
+				alert("photoPath2 "+data[i].photoPath2);
+				alert("photoName2 "+data[i].photoName2);
+				alert("bidmaxPrice "+data[i].bidMaxPrice);
+				alert("memberMaxPrice "+data[i].memberMaxPrice);
+				
+			}
+		},
+		error:function(data){
+			alert("biddingimpl.bla error")
+		}
+	});
 	$(".nav-tabs a").click(function(){
         $(this).tab('show');
+        
     });
 	
 });

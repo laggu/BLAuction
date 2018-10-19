@@ -467,9 +467,7 @@ public class AuctionController {
 		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
 
-		// int member_id = (Integer)session.getAttribute("member_id");
-
-		int member_id = 2;
+		int member_id = (Integer)session.getAttribute("member_id");
 
 		ArrayList<Integer> auct_ids = null;
 		AuctionVO auct = null;
