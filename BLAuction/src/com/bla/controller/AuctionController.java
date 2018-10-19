@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -466,7 +467,6 @@ public class AuctionController {
 		// auct_id로 경매가 무엇이 있는 지 select 후 title과 사진 가져오기,
 		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
-
 		int member_id = (Integer)session.getAttribute("member_id");
 
 		ArrayList<Integer> auct_ids = null;
@@ -485,7 +485,7 @@ public class AuctionController {
 
 		try {
 			// 회원이 입찰한 경매 id들(중복제거)
-			auct_ids = bbiz.selectAuctIdByMemberId(2);
+			auct_ids = bbiz.selectAuctIdByMemberId(member_id);
 			ja = new JSONArray();
 			// 회원이 입찰한 경매의 최고가와 그 경매에서 내가 입찰한 최고가 가져오기.
 			for (Integer auct_id : auct_ids) {
@@ -494,6 +494,7 @@ public class AuctionController {
 				jo = new JSONObject();
 				jo.put("auct_id", auct_id);
 				jo.put("title", auct.getAuct_title());
+				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
 				jo.put("auction_address", auct.getAuction_address());
 				// 사진도 Photo테이블에서 경로랑 이름 들고와야함..
@@ -530,9 +531,7 @@ public class AuctionController {
 		// Auction테이블에서 member_id로 select (ArrayList<AuctionVO>)
 		HttpSession session = request.getSession();
 
-		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-
-		int member_id = 1;
+		int member_id = (Integer)session.getAttribute("member_id");
 
 		Map<String, Integer> map = new HashMap<>();
 		map.put("member_id", member_id);
@@ -559,7 +558,9 @@ public class AuctionController {
 			// Auction 테이블에서 member_id로 내가 올린경매를 가져온다.
 			// auct_id로 사진을 가져온다.
 			// 경매 중-입찰전, 입찰 중, 낙찰, 취소 => 쿼리문 조건으로 날려서 따로 가지고와서 json화 한다.
-			auctions = abiz.selectAuctionByMember(member_id);
+			AuctionVO auction_member = new AuctionVO();
+			auction_member.setMember_id(member_id);
+			auctions = abiz.selectAuctionByMember(auction_member);
 
 			for (AuctionVO auction : auctions) {
 				int auct_id = auction.getAuct_id();
@@ -671,6 +672,7 @@ public class AuctionController {
 			jo.put("cancel", cancelJa.toJSONString());
 
 			out = response.getWriter();
+			System.out.println(jo);
 			out.print(jo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -684,8 +686,7 @@ public class AuctionController {
 	public void mysuccessbidlist(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
-		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-		int member_id = 1;
+		int member_id = (Integer)session.getAttribute("member_id");
 		ArrayList<SuccessfulBidVO> successfulBids = null;
 
 		// json 배열과 객체 선언
@@ -693,8 +694,9 @@ public class AuctionController {
 		JSONArray ja = null;
 
 		// json 넘겨주기위함
+		response.setContentType("text/json;charset=utf-8");
 		PrintWriter out = null;
-
+		
 		try {
 			// 처음 한 쿼리로
 			// Bidding 테이블에서 member_id가 가지고 있는 bid_id를 가져와서
@@ -713,13 +715,18 @@ public class AuctionController {
 
 			ja = new JSONArray();
 			for (SuccessfulBidVO successfulBid : successfulBids) {
+				System.out.println("successfulbid; "+successfulBid);
 				jo = new JSONObject();
 				price = bbiz.get(successfulBid.getBid_id()).getPrice();
+				System.out.println("price : "+price);
 				photos = pbiz.getAll(successfulBid.getAuct_id());
+				AuctionVO auction = abiz.get(successfulBid.getAuct_id());
 				auct_member_id = abiz.selectMemberIdByAuct(successfulBid.getAuct_id());
 				sellerInfo = mbiz.get(auct_member_id);
+				jo.put("title", auction.getAuct_title());
 				jo.put("price", price);
 				for (PhotoVO photoVO : photos) {
+					System.out.println(photoVO);
 					int i = 0;
 					String pathKey = "photoPath" + i;
 					String nameKey = "photoName" + i;
@@ -727,7 +734,8 @@ public class AuctionController {
 					jo.put(nameKey, photoVO.getPhoto_name());
 					i++;
 				}
-				jo.put("seller-name", sellerInfo.getName());
+				jo.put("seller_id", auct_member_id);
+				jo.put("seller_name", sellerInfo.getName());
 				jo.put("seller_phone", sellerInfo.getPhone());
 				jo.put("delivery_code", successfulBid.getDelivery_code());
 				jo.put("delivery_status", successfulBid.getDelivery_status());
@@ -737,6 +745,7 @@ public class AuctionController {
 			}
 
 			out = response.getWriter();
+			System.out.println(ja.toJSONString());
 			out.print(ja.toJSONString());
 
 		} catch (Exception e) {

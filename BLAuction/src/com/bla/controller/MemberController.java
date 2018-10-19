@@ -83,7 +83,6 @@ public class MemberController {
 		}
 		
 		
-		mv2.setViewName("main");
 		mv2.addObject("centerpage", "center");
 		System.out.println("로그인성공");
 		session.setAttribute("member_id", member.getMember_id());
@@ -151,7 +150,6 @@ public class MemberController {
 		member.setBirth(bi);
 		member.setMember_account(request.getParameter("member_account"));
 
-		mv.setViewName("main");
 		try {
 			biz.register(member);
 			System.out.println(member.getEmail());

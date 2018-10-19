@@ -15,6 +15,6 @@ public interface AuctionMapper {
 	public void insert(AuctionVO obj);
 	public void insertDown(AuctionVO obj);
 	public void updateStatus(AuctionVO obj);
-	public ArrayList<AuctionVO> selectAuctionByMember(Integer member_id);//mypage 나의 경매 리스트
+	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj);//mypage 나의 경매 리스트
 	public int selectMemberIdByAuct(Integer auct_id);
 }
