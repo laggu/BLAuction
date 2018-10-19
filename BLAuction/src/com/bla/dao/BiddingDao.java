@@ -63,4 +63,8 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	public Long selectMemberBidMaxPrice(Map<String,Integer> obj) throws Exception {
 		return bmapper.selectMemberBidMaxPrice(obj);
 	}
+	
+	public BiddingVO selectBididByAuctId(Integer auct_id) throws Exception{
+		return bmapper.selectBididByAuctId(auct_id);
+	}
 }

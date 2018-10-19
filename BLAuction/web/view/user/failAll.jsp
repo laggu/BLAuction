@@ -55,41 +55,19 @@ height:500px;
 
 
 </style>
-<script>
 
-var resultt = "<%=(String)request.getAttribute("resultt")%>"
-
-if(resultt != 'null') {
-	if(resultt == 'asdd') {
-		alert("id가 틀렸습니다. 다시 입력하세요.");
-	}
-	if(resultt == 'asdf') {
-		alert("password가 틀렸습니다. 다시 입력하세요.");
-	}
-}
-</script>
 
 </head>
 <body>
 
 	<div class="failMeta_body">
-		<h2></h2>
-		<br>
-		<br>
+		<h1>메타마스크와 비밀번호가 틀립니다.</h1>
 		<div>
 		    <div>
-		    	<img src="img/logo.PNG" style="margin-left:200px;margin-bottom:50px;">
 	            <div class="failMeta_panel">
 	                <form action="login.bla" method="POST">
 	                    <div class="ins">
 	                        <button type="submit" id="loginBTN" class="form-control failMeta btn btn-danger">로그인</button>
-	                    </div>
-	                    
-	                </form>
-	                
-	                <form action="register.bla" method="POST">
-	                    <div class="ins">
-	                        <button type="submit" id="registerBTN" class="form-control failMeta btn btn-danger">회원가입</button>
 	                    </div>
 	                    
 	                </form>

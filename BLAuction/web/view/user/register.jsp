@@ -101,7 +101,66 @@ $(function(){
 <script>
 $(document).ready(function(){
 $('.pass_show').append('<span class="ptxt">Show</span>');  
+
 $("#address").val($("#confmKey").val());
+
+function autoHypenPhone(str){
+    str = str.replace(/[^0-9]/g, '');
+    var tmp = '';
+    if( str.length < 4){
+        return str;
+    }else if(str.length < 7){
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+    }else if(str.length < 11){
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+    }else{              
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+    }
+    return str;
+}
+
+function check() {		
+
+	alert(document.getElementById("email").value);
+
+	var email = document.getElementById("email").value;
+
+	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+			if(exptext.test(email)==false){
+
+		//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
+
+		alert("이 메일형식이 올바르지 않습니다.");
+
+		document.addjoin.email.focus();
+
+		return false;
+
+	}
+
+}
+
+
+var cellPhone = document.getElementById('phone');
+cellPhone.onkeyup = function(event){
+event = event || window.event;
+var _val = this.value.trim();
+this.value = autoHypenPhone(_val) ;
+}
 
 });
   
@@ -113,6 +172,10 @@ $(this).text($(this).text() == "Show" ? "Hide" : "Show");
 $(this).prev().attr('type', function(index, attr){return attr == 'password' ? 'text' : 'password'; }); 
 
 });  
+
+
+
+
 </script>
 
 
@@ -212,12 +275,12 @@ transition: .3s ease all;
                    
                       <div class="ins">
                       <label class="write">이메일</label>
-                           <input type="text" id="email" class="form-control registers" name="email" placeholder="EMAIL" autofocus required>
+                           <input type="email" id="email" onsubmit="check();" class="form-control registers" name="email" placeholder="EMAIL" autofocus required>
                       </div>
                       
                       <div class="ins">
                       <label class="write">전화번호</label>
-                           <input type="text" id="phone" class="form-control registers" name="phone" placeholder="PHONE NUMBER" autofocus required>
+                           <input type="text" id="phone" class="form-control registers" name="phone" maxlength="13" placeholder="PHONE NUMBER" autofocus required>
                       </div>
                       
                       <div class="ins pass_show">
