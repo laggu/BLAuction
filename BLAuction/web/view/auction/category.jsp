@@ -66,6 +66,7 @@
 
 			</div>
 		</div>
+		</div>
 
 		<!-- Pagination -->
 		<div class="container" id="pagination_area">
@@ -90,6 +91,6 @@
 				</a></li>
 			</ul>
 		</div>
-	</div>
+	
 </body>
 </html>
