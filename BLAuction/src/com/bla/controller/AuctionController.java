@@ -399,31 +399,46 @@ public class AuctionController {
 
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")
-	public void biddingimpl(HttpServletRequest request) {
+	public void biddingimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// session에 저장시킨 member_id와 bidder_account를 받는다.
 
-		// int member_id = Integer.parseInt((String)session.getAttribute("member_id"));
-		// String bidder_account = (String) session.getAttribute("member_account");
+		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
+		String bidder_account = (String) session.getAttribute("member_account");
 
 		// request로 price, time, auct_id를 넘겨받는다.
-		// long price = Long.parseLong(request.getParameter("price"));
-		long time = System.currentTimeMillis();
-		// int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		long price = Long.parseLong(request.getParameter("price"));
+		long time = Long.parseLong(request.getParameter("time"));
+		int auct_id = Integer.parseInt(request.getParameter("auction_id"));
 
 		// BiddingVO bid = new BiddingVO(member_id,auct_id,price,time,bidder_account);
-		BiddingVO bid = new BiddingVO(3, 1, 2l, time, "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+		// BiddingVO bid = new BiddingVO(3, 1, 2l, time,
+		// "0x9671652cf6fba11f7576b341b95bff03ad27d581");
+		BiddingVO bid = new BiddingVO(member_id, auct_id, price, time, bidder_account);
 
+		// json 배열과 객체 선언
+		JSONObject jo = new JSONObject();
+
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
 		// DB insert
+
 		try {
 			bbiz.register(bid);
 			System.out.println("bid 성공");
+			
+			out = response.getWriter();
+			jo.put("isBid", true);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+			jo.put("isBid",false);
+		}finally {
+			out.print(jo.toJSONString());
+			out.close();
 		}
-
+		
 	}
 
 	// 내가 입찰한 list SELECT
@@ -793,7 +808,7 @@ public class AuctionController {
 		PrintWriter out = null;
 
 		jo.put("success", "success");
-		
+
 		try {
 			out = response.getWriter();
 		} catch (IOException e) {
