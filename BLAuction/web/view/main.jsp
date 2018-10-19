@@ -48,13 +48,19 @@
       <ul class="nav navbar-nav navbar-right" id="rightNav">
       	
       	<c:choose>
-        	<c:when test="${loginStatus == null}">
+        	<c:when test="${loginStatus == null}">    		
         		<li><a href="login.bla"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        		<li><a href="register.bla"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
         	</c:when>
         	<c:otherwise>
         		<li><a href="createAuction.bla"><img src="img/auction.png"></img>경매등록</a></li>
-      			<li><a href="mypage.bla"><img src="img/customer.png"></img>마이페이지</a></li>
+      			<li><a href="mypage.bla"><img src="img/info.png"></img>마이페이지</a></li>
         		<li><a href="logout.bla"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        		<script>
+        			var member_id_session = "${member_id}";
+        			var member_account_session = "${member_account}";
+        			var name_session = "${name}";
+        		</script>
         	</c:otherwise>
         </c:choose>
       </ul>

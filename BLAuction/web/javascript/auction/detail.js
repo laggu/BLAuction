@@ -7,27 +7,86 @@
 //       --- 그러면 올림 경매일 경우에는??
 // 6. 입찰 버튼 클릭시 입찰 모달 보여주기 ----- 경매 종류에 따라 다르게
 
-
-alert("test");
-
-//var xmlHttp;
-//function srvTime(){
-//	xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-//	xmlHttp.open('HEAD',window.location.href.toString(),false);
-//	xmlHttp.setRequestHeader("Content-Type", "text/html");
-//	xmlHttp.send('');
-//	var date = new Date(xmlHttp.getResponseHeader("Date"));
-//	alert(date);
-//}
-
-function getServerTime(){
-	var xhr = new XMLHttpRequest();  
-	xhr.open("GET", window.location.href.toString(), false);  
-	xhr.send(null);
-	var date = new Date(xmlHttp.getResponseHeader("Date"));
-	alert(date);
+var xmlHttp;
+function srvTime() {
+    try {
+        //FF, Opera, Safari, Chrome
+        xmlHttp = new XMLHttpRequest();
+    }
+    catch (err1) {
+        //IE
+        try {
+            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+        }
+        catch (err2) {
+            try {
+                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            catch (eerr3) {
+                //AJAX not supported, use CPU time.
+                alert("AJAX not supported");
+            }
+        }
+    }
+    xmlHttp.open('HEAD', window.location.href.toString(), false);
+    xmlHttp.setRequestHeader("Content-Type", "text/html");
+    xmlHttp.send();
+    var date = new Date(xmlHttp.getResponseHeader("Date"));
+    var timediff = dtA.getTime() - date.getTime();
+    
+    if(timediff <= 0){
+        $("#currentTimelimit").text('경매완료');
+        return;
+    }
+    
+    timediff /= 1000;
+    var s = '';
+    
+    if(parseInt(timediff/86400) >= 1){
+    	s += parseInt(timediff/86400) + '일 '
+        timediff %= 86400;
+    }
+    if(parseInt(timediff/3600) >= 1){
+    	s += parseInt(timediff/3600) + '시간 '
+        timediff %= 3600;
+    }
+    if(parseInt(timediff/60) >= 1){
+    	s += parseInt(timediff/60) + '분 '
+        timediff %= 60;
+    }
+    s += Math.floor(timediff) + '초';
+    $("#currentTimelimit").text(s);
+    $("#currentTimelimitModal").text(s);
+    //alert(timediff);
 }
 
-window.setInterval("getServerTime();",1000);
 
+function makeBid(){
+	var price = 5//$('#??').text();
+	var auction_id = 1//= "<%=(String)session.getAttribute('member_id')%>";
+	alert("makeBid");
+	bidding(auction_id, price);
+}
 
+function getTimeStamp(d) {
+	  var s =
+	    leadingZeros(d.getMonth() + 1, 2) + '-' +
+	    leadingZeros(d.getDate(), 2) + ' ' +
+
+	    leadingZeros(d.getHours(), 2) + ':' +
+	    leadingZeros(d.getMinutes(), 2) + ':' +
+	    leadingZeros(d.getSeconds(), 2);
+
+	  return s;
+	}
+
+function leadingZeros(n, digits) {
+var zero = '';
+n = n.toString();
+
+if (n.length < digits) {
+  for (i = 0; i < digits - n.length; i++)
+    zero += '0';
+}
+return zero + n;
+}

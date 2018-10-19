@@ -36,7 +36,6 @@ public class PhotoDao implements Dao<PhotoVO,Integer>{
 
 	@Override
 	public PhotoVO select(Integer v) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
