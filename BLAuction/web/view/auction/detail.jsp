@@ -19,11 +19,11 @@ $(document).ready(function(){
 });
 
 </script>
-<script src="javascript/auction/detail.js"></script>
+<script src="javascript/auction/detail.js?version=1"></script>
 </head>
 
 <body>
-
+<p>${auction_id }</p>
 <!-- Content -->
 <div id="detail_area">
 	<div class="col-sm-10 text-left">
@@ -78,29 +78,28 @@ $(document).ready(function(){
 				        </div>
 				        
 				        <div class="modal-body">  
-							<form action="biddingimpl.bla?auct_id=">
+							<div>
+								<h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4>
+							</div>
+						
+							<div id="inputPriceArea">
+								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
-									<h4>현재 입찰가: <span id="currentPrice"></span></h4>
+									<input id="suggestedPrice" type="number" class="form-control" 
+									min="0.001"  step="0.001" name="suggested_price">
 								</div>
+							</div>
 							
-								<div id="inputPriceArea">
-									<h4>입찰 제시 가격:&nbsp;</h4>
-									<div>
-										<input id="suggestedPrice" type="number" class="form-control" 
-										min="0.001"  step="0.001" name="suggested_price">
-									</div>
-								</div>
-								
-								<div>
-									<h4>경매 마감 시간: <span id="auctionDuedate">${due_date }</span></h4>
-								</div>
-								
-								<div>
-									<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
-								</div>
+							<div>
+								<h4>경매 마감 시간: <span id="auctionDuedate">${due_date }</span></h4>
+							</div>
 							
-								<button type="submit" class="btn btn-danger" id="bidding_submit_btn">입찰하기</button>
-							</form>
+							<div>
+								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
+							</div>
+						
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id });">입찰하기</button>
+						
 
 				        </div>
 				        

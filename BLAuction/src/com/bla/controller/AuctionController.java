@@ -217,7 +217,6 @@ public class AuctionController {
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
-		System.out.println(request.getParameter("timestamp"));
 
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
@@ -229,11 +228,13 @@ public class AuctionController {
 			auction = abiz.get(auct_id);
 			photos = pbiz.getAll(auct_id);
 			System.out.println(photos);
-			Long cur_price = bbiz.selectBidMaxPrice(auction);
-			if (cur_price == null) {
-				cur_price = auction.getStart_price();
+			Long cur_priceL = bbiz.selectBidMaxPrice(auction);
+			if (cur_priceL == null) {
+				cur_priceL = auction.getStart_price();
 			}
-			System.out.println(cur_price);
+			System.out.println(cur_priceL);
+			
+			Double cur_price = cur_priceL.doubleValue() * 0.001;
 
 			// 카테고리 구하기
 			String category = "";

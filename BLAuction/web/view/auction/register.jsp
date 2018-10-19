@@ -107,7 +107,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="number" class="form-control" id="startPrice" min="0.001"  step="0.001">
+									<input type="number" class="form-control" id="startPrice" min="0.001" step="0.001">
 								</div>
 								<input type="number" class="form-control" name="start_price" id="startPriceFinney">
 							</div>
