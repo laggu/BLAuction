@@ -31,8 +31,8 @@ $(document).ready(function(){
  				<div id="personalInfo">
   					<div id="rightInfo">
   						<div id="sellergrade"><img src="img/info.png"></div>
-  						<div><span id="sellerName"><strong>${member.name }</strong></span></div>
-  						<div><span id="myemail"><strong>${member.email }</strong></span></div>
+  						<div><span id="sellerName"><strong>${seller_info.name }</strong></span></div>
+  						<div><span id="myemail"><strong>${seller_info.email }</strong></span></div>
   						
   					</div>
   					<div id="leftInfo">

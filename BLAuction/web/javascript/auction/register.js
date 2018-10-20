@@ -142,7 +142,7 @@ $(document).ready(function() {
 	$('#registerTitle').on('change',function(){
 		var title = $('#registerTitle').val();
 		if(title.length >= 20){
-			alert("제목은 20자 이상이어야 합니다");
+			alert("제목은 20자 이하이어야 합니다");
 			$('#registerTitle').val(title.substring(0,20));
 		}
 		titleFlag = true;
@@ -156,6 +156,17 @@ $(document).ready(function() {
 			downTermFlag = false;
 		}
 		downTermFlag = true;
+	});
+	
+	$('#dueDate').on('blur',function(){
+		var due_date = new Date($('#dueDate').val());
+		var cur_date = new Date();
+		if(due_date <= cur_date){
+			alert('마감 시간이 현재 시간보다 빠릅니다.');
+			timeFlag = false;
+		}else{
+			timeFlag = true;			
+		}
 	});
 });
 
@@ -233,15 +244,9 @@ function verifyData(){
 		alert("시작가격을 입력하세요");
 		return false;
 	}
-	
 	var due_date = new Date($('#dueDate').val());
 	var due_time = new Date($('#dueTime').val());
 	
-	due_date.setHours(due_time.getHours);
-	due_date.setMinutes(due_time.getMinutes);
-	due_date.setSeconds(due_time.getSeconds);
-	
-	alert(due_date);
 	
 	if(!timeFlag){
 		alert("마감시간을 입력하세요");
