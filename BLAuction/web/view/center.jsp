@@ -59,17 +59,14 @@
 
 			<div class="card group" id="card_group">
 
-				
-
 					<!-- Row -->
-					<div class="card-columns">
+					<div class="card-columns" style="height:400px">
 						<h2>Best of the week</h2>
 						<c:forEach var="item" items="${list }">
 						<div class="card" style="width: 18rem;">
 							<h5 class="card-title" id="time_limit">마감시간 :
 								${item.getDuedate() }</h5>
-							<a
-								href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"><img
+							<a href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"><img
 								class="card-img-top" src="${item.getPhoto_path_1() }"
 								alt="Card image cap"></a>
 							<div class="card-body">
@@ -83,10 +80,6 @@
 						</div>
 						</c:forEach>
 					</div>
-
-				
-
-				
 
 					<!-- Row -->
 					<div class="card-columns">

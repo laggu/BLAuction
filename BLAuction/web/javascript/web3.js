@@ -470,6 +470,7 @@ function makeAuction(){
 					function(err,res){
 
 			})
+			location.href="main.bla";
 		},
 		error:function(data){
 			alert("/BLAuction/createAuctionimpl.bla fail");

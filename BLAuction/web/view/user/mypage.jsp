@@ -115,7 +115,8 @@
 //Tab 전환
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
-
+	
+	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
 		url : 'mybiddinglist.bla', /* DB로 접근 */
@@ -127,7 +128,7 @@ $(document).ready(function() {
 				var mybiddinglist = '';
 				mybiddinglist += '<div class="panel panel-default" id="mybidding_panel">';
 				mybiddinglist += '<div class="panel-body">';
-				mybiddinglist += '<div id="mybiddingImg"><img src="'+data[i].photoPath0+data[i].photoName0+'"></div>';
+				mybiddinglist += '<div id="mybiddingImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
 				mybiddinglist += '<div id="mybiddingInfo">';
 				mybiddinglist += '<div>';
 				mybiddinglist += '<h4><strong>' + data[i].title + '</strong></h4>';
@@ -148,6 +149,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	//내가 낙찰된 경매 리스트
 	$.ajax({
 		type : 'POST',
 		url : 'mysuccessbidlist.bla', /* DB로 접근 */
@@ -159,7 +161,7 @@ $(document).ready(function() {
 				var winningbidlist = '';
 				winningbidlist += '<div class="panel panel-default" id="winningbid_panel">';
 				winningbidlist += '<div class="panel-body">';
-				winningbidlist += '<div id="winningbidImg"><img src="'+data[i].photoPath0+data[i].photoName0+'"></div>';
+				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
 				winningbidlist += '<div id="winningbidInfo">';
 				winningbidlist += '<div>';
 				winningbidlist += '<h4><strong>' + data[i].title + '</strong></h4>';
@@ -183,17 +185,92 @@ $(document).ready(function() {
 		}
 	});
 	
+	//내가 올린 경매 리스트
 	$.ajax({
 		type : 'POST',
 		url : 'myauctionlist.bla', /* DB로 접근 */
 		datatype : 'json',
 		success : function(data) {
-			for (i in data) {
-				var myauctionlists = $('#myauctionlists');
-
-				var myauctionlist = '';
+			var myauctionlists = $('#myauctionlists');
 				
-				/* <div class="panel panel-default" id="myauction_panel">
+			var myauctionlist = '';
+
+			var before = data.before;
+			var proceeding = data.proceeding;
+			var end = data.end;
+			var cancel = data.cancel;
+			var failbid = data.failbid;
+			
+			for(i in before){
+				myauctionlist += '<div class="panel panel-default" id="myauction_panel">';
+				myauctionlist += '<div class="panel-body">';
+				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+before[i].auct_id+'" id="beforeA'+i+'"><img id="beforeImg'+i+'" src="'+before[i].photoPath0+before[i].photoName0+'"></a></div>';
+				
+				if(before[i].photoPath1 != 'undefined'){
+					$('#beforeA'+i).on('hover',function(){
+						$('#beforeImg'+i).attr("src",before[i].photoPath1+before[i].photoName1);
+					});
+				}
+				
+				myauctionlist += '<div id="myauctionInfo">';
+				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
+				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price+' Ether</span></div>';
+				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div></div></div></div>';
+				
+			}
+			
+			for(i in end){
+				myauctionlist += '<div class="panel panel-default" id="myauction_panel">';
+				myauctionlist += '<div class="panel-body">';
+				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+end[i].auct_id+'"><img src="'+end[i].photoPath0+end[i].photoName0+'"></a></div>';
+				myauctionlist += '<div id="myauctionInfo">'; 
+				myauctionlist += '<div id="myauctionTitle">';
+				myauctionlist += '<h4><strong>'+end.auct_title+'</strong></h4>';
+				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button></div>';
+				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice+' Ether</span></div>';
+				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
+				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
+				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany">'+end[i].company_code+'</span>)';	
+				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+				myauctionlist += '</div></div></div>';
+				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
+			}
+			
+			for(i in proceeding){
+				myauctionlist += '<div class="panel panel-default" id="myauction_panel">';
+				myauctionlist += '<div class="panel-body">';
+				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+proceeding[i].auct_id+'"><img src="'+proceeding[i].photoPath0+proceeding[i].photoName0+'"></a></div>';
+				myauctionlist += '<div id="myauctionInfo">';		
+				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
+				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
+				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
+				myauctionlist += '</div></div></div>';
+				
+			}
+			
+			for(i in cancel){
+				myauctionlist +='<div class="panel panel-default" id="myauction_panel">';
+				myauctionlist +='<div class="panel-body">';
+				myauctionlist +='<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+cancel[i].auct_id+'"><img src="'+cancel[i].photoPath0+cancel[i].photoName0+'"></a></div>';
+				myauctionlist +='<div id="myauctionInfo">';
+				myauctionlist +='<div id="myauctionTitle"><h4><strong>'+cancel[i].auct_title+'</strong></h4>';
+				myauctionlist +='<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>취소된 경매</button></div>';
+				myauctionlist +='</div></div></div>';
+				
+			}
+			
+			for(i in failbid){
+				myauctionlist +='<div class="panel panel-default" id="myauction_panel">';
+				myauctionlist +='<div class="panel-body">';
+				myauctionlist +='<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+failbid[i].auct_id+'" id="failbidA'+i+'"><img id="failbidImg'+i+'" src="'+failbid[i].photoPath0+failbid[i].photoName0+'"></a></div>';
+				myauctionlist +='<div id="myauctionInfo">';
+				myauctionlist +='<div id="myauctionTitle"><h4><strong>'+failbid[i].auct_title+'</strong></h4>';
+				myauctionlist +='<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>유찰된 경매</button></div>';
+				myauctionlist +='</div></div></div>';
+			}
+			
+			/* <div class="panel panel-default" id="myauction_panel">
 				<div class="panel-body">
 					<div id="myauctionImg">
 						<img src="img/se.jpg">
@@ -239,9 +316,8 @@ $(document).ready(function() {
 
 				</div>
 			</div> */
-				
-				myauctionlists.append(myauctionlist);
-			}
+			myauctionlists.append(myauctionlist);
+			
 		},
 		error : function(data) {
 			alert("낙찰된 경매물품이 없습니다.");
@@ -255,7 +331,13 @@ $(document).ready(function() {
 
 });
 </script>
-
+<style>
+#myauctionCancle{
+		position:absolute;
+		bottom:10px;
+		right:15px;
+	}
+</style>
 <body>
 
 	<!-- Content -->

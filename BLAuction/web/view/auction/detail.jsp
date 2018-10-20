@@ -9,7 +9,6 @@
 <title>BLAuction_물품 상세</title>
 <script>
 	var auctionStatus = "${auction.auction_status }";
-	alert(auctionStatus);
 	$(document).ready(function(){
 	    $("#bidding_btn").click(function(){
 	         $("#biddingModal").show();
