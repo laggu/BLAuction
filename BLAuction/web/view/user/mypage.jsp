@@ -405,7 +405,7 @@ $(document).ready(function() {
 			<ul class="nav nav-tabs" id="mylist_tabs">
 				<li class="active"><a data-toggle="tab" href="#mybiddinglists">입찰
 						리스트</a></li>
-				<li><a data-toggle="tab" href="#winningbidlists">낙찰 리스트</a></li>
+				<li><a data-toggle="tab" href="#winningbidlists">유찰/낙찰 리스트</a></li>
 				<li><a data-toggle="tab" href="#myauctionlists">내가 올린 경매</a></li>
 			</ul>
 
