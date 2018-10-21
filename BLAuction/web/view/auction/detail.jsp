@@ -9,13 +9,12 @@
 <title>BLAuction_물품 상세</title>
 <script>
 	var auctionStatus = "${auction.auction_status }";
+
 	$(document).ready(function(){
 	    $("#bidding_btn").click(function(){
 	         $("#biddingModal").show();
 	    });
-		
-	    
-	    
+
 	    dtA = new Date(parseInt($("#timestamp").text()));
 	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
@@ -24,7 +23,10 @@
 	    }else{
 	    	$("#currentTimelimit").text("경매 완료");	
 	    }
-	    
+
+		if("${auction.type}" == 2){
+			setDownPrice();
+		}
 	});
 </script>
 <script src="javascript/auction/detail.js"></script>
@@ -56,8 +58,12 @@
 	  					
 	  					<div id="oneLine">	
 	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
-	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></h4></div>
-
+	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span><span> 이더</span></h4></div>
+	  					</div>
+	  					<span id="registerDate">${auction.register_date }</span>
+	  					<div id="oneLine">	
+	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
+	  						<div><h4><strong>내림 시간 간격</strong>: <span id="auctionDownTerm">${auction.down_term }</span><span> 시간</span></h4></div>
 	  					</div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
@@ -116,11 +122,7 @@
 							</div>
 						
 							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
-						
-
 				        </div>
-				        
-			        	 
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					        </div>
@@ -136,7 +138,7 @@
 
 	<c:if test="${auction.type eq 1}">
 		<script>
-			getBidList("${auction.auct_id }");
+			getBidList("${auction.auct_id }")
 		</script>
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
@@ -170,7 +172,6 @@
 	  		</div>
 	  	</div>
 	</c:if>
-	
 </div>
 
 

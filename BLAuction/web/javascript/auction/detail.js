@@ -94,44 +94,7 @@ return zero + n;
 }
 
 
-function makebidding(auction_id, secret, user_id, auction_address){
-	var price = $("#suggestedPrice").val();
-	var cur_price = Number($("#currentPrice").text()) * 1000;
-	
-	price *= 1000;
-	
-	if(price ==0){
-		alert("가격을 입력하세요");
-		return;
-	}
-	if(secret==1){
-		if(price < cur_price){
-			alert("현재 가격보다 높은 가격을 입력하세요");
-			return;
-		}
-	}
-	var params = {
-			"price":price,
-			"auction_id":auction_id,
-			"time":date.getTime(),
-		}
-	
-	$.ajax({
-		type:'POST',
-		url:'biddingimpl.bla', /* DB로 접근 */
-		data:params,
-		datatype:'json',
-		success:function(data){
-			$("#biddingModal").modal('hide');
-			window.location.reload();
-		},
-		error:function(data){
-			alert("biddingimpl.bla error")
-		}
-	})
-	
-	bidding(auction_id, price, date.getTime(), user_id, auction_address);
-}
+
 
 function getBidList(auction_id){
 	var databaseTable = $("#databaseTable");
@@ -170,6 +133,113 @@ function getBidListFromContract(){
 	
 }
 
-function makebiddingDown(){
+function getDownPrice(){
+	var downPrice = Number($("#auctionDownPrice").text());
+	var downTerm = Number($("#auctionDownTerm").text());
+	var originalPrice = Number($("#currentPrice").text());
+	var originalTime = new Date(Number($("#registerDate").text())).getTime();;
+	var now = new Date().getTime();;
 	
+//	alert(downPrice + " " +
+//			downTerm + " " +
+//			originalPrice + " " +
+//			originalTime + " " +
+//			now 
+//			);
+	
+	var termPast = Math.floor((now - originalTime) / (3600000 * downTerm));
+	
+	var currentPrice = originalPrice - downPrice * termPast;
+	currentPrice = Math.floor(currentPrice * 1000) / 1000;
+	
+	if(currentPrice <= 0){
+		currentPrice = 0;
+	}
+
+	return currentPrice;
+}
+
+function setDownPrice(){
+	var downInterval = window.setInterval(function(){
+		price = getDownPrice();
+		if(price != 0){
+			$("#currentPrice").text(price);
+		}else{
+			window.clearInterval(downInterval);
+		}
+	},60000);
+}
+
+function makebidding(auction_id, secret, user_id, auction_address){
+	var price = $("#suggestedPrice").val();
+	var cur_price = Number($("#currentPrice").text()) * 1000;
+	
+	price *= 1000;
+	
+	if(price ==0){
+		alert("가격을 입력하세요");
+		return;
+	}
+	if(secret==1){
+		if(price < cur_price){
+			alert("현재 가격보다 높은 가격을 입력하세요");
+			return;
+		}
+	}
+	
+	var callback = function(){
+		$.ajax({
+			type:'POST',
+			url:'biddingimpl.bla', /* DB로 접근 */
+			data:params,
+			datatype:'json',
+			success:function(data){
+				$("#biddingModal").modal('hide');
+				window.location.reload();
+			},
+			error:function(data){
+				alert("biddingimpl.bla error")
+			}
+		})
+	}
+	
+	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+}
+
+function makebiddingDown(auction_id, user_id, auctionAddress){
+	price = getDownPrice();
+	
+	var callback = function(){
+		$.ajax({
+			type:'POST',
+			url:'biddingimpl.bla', /* DB로 접근 */
+			data:params,
+			datatype:'json',
+			success:function(data){
+				var params = {
+		      			"auct_id":auction_id
+		      		}
+		          
+		          $.ajax({
+		      		type:'POST',
+		      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
+		      		data:params,
+		      		datatype:'json',
+		      		success:function(data){
+		      			window.clearInterval(timeInterval);
+		    			window.location.reload();
+	      			},
+		      		error:function(data){
+		      			alert('successfulbiddingimpl error')
+		      		}
+		      	  })
+				window.location.reload();
+			},
+			error:function(data){
+				alert("biddingimpl.bla error")
+			}
+		})
+	}
+	
+	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
