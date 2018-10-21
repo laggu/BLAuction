@@ -186,7 +186,7 @@ function setDownPrice(){
 	},60000);
 }
 
-function makebidding(auction_id, secret, user_id, auction_address){
+function makebidding(auction_id, auct_type, user_id, auction_address){
 	var price = $("#suggestedPrice").val();
 	var cur_price = Number($("#currentPrice").text()) * 1000;
 	
@@ -196,7 +196,7 @@ function makebidding(auction_id, secret, user_id, auction_address){
 		alert("가격을 입력하세요");
 		return;
 	}
-	if(secret==1){
+	if(auct_type==1){
 		if(price < cur_price){
 			alert("현재 가격보다 높은 가격을 입력하세요");
 			return;

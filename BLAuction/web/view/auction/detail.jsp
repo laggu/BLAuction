@@ -101,10 +101,11 @@
 				        </div>
 				        
 				        <div class="modal-body">  
+				        	<c:if test="${auction.type eq 1}">
 							<div>
 								<h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4>
 							</div>
-						
+							</c:if>
 							<div id="inputPriceArea">
 								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
