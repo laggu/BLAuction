@@ -234,7 +234,7 @@ $(document).ready(function() {
 				
 				myauctionlist += '<div id="myauctionInfo">';
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
-				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price+' Ether</span></div>';
+				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price * 0.001+' Ether</span></div>';
 				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div></div></div></div>';
 				
 			}
@@ -247,7 +247,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionTitle">';
 				myauctionlist += '<h4><strong>'+end.auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button></div>';
-				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice+' Ether</span></div>';
+				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
 				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany">'+end[i].company_code+'</span>)';	
@@ -263,7 +263,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionInfo">';		
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
-				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
 				myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
 				myauctionlist += '</div></div></div>';
 				

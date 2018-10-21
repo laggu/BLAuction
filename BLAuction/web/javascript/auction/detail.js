@@ -227,7 +227,7 @@ function makebidding(auction_id, auct_type, user_id, auction_address){
 }
 
 function makebiddingDown(auction_id, user_id, auctionAddress){
-	price = getDownPrice();
+	price = getDownPrice()*1000;
 	
 	var callback = function(){
 		$.ajax({
