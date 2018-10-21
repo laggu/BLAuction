@@ -176,6 +176,10 @@ function getDownPrice(){
 }
 
 function setDownPrice(){
+	price = getDownPrice();
+	if(price != 0){
+		$("#currentPrice").text(price);
+	}
 	var downInterval = window.setInterval(function(){
 		price = getDownPrice();
 		if(price != 0){

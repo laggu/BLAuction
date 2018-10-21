@@ -23,15 +23,17 @@
 	    }else{
 	    	$("#currentTimelimit").text("경매 완료");	
 	    }
-
-		if("${auction.type}" == 2){
-			setDownPrice();
-		}
 	});
 </script>
 <script src="javascript/auction/detail.js"></script>
 </head>
-
+<script>
+	$(document).ready(function(){
+		if("${auction.type}" == "2"){
+			setDownPrice();
+		}
+	});
+</script>
 <body>
 <!-- Content -->
 <div id="detail_area">
@@ -101,7 +103,7 @@
 				        </div>
 				        
 				        <div class="modal-body">  
-				        	<c:if test="${auction.type eq 1}">
+				        	<c:if test="${auction.type eq 2}">
 							<div>
 								<h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4>
 							</div>
