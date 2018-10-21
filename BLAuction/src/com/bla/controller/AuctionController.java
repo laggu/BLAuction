@@ -236,7 +236,7 @@ public class AuctionController {
 			}
 			System.out.println(cur_priceL);
 			
-			Double cur_price = cur_priceL.doubleValue() * 0.001;
+			Double cur_price = cur_priceL.doubleValue();
 			cur_price = Math.round(cur_price*1000)/1000.0;
 
 			// 카테고리 구하기
