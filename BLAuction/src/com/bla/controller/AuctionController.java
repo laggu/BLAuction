@@ -389,6 +389,7 @@ public class AuctionController {
 			}
 
 			mv.addObject("list", list);
+			request.setAttribute("list", list);
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
 			e.printStackTrace();
