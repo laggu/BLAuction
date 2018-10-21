@@ -9,13 +9,12 @@
 <title>BLAuction_물품 상세</title>
 <script>
 	var auctionStatus = "${auction.auction_status }";
+
 	$(document).ready(function(){
 	    $("#bidding_btn").click(function(){
 	         $("#biddingModal").show();
 	    });
-		
-	    
-	    
+
 	    dtA = new Date(parseInt($("#timestamp").text()));
 	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
@@ -24,12 +23,17 @@
 	    }else{
 	    	$("#currentTimelimit").text("경매 완료");	
 	    }
-	    
 	});
 </script>
 <script src="javascript/auction/detail.js"></script>
 </head>
-
+<script>
+	$(document).ready(function(){
+		if("${auction.type}" == "2"){
+			setDownPrice();
+		}
+	});
+</script>
 <body>
 <!-- Content -->
 <div id="detail_area">
@@ -56,8 +60,12 @@
 	  					
 	  					<div id="oneLine">	
 	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
-	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></h4></div>
-
+	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span><span> 이더</span></h4></div>
+	  					</div>
+	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
+	  					<div id="oneLine">	
+	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
+	  						<div><h4><strong>내림 시간 간격</strong>: <span id="auctionDownTerm">${auction.down_term }</span><span> 시간</span></h4></div>
 	  					</div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
@@ -72,10 +80,10 @@
   				
   				<!-- Trigger the modal with a button -->
   				
-  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel'}">
+  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && empty auction.auction_address}">
   					<c:choose>
   						<c:when test="${auction.type eq 2}">
-		  					<button type="button" class="btn btn-danger" id="bidding_btn_down"><h4>입 찰 하 기</h4></button>
+		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>
     					</c:when>
 						<c:otherwise>
 		  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
@@ -95,10 +103,11 @@
 				        </div>
 				        
 				        <div class="modal-body">  
+				        	<c:if test="${auction.type eq 2}">
 							<div>
 								<h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4>
 							</div>
-						
+							</c:if>
 							<div id="inputPriceArea">
 								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
@@ -116,11 +125,7 @@
 							</div>
 						
 							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
-						
-
 				        </div>
-				        
-			        	 
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					        </div>
@@ -136,7 +141,7 @@
 
 	<c:if test="${auction.type eq 1}">
 		<script>
-			getBidList("${auction.auct_id }");
+			getBidList("${auction.auct_id }, ${auction.auction_address }");
 		</script>
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
@@ -152,17 +157,7 @@
 	  				
 	  				<div class="panel panel-default" id="Contractlist">
 	  				<h4><strong>Contract Info</strong></h4>
-	  				<table border="1">
-	  					<tr>
-		  					<th>입찰자</th>
-		  					<th>입찰가</th>
-		  					<th>입찰 시간</th>
-	  					</tr>
-	  					<tr>
-	  						<td id="Bidder_Name">회원1</td>
-	  						<td id="Bidders_Price">10</td>
-	  						<td id="Bidding_Timestamp">12:00</td>
-	  					</tr>
+	  				<table id="contractTable" border="1">
 	  				</table>
 	  				
 	  				</div>
@@ -170,7 +165,6 @@
 	  		</div>
 	  	</div>
 	</c:if>
-	
 </div>
 
 
