@@ -593,8 +593,13 @@ public class AuctionController {
 		ArrayList<SuccessfulBidVO> successfulBids = null;
 
 		// json 배열과 객체 선언
-		JSONObject jo = null;
-		JSONArray ja = null;
+		JSONObject jo = new JSONObject();
+		
+		JSONArray failJa = new JSONArray();
+		JSONArray successfulJa = new JSONArray();
+		
+		JSONObject failJo = null;
+		JSONObject successfulJo = null;
 
 		// json 넘겨주기위함
 		response.setContentType("text/json;charset=utf-8");
@@ -621,7 +626,6 @@ public class AuctionController {
 			// 다른 쿼리로 member_id로 판매자 이름, 판매자 전화번호
 			MemberVO sellerInfo = null;
 
-			ja = new JSONArray();
 			for (SuccessfulBidVO successfulBid : successfulBids) {
 				System.out.println("successfulbid; "+successfulBid);
 				jo = new JSONObject();
@@ -631,32 +635,34 @@ public class AuctionController {
 				AuctionVO auction = abiz.get(successfulBid.getAuct_id());
 				auct_member_id = abiz.selectMemberIdByAuct(successfulBid.getAuct_id());
 				sellerInfo = mbiz.get(auct_member_id);
-				jo.put("auct_id", auction.getAuct_id());
-				jo.put("title", auction.getAuct_title());
-				jo.put("price", price);
+				successfulJo.put("auct_id", auction.getAuct_id());
+				successfulJo.put("title", auction.getAuct_title());
+				successfulJo.put("price", price);
 
 				int i = 0;
 				for (PhotoVO photoVO : photos) {
 					System.out.println(photoVO);
 					String pathKey = "photoPath" + i;
 					String nameKey = "photoName" + i;
-					jo.put(pathKey, photoVO.getPhoto_path());
-					jo.put(nameKey, photoVO.getPhoto_name());
+					successfulJo.put(pathKey, photoVO.getPhoto_path());
+					successfulJo.put(nameKey, photoVO.getPhoto_name());
 					i++;
 				}
-				jo.put("seller_id", auct_member_id);
-				jo.put("seller_name", sellerInfo.getName());
-				jo.put("seller_phone", sellerInfo.getPhone());
-				jo.put("delivery_code", successfulBid.getDelivery_code());
-				jo.put("delivery_status", successfulBid.getDelivery_status());
-				jo.put("company_code", successfulBid.getCompany_code());
+				successfulJo.put("seller_id", auct_member_id);
+				successfulJo.put("seller_name", sellerInfo.getName());
+				successfulJo.put("seller_phone", sellerInfo.getPhone());
+				successfulJo.put("delivery_code", successfulBid.getDelivery_code());
+				successfulJo.put("delivery_status", successfulBid.getDelivery_status());
+				successfulJo.put("company_code", successfulBid.getCompany_code());
 
-				ja.add(jo);
+				successfulJa.add(jo);
 			}
 
 			out = response.getWriter();
-			System.out.println(ja.toJSONString());
-			out.print(ja.toJSONString());
+			jo.put("successfulBid",successfulJa.toJSONString());
+			System.out.println(jo);
+			
+			out.print(jo);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
