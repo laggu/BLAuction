@@ -123,25 +123,27 @@ $(document).ready(function() {
 		datatype : 'json',
 		success : function(data) {
 			for (i in data) {
-				var mybiddinglists = $('#mybiddinglists');
+				if(data[i].auction_status == 'proceeding'){
+					var mybiddinglists = $('#mybiddinglists');
 
-				var mybiddinglist = '';
-				mybiddinglist += '<div class="panel panel-default" id="mybidding_panel">';
-				mybiddinglist += '<div class="panel-body">';
-				mybiddinglist += '<div id="mybiddingImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
-				mybiddinglist += '<div id="mybiddingInfo">';
-				mybiddinglist += '<div>';
-				mybiddinglist += '<h4><strong>' + data[i].title + '</strong></h4>';
-				mybiddinglist += '<a href="sellerpage.bla?seller_id=' + data[i].seller_id + '">';
-				mybiddinglist += '<button type="button" class="btn btn-link" id="mybidding_seller_btn"><strong>판매자 정보 확인</strong></button></a>';
-				mybiddinglist += '</div>';
-				mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
-				mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
-				mybiddinglist += '<div>';
-				mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
-				mybiddinglist += '<button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button>';
-				mybiddinglist += '</div></div></div></div>';
-				mybiddinglists.append(mybiddinglist);
+					var mybiddinglist = '';
+					mybiddinglist += '<div class="panel panel-default" id="mybidding_panel">';
+					mybiddinglist += '<div class="panel-body">';
+					mybiddinglist += '<div id="mybiddingImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
+					mybiddinglist += '<div id="mybiddingInfo">';
+					mybiddinglist += '<div>';
+					mybiddinglist += '<h4><strong>' + data[i].title + '</strong></h4>';
+					mybiddinglist += '<a href="sellerpage.bla?seller_id=' + data[i].seller_id + '">';
+					mybiddinglist += '<button type="button" class="btn btn-link" id="mybidding_seller_btn"><strong>판매자 정보 확인</strong></button></a>';
+					mybiddinglist += '</div>';
+					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
+					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					mybiddinglist += '<div>';
+					mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
+					mybiddinglist += '<button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button>';
+					mybiddinglist += '</div></div></div></div>';
+					mybiddinglists.append(mybiddinglist);
+				}
 			}
 		},
 		error : function(data) {

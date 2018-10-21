@@ -601,6 +601,11 @@ public class AuctionController {
 		PrintWriter out = null;
 		
 		try {
+			// 내가 입찰하고, auction_status가 end인 auction들을 가져온다.
+			// 가져와서 내가 입차한 최고가격과 auction의 최고가를 비교하여서
+			// 같지 않는 auction들만 담아서 보낸다.
+			
+			
 			// 처음 한 쿼리로
 			// Bidding 테이블에서 member_id가 가지고 있는 bid_id를 가져와서
 			// SUCCESSFUL_BID 테이블에서 bid_id가 포함되어있는 것에서 successfulbid 가져오기
@@ -726,10 +731,15 @@ public class AuctionController {
 					proceedingJo = new JSONObject();
 					// 입찰중 => 재입찰하기 또는 내가 최고가일때 입찰 ㄴㄴ
 
-					// 내가 입찰한 최고 가격과 비딩의 최고 가격을 가져온다.
-					long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
+					// 내림경매 일때는 bidding 테이블을 거치면 안됨(조건 걸어줘야한다)
+					if(auction.getType()!=2) {
+						//비딩의 최고 가격을 가져온다.
+						long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
+						proceedingJo.put("bidMaxPrice", bidMaxPrice);
+					}
+					
 					proceedingJo.put("auct_id", auction.getAuct_id());
-					proceedingJo.put("bidMaxPrice", bidMaxPrice);
+					
 
 					// 경매 사진과 타이틀도 가져와야함
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
