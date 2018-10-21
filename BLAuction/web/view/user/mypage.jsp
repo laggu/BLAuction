@@ -157,30 +157,48 @@ $(document).ready(function() {
 		url : 'mysuccessbidlist.bla', /* DB로 접근 */
 		datatype : 'json',
 		success : function(data) {
-			for (i in data) {
-				var winningbidlists = $('#winningbidlists');
-
-				var winningbidlist = '';
+			var failBid = data.failBid;
+			var successfulBid = data.successfulBid;
+			
+			var winningbidlists = $('#winningbidlists');
+			var winningbidlist = '';
+			
+			for(i in failBid){
 				winningbidlist += '<div class="panel panel-default" id="winningbid_panel">';
 				winningbidlist += '<div class="panel-body">';
-				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
+				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+failBid[i].auct_id+'"><img src="'+failBid[i].photoPath0+failBid[i].photoName0+'"></a></div>';
 				winningbidlist += '<div id="winningbidInfo">';
 				winningbidlist += '<div>';
-				winningbidlist += '<h4><strong>' + data[i].title + '</strong></h4>';
-				winningbidlist += '<a href="sellerpage.bla?seller_id=' + data[i].seller_id + '">';
+				winningbidlist += '<h4><strong>' + failBid[i].auct_title + '</strong></h4>';
+				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
+				winningbidlist += '</div>';
+				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
+				winningbidlist += '<div><button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '</div></div></div>';	
+				
+			}
+			
+			for (i in successfulBid) {
+				winningbidlist += '<div class="panel panel-default" id="winningbid_panel">';
+				winningbidlist += '<div class="panel-body">';
+				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+successfulBid[i].auct_id+'"><img src="'+successfulBid[i].photoPath0+successfulBid[i].photoName0+'"></a></div>';
+				winningbidlist += '<div id="winningbidInfo">';
+				winningbidlist += '<div>';
+				winningbidlist += '<h4><strong>' + successfulBid[i].title + '</strong></h4>';
+				winningbidlist += '<a href="sellerpage.bla?seller_id=' + successfulBid[i].seller_id + '">';
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>';
 				winningbidlist += '</div>';
-				winningbidlist += '<div>낙찰가: <span id="winningbidPrice">' + data[i].price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div>판매자 이름: <span id="bidsellerName">'+ data[i].seller_name+'</span> / 판매자 전화번호: <span id="bidsellerPhone">'+ data[i].seller_phone+'</span> ';
-				winningbidlist += '<a href="sellerpage.bla?seller_id='+data[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
+				winningbidlist += '<div>낙찰가: <span id="winningbidPrice">' + successfulBid[i].price * 0.001 + ' Ether</span></div>';
+				winningbidlist += '<div>판매자 이름: <span id="bidsellerName">'+ successfulBid[i].seller_name+'</span> / 판매자 전화번호: <span id="bidsellerPhone">'+ successfulBid[i].seller_phone+'</span> ';
+				winningbidlist += '<a href="sellerpage.bla?seller_id='+successfulBid[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
 				winningbidlist += '</div>';
-				winningbidlist += '<div>택배사: <span id="deliverycompany">'+data[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+data[i].delivery_code+'</span> </div>';
+				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
 				winningbidlist += '<span id="Delivery_Status" +index></span></div></div></div></div>';	
-							
-				winningbidlists.append(winningbidlist);
+				
 			}
+			winningbidlists.append(winningbidlist);
 		},
 		error : function(data) {
 			alert("낙찰된 경매물품이 없습니다.");
