@@ -9,6 +9,7 @@
 <title>BLAuction_마이페이지</title>
 
 <script src="javascript/user/delivery.js?version=1"></script>
+<script src="javascript/user/mypage.js?version=1"></script>
 
 <script type="text/javascript">
 	// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
@@ -290,52 +291,6 @@ $(document).ready(function() {
 				myauctionlist +='</div></div></div>';
 			}
 			
-			/* <div class="panel panel-default" id="myauction_panel">
-				<div class="panel-body">
-					<div id="myauctionImg">
-						<img src="img/se.jpg">
-					</div>
-					<div id="myauctionInfo">
-						<div id="myauctionTitle">
-							<h4>
-								<strong>경매 물품 이름</strong>
-							</h4>
-							<button type="button" class="btn btn-default"
-								id="myauctionbidStatus" disabled>경매 완료</button>
-						</div>
-
-						<div>
-							낙찰가: <span id="myauctionPrice">0.1 Ether</span>
-						</div>
-						<div>
-							낙찰자 이름: <span id="winnerName">한나영</span> / 낙찰자 전화번호: <span
-								id="winnerPhone">010-1234-5678</span> <a
-								href="sellerpage.bla?auct_id=auct_id"><button
-									type="button" class="btn btn-link" id="myauction_seller_btn">
-									<strong>판매자 정보 확인</strong>
-								</button></a>
-						</div>
-						<div>
-							낙찰자 주소: <span id="winnerAddress">서울시 강남구 테헤란로 212 멀티캠퍼스
-								1004호</span>
-						</div>
-						<div>
-							운송장 정보: <span id="winnerInvoice">777-777777-7</span>&nbsp;(<span
-								id="winnerDeliverycompany">cj 대한통운</span>)
-							<button type="button" class="btn btn-warning"
-								id="deliveryInfo_btn" data-toggle="modal"
-								data-target="#deliveryInfoModal">
-								<strong>택배 정보 입력</strong>
-							</button>
-						</div>
-						<div>
-							<button type="button" class="btn btn-danger"
-								id="myauctionCancle">경매 취소</button>
-						</div>
-					</div>
-
-				</div>
-			</div> */
 			myauctionlists.append(myauctionlist);
 			
 		},

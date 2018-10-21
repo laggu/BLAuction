@@ -361,8 +361,8 @@ public class AuctionController {
 			
 			int listSize = auction_list.size();
 			//listSize가 4이상일 때 
-			if(listSize > 4)
-				listSize = 4;
+//			if(listSize > 4)
+//				listSize = 4;
 
 			for (int i = 0; i < listSize; i++) {
 				ListVO newlist = new ListVO();
@@ -388,6 +388,7 @@ public class AuctionController {
 			}
 
 			mv.addObject("list", list);
+			request.setAttribute("list", list);
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
 			e.printStackTrace();
