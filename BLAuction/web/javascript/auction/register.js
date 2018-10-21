@@ -161,7 +161,12 @@ $(document).ready(function() {
 	$('#dueDate').on('blur',function(){
 		var due_date = new Date($('#dueDate').val());
 		var cur_date = new Date();
-		if(due_date <= cur_date){
+		
+		if(!Date.parse($('#dueDate').val())){
+			alert('날짜를 제대로 입력해 주세요.');
+			timeFlag = false;
+		}
+		else if(due_date <= cur_date){
 			alert('마감 시간이 현재 시간보다 빠릅니다.');
 			timeFlag = false;
 		}else{
@@ -245,13 +250,22 @@ function verifyData(){
 		return false;
 	}
 	var due_date = new Date($('#dueDate').val());
-	var due_time = new Date($('#dueTime').val());
+	var current_time = new Date();
 	
+//	if(due_date != null){
+//		alert("마감시간을 입력하세요");
+//		return false;
+//	}
+//	if(due_date.getTime() - current_time.getTime() > 0){
+//		alert("과거 시간은 입력할 수 없습니다.");
+//		return false;
+//	}
 	
 	if(!timeFlag){
-		alert("마감시간을 입력하세요");
+		alert("시간을 입력하세요");
 		return false;
 	}
+	
 	if(!downPriceFlag){
 		alert("내림가격을 입력하세요");
 		return false;

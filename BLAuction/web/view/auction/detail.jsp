@@ -14,7 +14,8 @@
 	         $("#biddingModal").show();
 	    });
 		
-	    getBidList("${auction.auct_id }");
+	    
+	    
 	    dtA = new Date(parseInt($("#timestamp").text()));
 	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
@@ -132,39 +133,43 @@
 		</div>
 	</div>
 	
-	
-	<div class="col-sm-10 text-left">
-		<!-- Page Start -->
-		<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트</h3>
-		<div class="panel panel-default" id="biddingList_panel">
-  			<div class="panel-body">
-  				<div class="panel panel-default" id="DBlist">
-  				<h4><strong>DataBase Info</strong></h4>
-  				<table id="databaseTable" border="1">
-  					
-  				</table>
-  				</div>
-  				
-  				<div class="panel panel-default" id="Contractlist">
-  				<h4><strong>Contract Info</strong></h4>
-  				<table border="1">
-  					<tr>
-	  					<th>입찰자</th>
-	  					<th>입찰가</th>
-	  					<th>입찰 시간</th>
-  					</tr>
-  					<tr>
-  						<td id="Bidder_Name">회원1</td>
-  						<td id="Bidders_Price">10</td>
-  						<td id="Bidding_Timestamp">12:00</td>
-  					</tr>
-  				</table>
-  				
-  				</div>
-  			</div>
-  		</div>
-  	</div>
-	
+
+	<c:if test="${auction.type eq 1}">
+		<script>
+			getBidList("${auction.auct_id }");
+		</script>
+		<div class="col-sm-10 text-left">
+			<!-- Page Start -->
+			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트</h3>
+			<div class="panel panel-default" id="biddingList_panel">
+	  			<div class="panel-body">
+	  				<div class="panel panel-default" id="DBlist">
+	  				<h4><strong>DataBase Info</strong></h4>
+	  				<table id="databaseTable" border="1">
+	  					
+	  				</table>
+	  				</div>
+	  				
+	  				<div class="panel panel-default" id="Contractlist">
+	  				<h4><strong>Contract Info</strong></h4>
+	  				<table border="1">
+	  					<tr>
+		  					<th>입찰자</th>
+		  					<th>입찰가</th>
+		  					<th>입찰 시간</th>
+	  					</tr>
+	  					<tr>
+	  						<td id="Bidder_Name">회원1</td>
+	  						<td id="Bidders_Price">10</td>
+	  						<td id="Bidding_Timestamp">12:00</td>
+	  					</tr>
+	  				</table>
+	  				
+	  				</div>
+	  			</div>
+	  		</div>
+	  	</div>
+	</c:if>
 	
 </div>
 
