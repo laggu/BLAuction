@@ -94,9 +94,12 @@ return zero + n;
 }
 
 
+function getBidList(auction_id, auction_address){
+	getBidListFromDB(auction_id);
+	getBidListFromContract(auction_address);
+}
 
-
-function getBidList(auction_id){
+function getBidListFromDB(auction_id){
 	var databaseTable = $("#databaseTable");
 	databaseTable.empty();
 	databaseTable.append("<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th><th>트랜잭션 상태</th></tr>");
@@ -129,8 +132,28 @@ function getBidList(auction_id){
 
 }
 
-function getBidListFromContract(){
 	
+function getBidListFromContract(auctionAddress){
+	bidList = [];
+	var printList = function(){
+		var contractTable = $("#contractTable");
+		contractTable.empty();
+		contractTable.append('<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th></tr>');
+		
+		bidList.sort(function (a, b) { 
+			return a.time < b.time ? -1 : a.time > b.time ? 1 : 0;  
+		});
+		
+		for(i in bidList){
+			s = "<tr>";
+			s += "<td id=CBidderName" + i +"> "+ bidList[i].name + "</td>";
+			s += "<td id=CBiddersPrice" + i +"> "+ (bidList[i].price * 0.001).toFixed(3) + "</td>";
+			s += "<td id=CBiddingTimestamp" + i +"> "+ getTimeStamp(new Date(bidList[i].time)) + "</td>";
+			s += "</tr>"
+			databaseTable.append(s);
+		}
+	}
+	getBidList(auctionAddress, bidList, printList);
 }
 
 function getDownPrice(){
@@ -139,14 +162,7 @@ function getDownPrice(){
 	var originalPrice = Number($("#currentPrice").text());
 	var originalTime = new Date(Number($("#registerDate").text())).getTime();;
 	var now = new Date().getTime();;
-	
-//	alert(downPrice + " " +
-//			downTerm + " " +
-//			originalPrice + " " +
-//			originalTime + " " +
-//			now 
-//			);
-	
+
 	var termPast = Math.floor((now - originalTime) / (3600000 * downTerm));
 	
 	var currentPrice = originalPrice - downPrice * termPast;
@@ -240,6 +256,11 @@ function makebiddingDown(auction_id, user_id, auctionAddress){
 			}
 		})
 	}
-	
+	var params = {
+			"price": price,
+			"auction_id": auction_id,
+			"time": date.getTime(),
+		}
+	callback();
 	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
