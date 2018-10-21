@@ -158,30 +158,48 @@ $(document).ready(function() {
 		url : 'mysuccessbidlist.bla', /* DB로 접근 */
 		datatype : 'json',
 		success : function(data) {
-			for (i in data) {
-				var winningbidlists = $('#winningbidlists');
-
-				var winningbidlist = '';
+			var failBid = data.failBid;
+			var successfulBid = data.successfulBid;
+			
+			var winningbidlists = $('#winningbidlists');
+			var winningbidlist = '';
+			
+			for(i in failBid){
 				winningbidlist += '<div class="panel panel-default" id="winningbid_panel">';
 				winningbidlist += '<div class="panel-body">';
-				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+data[i].auct_id+'"><img src="'+data[i].photoPath0+data[i].photoName0+'"></a></div>';
+				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+failBid[i].auct_id+'"><img src="'+failBid[i].photoPath0+failBid[i].photoName0+'"></a></div>';
 				winningbidlist += '<div id="winningbidInfo">';
 				winningbidlist += '<div>';
-				winningbidlist += '<h4><strong>' + data[i].title + '</strong></h4>';
-				winningbidlist += '<a href="sellerpage.bla?seller_id=' + data[i].seller_id + '">';
+				winningbidlist += '<h4><strong>' + failBid[i].auct_title + '</strong></h4>';
+				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
+				winningbidlist += '</div>';
+				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
+				winningbidlist += '<div><button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '</div></div></div>';	
+				
+			}
+			
+			for (i in successfulBid) {
+				winningbidlist += '<div class="panel panel-default" id="winningbid_panel">';
+				winningbidlist += '<div class="panel-body">';
+				winningbidlist += '<div id="winningbidImg"><a href="auctiondetail.bla?auctionid='+successfulBid[i].auct_id+'"><img src="'+successfulBid[i].photoPath0+successfulBid[i].photoName0+'"></a></div>';
+				winningbidlist += '<div id="winningbidInfo">';
+				winningbidlist += '<div>';
+				winningbidlist += '<h4><strong>' + successfulBid[i].title + '</strong></h4>';
+				winningbidlist += '<a href="sellerpage.bla?seller_id=' + successfulBid[i].seller_id + '">';
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>경매 완료</button>';
 				winningbidlist += '</div>';
-				winningbidlist += '<div>낙찰가: <span id="winningbidPrice">' + data[i].price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div>판매자 이름: <span id="bidsellerName">'+ data[i].seller_name+'</span> / 판매자 전화번호: <span id="bidsellerPhone">'+ data[i].seller_phone+'</span> ';
-				winningbidlist += '<a href="sellerpage.bla?seller_id='+data[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
+				winningbidlist += '<div>낙찰가: <span id="winningbidPrice">' + successfulBid[i].price * 0.001 + ' Ether</span></div>';
+				winningbidlist += '<div>판매자 이름: <span id="bidsellerName">'+ successfulBid[i].seller_name+'</span> / 판매자 전화번호: <span id="bidsellerPhone">'+ successfulBid[i].seller_phone+'</span> ';
+				winningbidlist += '<a href="sellerpage.bla?seller_id='+successfulBid[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
 				winningbidlist += '</div>';
-				winningbidlist += '<div>택배사: <span id="deliverycompany">'+data[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+data[i].delivery_code+'</span> </div>';
+				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
 				winningbidlist += '<span id="Delivery_Status" +index></span></div></div></div></div>';	
-							
-				winningbidlists.append(winningbidlist);
+				
 			}
+			winningbidlists.append(winningbidlist);
 		},
 		error : function(data) {
 			alert("낙찰된 경매물품이 없습니다.");
@@ -217,7 +235,7 @@ $(document).ready(function() {
 				
 				myauctionlist += '<div id="myauctionInfo">';
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
-				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price+' Ether</span></div>';
+				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price * 0.001+' Ether</span></div>';
 				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div></div></div></div>';
 				
 			}
@@ -230,7 +248,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionTitle">';
 				myauctionlist += '<h4><strong>'+end.auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button></div>';
-				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice+' Ether</span></div>';
+				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
 				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany">'+end[i].company_code+'</span>)';	
@@ -246,7 +264,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionInfo">';		
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
-				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
 				myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
 				myauctionlist += '</div></div></div>';
 				

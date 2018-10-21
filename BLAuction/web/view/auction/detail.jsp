@@ -25,7 +25,7 @@
 	    }
 	});
 </script>
-<script src="javascript/auction/detail.js"></script>
+<script src="javascript/auction/detail.js?version=1"></script>
 </head>
 <script>
 	$(document).ready(function(){
@@ -80,7 +80,7 @@
   				
   				<!-- Trigger the modal with a button -->
   				
-  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && empty auction.auction_address}">
+  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && not empty auction.auction_address}">
   					<c:choose>
   						<c:when test="${auction.type eq 2}">
 		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>

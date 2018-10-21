@@ -64,5 +64,7 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public int selectMemberIdByAuct(Integer auct_id) throws Exception{//경매 올린 member_id 가져올려고 함
 		return adao.selectMemberIdByAuct(auct_id);
 	}
-
+	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Integer auct_id) throws Exception{
+		return adao.selectEndAuctionByMemberId(auct_id);
+	}
 }
