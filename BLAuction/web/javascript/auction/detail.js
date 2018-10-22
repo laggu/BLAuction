@@ -262,5 +262,5 @@ function makebiddingDown(auction_id, user_name, user_id, auctionAddress){
 		})
 	}
 	
-	web3_bidding(auction_id, price, date.getTime(), user_name, user_id, auction_address, callback);
+	web3_bidding(auction_id, price, date.getTime(), user_name, user_id, auctionAddress, callback);
 }

@@ -27,6 +27,18 @@
 	<!-- Content -->
 	<div id="list_area">
 		<div class="col-sm-10 text-left">
+		
+			<!-- sorting method -->
+			<div class="dropdown" id="sortingMethod">
+				<button class="btn btn-default dropdown-toggle" type="button"
+					data-toggle="dropdown">
+					경매 정렬 기준 <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">최신 등록순</a></li>
+					<li><a href="#">마감 입박순</a></li>
+				</ul>
+			</div>
 
 			<!-- Cards -->
 

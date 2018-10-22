@@ -16,7 +16,7 @@
 	    });
 
 	    dtA = new Date(parseInt($("#timestamp").text()));
-	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
+	    if(auctionStatus == "before" || auctionStatus == "proceeding"){"web/css/style.css"
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
 	    }else if(auctionStatus == "cancel"){
 	    	$("#currentTimelimit").text("경매 취소");
@@ -148,7 +148,8 @@
 		</script>
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
-			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트</h3>
+			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트
+			<span class="glyphicon glyphicon-refresh"></span></h3>
 			<div class="panel panel-default" id="biddingList_panel">
 	  			<div class="panel-body">
 	  				<div class="panel panel-default" id="DBlist">
