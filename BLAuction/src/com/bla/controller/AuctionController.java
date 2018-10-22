@@ -349,55 +349,99 @@ public class AuctionController {
 	// 각종 카테고리 리스트 뿌려주기/////////////////////////////////
 	@RequestMapping("/main.bla")
 	public ModelAndView allCategory(HttpServletRequest request) {
-		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<ListVO> down_list = new ArrayList<ListVO>();
+		ArrayList<ListVO> time_list = new ArrayList<ListVO>();
 		ArrayList<AuctionVO> auction_list = null;
-
-		System.out.println("###################### GET ALL ######################");
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
 		try {
-			auction_list = abiz.get();
+			// TIME_LIST 작업
+			auction_list = abiz.getByDuedate();
 			
-			int listSize = auction_list.size();
-			//listSize가 4이상일 때 
-//			if(listSize > 4)
-//				listSize = 4;
-
-			for (int i = 0; i < listSize; i++) {
+			Iterator<AuctionVO> tmp = auction_list.iterator();
+			int i = 0;
+			while (tmp.hasNext()) {
+				AuctionVO auctionVO = (AuctionVO) tmp.next();
+				if(i == 4) break;
+				if(auctionVO.getType() == 2) {
+					continue;
+				}
+				
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-						.format(new Date((Long) auction_list.get(i).getDuedate()));
+						.format(new Date((Long) auctionVO.getDuedate()));
 				PhotoVO photo1 = null;
 				PhotoVO photo2 = null;
 				try {
-					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					photo1 = pbiz.getAll(auctionVO.getAuct_id()).get(0);
 					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
-					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					photo2 = pbiz.getAll(auctionVO.getAuct_id()).get(1);
 					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
 				}catch(Exception e) {
 					
 				}
-				newlist.setAuction(auction_list.get(i));
+				newlist.setAuction(auctionVO);
 				newlist.setDuedate(due_date);
-				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
 				if (newlist.getMax_price() == null) {
-					newlist.setMax_price(auction_list.get(i).getStart_price());
+					newlist.setMax_price(auctionVO.getStart_price());
 				}
-				list.add(newlist);
+				time_list.add(newlist);
+				i++;
+			}
+			
+			// time_LIST 작업
+			auction_list.clear();
+			auction_list = abiz.getByType(2);
+			i = 0;
+			Iterator<AuctionVO> itr = auction_list.iterator();
+			while (itr.hasNext()) {
+				AuctionVO auctionVO = (AuctionVO) itr.next();
+				if(i == 4) break;
+				
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auctionVO.getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auctionVO.getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
+				newlist.setAuction(auctionVO);
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auctionVO.getStart_price());
+				}
+				down_list.add(newlist);
+				i++;
 			}
 
-			mv.addObject("list", list);
-			request.setAttribute("list", list);
+			mv.addObject("down_list", down_list);
+			mv.addObject("time_list", time_list);
 			mv.addObject("centerpage", "center");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("centerpage", "center");
 		}
 
-		Iterator<ListVO> itr = list.iterator();
+		System.out.println("###################### GET DOWN AUCTION ######################");
+		Iterator<ListVO> itr = down_list.iterator();
 		while (itr.hasNext()) {
 			ListVO listVO = (ListVO) itr.next();
+			System.out.println(listVO);
+		}
+		
+		System.out.println("###################### GET 마감임박 ######################");
+		Iterator<ListVO> itr_ = time_list.iterator();
+		while (itr_.hasNext()) {
+			ListVO listVO = (ListVO) itr_.next();
 			System.out.println(listVO);
 		}
 
@@ -462,12 +506,70 @@ public class AuctionController {
 
 		return mv;
 	}
+	
+	@RequestMapping("/allCategory.bla")
+	public ModelAndView allcategory(HttpServletRequest request) {
+		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> auction_list = null;
+
+		System.out.println("###################### GET ALL ######################");
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		try {
+			auction_list = abiz.get();
+			
+			int listSize = auction_list.size();
+			//listSize가 4이상일 때 
+//			if(listSize > 4)
+//				listSize = 4;
+
+			for (int i = 0; i < listSize; i++) {
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auction_list.get(i).getDuedate()));
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
+				newlist.setAuction(auction_list.get(i));
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auction_list.get(i).getStart_price());
+				}
+				list.add(newlist);
+			}
+
+			mv.addObject("list", list);
+			mv.addObject("centerpage", "auction/allCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "auction/allCategory");
+		}
+
+		Iterator<ListVO> itr = list.iterator();
+		while (itr.hasNext()) {
+			ListVO listVO = (ListVO) itr.next();
+			System.out.println(listVO);
+		}
+
+		return mv;
+	}
 
 	// 옥션 정보 수정하기 단, auction_status가 입찰 전일 경우에만!
 	@RequestMapping("/updateAuctionimpl.bla")
 	public ModelAndView updateAuctionimpl(AuctionVO auction, HttpServletRequest request) {
 		return null;
 	}
+	
+	
 
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")

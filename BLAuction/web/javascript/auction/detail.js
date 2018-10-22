@@ -95,6 +95,7 @@ return zero + n;
 
 
 function getBidList(auction_id, auction_address){
+	alert(auction_id);
 	getBidListFromDB(auction_id);
 	//getBidListFromContract(auction_address);
 }
@@ -224,7 +225,7 @@ function makebidding(auction_id, auct_type, user_id, auction_address){
 		})
 	}
 	
-	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
 
 function makebiddingDown(auction_id, user_id, auctionAddress){
@@ -267,5 +268,5 @@ function makebiddingDown(auction_id, user_id, auctionAddress){
 			"time": date.getTime(),
 		}
 	callback();
-	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	//web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
