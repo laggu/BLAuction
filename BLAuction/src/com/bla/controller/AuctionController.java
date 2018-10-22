@@ -652,7 +652,7 @@ public class AuctionController {
 		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
 		int member_id = (Integer) session.getAttribute("member_id");
-
+		
 		ArrayList<Integer> auct_ids = null;
 		AuctionVO auct = null;
 		ArrayList<PhotoVO> photos = null;
@@ -758,6 +758,7 @@ public class AuctionController {
 				map.put("auct_id", auction.getAuct_id());
 				Long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 				Long memberBidMaxPrice = bbiz.selectMemberMaxPrice(map);
+				System.out.println("bidMaxPrice : "+bidMaxPrice + ", memberBidMaxPrice : "+memberBidMaxPrice);
 				if (bidMaxPrice != memberBidMaxPrice) {
 					failJo = new JSONObject();
 					failJo.put("auct_id", auction.getAuct_id());
@@ -1080,10 +1081,14 @@ public class AuctionController {
 	public String successfulbiddingimpl(HttpServletRequest request, HttpServletResponse response) {
 		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
 		// int auct_id =2;
-		// auct_id를 받아서 BIDDING 정보를 가져와서 bid_id를 가져오기
+		// auct_id와 member_id를 받아서 BIDDING 정보를 가져와서 bid_id를 가져오기
 		BiddingVO bid = null;
 		int bid_id = 0;
 
+		int member_id = (Integer) request.getSession().getAttribute("member_id");
+		Map<String, Integer> map = new HashMap<>();
+		map.put("member_id", member_id);
+		
 		// auct_id, bid_id로만 insert 하기
 		SuccessfulBidVO successfulBid = null;
 
@@ -1091,9 +1096,10 @@ public class AuctionController {
 		AuctionVO auction_update = new AuctionVO();
 		auction_update.setAuct_id(auct_id);
 		auction_update.setAuction_status("end");
-
+		
 		try {
-			bid = bbiz.selectBididByAuctId(auct_id);
+			map.put("auct_id", auction_update.getAuct_id());
+			bid = bbiz.selectBididByAuctId(map);
 			bid_id = bid.getBid_id();
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
 
@@ -1199,6 +1205,12 @@ public class AuctionController {
 		return null;
 	}
 
+	//후기 등록하는 함수
+	@RequestMapping("/registerReview.bla")
+	public void registerReview(HttpServletRequest request, HttpServletResponse response) {
+		//int auct_id = 0; 받기 
+	}
+	
 	// 회원 등급?
 	@RequestMapping("/rateimpl.bla")
 	public String rateimpl(HttpServletRequest request) {

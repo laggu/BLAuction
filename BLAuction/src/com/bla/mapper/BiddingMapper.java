@@ -16,5 +16,5 @@ public interface BiddingMapper {
 	public ArrayList<BiddingVO> selectAuctionBiddingList(Integer auct_id);
 	public void insert(BiddingVO obj);
 	public BiddingVO select(Integer bid_id);
-	public BiddingVO selectBididByAuctId(Integer auct_id);
+	public BiddingVO selectBididByAuctId(Map<String,Integer> obj);
 }

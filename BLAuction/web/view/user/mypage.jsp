@@ -107,13 +107,36 @@ document.form.zipNo.value = zipNo;
 		}
 
 	};
+	
+	function registerReview(){
+		//후기 등록하기
+		var review = $('#textReview').val();
+		
+		
+		$.ajax({
+			type : 'POST',
+			url : 'registerReview.bla', /* DB로 접근 */
+			datatype : 'json',
+			success : function(data) {
+				
+			},
+			error : function(data) {
+				alert("biddingimpl.bla error")
+			}
+		})
+	}
+	
 </script>
 
 <script>
 //Tab 전환
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
-	
+
+	function setAuctId(auct_id){
+		alert(auct_id);
+		$('#auct_id').val(auct_id);
+	}
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
@@ -194,7 +217,7 @@ $(document).ready(function() {
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
 				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
-				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
+				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
 			winningbidlists.append(winningbidlist);
@@ -654,8 +677,8 @@ $(document).ready(function() {
   							<textarea class="form-control" rows="5" id="textReview"></textarea>
 
 						</div>
-
-						<button type="submit" class="btn btn-danger" id="createReview_Btn">후기 등록</button>
+						<input type= "hidden" name="auct_id" id="auct_id" value="">
+						<button type="button" class="btn btn-danger" id="createReview_Btn" onclick="registerReview()">후기 등록</button>
 					</form>
 
 				</div>
