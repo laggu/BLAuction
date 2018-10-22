@@ -497,7 +497,7 @@
 	
 	#detail_panel,#biddingList_panel{
 		position:relative;
-		height:1000px;
+		height:1200px;
 		width:96%;
 		margin-left:2%;
 	}
@@ -584,11 +584,13 @@
 	
 	
 	#bidding_btn{
+		position:relative;
 		width:300px;
 		margin:10% 35%;
 	}
 	
 	#bidding_btn h4{
+		position:relative;
 		color:white;
 	}
 	
