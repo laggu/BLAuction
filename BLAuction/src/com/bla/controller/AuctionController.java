@@ -223,6 +223,7 @@ public class AuctionController {
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
 		ArrayList<PhotoVO> photos = null;
+		String name = (String)request.getSession().getAttribute("name");
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
@@ -279,7 +280,8 @@ public class AuctionController {
 			// 마감일자 구하기
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
-
+			
+			mv.addObject("name",name);
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
 			mv.addObject("category", category);
