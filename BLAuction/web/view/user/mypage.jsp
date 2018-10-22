@@ -243,7 +243,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+end[i].auct_id+'"><img src="'+end[i].photoPath0+end[i].photoName0+'"></a></div>';
 				myauctionlist += '<div id="myauctionInfo">'; 
 				myauctionlist += '<div id="myauctionTitle">';
-				myauctionlist += '<h4><strong>'+end.auct_title+'</strong></h4>';
+				myauctionlist += '<h4><strong>'+end[i].auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button></div>';
 				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
@@ -292,7 +292,7 @@ $(document).ready(function() {
 			
 		},
 		error : function(data) {
-			alert("낙찰된 경매물품이 없습니다.");
+			alert("경매를 불러오는데 실패했습니다.");
 		}
 	});
 	

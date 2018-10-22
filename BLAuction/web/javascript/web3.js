@@ -590,7 +590,7 @@ function set_auction(auction_address){
  * 3. 반환받은 bid_id 및 입찰자 정보로 Auction의 bidding을 실행
  * 4. biddingEvent를 통해서 입찰 성공 시 이벤트 처리
  */
-function web3_bidding(auction_id, price, time, bidder_id, auctionAddress, callbackFunc){
+function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
     var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
     
     var params = {
@@ -599,7 +599,7 @@ function web3_bidding(auction_id, price, time, bidder_id, auctionAddress, callba
 			"time": time,
 		}
     
-	auction.bidding.sendTransaction(bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
+	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
         console.log(res)
         callbackFunc(params);

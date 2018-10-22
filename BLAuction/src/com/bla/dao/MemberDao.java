@@ -43,7 +43,6 @@ public class MemberDao implements Dao<MemberVO,Integer> {
 	}//member_id
 
 	public MemberVO select(String v) throws Exception {
-		System.out.println("mapper:select:"+v);
 		return mapper.selectbyemail(v);
 	}//email
 	

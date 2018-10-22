@@ -21,7 +21,7 @@ function setDeliveryCode(){
 			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
 			
 			var deliveryCodeVal = data.delivery_code;
-			
+			var delivery
 		},
 		error:function(data){
 			alert(data)
