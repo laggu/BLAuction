@@ -991,9 +991,9 @@ public class AuctionController {
 	public void deliveryimpl(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int auct_id = (Integer) session.getAttribute("auct_id");
-		String delivery_code = request.getParameter("delivery_code");
-		int company_code = Integer.parseInt(request.getParameter("company_code"));
-		String delivery_status = request.getParameter("delivery_status");
+		String delivery_code = request.getParameter("deliveryCode");
+		int company_code = Integer.parseInt(request.getParameter("companyCode"));
+		String delivery_status = request.getParameter("deliveryStatus");
 
 		SuccessfulBidVO successfulbid = null;
 
@@ -1004,6 +1004,8 @@ public class AuctionController {
 			successfulbid.setDelivery_status(delivery_status);
 
 			sbiz.modify(successfulbid);
+			
+			
 
 		} catch (Exception e) {
 

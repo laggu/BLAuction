@@ -248,7 +248,7 @@ $(document).ready(function() {
 				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
-				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany">'+end[i].company_code+'</span>)';	
+				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';	
 				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?

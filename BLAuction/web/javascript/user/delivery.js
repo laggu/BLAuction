@@ -4,11 +4,11 @@
 
 function setDeliveryCode(){
 	//모달 보여주고
-	var deliveryCode = $('#invoice_num').text();
-	var companyCode = $('#selectedDeliveryCompany').text();
+	
 	var params = {
 			"deliveryCode ": deliveryCode,
 			"companyCode ": companyCode,
+			"deliveryStatus": deliveryStatus
 		}
 	
 	$.ajax({
@@ -17,7 +17,10 @@ function setDeliveryCode(){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			alert(data)
+			var deliveryCode = $('#winnerInvoice'+data.auct_id);
+			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
+			
+			var deliveryCodeVal = data.
 		},
 		error:function(data){
 			alert(data)
