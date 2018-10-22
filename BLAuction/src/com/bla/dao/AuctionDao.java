@@ -53,6 +53,10 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectByCategory(category_id);
 	}
 	
+	public ArrayList<AuctionVO> selectByType(int type) throws Exception {
+		return amapper.selectByType(type);
+	}
+	
 	public void updateStatus(AuctionVO obj) throws Exception {
 		amapper.updateStatus(obj);
 	}

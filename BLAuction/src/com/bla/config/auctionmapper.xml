@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectAll" resultMap="auctList">
-		SELECT * FROM AUCTION ORDER BY AUCT_ID
+		SELECT * FROM AUCTION ORDER BY AUCT_ID ORDER BY REGISTER_DATE
 	</select>
 	
 	<select id="selectByCategory" parameterType="Integer" resultMap="auctList">
@@ -37,6 +37,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<select id="selectByRegdate" parameterType="Long" resultType="Integer">
 		SELECT AUCT_ID FROM AUCTION WHERE REGISTER_DATE=#{register_date}
+	</select>
+	
+	<select id="selectByType" parameterType="Integer" resultType="auctList">
+		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{register_date} ORDER BY REGISTER_DATE
 	</select>
 
 	<insert id="insert" parameterType="auction">

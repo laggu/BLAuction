@@ -462,12 +462,71 @@ public class AuctionController {
 
 		return mv;
 	}
+	
+	@RequestMapping("/allCategory.bla")
+	public ModelAndView allcategory(HttpServletRequest request) {
+		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> auction_list = null;
+
+		System.out.println("###################### GET ALL ######################");
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main");
+		try {
+			auction_list = abiz.get();
+			
+			int listSize = auction_list.size();
+			//listSize가 4이상일 때 
+//			if(listSize > 4)
+//				listSize = 4;
+
+			for (int i = 0; i < listSize; i++) {
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auction_list.get(i).getDuedate()));
+				PhotoVO photo1 = null;
+				PhotoVO photo2 = null;
+				try {
+					photo1 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(0);
+					newlist.setPhoto_path_1(photo1.getPhoto_path() + photo1.getPhoto_name());
+					photo2 = pbiz.getAll(auction_list.get(i).getAuct_id()).get(1);
+					newlist.setPhoto_path_2(photo2.getPhoto_path() + photo2.getPhoto_name());
+				}catch(Exception e) {
+					
+				}
+				newlist.setAuction(auction_list.get(i));
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auction_list.get(i)));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auction_list.get(i).getStart_price());
+				}
+				list.add(newlist);
+			}
+
+			mv.addObject("list", list);
+			request.setAttribute("list", list);
+			mv.addObject("centerpage", "center");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "center");
+		}
+
+		Iterator<ListVO> itr = list.iterator();
+		while (itr.hasNext()) {
+			ListVO listVO = (ListVO) itr.next();
+			System.out.println(listVO);
+		}
+
+		return mv;
+	}
 
 	// 옥션 정보 수정하기 단, auction_status가 입찰 전일 경우에만!
 	@RequestMapping("/updateAuctionimpl.bla")
 	public ModelAndView updateAuctionimpl(AuctionVO auction, HttpServletRequest request) {
 		return null;
 	}
+	
+	
 
 	// 입찰할 때 Bidding 정보 INSERT
 	@RequestMapping("/biddingimpl.bla")

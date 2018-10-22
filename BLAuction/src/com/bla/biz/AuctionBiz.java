@@ -53,6 +53,10 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 		return adao.selectByCategory(category_id);
 	}
 	
+	public ArrayList<AuctionVO> getByType(int type) throws Exception {
+		return adao.selectByType(type);
+	}
+	
 	public void updateStatus(AuctionVO obj) throws Exception{
 		adao.updateStatus(obj);
 	}
