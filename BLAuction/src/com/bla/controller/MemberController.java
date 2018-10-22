@@ -45,7 +45,7 @@ public class MemberController {
 		String member_account = request.getParameter("member_account");
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
-		ModelAndView mv2 = new ModelAndView();
+		ModelAndView mv2 = new ModelAndView("redirect:/main.bla");
 		MemberVO member = null;
 
 		try {
@@ -83,7 +83,6 @@ public class MemberController {
 		}
 		
 		
-		mv2.setViewName("main");
 		mv2.addObject("centerpage", "center");
 		System.out.println("로그인성공");
 		session.setAttribute("member_id", member.getMember_id());
@@ -136,7 +135,7 @@ public class MemberController {
 		}
 		response.setContentType("text/html;charset=UTF-8");
 
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("redirect:/main.bla");
 		HttpSession session = request.getSession();
 		MemberVO member = new MemberVO();
 
@@ -151,11 +150,14 @@ public class MemberController {
 		member.setBirth(bi);
 		member.setMember_account(request.getParameter("member_account"));
 
-		mv.setViewName("main");
 		try {
 			biz.register(member);
+			System.out.println(member.getEmail());
+			member = mbiz.get(member.getEmail());
+			System.out.println(member);
 			mv.addObject("centerpage", "center");
-			session.setAttribute("email", member.getEmail());
+			session.setAttribute("member_id", member.getMember_id());
+			session.setAttribute("member_account", member.getMember_account());
 			session.setAttribute("loginStatus", "loginSuccess");
 			return mv;
 		} catch (Exception e) {

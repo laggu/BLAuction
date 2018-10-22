@@ -13,7 +13,7 @@
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-<script src="javascript/auction/register.js?version=1"></script>
+<script src="javascript/auction/register.js"></script>
 
 <style>
 input.upload1 {
@@ -90,7 +90,6 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 										</select>
 									</div>
 								</div>
-
 							</div>
 						</div>
 
@@ -107,9 +106,11 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								class="form-group" id="start_price">
 								<h4>경매 시작 가격:</h4>
 								<div class="col-sm-6">
-									<input type="number" class="form-control" id="startPrice" min="0.001"  step="0.001">
+									<input type="number" class="form-control" id="startPrice" min="0.001" step="0.001">
+									<span>Ether</span>
 								</div>
 								<input type="number" class="form-control" name="start_price" id="startPriceFinney">
+								<span>Finney</span>
 							</div>
 							
 							<div style="margin-left: -2%; margin-bottom: 4%;"
@@ -117,11 +118,11 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<h4>경매 마감 시간:</h4>
 								<div class="col-sm-8">
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="dueDate" name="due_date">
+										<input type="datetime-local" class="form-control" id="dueDate" name="due_date" style="width:250px">
 									</div>
-									<div class="col-sm-4">
+									<!-- <div class="col-sm-4">
 										<input type="time" class="form-control" id="dueTime" name="due_time">
-									</div>	
+									</div>	 -->
 								</div>
 							</div>
 							

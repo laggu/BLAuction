@@ -422,9 +422,7 @@ $(document).ready(function(){
         web3 = new Web3(Web3.providers.HttpProvider('이더리움 넷 주소'))
     }
     
-    $("#register_btn").click(function(){
-    	makeAuction();
-    })
+  
 })
 
 	<!-- Variables -->
@@ -470,13 +468,12 @@ function makeAuction(){
 			console.log(data.down_term)
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
-						alert("res : " + res)
-						alert("err : " + err)
+
 			})
+			location.href="main.bla";
 		},
 		error:function(data){
-			alert("fail")
-			alert(data)
+			alert("/BLAuction/createAuctionimpl.bla fail");
 		}
 	})
 }
@@ -499,7 +496,7 @@ manager.makeAuctionEvent().watch(function(err,res){
 	var auction_address = res.args.auction_address
 	
 	/* ↓↓ 등록성공 화면처리 ↓↓ */
-	alert("Auction Successfully Created!");
+
 	
 })
 
@@ -546,39 +543,19 @@ function set_auction(auction_address){
  * 3. 반환받은 bid_id 및 입찰자 정보로 Auction의 bidding을 실행
  * 4. biddingEvent를 통해서 입찰 성공 시 이벤트 처리
  */
-function bidding(auction_id, price){
-	//var auction_id /* 쿠키에서 정보를 받아옴*/
-	//var price = $("#price").val();
-	var time = new Date().getTime();
-    var client_address = web3.eth.accounts[0];
-    bidder_id = 1; //get from session
+function bidding(auction_id, price, time, bidder_id, auctionAddress, callbackFunc){
+    var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
     
-	var params = {
-		"bidder_id":bidder_id,
-		"auction_id":auction_id,
-		"price":price,
-		"time":time,
-		"client_address":client_address
-	}
-	
-	alert(params.bidder_id + "\n" + params.auction_id + "\n" + params.price + "\n" + params.time + "\n" + params.client_address);	
-	
-	$.ajax({
-		type:'POST',
-		url:'bidding.bla', /* DB로 접근 */
-		data:params,
-		datatype:'json',
-		success:function(data){
-			alert(data)
-		},
-		error:function(data){
-			alert(data)
+    var params = {
+			"price": price,
+			"auction_id": auction_id,
+			"time": time,
 		}
-	})
-	
-	auction.bidding.sendTransaction(bidder_id, time, {from:client_address, value:web3.toWei(price, "finney")},  function(err, res){
+    
+	auction.bidding.sendTransaction(bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
         console.log(res)
+        callbackFunc(params);
     });
 }
 
@@ -611,20 +588,22 @@ function withdraw(){
 	})
 }
 
-function getBid(auction, index){
+
+
+function getBid(auction, index, bidList){
 	auction.getBid(index, function(err,res){
-		alert(index + "\n" + res);
-		var temp = {name:res[0], price:res[1], time:res[2]}
+		var temp = {name:res[0], price:res[1], time:res[2]};
+		bidList.push(temp);
 	})
 }
 
-function getBidList(auctionAddress){
+function getBidList(auctionAddress, bidList){
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
-	
+
 	auction.getBidCount(function(err,res){
 		var count = res;
 		for(var i = 0; i < count; ++i){
-			getBid(auction, i);
+			getBid(auction, i, bidList);
 		}
 	})
 }

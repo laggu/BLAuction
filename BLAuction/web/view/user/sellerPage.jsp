@@ -7,29 +7,119 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-<script type="text/javascript">
-// opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
-// (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
-//document.domain = "abc.go.kr";
-function goPopup(){
-//경로는 시스템에 맞게 수정하여 사용
-//호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를
-//호출하게 됩니다.
-var pop = window.open("jusoPopup.bla","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-//** 2017년 5월 모바일용 팝업 API 기능 추가제공 **/
-// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서
-// 실제 주소검색 URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-// var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
-}
-function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
-// 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
-document.form.roadFullAddr.value = roadFullAddr;
-document.form.roadAddrPart1.value = roadAddrPart1;
-document.form.roadAddrPart2.value = roadAddrPart2;
-documentform.addrDetail.value = addrDetail;
-document.form.zipNo.value = zipNo;
-}
+<script>
+//Tab 전환
+$(document).ready(function(){
+	var seller_id = '${seller_info.member_id}';
+	var salesAmount = 0;
+	var completeAmount = 0;
+	
+	//판매자가 올린 경매 리스트
+	$.ajax({
+		type : 'POST',
+		url : 'myauctionlist.bla', /* DB로 접근 */
+		data: {
+			'seller_id':seller_id
+		},
+		datatype : 'json',
+		success : function(data) {
+			var sellinglists = $('#sellinglists');
+				
+			var sellinglist = '';
+
+			var before = data.before;
+			var proceeding = data.proceeding;
+			var end = data.end;
+			var cancel = data.cancel;
+			var failbid = data.failbid;
+			
+			for(i in before){
+				salesAmount++;
+				sellinglist += '<div class="panel panel-default" id="selling_panel">';
+				sellinglist += '<div class="panel-body">';
+				sellinglist += '<div id="sellingImg"><a href="auctiondetail.bla?auctionid='+before[i].auct_id+'" id="beforeA'+i+'"><img style="width:240px;height:200px;" id="beforeImg'+i+'" src="'+before[i].photoPath0+before[i].photoName0+'"></a></div>';
+				
+				if(before[i].photoPath1 != 'undefined'){
+					$('#beforeA'+i).on('hover',function(){
+						$('#beforeImg'+i).attr("src",before[i].photoPath1+before[i].photoName1);
+					});
+				}
+				
+				sellinglist += '<div id="sellingInfo">';
+				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="sellingbidStatus" disabled>입찰전</button></div>';
+				sellinglist += '<div>입찰 시작가: <span id="sellingbidPrice">'+before[i].start_price+' Ether</span></div>';
+				sellinglist += '</div></div></div>';
+			}
+			
+			for(i in end){
+				salesAmount++;
+				completeAmount++;
+				sellinglist += '<div class="panel panel-default" id="selling_panel">';
+				sellinglist += '<div class="panel-body">';
+				sellinglist += '<div id="sellingImg"><a href="auctiondetail.bla?auctionid='+end[i].auct_id+'"><img style="width:240px;height:200px;" src="'+end[i].photoPath0+end[i].photoName0+'"></a></div>';
+				sellinglist += '<div id="sellingInfo">'; 
+				sellinglist += '<div id="sellingInfoTitle">';
+				sellinglist += '<h4><strong>'+end[i].auct_title+'</strong></h4>';
+				sellinglist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>경매 완료</button></div>';
+				sellinglist += '</div></div></div>';
+			}
+			
+			for(i in proceeding){
+				salesAmount++;
+				sellinglist += '<div class="panel panel-default" id="selling_panel">';
+				sellinglist += '<div class="panel-body">';
+				sellinglist += '<div id="sellingImg"><a href="auctiondetail.bla?auctionid='+proceeding[i].auct_id+'"><img style="width:240px;height:200px;" src="'+proceeding[i].photoPath0+proceeding[i].photoName0+'"></a></div>';
+				sellinglist += '<div id="sellingInfo">';		
+				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
+				sellinglist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
+				sellinglist += '<div>현재 최고가: <span id="sellingbidPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				sellinglist += '<div>경매 마감 시간: <span id="sellingbidDuedate">'+proceeding[i].dueDate+'</span></div>';
+				sellinglist += '</div></div></div>';
+				
+			}
+			
+			for(i in cancel){
+				salesAmount++;
+				sellinglist +='<div class="panel panel-default" id="selling_panel">';
+				sellinglist +='<div class="panel-body">';
+				sellinglist +='<div id="sellingImg"><a href="auctiondetail.bla?auctionid='+cancel[i].auct_id+'"><img style="width:240px;height:200px;" src="'+cancel[i].photoPath0+cancel[i].photoName0+'"></a></div>';
+				sellinglist +='<div id="sellingInfo">';
+				sellinglist +='<div id="sellingInfoTitle"><h4><strong>'+cancel[i].auct_title+'</strong></h4>';
+				sellinglist +='<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>취소된 경매</button></div>';
+				sellinglist +='</div></div></div>';
+				
+			}
+			
+			for(i in failbid){
+				salesAmount++;
+				sellinglist +='<div class="panel panel-default" id="selling_panel">';
+				sellinglist +='<div class="panel-body">';
+				sellinglist +='<div id="sellingImg"><a href="auctiondetail.bla?auctionid='+failbid[i].auct_id+'" id="failbidA'+i+'"><img style="width:240px;height:200px;" id="failbidImg'+i+'" src="'+failbid[i].photoPath0+failbid[i].photoName0+'"></a></div>';
+				sellinglist +='<div id="sellingInfo">';
+				sellinglist +='<div id="sellingInfoTitle"><h4><strong>'+failbid[i].auct_title+'</strong></h4>';
+				sellinglist +='<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>유찰된 경매</button></div>';
+				sellinglist +='</div></div></div>';
+			}
+			
+			sellinglists.append(sellinglist);
+			
+			var numofRegauction = $('#numofRegauction');
+			numofRegauction.text(salesAmount);
+			var numofComplitedauction = $('#numofComplitedauction');
+			numofComplitedauction.text(completeAmount);
+		},
+		error : function(data) {
+			alert("낙찰된 경매물품이 없습니다.");
+		}
+	});
+	$(".nav-tabs a").click(function(){
+        $(this).tab('show');
+    });
+	
+});
 </script>
+<style>
+</style>
 </head>
 <body>
 
@@ -44,8 +134,8 @@ document.form.zipNo.value = zipNo;
  				<div id="personalInfo">
   					<div id="rightInfo">
   						<div id="sellergrade"><img src="img/info.png"></div>
-  						<div><span id="sellerName"><strong>${member.name }</strong></span></div>
-  						<div><span id="myemail"><strong>${member.email }</strong></span></div>
+  						<div><span id="sellerName"><strong>${seller_info.name }</strong></span></div>
+  						<div><span id="myemail"><strong>${seller_info.email }</strong></span></div>
   						
   					</div>
   					<div id="leftInfo">
@@ -68,11 +158,12 @@ document.form.zipNo.value = zipNo;
 		<div id="sellerlist_area">
 		
 			<ul class="nav nav-tabs" id="sellerlist_tabs">
-			  <li class="active"><a data-toggle="tab" href="#home">후기 리스트</a></li>
-			  <li><a data-toggle="tab" href="#menu1">판매 리스트</a></li>
+			  <li class="active"><a data-toggle="tab" href="#reviewlists">후기 리스트</a></li>
+			  <li><a data-toggle="tab" href="#sellinglists">판매 리스트</a></li>
 			</ul>
 			
 			<div class="tab-content" id="sellerlist_panel">
+			<!-- First -->
 			  <div id="reviewlists" class="tab-pane fade in active">
 			  	<!-- Panel -->
 			    <div class="panel panel-default" id="review_panel">
@@ -82,21 +173,7 @@ document.form.zipNo.value = zipNo;
 		  					<div><h4><strong>낙찰자 이름</strong></h4></div>
 	  						<div>낙찰가: <span id="successfulbidPrice">2.0 Ether</span></div>
 	  						<div class="form-group">
-								<textarea class="form-control" rows="2" id="reviewComment">옷이 너무 잘 맞아요!</textarea>
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				<div class="panel panel-default" id="selling_panel">
-		  			<div class="panel-body">
-		  				<div id="sellingImg"><img src="img/se.jpg"></div>
-		  				<div id="sellingInfo">
-		  					<div>
-		  						<h4><strong>경매 물품 이름</strong></h4>
-		  						<button type="button" class="btn btn-default" id="sellingbidStatus" disabled>경매 완료</button>	
-		  					</div>
-	  						<div>
-	  							낙찰가: <span id="sellingbidPrice">1.0 Ether</span>
+								<textarea class="form-control" rows="2" id="reviewComment" disabled>옷이 너무 잘 맞아요!</textarea>
 	  						</div>
 		  				</div>
 		  			</div>
@@ -105,11 +182,7 @@ document.form.zipNo.value = zipNo;
 			  </div>
 			  <div id="sellinglists" class="tab-pane fade">
 			    <!-- Panel -->
-			    <div class="panel panel-default" id="selling_panel">
-		  			<div class="panel-body">
-		  				
-		  			</div>
-				</div>
+			    
 			  </div>
 			</div>
 		
@@ -203,9 +276,7 @@ document.form.zipNo.value = zipNo;
 	      
 	    </div>
 	  </div>
-	  
-	
-	  
+	    
 	  
     
 </body>

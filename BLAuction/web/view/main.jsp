@@ -76,7 +76,7 @@
     <!-- Menu Navigation -->
     <div class="col-sm-2 sidenav" id="menu">
       <div>
-      	<p><a href="main.bla"><strong>전체 카테고리</strong></a></p>
+      	<p><a href="allCategory.bla"><strong>전체 카테고리</strong></a></p>
       </div>
       <div id="menu_category">
 	    <p><a href="category.bla?category=1">의류/잡화</a></p>
