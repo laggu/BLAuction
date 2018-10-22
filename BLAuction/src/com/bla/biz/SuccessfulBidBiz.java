@@ -53,4 +53,8 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id) throws Exception{
 		return sdao.oneSelectMySuccessfulBid(auct_id);
 	}
+	
+	public void updateReview(SuccessfulBidVO obj) throws Exception {
+		sdao.updateReview(obj);
+	}
 }

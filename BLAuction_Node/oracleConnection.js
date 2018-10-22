@@ -1,14 +1,19 @@
 var oracledb = require('oracledb');
 
 //http://hellogohn.com/post_one278
-
-function auctionConfirm(auction_address, auction_id) {
-    oracledb.getConnection(
-        {
+var dbConnection_local =  {
+            user          : "BLAuction",//"team20s",
+            password      : "1234",//"blauction",
+            connectString : "70.12.110.164:1521/xe",//"blauction.czitde7cvox2.ap-northeast-2.rds.amazonaws.com:1521/TEAM20S"
+}
+var dbConnection =  {
             user          : "team20s",
             password      : "blauction",
             connectString : "blauction.czitde7cvox2.ap-northeast-2.rds.amazonaws.com:1521/TEAM20S"
-        },
+}
+function auctionConfirm(auction_address, auction_id) {
+    oracledb.getConnection(
+	dbConnection,
         function(err, connection) {
             if (err) {
                 console.error(err.message);
@@ -32,11 +37,7 @@ function auctionConfirm(auction_address, auction_id) {
 
 function bidConfirm(member_id, auct_id, price, time) {
     oracledb.getConnection(
-        {
-            user          : "team20s",
-            password      : "blauction",
-            connectString : "blauction.czitde7cvox2.ap-northeast-2.rds.amazonaws.com:1521/TEAM20S"
-        },
+dbConnection,
         function(err, connection) {
             if (err) {
                 console.error(err.message);

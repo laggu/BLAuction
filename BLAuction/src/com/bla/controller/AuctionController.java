@@ -831,6 +831,7 @@ public class AuctionController {
 			out = response.getWriter();
 			jo.put("failBid", failJa);
 			jo.put("successfulBid", successfulJa);
+			System.out.println("////////////////////////////낙찰/유찰 리스트////////////////");
 			System.out.println(jo);
 
 			out.print(jo);
@@ -1104,7 +1105,7 @@ public class AuctionController {
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
 
 			sbiz.register(successfulBid);
-
+			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
 
 		} catch (Exception e) {
@@ -1208,7 +1209,32 @@ public class AuctionController {
 	//후기 등록하는 함수
 	@RequestMapping("/registerReview.bla")
 	public void registerReview(HttpServletRequest request, HttpServletResponse response) {
-		//int auct_id = 0; 받기 
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		String review = request.getParameter("review");
+		
+		SuccessfulBidVO successfulBid = new SuccessfulBidVO();
+		
+		successfulBid.setAuct_id(auct_id);
+		successfulBid.setReview(review);
+		
+		System.out.println("successfulBid : "+successfulBid);
+		
+		JSONObject jo = new JSONObject();
+		
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
+		
+		try {
+			sbiz.updateReview(successfulBid);
+			jo.put("result", "success");
+			out = response.getWriter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		out.print(jo);
+		
 	}
 	
 	// 회원 등급?
