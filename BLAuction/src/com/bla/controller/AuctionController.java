@@ -934,6 +934,7 @@ public class AuctionController {
 						proceedingJo.put(nameKey, photoVO.getPhoto_name());
 						i++;
 					}
+					proceedingJo.put("auct_type", auction.getType());
 					proceedingJo.put("auct_title", auction.getAuct_title());
 					// 경매 마감 시간 보내기
 					String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
