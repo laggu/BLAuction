@@ -95,9 +95,8 @@ return zero + n;
 
 
 function getBidList(auction_id, auction_address){
-	alert(auction_id);
 	getBidListFromDB(auction_id);
-	//getBidListFromContract(auction_address);
+	getBidListFromContract(auction_address);
 }
 
 function getBidListFromDB(auction_id){
@@ -192,7 +191,7 @@ function setDownPrice(){
 	},60000);
 }
 
-function makebidding(auction_id, auct_type, user_id, auction_address){
+function makebidding(auction_id, auct_type, user_name, user_id, auction_address){
 	var price = $("#suggestedPrice").val();
 	var cur_price = Number($("#currentPrice").text()) * 1000;
 	
@@ -225,10 +224,10 @@ function makebidding(auction_id, auct_type, user_id, auction_address){
 		})
 	}
 	
-	web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	web3_bidding(auction_id, price, date.getTime(), user_name, user_id, auction_address, callback);
 }
 
-function makebiddingDown(auction_id, user_id, auctionAddress){
+function makebiddingDown(auction_id, user_name, user_id, auctionAddress){
 	price = getDownPrice()*1000;
 	
 	var callback = function(){
@@ -262,11 +261,6 @@ function makebiddingDown(auction_id, user_id, auctionAddress){
 			}
 		})
 	}
-	var params = {
-			"price": price,
-			"auction_id": auction_id,
-			"time": date.getTime(),
-		}
-	callback();
-	//web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	
+	web3_bidding(auction_id, price, date.getTime(), user_name, user_id, auction_address, callback);
 }
