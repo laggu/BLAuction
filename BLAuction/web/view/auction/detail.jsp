@@ -63,10 +63,12 @@
 	  						<div><h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span><span> 이더</span></h4></div>
 	  					</div>
 	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
+	  					<c:if test="${auction.type eq 2}">
 	  					<div id="oneLine">	
 	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
 	  						<div><h4><strong>내림 시간 간격</strong>: <span id="auctionDownTerm">${auction.down_term }</span><span> 시간</span></h4></div>
 	  					</div>
+	  					</c:if>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
 	  					<div>
