@@ -458,19 +458,20 @@ function makeAuction(){
         contentType: false,
 		data:form,
 		success:function(data){
-			console.log(data)
-			console.log(data.auction_id)
-			console.log(data.seller_id)
-			console.log(data.due_date)
-			console.log(data.start_price)
-			console.log(data.auction_type)
-			console.log(data.down_price)
-			console.log(data.down_term)
+			console.log(data);
+			console.log(typeof data.auction_id);
+			console.log(typeof data.seller_id);
+			console.log(typeof data.due_date);
+			console.log(typeof data.start_price);
+			console.log(typeof data.auction_type);
+			console.log(typeof data.down_price);
+			console.log(typeof data.down_term);
+			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
 
-			})
-			location.href="main.bla";
+			});
+			//location.href="main.bla";
 		},
 		error:function(data){
 			alert("/BLAuction/createAuctionimpl.bla fail");

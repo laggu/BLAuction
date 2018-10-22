@@ -1,4 +1,4 @@
-var auction_ABI = var auction_ABI = [
+var auction_ABI = [
 	{
 		"constant": false,
 		"inputs": [
@@ -406,7 +406,7 @@ var auction_manager_ABI = [
 		"type": "function"
 	}
 ];
-var auction_manager_address = '0xdcd28fe14c4b4ebd81b55f10d375b4781bcdeb19'
+var auction_manager_address = '0x8dcd68955cbfd419668c5e0cc419c1e41c5b4252'
 
 module.exports.ABI = auction_ABI;
 module.exports.manager_ABI = auction_manager_ABI;
