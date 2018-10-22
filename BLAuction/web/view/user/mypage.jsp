@@ -107,36 +107,42 @@ document.form.zipNo.value = zipNo;
 		}
 
 	};
+
+	
+</script>
+
+<script>
+//Tab 전환
 	
 	function registerReview(){
 		//후기 등록하기
 		var review = $('#textReview').val();
-		
+		var auct_id = $('#auct_id').val();
 		
 		$.ajax({
 			type : 'POST',
 			url : 'registerReview.bla', /* DB로 접근 */
+			data : {
+				"review":review,
+				"auct_id":auct_id,
+			},
 			datatype : 'json',
 			success : function(data) {
-				
+				$("#createReviewModal").modal('hide');
+				alert(data.result);
 			},
 			error : function(data) {
 				alert("biddingimpl.bla error")
 			}
 		})
 	}
-	
-</script>
 
-<script>
-//Tab 전환
+function setAuctId(auct_id){
+		$('#auct_id').val(auct_id);
+	}
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 
-	function setAuctId(auct_id){
-		alert(auct_id);
-		$('#auct_id').val(auct_id);
-	}
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',

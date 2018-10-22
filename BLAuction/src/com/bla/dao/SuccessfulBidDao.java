@@ -53,4 +53,8 @@ public class SuccessfulBidDao implements Dao<SuccessfulBidVO, Integer> {
 	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id) throws Exception {
 		return smapper.oneSelectMySuccessfulBid(auct_id);
 	}
+	
+	public void updateReview(SuccessfulBidVO obj) throws Exception {
+		smapper.updateReview(obj);
+	}
 }
