@@ -1090,13 +1090,14 @@ public class AuctionController {
 
 	// 낙찰이 완료되고 물품을 보냈을 때 택배 운송장 번호를 입력.
 	@RequestMapping("/deliveryimpl.bla")
-	public void deliveryimpl(HttpServletRequest request) {
+	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		int auct_id = (Integer) session.getAttribute("auct_id");
 		String delivery_code = request.getParameter("deliveryCode");
 		int company_code = Integer.parseInt(request.getParameter("companyCode"));
 		String delivery_status = request.getParameter("deliveryStatus");
 
+		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
 		PrintWriter out = null;
 		SuccessfulBidVO successfulbid = null;
@@ -1109,12 +1110,17 @@ public class AuctionController {
 
 			sbiz.modify(successfulbid);
 			
-			jo.put("","");
+			jo.put("company_code","company_code");
+			jo.put("delivery_code", "delivery_code");
+			jo.put("delivery_status", "delivery_status");
+			
+			out = response.getWriter();
 
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
+		
+		out.println(jo);
 	}
 
 	// 최고 입찰자가 바꼈을 때 환불해 주기 위함

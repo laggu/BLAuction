@@ -20,7 +20,8 @@ function setDeliveryCode(){
 			var deliveryCode = $('#winnerInvoice'+data.auct_id);
 			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
 			
-			var deliveryCodeVal = data.
+			var deliveryCodeVal = data.delivery_code;
+			
 		},
 		error:function(data){
 			alert(data)
