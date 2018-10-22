@@ -49,14 +49,14 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="auction">
 		INSERT INTO AUCTION 
-		(AUCT_ID,AUCT_TITLE,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,AUCTION_ADDRESS,TAG,REGISTER_DATE) 
-		VALUES (SEQ_AUCT.NEXTVAL,#{auct_title}, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{auction_address},#{tag},#{register_date})         
+		(AUCT_ID,AUCT_TITLE,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,TAG,REGISTER_DATE) 
+		VALUES (SEQ_AUCT.NEXTVAL,#{auct_title}, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{tag},#{register_date})         
 	</insert>
 
 	<insert id="insertDown" parameterType="auction">
 		INSERT INTO AUCTION 
-		(AUCT_ID,AUCT_TITLE,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,DOWN_PRICE,DOWN_TERM,AUCTION_STATUS,AUCTION_ADDRESS,TAG,REGISTER_DATE) 
-		VALUES (SEQ_AUCT.NEXTVAL,#{auct_title}, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{down_price}, #{down_term},#{auction_status},#{auction_address},#{tag},#{register_date})   
+		(AUCT_ID,AUCT_TITLE,MEMBER_ID,DUEDATE,AUCT_TYPE_ID, START_PRICE,SELLER_ACCOUNT,CATE_TYPE_ID,DESCRIPTION,DOWN_PRICE,DOWN_TERM,AUCTION_STATUS,TAG,REGISTER_DATE) 
+		VALUES (SEQ_AUCT.NEXTVAL,#{auct_title}, #{member_id},#{duedate},#{type},#{start_price},#{seller_account},#{category_id},#{description},#{down_price}, #{down_term},#{auction_status},#{tag},#{register_date})   
 	</insert>
 
 	<update id="updateStatus" parameterType="auction">
