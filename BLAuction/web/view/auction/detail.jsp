@@ -86,7 +86,7 @@
   				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && auction.auction_status ne 'failbid' && not empty auction.auction_address}">
   					<c:choose>
   						<c:when test="${auction.type eq 2}">
-		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },${name },${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>
+		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },'${name }',${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>
     					</c:when>
 						<c:otherwise>
 		  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
@@ -127,7 +127,7 @@
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${name },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },'${name }',${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
 				        </div>
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

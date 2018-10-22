@@ -593,15 +593,15 @@ function set_auction(auction_address){
 function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
     var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
     
-    var params = {
+	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
+        console.log("bidding() : ")
+        console.log(res)
+        
+        var params = {
 			"price": price,
 			"auction_id": auction_id,
 			"time": time,
 		}
-    
-	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
-        console.log("bidding() : ")
-        console.log(res)
         callbackFunc(params);
     });
 }

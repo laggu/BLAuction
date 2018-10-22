@@ -208,7 +208,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 		}
 	}
 	
-	var callback = function(){
+	var callback = function(params){
 		$.ajax({
 			type:'POST',
 			url:'biddingimpl.bla', /* DB로 접근 */
@@ -230,21 +230,21 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 function makebiddingDown(auction_id, user_name, user_id, auctionAddress){
 	price = getDownPrice()*1000;
 	
-	var callback = function(){
+	var callback = function(params){
 		$.ajax({
 			type:'POST',
 			url:'biddingimpl.bla', /* DB로 접근 */
 			data:params,
 			datatype:'json',
 			success:function(data){
-				var params = {
+				var param = {
 		      			"auct_id":auction_id
 		      		}
 		          
 		          $.ajax({
 		      		type:'POST',
 		      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
-		      		data:params,
+		      		data:param,
 		      		datatype:'json',
 		      		success:function(data){
 		      			window.clearInterval(timeInterval);
