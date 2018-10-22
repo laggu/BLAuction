@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BLAuction 의류/잡화</title>
+<title>BLAuction 모든카테고리</title>
 </head>
 <script>
 	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, category_id) {
