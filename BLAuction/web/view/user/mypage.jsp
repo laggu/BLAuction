@@ -193,7 +193,8 @@ $(document).ready(function() {
 				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
-				winningbidlist += '<span id="Delivery_Status" +index></span></div></div></div></div>';	
+				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
+				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
 			winningbidlists.append(winningbidlist);
@@ -622,6 +623,39 @@ $(document).ready(function() {
 
 						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">택배
 							정보 등록</button>
+					</form>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	<!-- Create Review Modal -->
+	<div class="modal" id="createReviewModal">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"></h4>
+				</div>
+
+				<div class="modal-body">
+					<form action="" class="form-horizontal">
+					
+						<div>
+							<h4>후기 등록하기</h4>
+  							<textarea class="form-control" rows="5" id="textReview"></textarea>
+
+						</div>
+
+						<button type="submit" class="btn btn-danger" id="createReview_Btn">후기 등록</button>
 					</form>
 
 				</div>
