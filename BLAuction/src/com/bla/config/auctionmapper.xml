@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT MEMBER_ID FROM AUCTION WHERE AUCT_ID = #{auct_id}
 	</select>
 	
-	<select id="selectEndAuctionByMemberId" parameterType="Integer" resultMap="auctList">
-		SELECT * FROM AUCTION WHERE AUCT_ID = ${auct_id} AND AUCTION_STATUS='end'
+	<select id="selectEndAuctionByMemberId" parameterType="Map" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE MEMBER_ID = ${member_id} AND AUCTION_STATUS='end'
 	</select>
 </mapper>

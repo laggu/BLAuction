@@ -1,6 +1,7 @@
 package com.bla.mapper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,5 @@ public interface AuctionMapper {
 	public void updateStatus(AuctionVO obj);
 	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj);//mypage 나의 경매 리스트
 	public int selectMemberIdByAuct(Integer auct_id);
-	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Integer auct_id);
+	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj);
 }

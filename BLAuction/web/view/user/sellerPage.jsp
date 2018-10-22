@@ -112,6 +112,39 @@ $(document).ready(function(){
 			alert("낙찰된 경매물품이 없습니다.");
 		}
 	});
+	
+	//후기 리스트 띄어주기.
+	$.ajax({
+		type : 'POST',
+		url : 'sellerReview.bla', /* DB로 접근 */
+		data: {
+			'seller_id':seller_id
+		},
+		datatype : 'json',
+		success : function(data) {
+			var reviewLists = $('#reviewlists');
+			var reviewList = '';
+			for(i in data){
+				reviewList +='<div class="panel panel-default" id="review_panel">';
+				reviewList += '<div class="panel-body">';
+				reviewList += '<div id="reviewImg"><img style="width:240px;height:200px;" src="'+data[i].photoPath0+data[i].photoName0+'"></div>';
+				reviewList += '<div id="reviewInfo">';
+				reviewList += '<div><h4><strong>'+data[i].name+'</strong></h4></div>';
+				reviewList += '<div>낙찰가: <span id="successfulbidPrice">'+data[i].price*0.001+' Ether</span></div>';
+				reviewList += '<div class="form-group">';
+				reviewList += '<textarea class="form-control" rows="2" id="reviewComment" disabled>'+data[i].review+'</textarea>';
+				reviewList += '</div></div></div></div>';
+			}
+			
+			reviewLists.append(reviewList);
+  			
+						
+		},
+		error : function(data) {
+			alert("후기리스트 띄우는데 문제생김.");
+		}
+	});
+	
 	$(".nav-tabs a").click(function(){
         $(this).tab('show');
     });
@@ -166,19 +199,7 @@ $(document).ready(function(){
 			<!-- First -->
 			  <div id="reviewlists" class="tab-pane fade in active">
 			  	<!-- Panel -->
-			    <div class="panel panel-default" id="review_panel">
-		  			<div class="panel-body">
-		  				<div id="reviewImg"><img src="img/se.jpg"></div>
-		  				<div id="reviewInfo">
-		  					<div><h4><strong>낙찰자 이름</strong></h4></div>
-	  						<div>낙찰가: <span id="successfulbidPrice">2.0 Ether</span></div>
-	  						<div class="form-group">
-								<textarea class="form-control" rows="2" id="reviewComment" disabled>옷이 너무 잘 맞아요!</textarea>
-	  						</div>
-		  				</div>
-		  			</div>
-				</div>
-				
+			    
 			  </div>
 			  <div id="sellinglists" class="tab-pane fade">
 			    <!-- Panel -->
