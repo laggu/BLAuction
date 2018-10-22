@@ -45,12 +45,20 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 		return adao.select();
 	}
 	
+	public ArrayList<AuctionVO> getByDuedate() throws Exception {
+		return adao.selectByDuedate();
+	}
+	
 	public int get(Long register_date) throws Exception {
 		return adao.select(register_date);
 	}
 	
 	public ArrayList<AuctionVO> getByCategory(int category_id) throws Exception {
 		return adao.selectByCategory(category_id);
+	}
+	
+	public ArrayList<AuctionVO> getByType(int type) throws Exception {
+		return adao.selectByType(type);
 	}
 	
 	public void updateStatus(AuctionVO obj) throws Exception{
