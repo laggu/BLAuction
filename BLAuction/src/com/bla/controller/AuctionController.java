@@ -86,7 +86,7 @@ public class AuctionController {
 
 		System.out.println("###################### CREATING AUCTION !!! ######################");
 		String date = multi.getParameter("due_date");
-		// String time = multi.getParameter("due_time");
+		//String time = multi.getParameter("due_time");
 		date = date.replaceAll("T", " ");
 		// Get time
 		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -203,8 +203,8 @@ public class AuctionController {
 		JSONObject json = new JSONObject();
 		try {
 			json.put("auction_id", auct_id);
-			json.put("seller_id", 9484);
-			json.put("due_date", register_date);
+			json.put("seller_id", member_id);
+			json.put("due_date", duedate);
 			json.put("start_price", start_price);
 			json.put("auction_type", auction_type);
 			json.put("down_price", down_price);

@@ -127,7 +127,7 @@
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },'${name }',${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},'${name }',${member_id},'${auction.auction_address}' );">입찰하기</button>
 				        </div>
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
