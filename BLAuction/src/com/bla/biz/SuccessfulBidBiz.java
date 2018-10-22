@@ -25,7 +25,7 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	@Override
 	public void modify(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sdao.update(t);
 	}
 
 	@Override

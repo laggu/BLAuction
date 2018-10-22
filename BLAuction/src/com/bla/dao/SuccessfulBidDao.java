@@ -24,6 +24,7 @@ public class SuccessfulBidDao implements Dao<SuccessfulBidVO, Integer> {
 	@Override
 	public void update(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
+		smapper.update(t);
 
 	}
 
