@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectByType" parameterType="Integer" resultMap="auctList">
-		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{register_date} ORDER BY REGISTER_DATE
+		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{type} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding') ORDER BY DUEDATE
 	</select>
 	
 	<select id="selectByDuedate" resultMap="auctList">
