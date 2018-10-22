@@ -776,13 +776,9 @@ public class AuctionController {
 			MemberVO sellerInfo = null;
 
 			for (SuccessfulBidVO successfulBid : successfulBids) {
-<<<<<<< HEAD
-				System.out.println("successfulbid; " + successfulBid);
-				jo = new JSONObject();
-=======
+
 				System.out.println("successfulbid; "+successfulBid);
 				successfulJo = new JSONObject();
->>>>>>> 508f2036cc0f306bb65139f825f6efdf5aefed06
 				price = bbiz.get(successfulBid.getBid_id()).getPrice();
 				System.out.println("price : " + price);
 				photos = pbiz.getAll(successfulBid.getAuct_id());
