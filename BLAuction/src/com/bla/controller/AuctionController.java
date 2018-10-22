@@ -223,6 +223,7 @@ public class AuctionController {
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
 		AuctionVO auction = null;
 		ArrayList<PhotoVO> photos = null;
+		String name = (String)request.getSession().getAttribute("name");
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
@@ -279,7 +280,8 @@ public class AuctionController {
 			// 마감일자 구하기
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
-
+			
+			mv.addObject("name",name);
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
 			mv.addObject("category", category);
@@ -305,8 +307,14 @@ public class AuctionController {
 	@RequestMapping("/auctionbidlist.bla")
 	public void auctionbidlist(HttpServletRequest request, HttpServletResponse response) {
 		// view에서 auct_id를 받아온다.
-		int auct_id = Integer.parseInt(request.getParameter("auction_id"));
-		System.out.println(auct_id);
+		System.out.println(request.getParameter("auction_id"));
+		int auct_id;
+		try {
+			auct_id = Integer.parseInt(request.getParameter("auction_id"));
+		}catch(Exception e) {
+			return;
+		}
+
 
 		// 입찰 해당 auct_id를 받아서 Bidding 객체를 가져온다.
 		ArrayList<BiddingVO> biddings = null;
@@ -731,6 +739,7 @@ public class AuctionController {
 			// 가져와서 내가 입차한 최고가격과 auction의 최고가를 비교하여서
 			// 같지 않는 auction들만 담아서 보낸다.
 			for(AuctionVO auction : aucts) {
+				map.put("auct_id", auction.getAuct_id());
 				Long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 				Long memberBidMaxPrice = bbiz.selectMemberMaxPrice(map);
 				if(bidMaxPrice != memberBidMaxPrice) {
@@ -769,14 +778,16 @@ public class AuctionController {
 
 			for (SuccessfulBidVO successfulBid : successfulBids) {
 				System.out.println("successfulbid; "+successfulBid);
-				jo = new JSONObject();
+				successfulJo = new JSONObject();
 				price = bbiz.get(successfulBid.getBid_id()).getPrice();
 				System.out.println("price : "+price);
 				photos = pbiz.getAll(successfulBid.getAuct_id());
 				AuctionVO auction = abiz.get(successfulBid.getAuct_id());
+				int successfulAuct_id = auction.getAuct_id();
 				auct_member_id = abiz.selectMemberIdByAuct(successfulBid.getAuct_id());
 				sellerInfo = mbiz.get(auct_member_id);
-				successfulJo.put("auct_id", auction.getAuct_id());
+				System.out.println("successfulAuct_id: "+successfulAuct_id);
+				successfulJo.put("auct_id", successfulAuct_id);
 				successfulJo.put("title", auction.getAuct_title());
 				successfulJo.put("price", price);
 
@@ -796,7 +807,7 @@ public class AuctionController {
 				successfulJo.put("delivery_status", successfulBid.getDelivery_status());
 				successfulJo.put("company_code", successfulBid.getCompany_code());
 
-				successfulJa.add(jo);
+				successfulJa.add(successfulJo);
 			}
 
 			out = response.getWriter();

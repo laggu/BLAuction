@@ -105,7 +105,7 @@ function getBidListFromDB(auction_id){
 	databaseTable.append("<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th><th>트랜잭션 상태</th></tr>");
 	
 	var params = {
-			"auction_id":auction_id
+			"auction_id":Number(auction_id)
 		}
 	
 	$.ajax({

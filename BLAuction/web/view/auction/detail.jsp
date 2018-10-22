@@ -144,7 +144,8 @@
 
 	<c:if test="${auction.type eq 1}">
 		<script>
-			getBidList("${auction.auct_id }", "${auction.auction_address }");
+			alert("${auction.auct_id }");
+			//getBidList("${auction.auct_id }", "${auction.auction_address }");
 		</script>
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
