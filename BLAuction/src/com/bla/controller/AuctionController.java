@@ -371,6 +371,11 @@ public class AuctionController {
 			int i = 0;
 			while (tmp.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) tmp.next();
+				
+				if(auctionVO.getAuction_address() == null) 
+					continue;
+				
+				
 				if(i == 4) break;
 				if(auctionVO.getType() == 2) {
 					continue;
@@ -399,13 +404,18 @@ public class AuctionController {
 				i++;
 			}
 			
-			// time_LIST 작업
+			// down_auction list 작업
 			auction_list.clear();
 			auction_list = abiz.getByType(2);
 			i = 0;
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
+				
+				if(auctionVO.getAuction_address() == null) 
+					continue;
+				
+				
 				if(i == 4) break;
 				
 				ListVO newlist = new ListVO();
@@ -471,11 +481,14 @@ public class AuctionController {
 			auction_list = abiz.getByCategory(category_id);
 			
 			int listSize = auction_list.size();
-			//listSize가 4이상일 때 
+			/*//listSize가 4이상일 때 
 			if(listSize > 4)
-				listSize = 4;
+				listSize = 4;*/
 			
 			for (int i = 0; i < listSize; i++) {
+				if(auction_list.get(i).getAuction_address() == null) {
+					continue;
+				}
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
@@ -533,6 +546,10 @@ public class AuctionController {
 //				listSize = 4;
 
 			for (int i = 0; i < listSize; i++) {
+				if(auction_list.get(i).getAuction_address() == null) {
+					continue;
+				}
+				
 				ListVO newlist = new ListVO();
 				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
 						.format(new Date((Long) auction_list.get(i).getDuedate()));
