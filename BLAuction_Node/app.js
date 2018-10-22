@@ -40,7 +40,7 @@ var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
             console.log('bidding event');
             console.log(res.returnValues);
             console.log();
-            db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price * 0.000000000000000001, res.returnValues.time);
+            db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price * 0.000000000000001, res.returnValues.time);
         });
         tempAuction.events.ownerWithdrawEvent(function(err, res){
             // auction.biddingEvent().stopWatching();
