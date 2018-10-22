@@ -63,6 +63,7 @@
 	  						<div><h4><c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPrice">${auction.start_price * 0.001 }</span></c:if><span> 이더</span></h4></div>
 	  					</div>
 	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
+	  					<!-- test --><span>${auction.auction_address}</span>
 	  					<c:if test="${auction.type eq 2}">
 	  					<div id="oneLine">	
 	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
@@ -82,10 +83,10 @@
   				
   				<!-- Trigger the modal with a button -->
   				
-  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && auction.auction_status ne 'failbid' && not empty auction.auction_address}">
+  				<c:if test="${member_id ne auction.member_id && auction.auction_status ne 'end' && auction.auction_status ne 'cancel' && auction.auction_status ne 'failbid'}">
   					<c:choose>
   						<c:when test="${auction.type eq 2}">
-		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>
+		  					<button type="button" class="btn btn-danger" id="bidding_btn_down" onclick="makebiddingDown(${auction.auct_id },${name },${member_id},'${auction.auction_address}')"><h4>입 찰 하 기</h4></button>
     					</c:when>
 						<c:otherwise>
 		  					<button type="button" class="btn btn-danger" id="bidding_btn" data-toggle="modal" data-target="#biddingModal"><h4>입 찰 하 기</h4></button>
@@ -107,7 +108,7 @@
 				        <div class="modal-body">  
 				        	<c:if test="${auction.type eq 2}">
 							<div>
-								<h4>현재 입찰가: <span id="currentPrice">${cur_price }</span></h4>
+							<c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
 							</div>
 							</c:if>
 							<div id="inputPriceArea">
@@ -126,7 +127,7 @@
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${name },${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
 				        </div>
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
