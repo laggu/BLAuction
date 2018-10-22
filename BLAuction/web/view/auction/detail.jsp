@@ -60,7 +60,7 @@
 	  					
 	  					<div id="oneLine">	
 	  						<div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
-	  						<div><h4><c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPrice">${auction.start_price * 0.001 }</span></c:if><span> 이더</span></h4></div>
+	  						<div><h4><c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001}</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPrice">${auction.start_price * 0.001 }</span></c:if><span> 이더</span></h4></div>
 	  					</div>
 	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
 	  					<!-- test --><span>${auction.auction_address}</span>
@@ -108,7 +108,7 @@
 				        <div class="modal-body">  
 				        	<c:if test="${auction.type eq 2}">
 							<div>
-							<c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
+							<c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
 							</div>
 							</c:if>
 							<div id="inputPriceArea">
