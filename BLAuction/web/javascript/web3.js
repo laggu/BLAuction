@@ -545,10 +545,13 @@ function set_auction(auction_address){
  */
 function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
     var auction = web3.eth.contract(auction_ABI).at(String(auctionAddress));
+    //alert(auctionAddress);
+    //alert("bidder_name type = "+typeof bidder_name + "\n" + "bidder_id type = "+typeof bidder_id + "\n" +"time type = "+typeof time);
+    alert(time);
+    alert(new Date(time));
+    alert(new Date(1540192017156));
     
-    alert(bidder_name + " " + bidder_id + " " + time);
-
-	auction.bidding.sendTransaction(String(bidder_name), Number(bidder_id), Number(time), {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
+	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
         console.log(res)
         if(!err){

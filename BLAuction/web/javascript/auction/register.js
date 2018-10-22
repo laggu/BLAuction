@@ -170,7 +170,8 @@ $(document).ready(function() {
 			alert('마감 시간이 현재 시간보다 빠릅니다.');
 			timeFlag = false;
 		}else{
-			timeFlag = true;			
+			timeFlag = true;
+			$('#dueDateLong').val(due_date.getTime());
 		}
 	});
 });

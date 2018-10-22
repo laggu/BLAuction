@@ -119,6 +119,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<div class="col-sm-8">
 									<div class="col-sm-4">
 										<input type="datetime-local" class="form-control" id="dueDate" name="due_date" style="width:250px">
+										<input type="number" id='dueDateLong' name='dueDateLong'>
 									</div>
 									<!-- <div class="col-sm-4">
 										<input type="time" class="form-control" id="dueTime" name="due_time">
