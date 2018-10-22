@@ -35,12 +35,10 @@ public class MemberBiz implements Biz<MemberVO,Integer> {
 
 	@Override
 	public MemberVO get(Integer v) throws Exception {
-		System.out.println("id/biz:"+dao.select());
 		return dao.select(v);
 	}//member_id
 	
 	public MemberVO get(String v) throws Exception {
-		System.out.println("email/biz:"+v);
 		return dao.select(v);
 	}//email 
 
