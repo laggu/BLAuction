@@ -8,8 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
 <script>
-	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, category_id) {
-		$("#list_div"+category_id).append(''+
+	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, index) {
+		$("#list_div"+index).append(''+
 					'<div class="card" style="width: 18rem;">'+
 					'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
 					'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
@@ -73,28 +73,24 @@
 
 			<div class="card group" id="card_group">
 			
-			<h2>의류 / 잡화</h2>
-				<div id="list_div1" class="card-columns" style="height: 400px"></div>
-
-				<h2>뷰티 / 미용</h2>
-				<div id="list_div2" class="card-columns" style="height: 400px"></div>
-
-				<h2>스포츠 / 레저</h2>
-				<div id="list_div3" class="card-columns" style="height: 400px"></div>
-
-				<h2>디지털 / 가전</h2>
-				<div id="list_div4" class="card-columns" style="height: 400px"></div>
-
-				<h2>생활 / 가구</h2>
-				<div id="list_div5" class="card-columns" style="height: 400px"></div>
-
-				<h2>기타</h2>
-				<div id="list_div6" class="card-columns" style="height: 400px"></div>
+			<h2> DOWN AUCTION </h2>
+			<div id="list_div1" class="card-columns" style="height: 400px"></div>
 			
-				<c:forEach var="item" items="${list }">
+			<h2> 마감임박 </h2>
+			<div id="list_div2" class="card-columns" style="height: 400px"></div>
+			
+				<c:forEach var="item" items="${down_list }">
 				
 					<script>
-						print_category("${item.getDuedate() }", "${item.getAuction().getAuct_id() }", "${item.getPhoto_path_1() }", "${item.getAuction().getAuct_title() }", "${item.getMax_price() }", "${item.getAuction().getCategory_id() }");
+						print_category("${item.getDuedate() }", "${item.getAuction().getAuct_id() }", "${item.getPhoto_path_1() }", "${item.getAuction().getAuct_title() }", "${item.getMax_price() }", 1);
+					</script>
+				
+				</c:forEach>
+				
+				<c:forEach var="item" items="${time_list }">
+				
+					<script>
+						print_category("${item.getDuedate() }", "${item.getAuction().getAuct_id() }", "${item.getPhoto_path_1() }", "${item.getAuction().getAuct_title() }", "${item.getMax_price() }", 2);
 					</script>
 				
 				</c:forEach>
