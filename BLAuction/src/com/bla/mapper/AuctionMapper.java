@@ -13,6 +13,7 @@ public interface AuctionMapper {
 	public ArrayList<AuctionVO> selectByCategory(int category_id);
 	public ArrayList<AuctionVO> selectByType(int type);
 	public ArrayList<AuctionVO> selectAll();
+	public ArrayList<AuctionVO> selectByDuedate();
 	public void insert(AuctionVO obj);
 	public void insertDown(AuctionVO obj);
 	public void updateStatus(AuctionVO obj);

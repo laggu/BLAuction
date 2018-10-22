@@ -28,19 +28,23 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectAll" resultMap="auctList">
-		SELECT * FROM AUCTION ORDER BY AUCT_ID ORDER BY REGISTER_DATE
+		SELECT * FROM AUCTION ORDER BY AUCT_ID
 	</select>
 	
 	<select id="selectByCategory" parameterType="Integer" resultMap="auctList">
-		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id} WHERE AUCTION_STATUS='BEFORE' OR AUCTION_STATUS='PROCEEDING'
+		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding')
 	</select>
 	
 	<select id="selectByRegdate" parameterType="Long" resultType="Integer">
 		SELECT AUCT_ID FROM AUCTION WHERE REGISTER_DATE=#{register_date}
 	</select>
 	
-	<select id="selectByType" parameterType="Integer" resultType="auctList">
+	<select id="selectByType" parameterType="Integer" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{register_date} ORDER BY REGISTER_DATE
+	</select>
+	
+	<select id="selectByDuedate" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding' ORDER BY DUEDATE
 	</select>
 
 	<insert id="insert" parameterType="auction">

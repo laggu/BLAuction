@@ -45,6 +45,10 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectAll();
 	}
 	
+	public ArrayList<AuctionVO> selectByDuedate() throws Exception {
+		return amapper.selectByDuedate();
+	}
+	
 	public int select(Long register_date) throws Exception {
 		return amapper.selectByRegdate(register_date);
 	}
