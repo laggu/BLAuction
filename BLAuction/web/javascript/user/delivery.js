@@ -4,8 +4,8 @@
 
 function setDeliveryCode(){
 	//모달 보여주고
-	var deliveryCode = $('#???').text();
-	var companyCode = $('#???').text();
+	var deliveryCode = $('#invoice_num').text();
+	var companyCode = $('#selectedDeliveryCompany').text();
 	var params = {
 			"deliveryCode ": deliveryCode,
 			"companyCode ": companyCode,
