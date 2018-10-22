@@ -95,8 +95,9 @@ return zero + n;
 
 
 function getBidList(auction_id, auction_address){
+	alert(auction_id);
 	getBidListFromDB(auction_id);
-	getBidListFromContract(auction_address);
+	//getBidListFromContract(auction_address);
 }
 
 function getBidListFromDB(auction_id){
@@ -119,8 +120,9 @@ function getBidListFromDB(auction_id){
 				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
 				s += "<td id=BiddersPrice" + i +"> "+ (data[i].bid_price * 0.001).toFixed(3) + "</td>";
 				s += "<td id=BiddingTimestamp" + i +"> "+ getTimeStamp(new Date(data[i].bid_time)) + "</td>";
-				s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
-				s += "</tr>"
+				//s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				s += "</tr>";
+				var databaseTable = $("#databaseTable");
 				databaseTable.append(s);
 			}
 			
@@ -153,7 +155,7 @@ function getBidListFromContract(auctionAddress){
 			databaseTable.append(s);
 		}
 	}
-	getBidList(auctionAddress, bidList, printList);
+	web3_getBidList(auctionAddress, bidList, printList);
 }
 
 function getDownPrice(){
@@ -223,7 +225,7 @@ function makebidding(auction_id, auct_type, user_id, auction_address){
 		})
 	}
 	
-	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
 
 function makebiddingDown(auction_id, user_id, auctionAddress){
@@ -266,5 +268,5 @@ function makebiddingDown(auction_id, user_id, auctionAddress){
 			"time": date.getTime(),
 		}
 	callback();
-	bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
+	//web3_bidding(auction_id, price, date.getTime(), user_id, auction_address, callback);
 }
