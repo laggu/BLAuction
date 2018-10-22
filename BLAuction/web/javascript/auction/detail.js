@@ -100,10 +100,6 @@ function getBidList(auction_id, auction_address){
 }
 
 function getBidListFromDB(auction_id){
-	var databaseTable = $("#databaseTable");
-	databaseTable.empty();
-	databaseTable.append("<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th><th>트랜잭션 상태</th></tr>");
-	
 	var params = {
 			"auction_id":Number(auction_id)
 		}
@@ -114,14 +110,17 @@ function getBidListFromDB(auction_id){
 		data:params,
 		datatype:'json',
 		success:function(data){
+			var databaseTable = $("#databaseTable");
+			databaseTable.empty();
+			databaseTable.append("<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th><th>트랜잭션 상태</th></tr>");
 			for(i in data){
 				s = "<tr>";
 				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
 				s += "<td id=BiddersPrice" + i +"> "+ (data[i].bid_price * 0.001).toFixed(3) + "</td>";
 				s += "<td id=BiddingTimestamp" + i +"> "+ getTimeStamp(new Date(data[i].bid_time)) + "</td>";
-				//s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
 				s += "</tr>";
-				var databaseTable = $("#databaseTable");
+				
 				databaseTable.append(s);
 			}
 			
@@ -141,17 +140,21 @@ function getBidListFromContract(auctionAddress){
 		contractTable.empty();
 		contractTable.append('<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th></tr>');
 		
+		alert(bidList[0].time + "\n" +bidList[1].time + "\n" +bidList[2].time + "\n")
+		
 		bidList.sort(function (a, b) { 
 			return a.time < b.time ? -1 : a.time > b.time ? 1 : 0;  
 		});
 		
-		for(i in bidList){
+		alert(bidList[0].time + "\n" +bidList[1].time + "\n" +bidList[2].time + "\n")
+		
+		for(var i = 0; i < bidList.length; ++i){
 			s = "<tr>";
 			s += "<td id=CBidderName" + i +"> "+ bidList[i].name + "</td>";
-			s += "<td id=CBiddersPrice" + i +"> "+ (bidList[i].price * 0.001).toFixed(3) + "</td>";
-			s += "<td id=CBiddingTimestamp" + i +"> "+ getTimeStamp(new Date(bidList[i].time)) + "</td>";
+			s += "<td id=CBiddersPrice" + i +"> "+ (bidList[i].price * 0.000000000000000001).toFixed(3) + "</td>";
+			s += "<td id=CBiddingTimestamp" + i +"> "+ getTimeStamp(new Date(Number(bidList[i].time))) + "</td>";
 			s += "</tr>"
-			databaseTable.append(s);
+			contractTable.append(s);
 		}
 	}
 	web3_getBidList(auctionAddress, bidList, printList);

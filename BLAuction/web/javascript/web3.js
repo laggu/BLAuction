@@ -469,9 +469,8 @@ function makeAuction(){
 			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
-
+				location.href="main.bla";
 			});
-			//location.href="main.bla";
 		},
 		error:function(data){
 			alert("/BLAuction/createAuctionimpl.bla fail");
@@ -546,11 +545,6 @@ function set_auction(auction_address){
  */
 function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
     var auction = web3.eth.contract(auction_ABI).at(String(auctionAddress));
-    //alert(auctionAddress);
-    //alert("bidder_name type = "+typeof bidder_name + "\n" + "bidder_id type = "+typeof bidder_id + "\n" +"time type = "+typeof time);
-    alert(time);
-    alert(new Date(time));
-    alert(new Date(1540192017156));
     
 	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
@@ -602,10 +596,11 @@ function web3_getBid(auction, index, bidList, printList, count){
 	auction.getBid(index, function(err,res){
 		var temp = {name:res[0], price:res[1], time:res[2]};
 		bidList.push(temp);
+		
+		if(Number(count) == index+1){
+			printList();
+		}
 	})
-	if(count == index){
-		printList();
-	}
 }
 
 function web3_getBidList(auctionAddress, bidList, printList){
