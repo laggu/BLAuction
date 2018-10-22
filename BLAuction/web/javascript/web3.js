@@ -480,7 +480,7 @@ var bidder_id = 0
 	/* ********** Auction Manager ********** */
 	/* ************************************* */
 
-var auction_manager_address = '0x5364cbc6641b84755d8fa5d4665edd6cef72752c'
+var auction_manager_address = '0x5dbc8a21dd3f597effd8ac5e4300c360e71e2eff'
 var manager = web3.eth.contract(auction_manager_ABI).at(auction_manager_address)
 
 /**
