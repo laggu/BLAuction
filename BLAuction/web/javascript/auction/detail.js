@@ -96,7 +96,7 @@ return zero + n;
 
 function getBidList(auction_id, auction_address){
 	getBidListFromDB(auction_id);
-	getBidListFromContract(auction_address);
+	//getBidListFromContract(auction_address);
 }
 
 function getBidListFromDB(auction_id){
@@ -119,7 +119,7 @@ function getBidListFromDB(auction_id){
 				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
 				s += "<td id=BiddersPrice" + i +"> "+ (data[i].bid_price * 0.001).toFixed(3) + "</td>";
 				s += "<td id=BiddingTimestamp" + i +"> "+ getTimeStamp(new Date(data[i].bid_time)) + "</td>";
-				s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				//s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
 				s += "</tr>"
 				databaseTable.append(s);
 			}
@@ -153,7 +153,7 @@ function getBidListFromContract(auctionAddress){
 			databaseTable.append(s);
 		}
 	}
-	getBidList(auctionAddress, bidList, printList);
+	web3_getBidList(auctionAddress, bidList, printList);
 }
 
 function getDownPrice(){

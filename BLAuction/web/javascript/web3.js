@@ -590,20 +590,23 @@ function withdraw(){
 
 
 
-function getBid(auction, index, bidList){
+function web3_getBid(auction, index, bidList, printList, count){
 	auction.getBid(index, function(err,res){
 		var temp = {name:res[0], price:res[1], time:res[2]};
 		bidList.push(temp);
 	})
+	if(count == index){
+		printList();
+	}
 }
 
-function getBidList(auctionAddress, bidList){
+function web3_getBidList(auctionAddress, bidList, printList){
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 
 	auction.getBidCount(function(err,res){
 		var count = res;
 		for(var i = 0; i < count; ++i){
-			getBid(auction, i, bidList);
+			web3_getBid(auction, i, bidList, printList, count);
 		}
 	})
 }
