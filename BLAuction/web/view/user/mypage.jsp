@@ -615,7 +615,7 @@ $(document).ready(function() {
 								name="invoice_num">
 						</div>
 
-						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">택배
+						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
 					</form>
 
