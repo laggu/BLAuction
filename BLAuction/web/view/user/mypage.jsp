@@ -7,22 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-
 <script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=2"></script>
 <script type="text/javascript">
-$(document).ready(function(){	
-   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
-	})
-	.ajaxStart(function(){
-		$('#load').show(); //ajax실행시 로딩바를 보여줌
-	})
-	.ajaxStop(function(){
-		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
-});
-</script>
-<script type="text/javascript">
-
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
 // (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
 //document.domain = "abc.go.kr";
@@ -150,7 +137,7 @@ function setDeliveryCode(){
 	})
 }
 
-//Tab 전환
+
 	
 	function registerReview(){
 		//후기 등록하기
@@ -183,8 +170,12 @@ function setSuccessAuctId(auct_id){
 }
 
 $(document).ready(function() {
+	//Tab 전환
+	$(".nav-tabs a").click(function() {
+		$(this).tab('show');
+	});
+	
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
-
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
@@ -385,20 +376,11 @@ $(document).ready(function() {
 		}
 	});
 	
-	$(".nav-tabs a").click(function() {
-		$(this).tab('show');
-
-	});
+	
 
 });
 </script>
-<style>
-#myauctionCancle{
-		position:absolute;
-		bottom:10px;
-		right:15px;
-	}
-</style>
+
 <body>
 
 	<!-- Content -->
@@ -491,8 +473,8 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
-
+	
+	
 	<!-- Modal -->
 
 	<!-- ChangePw Modal -->
@@ -733,10 +715,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-<!-- Loading bar -->
-<div id="load">
-	<img src="img/loading.gif" alt="loading">
-</div>
+
 
 </body>
 </html>
