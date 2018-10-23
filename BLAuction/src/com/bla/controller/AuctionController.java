@@ -86,7 +86,7 @@ public class AuctionController {
 
 		System.out.println("###################### CREATING AUCTION !!! ######################");
 		String date = multi.getParameter("due_date");
-		// String time = multi.getParameter("due_time");
+		//String time = multi.getParameter("due_time");
 		date = date.replaceAll("T", " ");
 		// Get time
 		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -203,8 +203,8 @@ public class AuctionController {
 		JSONObject json = new JSONObject();
 		try {
 			json.put("auction_id", auct_id);
-			json.put("seller_id", 9484);
-			json.put("due_date", register_date);
+			json.put("seller_id", member_id);
+			json.put("due_date", duedate);
 			json.put("start_price", start_price);
 			json.put("auction_type", auction_type);
 			json.put("down_price", down_price);
@@ -652,7 +652,7 @@ public class AuctionController {
 		// 가져온 auct_id로 bidding의 최고가, member_id로의 최고가를 구하시오..
 		HttpSession session = request.getSession();
 		int member_id = (Integer) session.getAttribute("member_id");
-
+		
 		ArrayList<Integer> auct_ids = null;
 		AuctionVO auct = null;
 		ArrayList<PhotoVO> photos = null;
@@ -680,7 +680,8 @@ public class AuctionController {
 				jo.put("title", auct.getAuct_title());
 				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
-				jo.put("auction_address", auct.getAuction_address());
+				jo.put("auction_address", (String)auct.getAuction_address());
+				System.out.println(auct.getAuction_address());
 				// 사진도 Photo테이블에서 경로랑 이름 들고와야함..
 				photos = pbiz.getAll(auct_id);
 
@@ -758,6 +759,7 @@ public class AuctionController {
 				map.put("auct_id", auction.getAuct_id());
 				Long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 				Long memberBidMaxPrice = bbiz.selectMemberMaxPrice(map);
+				System.out.println("bidMaxPrice : "+bidMaxPrice + ", memberBidMaxPrice : "+memberBidMaxPrice);
 				if (bidMaxPrice != memberBidMaxPrice) {
 					failJo = new JSONObject();
 					failJo.put("auct_id", auction.getAuct_id());
@@ -830,6 +832,7 @@ public class AuctionController {
 			out = response.getWriter();
 			jo.put("failBid", failJa);
 			jo.put("successfulBid", successfulJa);
+			System.out.println("////////////////////////////낙찰/유찰 리스트////////////////");
 			System.out.println(jo);
 
 			out.print(jo);
@@ -934,6 +937,7 @@ public class AuctionController {
 						proceedingJo.put(nameKey, photoVO.getPhoto_name());
 						i++;
 					}
+					proceedingJo.put("auct_type", auction.getType());
 					proceedingJo.put("auct_title", auction.getAuct_title());
 					// 경매 마감 시간 보내기
 					String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
@@ -1061,12 +1065,61 @@ public class AuctionController {
 	@RequestMapping("/sellerReview.bla")
 	public void sellerReview(HttpServletRequest request, HttpServletResponse response) {
 		// 판매자 member_id를 들고온다.
+		int seller_id = Integer.parseInt(request.getParameter("seller_id"));
 		// member_id로 auct들을 가져오고,
+		ArrayList<AuctionVO> aucts = null;
 		// 해당 옥션의 auct_id, 사진, 타이틀 json화
 		// auct_id로 successfulbid 에서 review를 들고온다.
+		SuccessfulBidVO successfulBid = null;
 		// reveiw json화.
+		JSONArray ja = new JSONArray();
+		JSONObject jo = null;
+		
+		//map 선언
+		Map<String,Integer> map = new HashMap<>();
+		map.put("member_id", seller_id);
+		
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
+		
 		try {
+			aucts = abiz.selectEndAuctionByMemberId(map);
+			
+			for(AuctionVO auct : aucts) {
+				successfulBid = sbiz.oneSelectMySuccessfulBid(auct.getAuct_id());
+				//bidid를 가져와서 bidding 테이블에서 member_id와 낙찰가를 가져오고,
+				//해당 member_id를 가져와서 낙찰자 이름 가져오기 
+				if(successfulBid.getReview() != null) {
+					jo = new JSONObject();
+					BiddingVO bid = bbiz.get(successfulBid.getBid_id());
+					System.out.println("판매자 리스트 - 낙찰자 정보"+bid);
+					
+					MemberVO reviewer = mbiz.get(bid.getMember_id());
+					System.out.println("낙찰자 정보 --- "+reviewer.getName());
+					
+					jo.put("name",reviewer.getName());
+					jo.put("price", bid.getPrice());
+					jo.put("auct_title",auct.getAuct_title());
+					jo.put("review", successfulBid.getReview());
+					ArrayList<PhotoVO> photos = pbiz.getAll(auct.getAuct_id());
+					
+					jo.put("auct_id", auct.getAuct_id());
 
+					int i = 0;
+					for (PhotoVO photoVO : photos) {
+						String pathKey = "photoPath" + i;
+						String nameKey = "photoName" + i;
+						jo.put(pathKey, photoVO.getPhoto_path());
+						jo.put(nameKey, photoVO.getPhoto_name());
+						i++;
+					}
+					ja.add(jo);
+				}
+				
+			}
+			out = response.getWriter();
+			System.out.println("판매자 후기 리스트 ::"+ja.toJSONString());
+			out.print(ja.toJSONString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1079,10 +1132,14 @@ public class AuctionController {
 	public String successfulbiddingimpl(HttpServletRequest request, HttpServletResponse response) {
 		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
 		// int auct_id =2;
-		// auct_id를 받아서 BIDDING 정보를 가져와서 bid_id를 가져오기
+		// auct_id와 member_id를 받아서 BIDDING 정보를 가져와서 bid_id를 가져오기
 		BiddingVO bid = null;
 		int bid_id = 0;
 
+		int member_id = (Integer) request.getSession().getAttribute("member_id");
+		Map<String, Integer> map = new HashMap<>();
+		map.put("member_id", member_id);
+		
 		// auct_id, bid_id로만 insert 하기
 		SuccessfulBidVO successfulBid = null;
 
@@ -1090,14 +1147,15 @@ public class AuctionController {
 		AuctionVO auction_update = new AuctionVO();
 		auction_update.setAuct_id(auct_id);
 		auction_update.setAuction_status("end");
-
+		
 		try {
-			bid = bbiz.selectBididByAuctId(auct_id);
+			map.put("auct_id", auction_update.getAuct_id());
+			bid = bbiz.selectBididByAuctId(map);
 			bid_id = bid.getBid_id();
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
 
 			sbiz.register(successfulBid);
-
+			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
 
 		} catch (Exception e) {
@@ -1198,6 +1256,37 @@ public class AuctionController {
 		return null;
 	}
 
+	//후기 등록하는 함수
+	@RequestMapping("/registerReview.bla")
+	public void registerReview(HttpServletRequest request, HttpServletResponse response) {
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		String review = request.getParameter("review");
+		
+		SuccessfulBidVO successfulBid = new SuccessfulBidVO();
+		
+		successfulBid.setAuct_id(auct_id);
+		successfulBid.setReview(review);
+		
+		System.out.println("successfulBid : "+successfulBid);
+		
+		JSONObject jo = new JSONObject();
+		
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
+		
+		try {
+			sbiz.updateReview(successfulBid);
+			jo.put("result", "success");
+			out = response.getWriter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		out.print(jo);
+		
+	}
+	
 	// 회원 등급?
 	@RequestMapping("/rateimpl.bla")
 	public String rateimpl(HttpServletRequest request) {

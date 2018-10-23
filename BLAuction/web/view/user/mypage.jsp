@@ -107,13 +107,42 @@ document.form.zipNo.value = zipNo;
 		}
 
 	};
+
+	
 </script>
 
 <script>
 //Tab 전환
+	
+	function registerReview(){
+		//후기 등록하기
+		var review = $('#textReview').val();
+		var auct_id = $('#auct_id').val();
+		
+		$.ajax({
+			type : 'POST',
+			url : 'registerReview.bla', /* DB로 접근 */
+			data : {
+				"review":review,
+				"auct_id":auct_id,
+			},
+			datatype : 'json',
+			success : function(data) {
+				$("#createReviewModal").modal('hide');
+				alert(data.result);
+			},
+			error : function(data) {
+				alert("biddingimpl.bla error")
+			}
+		})
+	}
+
+function setAuctId(auct_id){
+		$('#auct_id').val(auct_id);
+	}
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
-	
+
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
@@ -138,7 +167,7 @@ $(document).ready(function() {
 					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
-					mybiddinglist += '<button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button>';
+					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw('+ data[i].auction_address +')" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
 					mybiddinglists.append(mybiddinglist);
 				}
@@ -193,7 +222,8 @@ $(document).ready(function() {
 				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
-				winningbidlist += '<span id="Delivery_Status" +index></span></div></div></div></div>';	
+				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
+				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
 			winningbidlists.append(winningbidlist);
@@ -261,8 +291,13 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionInfo">';		
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
-				myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
-				myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
+				if(proceeding[i].auct_type == 2){
+					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
+					myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div>';
+				}else{
+					myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
+					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
+				}
 				myauctionlist += '</div></div></div>';
 				
 			}
@@ -617,6 +652,39 @@ $(document).ready(function() {
 
 						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
+					</form>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	<!-- Create Review Modal -->
+	<div class="modal" id="createReviewModal">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"></h4>
+				</div>
+
+				<div class="modal-body">
+					<form action="" class="form-horizontal">
+					
+						<div>
+							<h4>후기 등록하기</h4>
+  							<textarea class="form-control" rows="5" id="textReview"></textarea>
+
+						</div>
+						<input type= "hidden" name="auct_id" id="auct_id" value="">
+						<button type="button" class="btn btn-danger" id="createReview_Btn" onclick="registerReview()">후기 등록</button>
 					</form>
 
 				</div>

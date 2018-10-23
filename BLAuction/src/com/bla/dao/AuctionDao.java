@@ -1,6 +1,7 @@
 package com.bla.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -73,8 +74,8 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectMemberIdByAuct(auct_id);
 	}
 	
-	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Integer auct_id) throws Exception{
-		return amapper.selectEndAuctionByMemberId(auct_id);
+	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj) throws Exception{
+		return amapper.selectEndAuctionByMemberId(obj);
 	}
 	
 }

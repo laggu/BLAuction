@@ -14,4 +14,5 @@ public interface SuccessfulBidMapper {
 	public void update (SuccessfulBidVO obj);
 	public ArrayList<SuccessfulBidVO> selectMySuccessfulBid(Integer member_id);
 	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id);
+	public void updateReview(SuccessfulBidVO obj);
 }

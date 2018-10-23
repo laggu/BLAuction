@@ -16,7 +16,7 @@
 	    });
 
 	    dtA = new Date(parseInt($("#timestamp").text()));
-	    if(auctionStatus == "before" || auctionStatus == "proceeding"){
+	    if(auctionStatus == "before" || auctionStatus == "proceeding"){"web/css/style.css"
 	    	timeInterval = window.setInterval("srvTime(${auction.auct_id });",600);
 	    }else if(auctionStatus == "cancel"){
 	    	$("#currentTimelimit").text("경매 취소");
@@ -127,7 +127,7 @@
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
 						
-							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },'${name }',${auction.type},${member_id},'${auction.auction_address}' );">입찰하기</button>
+							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},'${name }',${member_id},'${auction.auction_address}' );">입찰하기</button>
 				        </div>
 					        <div class="modal-footer">
 					          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -148,7 +148,8 @@
 		</script>
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
-			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트</h3>
+			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트
+			<span class="glyphicon glyphicon-refresh"></span></h3>
 			<div class="panel panel-default" id="biddingList_panel">
 	  			<div class="panel-body">
 	  				<div class="panel panel-default" id="DBlist">

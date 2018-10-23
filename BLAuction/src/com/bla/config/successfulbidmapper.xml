@@ -20,6 +20,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE SUCCESSFUL_BID SET REVIEW = #{review}, DELIVERY_CODE = #{delivery_code}, DELIVERY_STATUS = #{delivery_status}, COMPANY_CODE = #{company_code} WHERE AUCT_ID = #{auct_id} 
 	</update>
 	
+	<update id="updateReview" parameterType="successfulbid">
+		UPDATE SUCCESSFUL_BID SET REVIEW = #{review} WHERE AUCT_ID = #{auct_id} 
+	</update>
+	
 	<select id="selectMySuccessfulBid" parameterType="Integer" resultType="successfulbid">
 		SELECT * FROM SUCCESSFUL_BID WHERE BID_ID IN (SELECT BID_ID FROM BIDDING WHERE MEMBER_ID=#{member_id})
 	</select>

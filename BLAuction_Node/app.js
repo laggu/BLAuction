@@ -7,20 +7,16 @@ http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end('Hello World!');
 }).listen(9000);
-
-console.log("test");
+console.log('server created');
 
 var web3 = new Web3(
     new Web3.providers.WebsocketProvider('wss://kovan.infura.io/ws/1b634aaa684e42fbbba12e68027076ff')
 );
 
-//console.log(web3);
 
 var address = "";
 var key = '';
 
-//db.auctionConfirm("asdf", 1);
-//db.bidConfirm(2, 1, 200000, 15123141);
 function makeAuction(address){
     var temp = new web3.eth.Contract(auction.ABI, address);
     return temp;
@@ -32,16 +28,19 @@ var auction_manager_contract = new web3.eth.Contract(auction.manager_ABI,auction
 
 var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
     function(err, res){
-        //var auction = new web3.eth.Contract(auction.ABI, res.returnValues.auction_address);
+	if(res==null){
+		console.log("response null");
+		return;
+	}
         console.log("auction created");
-        console.log(res);
+        console.log(res.returnValues);
         console.log();
         var tempAuction = makeAuction(res.returnValues.auction_address);
         var biddingEvent = tempAuction.events.biddingEvent(function(err, res){
             console.log('bidding event');
             console.log(res.returnValues);
             console.log();
-            db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price, res.returnValues.time);
+            db.bidConfirm(res.returnValues.member_id, res.returnValues.auct_id, res.returnValues.price * 0.000000000000001, res.returnValues.time);
         });
         tempAuction.events.ownerWithdrawEvent(function(err, res){
             // auction.biddingEvent().stopWatching();
@@ -63,5 +62,4 @@ var makeAuctionEvent = auction_manager_contract.events.makeAuctionEvent(
     console.error(error)
 });
 
-
-//http://blog.semo.io/21 geth 설치
+console.log('start watching event from auction_manager');

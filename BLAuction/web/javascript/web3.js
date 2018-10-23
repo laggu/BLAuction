@@ -2,6 +2,156 @@
 
 var auction_ABI = [
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_bidder_name",
+				"type": "string"
+			},
+			{
+				"name": "bidder_id",
+				"type": "uint256"
+			},
+			{
+				"name": "time",
+				"type": "uint256"
+			}
+		],
+		"name": "bidding",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "set_delivery_status",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "fee",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw_for_owner",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_auction_id",
+				"type": "uint256"
+			},
+			{
+				"name": "_seller_id",
+				"type": "uint256"
+			},
+			{
+				"name": "_auction_type",
+				"type": "uint8"
+			},
+			{
+				"name": "_due_date",
+				"type": "uint256"
+			},
+			{
+				"name": "_start_price",
+				"type": "uint256"
+			},
+			{
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"name": "_manager",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "member_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "auct_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "time",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "_bidder_name",
+				"type": "string"
+			}
+		],
+		"name": "biddingEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "refundEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "auction_id",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerWithdrawEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "auctionEndEvent",
+		"type": "event"
+	},
+	{
 		"constant": true,
 		"inputs": [],
 		"name": "getAllData",
@@ -45,6 +195,10 @@ var auction_ABI = [
 						"type": "uint256"
 					},
 					{
+						"name": "bidder_name",
+						"type": "string"
+					},
+					{
 						"name": "price",
 						"type": "uint256"
 					},
@@ -67,6 +221,47 @@ var auction_ABI = [
 			{
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getBid",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBidCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -91,247 +286,9 @@ var auction_ABI = [
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "withdraw",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get_bid_list",
-		"outputs": [
-			{
-				"components": [
-					{
-						"name": "bid_id",
-						"type": "uint256"
-					},
-					{
-						"name": "bidder_id",
-						"type": "uint256"
-					},
-					{
-						"name": "price",
-						"type": "uint256"
-					},
-					{
-						"name": "time",
-						"type": "uint256"
-					},
-					{
-						"name": "bidder_address",
-						"type": "address"
-					}
-				],
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "withdraw_for_owner",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "bid_id",
-				"type": "uint256"
-			},
-			{
-				"name": "bidder_id",
-				"type": "uint256"
-			},
-			{
-				"name": "time",
-				"type": "uint256"
-			}
-		],
-		"name": "bidding",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "status",
-				"type": "bool"
-			}
-		],
-		"name": "set_delivery_status",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"name": "_auction_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_seller_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_auction_type",
-				"type": "uint8"
-			},
-			{
-				"name": "_due_date",
-				"type": "uint256"
-			},
-			{
-				"name": "_start_price",
-				"type": "uint256"
-			},
-			{
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "member_id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "auct_id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "price",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"name": "time",
-				"type": "uint256"
-			}
-		],
-		"name": "biddingEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "refundEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "auction_id",
-				"type": "uint256"
-			}
-		],
-		"name": "ownerWithdrawEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "auctionEndEvent",
-		"type": "event"
 	}
 ];
 var auction_manager_ABI = [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_auction_id",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "auctions",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_auction_id",
-				"type": "uint256"
-			}
-		],
-		"name": "getAuction",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_auction_id",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw_for_owner",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
 	{
 		"constant": false,
 		"inputs": [
@@ -379,26 +336,14 @@ var auction_manager_ABI = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_auction_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_bid_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_bidder_id",
-				"type": "uint256"
-			},
-			{
-				"name": "_time",
-				"type": "uint256"
+				"name": "newManager",
+				"type": "address"
 			}
 		],
-		"name": "makeBid",
+		"name": "setManagerAddress",
 		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -406,18 +351,6 @@ var auction_manager_ABI = [
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "makeBidEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "endAuctionEvent",
-		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -437,22 +370,42 @@ var auction_manager_ABI = [
 		"type": "event"
 	},
 	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "refundEvent",
-		"type": "event"
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "auctions",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "ownerWithdrawEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "withdrawEvent",
-		"type": "event"
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_auction_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getAuction",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ];
 
@@ -480,7 +433,7 @@ var bidder_id = 0
 	/* ********** Auction Manager ********** */
 	/* ************************************* */
 
-var auction_manager_address = '0x5dbc8a21dd3f597effd8ac5e4300c360e71e2eff'
+var auction_manager_address = '0x91e62f2014cf23f6f37bc38a32818d8576e57cc7'
 var manager = web3.eth.contract(auction_manager_ABI).at(auction_manager_address)
 
 /**
@@ -505,19 +458,19 @@ function makeAuction(){
         contentType: false,
 		data:form,
 		success:function(data){
-			console.log(data)
-			console.log(data.auction_id)
-			console.log(data.seller_id)
-			console.log(data.due_date)
-			console.log(data.start_price)
-			console.log(data.auction_type)
-			console.log(data.down_price)
-			console.log(data.down_term)
+			console.log(data);
+			console.log(typeof data.auction_id);
+			console.log(typeof data.seller_id);
+			console.log(typeof data.due_date);
+			console.log(typeof data.start_price);
+			console.log(typeof data.auction_type);
+			console.log(typeof data.down_price);
+			console.log(typeof data.down_term);
+			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
-
-			})
-			location.href="main.bla";
+				location.href="main.bla";
+			});
 		},
 		error:function(data){
 			alert("/BLAuction/createAuctionimpl.bla fail");
@@ -555,10 +508,10 @@ manager.makeAuctionEvent().watch(function(err,res){
  * Auction 컨트랙을 호출
  * 브라우저가 어떤 Auction에 대해 입찰할지 모르기 때문에 입찰 전 세팅 
  */
-var auction = ''
+
 	
 function set_auction(auction_address){
-	auction = web3.eth.contract(auction_ABI).at(auction_address)
+	var auction = web3.eth.contract(auction_ABI).at(auction_address)
 	
 	auction.makeBidEvent().watch(function(err,res){
 	var bid_id = res.args.bid_id
@@ -591,18 +544,19 @@ function set_auction(auction_address){
  * 4. biddingEvent를 통해서 입찰 성공 시 이벤트 처리
  */
 function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
-    var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
+    var auction = web3.eth.contract(auction_ABI).at(String(auctionAddress));
     
 	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
         console.log(res)
-        
-        var params = {
-			"price": price,
-			"auction_id": auction_id,
-			"time": time,
-		}
-        callbackFunc(params);
+        if(!err){
+	        var params = {
+				"price": price,
+				"auction_id": auction_id,
+				"time": time,
+			}
+	        callbackFunc(params);
+        }
     });
 }
 
@@ -630,7 +584,9 @@ function setDeliveryStatus(auctionAddress){
  * 비밀경매 : 경매 종료 후 호출 가능
  */
 
-function web3_withdraw(){
+function web3_withdraw(auctionAddress){
+	alert(typeof auctionAddress);
+	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	auction.withdraw(function(err,res){
 	})
 }
@@ -641,10 +597,11 @@ function web3_getBid(auction, index, bidList, printList, count){
 	auction.getBid(index, function(err,res){
 		var temp = {name:res[0], price:res[1], time:res[2]};
 		bidList.push(temp);
+		
+		if(Number(count) == index+1){
+			printList();
+		}
 	})
-	if(count == index){
-		printList();
-	}
 }
 
 function web3_getBidList(auctionAddress, bidList, printList){
