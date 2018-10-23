@@ -24,7 +24,11 @@
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
-
+<script>
+	$(document).ready(function (){
+		$('#load').hide();
+	})
+</script>
 </head>
 
 <body>
