@@ -10,7 +10,17 @@
 
 <script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=2"></script>
-
+<script type="text/javascript">
+$(document).ready(function(){	
+   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+	})
+	.ajaxStart(function(){
+		$('#load').show(); //ajax실행시 로딩바를 보여줌
+	})
+	.ajaxStop(function(){
+		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
+});
+</script>
 <script type="text/javascript">
 
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
@@ -691,6 +701,11 @@ $(document).ready(function() {
 
 		</div>
 	</div>
+	
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
+</div>
 
 </body>
 </html>

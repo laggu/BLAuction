@@ -13,6 +13,7 @@ var timeInterval;
 
 
 function srvTime(auct_id) {
+	$('#load').hide();
 	  $.ajax({
 	    type: 'GET',
 	    cache: false,
@@ -103,7 +104,7 @@ function getBidListFromDB(auction_id){
 	var params = {
 			"auction_id":Number(auction_id)
 		}
-	
+	$('#load').show();
 	$.ajax({
 		type:'POST',
 		url:'auctionbidlist.bla', /* DB로 접근 */
@@ -127,7 +128,7 @@ function getBidListFromDB(auction_id){
 				
 				databaseTable.append(s);
 			}
-			
+			$('#load').hide();
 		},
 		error:function(data){
 			alert('auctionbidlist.bla error')

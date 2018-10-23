@@ -25,17 +25,6 @@
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){	
-   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
-	})
-	.ajaxStart(function(){
-		$('#load').show(); //ajax실행시 로딩바를 보여줌
-	})
-	.ajaxStop(function(){
-		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
-});
-</script>
 </head>
 
 <body>
@@ -122,10 +111,6 @@ $(document).ready(function(){
 </footer>
 
 
-<!-- Loading bar -->
-<div id="load">
-	<img src="img/loading.gif" alt="loading">
-</div>
 
 </body>
 </html>
