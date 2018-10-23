@@ -26,12 +26,12 @@ contract Auction{
     event auctionEndEvent();
     
     modifier auction_progress(uint _time){
-        require(due_date > _time);
+        require(due_date > _time * 1000);
         _;
     }
     
     modifier auction_end(uint _time){
-        require(due_date < _time);
+        require(due_date < _time * 1000);
         _;
     }
     

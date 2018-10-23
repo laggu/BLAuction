@@ -1193,7 +1193,6 @@ public class AuctionController {
 	// 낙찰이 완료되고 물품을 보냈을 때 택배 운송장 번호를 입력.
 	@RequestMapping("/deliveryimpl.bla")
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
 		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
 		String delivery_code = request.getParameter("delivery_code");
 		int company_code = Integer.parseInt(request.getParameter("company_code"));
@@ -1249,25 +1248,26 @@ public class AuctionController {
 
 	// 입찰 전 경매 취소하는 함수
 	@RequestMapping("/auctioncancel.bla")
-	public ModelAndView auctioncancel(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("main");
+	public void auctioncancel(HttpServletRequest request, HttpServletResponse response) {
+		
 		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
-
+		String auct_status = request.getParameter("auct_status");
+		
+		response.setContentType("text/json;charset=utf-8");
+		
 		AuctionVO auction = new AuctionVO();
-		auction.setAuct_id(auct_id);
-		auction.setAuction_status("cancel");
-
+	
 		try {
+			auction.setAuct_id(auct_id);
+			auction.setAuction_status("cancel");
+			
 			abiz.updateStatus(auction);
-			mv.addObject("center", "user/mypage");
-			mv.addObject("isCancel", true);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			mv.addObject("isCancel", false);
 		}
 
-		return null;
 	}
 
 	//후기 등록하는 함수

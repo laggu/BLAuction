@@ -14,7 +14,15 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
+<script type="text/javascript">
+$(window).load(function() {
+	$('#load').hide();
+});
+</script>
 <script>
 time = new Date().getTime()
 console.log(time)
@@ -42,6 +50,10 @@ console.log(time)
 	  <div class="col-sm-4" id="beauty"><a href="category.bla?category=2"><img src="img/beauty.jpg"><h2>#뷰티 #미용</h2></a></div>
 	  <div class="col-sm-4" id="etc"><a href="category.bla?category=6"><img src="img/etc.jpg"><h2>#기타</h2></a></div>
 </div>
+</div>
+
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
 </div>
 
 </body>

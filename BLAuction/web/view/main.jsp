@@ -17,11 +17,28 @@
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
+<!-- Latest JQuery -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
+
+<script type="text/javascript">
+ 
+$(document).ready(function(){	
+   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+	})
+	.ajaxStart(function(){
+		$('#load').show(); //ajax실행시 로딩바를 보여줌
+	})
+	.ajaxStop(function(){
+		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
+});
+
+</script>
 </head>
 
 <body>
@@ -107,36 +124,10 @@
   <p>created by Team20's designed by Eileen</p>
 </footer>
 
-<!-- Modal -->
-<!-- ********************************************************************************************* -->
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
-</button>
 
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
 </div>
 
 </body>
