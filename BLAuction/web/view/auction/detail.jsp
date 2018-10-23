@@ -25,7 +25,7 @@
 	    }
 	});
 </script>
-<script src="javascript/auction/detail.js?version=1"></script>
+<script src="javascript/auction/detail.js"></script>
 </head>
 <script>
 	$(document).ready(function(){
