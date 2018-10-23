@@ -176,11 +176,6 @@
 	</c:if>
 </div>
 
-<!-- Loading bar -->
-<div id="load">
-	<img src="img/loading.gif" alt="loading">
-</div>
-
 
 </body>
 </html>
