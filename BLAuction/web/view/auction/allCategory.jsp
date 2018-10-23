@@ -22,6 +22,13 @@
 					'</div></div>')
 	}
 </script>
+<script>
+$(document).ready(function(){
+	$('#thelatest').on('show.bs.dropdown', function () {
+		  
+		})
+});
+</script>
 <body>
 
 	<!-- Content -->
@@ -35,8 +42,8 @@
 					경매 정렬 기준 <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#">최신 등록순</a></li>
-					<li><a href="#">마감 입박순</a></li>
+					<li><a href="#" id="thelatest">최신 등록순</a></li>
+					<li><a href="#" id="">마감 입박순</a></li>
 				</ul>
 			</div>
 
