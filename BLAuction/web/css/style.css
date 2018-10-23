@@ -1112,9 +1112,10 @@ body
 	#changePasswd_btn {
 		margin-top:15px;
 	}
-
-	#changedAddress{
-		width:350px;
+	
+	#changedPhone{
+		width:200px;
+		margin:0 auto;
 	}
 
 	#sgbidding_area{

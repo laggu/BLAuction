@@ -422,16 +422,14 @@ $(document).ready(function() {
 							</div>
 							<div>
 								<strong>핸드폰 번호: </strong><span id="myphone">${member.phone }</span>
-								<button type="button" class="btn btn-warning"
-									id="changePhone_btn" data-toggle="modal"
-									data-target="#ChangePhoneModal">
-									<strong>번호 변경</strong>
+								<button type="button" class="btn btn-warning" id="changePhone_btn" data-toggle="modal"
+									data-target="#ChangePhoneModal"><strong>번호 변경</strong>
 								</button>
 							</div>
 							<div>
 								<strong>주소: </strong><span id="myaddress">${member.address }</span>
-								<button type="button" class="btn btn-warning"
-									id="changeAddress_btn" onClick="goPopup();" value="팝업">
+								<button type="button" class="btn btn-warning" 
+									id="changeAddress_btn" data-toggle="modal" data-target="#ChangeAddressModal">
 									<strong>주소 변경</strong>
 								</button>
 							</div>
@@ -568,18 +566,12 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="">
+						<div class="form-group">
 						<h4>변경된 주소 입력:</h4>
-						<input type="text" id="changedAddress" name="changed_address">
-						<button onClick="goPopup();" value="팝업">
-							<img src="img/map.png">
-						</button>
-						<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
-							도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
-							고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
-							참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
-							우편번호<input type="text" id="zipNo" name="zipNo" /> -->
+						<input type="text" id="changedAddress" name="changed_address" class="form-control">
 						<button type="submit" class="btn btn-danger"
 							id="changeAddress_Btn" onclick="registerAddress(this.form);">변경하기</button>
+						</div>
 					</form>
 				</div>
 
