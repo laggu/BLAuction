@@ -166,6 +166,7 @@
 	  				<div class="panel panel-default" id="Contractlist">
 	  				<h4><strong>Contract Info</strong></h4>
 	  				<table id="contractTable" border="1">
+	  				<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th></tr>
 	  				</table>
 	  				
 	  				</div>

@@ -4,6 +4,7 @@ package com.bla.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1176,7 +1177,10 @@ public class AuctionController {
 			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
 
-		} catch (Exception e) {
+		}catch(SQLIntegrityConstraintViolationException e) {
+			
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
