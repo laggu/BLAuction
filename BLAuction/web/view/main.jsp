@@ -39,11 +39,11 @@
     </div>
     
     <div class="collapse navbar-collapse" id="myNavbar">     
-      <form class="navbar-form navbar-left" action="/search.bla">
 	  <div class="input-group" id="searchingbar_main">
-	  	<input type="text" class="form-control" placeholder="#">
+	  	<form method="post" action="searchimpl.bla">
+	  		<input type="text" class="form-control" placeholder="#" name="searchText">
+	  	</form>
 	  </div>
-	  </form>
 
       <ul class="nav navbar-nav navbar-right" id="rightNav">
       	

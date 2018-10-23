@@ -74,4 +74,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectEndAuctionByMemberId" parameterType="Map" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE MEMBER_ID = ${member_id} AND AUCTION_STATUS='end'
 	</select>
+	
+	<select id="searchTitleOrTag" parameterType="String" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE TAG LIKE '%'||#{tag}||'%' OR AUCT_TITLE LIKE '%'||#{tag}||'%'
+	</select>
 </mapper>

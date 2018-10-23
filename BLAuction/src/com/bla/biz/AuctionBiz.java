@@ -76,4 +76,8 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj) throws Exception{
 		return adao.selectEndAuctionByMemberId(obj);
 	}
+	
+	public ArrayList<AuctionVO> searchTitleOrTag(String tag) throws Exception{
+		return adao.searchTitleOrTag(tag);
+	}
 }
