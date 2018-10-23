@@ -932,8 +932,13 @@ public class AuctionController {
 					// before이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
 					beforeJo.put("auct_id", auction.getAuct_id());
 					beforeJo.put("auction_status", auction.getAuction_status());
+					
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					beforeJo.put("auction_address", auction.getAuction_address());
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
-
+					
 					int i = 0;
 					for (PhotoVO photoVO : photos) {
 						String pathKey = "photoPath" + i;
@@ -956,7 +961,11 @@ public class AuctionController {
 						long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 						proceedingJo.put("bidMaxPrice", bidMaxPrice);
 					}
-
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					proceedingJo.put("auction_address", auction.getAuction_address());
+					
 					proceedingJo.put("auct_id", auction.getAuct_id());
 
 					// 경매 사진과 타이틀도 가져와야함
