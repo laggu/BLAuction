@@ -406,7 +406,8 @@ var auction_manager_ABI = [
 		"type": "function"
 	}
 ];
-var auction_manager_address = '0x91e62f2014cf23f6f37bc38a32818d8576e57cc7'
+
+var auction_manager_address = '0x28868f61d4502f36387f3b965aa92118f15a2ff1'
 
 module.exports.ABI = auction_ABI;
 module.exports.manager_ABI = auction_manager_ABI;
