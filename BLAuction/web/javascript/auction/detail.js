@@ -205,7 +205,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 		return;
 	}
 	if(auct_type==1){
-		if(price < cur_price){
+		if(price <= cur_price){
 			alert("현재 가격보다 높은 가격을 입력하세요");
 			return;
 		}

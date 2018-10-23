@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
-<script src="javascript/user/delivery.js?version=1"></script>
+<script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=1"></script>
 
 <script type="text/javascript">
@@ -167,7 +167,7 @@ $(document).ready(function() {
 					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
-					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw('+ data[i].auction_address +')" id="refund_btn"><strong>환불받기</strong></button>';
+					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
 					mybiddinglists.append(mybiddinglist);
 				}
@@ -278,8 +278,17 @@ $(document).ready(function() {
 				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
-				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';	
-				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+				if(String(end[i].delivery_code) == 'null'){
+					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>';	
+				}else{
+					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
+					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'></span>';
+				}
+				var fee = 5;
+				if(end[i].delivery_status == '6'){
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button></div>';
+				}
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
 			}
