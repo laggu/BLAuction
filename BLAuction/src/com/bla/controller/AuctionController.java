@@ -419,7 +419,7 @@ public class AuctionController {
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				
+				System.out.println(auctionVO);
 				if(auctionVO.getAuction_address() == null) 
 					continue;
 				
