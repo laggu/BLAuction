@@ -335,7 +335,7 @@ transition: .3s ease all;
                       <div class="ins">
                       <label class="write">거주지</label>
                          <div class="row">
-                            <div class="col-lg-11 col-md-11 col-xs-11">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
                                <input type="text" id="address" class="form-control registers" name="address" placeholder="Home address" autofocus required>
                             </div>
                             
