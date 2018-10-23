@@ -572,7 +572,7 @@ function web3_withdraw_for_owner(fee, auctionAddress){
 	})
 }
 
-function setDeliveryStatus(auctionAddress){
+function web3_setDeliveryStatus(auctionAddress){
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	auction.set_delivery_status(true, function(err,res){
 	});

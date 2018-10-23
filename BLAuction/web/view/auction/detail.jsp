@@ -64,6 +64,12 @@
 	  					</div>
 	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
 	  					<!-- test --><span>${auction.auction_address}</span>
+	  					
+	  					<c:if test="${memberMaxPrice ne 0}">
+	  					<div>
+	  						<span>내 입찰가</span><span>${memberMaxPrice * 0.001}</span>	  					
+  						</div>
+	  					</c:if>
 	  					<c:if test="${auction.type eq 2}">
 	  					<div id="oneLine">	
 	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
