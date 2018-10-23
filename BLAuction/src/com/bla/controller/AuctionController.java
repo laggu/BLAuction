@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -476,6 +475,13 @@ public class AuctionController {
 
 	@RequestMapping("/category.bla")
 	public ModelAndView category(HttpServletRequest request) {
+		//마감임박, 등록 순서 데로 정렬
+		String listKind = request.getParameter("listKind");
+		if(listKind == null) {
+			
+		}
+		
+		
 		int category_id = Integer.parseInt(request.getParameter("category"));
 		ArrayList<ListVO> list = new ArrayList<ListVO>();
 		ArrayList<AuctionVO> auction_list = null;
@@ -535,6 +541,7 @@ public class AuctionController {
 
 		return mv;
 	}
+	
 	
 	@RequestMapping("/allCategory.bla")
 	public ModelAndView allcategory(HttpServletRequest request) {
@@ -1302,8 +1309,66 @@ public class AuctionController {
 
 	// 검색창에서 검색한 결과를 내보내는 함수
 	@RequestMapping("/searchimpl.bla")
-	public String searchimpl(HttpServletRequest request) {
-		return null;
+	public ModelAndView searchimpl(HttpServletRequest request) {
+		String searchText = request.getParameter("searchText");
+		
+		System.out.println(searchText);
+		
+		ArrayList<ListVO> searchList = new ArrayList<>();
+		
+		ArrayList<AuctionVO> aucts = null;
+		
+		ModelAndView mv = new ModelAndView("main");
+		
+		try {
+			aucts = abiz.searchTitleOrTag(searchText);
+			System.out.println(aucts);
+			
+			for(AuctionVO auct : aucts) {
+				ListVO newList = new ListVO();
+				if(auct.getTag() == null) {
+					auct.setTag("");
+				}
+				newList.setAuction(auct);
+				
+				ArrayList<PhotoVO> photos = pbiz.getAll(auct.getAuct_id());
+				String photo_path_1 = "";
+				String photo_path_2 ="";
+				for (int i = 0 ; i<photos.size();i++) {
+					if(i==0)
+						photo_path_1 = photos.get(i).getPhoto_path()+photos.get(i).getPhoto_name();
+					else
+						photo_path_2 = photos.get(i).getPhoto_path()+photos.get(i).getPhoto_name();
+
+				}
+				
+				newList.setPhoto_path_1(photo_path_1);
+				newList.setPhoto_path_2(photo_path_2);
+				
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auct.getDuedate()));
+				
+				newList.setDuedate(due_date);
+				long max_price = 0;
+				try {
+					max_price = bbiz.selectBidMaxPrice(auct);					
+				}catch(Exception e) {
+					max_price = auct.getStart_price();
+				}
+				newList.setMax_price(max_price);
+				searchList.add(newList);
+			}
+			
+			
+			mv.addObject("result","success");
+			mv.addObject("list",searchList);
+			mv.addObject("centerpage","auction/search");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mv.addObject("result","fail");
+		}
+		
+		return mv;
 	}
 
 	// 마지막에 낙찰 되었을 때 점검하는 함수
