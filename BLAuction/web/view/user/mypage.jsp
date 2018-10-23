@@ -512,10 +512,10 @@ $(document).ready(function() {
 				</div>
 
 				<div class="modal-body">
-					<form action="">
+					<form action="phoneupdateimpl.bla" method="post" name="frmm2" id="frmm2">
 						<div class="form-group">
 						<h4>변경된 핸드폰 번호:</h4>
-						<input type="tel" id="changedPhone" name="changed_phone" class="form-control" placeholder="010-1234-5678">
+						<input type="tel" id="changedPhone" name="changed_phone" class="form-control" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required/>
 						<button type="submit" class="btn btn-danger" id="changePhone_Btn"
 							onclick="registerPhone(this.form);">변경하기</button>
 						</div>
