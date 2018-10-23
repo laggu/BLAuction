@@ -466,23 +466,16 @@ $(document).ready(function() {
 				</div>
 
 				<div class="modal-body">
-					<form action="pwdupdateimpl.bla" method="post" name="frmm"
-						id="frmm">
-						<div>
-							<h4>현재 비밀번호:</h4>
-							<input type="text" id="currentPw" name="userPasswd"
-								onblur="checkPwd();">
-							<div id="spwd"></div>
-						</div>
-						<div>
-							<h4>변경할 비밀번호:</h4>
-							<input type="text" id="changedPw" name="changed_Pw">
+					<form action="pwdupdateimpl.bla" method="post" name="frmm" id="frmm">
+						
+						<div class="form-group">
+							<h4 style="display:inline">변경할 비밀번호:</h4>
+							<input type="text" id="changedPw" name="changed_Pw" class="form-control">
 						</div>
 
-						<div>
-							<h4>비밀번호 확인:</h4>
-							<input type="text" id="rechangedPw" name="rechanged_Pw"
-								onblur="newCheckPwd();">
+						<div class="form-group">
+							<h4 style="display:inline">비밀번호 확인:</h4>
+							<input type="text" id="rechangedPw" name="rechanged_Pw" class="form-control" onblur="newCheckPwd();">
 						</div>
 
 						<div id="spwdCheck"></div>
@@ -520,10 +513,12 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="">
+						<div class="form-group">
 						<h4>변경된 핸드폰 번호:</h4>
-						<input type="text" id="changedPhone" name="changed_phone">
+						<input type="tel" id="changedPhone" name="changed_phone" class="form-control" placeholder="010-1234-5678">
 						<button type="submit" class="btn btn-danger" id="changePhone_Btn"
 							onclick="registerPhone(this.form);">변경하기</button>
+						</div>
 					</form>
 
 				</div>

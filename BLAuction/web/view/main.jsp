@@ -17,11 +17,28 @@
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
+<!-- Latest JQuery -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
+
+<script type="text/javascript">
+ 
+$(document).ready(function(){	
+   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+	})
+	.ajaxStart(function(){
+		$('#load').show(); //ajax실행시 로딩바를 보여줌
+	})
+	.ajaxStop(function(){
+		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
+});
+
+</script>
 </head>
 
 <body>
@@ -137,6 +154,11 @@
 
     </div>
   </div>
+</div>
+
+
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
 </div>
 
 </body>
