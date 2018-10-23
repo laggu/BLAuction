@@ -19,7 +19,7 @@ function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
 		datatype:'json',
 		success:function(data){
 			var s = '';
-			alert(data.level)
+			alert(data.code)
 			switch (data.level) {
 			  case 1:
 				  s = "배송 준비중입니다."
