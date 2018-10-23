@@ -110,7 +110,10 @@
   <p>created by Team20's designed by Eileen</p>
 </footer>
 
-
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
+</div>
 
 </body>
 </html>

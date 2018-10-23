@@ -447,7 +447,7 @@ var bidder_id = 0
 function makeAuction(){
 	
 	var form = new FormData(document.getElementById('auction_form'));
-	
+	$('#load').show();
 	var register_date = new Date().getTime();
 	form.append("register_date", register_date);
 	var description = $('#summernote').summernote('code');
@@ -471,6 +471,7 @@ function makeAuction(){
 			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
+				$('#load').hide();
 				location.href="main.bla";
 			});
 		},
@@ -547,7 +548,7 @@ function set_auction(auction_address){
  */
 function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAddress, callbackFunc){
     var auction = web3.eth.contract(auction_ABI).at(String(auctionAddress));
-    
+
 	auction.bidding.sendTransaction(bidder_name, bidder_id, time, {from:web3.eth.accounts[0], value:web3.toWei(price, "finney")},  function(err, res){
         console.log("bidding() : ")
         console.log(res)
@@ -569,14 +570,17 @@ function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAd
  */
 function web3_withdraw_for_owner(fee, auctionAddress){
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
-    
+	$('#load').show();
 	auction.withdraw_for_owner(fee, function(err,res){
+		$('#load').hide();
 	})
 }
 
 function web3_setDeliveryStatus(auctionAddress){
+	$('#load').show();
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	auction.set_delivery_status(true, function(err,res){
+		$('#load').hide();
 	});
 }
 
@@ -589,9 +593,10 @@ function web3_setDeliveryStatus(auctionAddress){
  */
 
 function web3_withdraw(auctionAddress){
-	alert(typeof auctionAddress);
+	$('#load').show();
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	auction.withdraw(function(err,res){
+		$('#load').hide();
 	})
 }
 
