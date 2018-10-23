@@ -348,16 +348,11 @@ transition: .3s ease all;
                       <div class="ins">
                       <label class="write">거주지</label>
                          <div class="row">
-                            <div class="col-lg-11 col-md-11 col-xs-11">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
                                <input type="text" id="address" class="form-control registers" name="address" placeholder="Home address" autofocus required>
                             </div>
                             
-                            <button onClick="goPopup();" value="팝업"><img src="img/map.png"></button>
-                     		<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
-도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
-고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
-참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
-우편번호<input type="text" id="zipNo" name="zipNo" /> -->
+                 
                          
                          
                          </div>
