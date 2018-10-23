@@ -137,7 +137,7 @@ height:500px;
 	                    </div>
 	                    
 	                    <div class="ins">
-	                    	<input class="form-control logins btn btn-danger" type="button" value="아이디와 비밀번호를 잊어버리셨나요?" onclick="openChild()"><br>
+	                    	<input class="form-control logins btn btn-danger" type="button" value="비밀번호를 잊어버리셨나요?" onclick="openChild()"><br>
 	                    </div>
 	                    
 	                    <input type="hidden" id="member_account" name="member_account">
