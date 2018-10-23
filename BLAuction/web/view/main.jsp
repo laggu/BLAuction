@@ -26,6 +26,7 @@
 <script src="javascript/web3.js"></script>
 
 <script type="text/javascript">
+alert(new Date().getTime())
 $(document).ready(function(){	
    $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
 	})
