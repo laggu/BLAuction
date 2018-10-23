@@ -1180,10 +1180,8 @@ public class AuctionController {
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
-		String delivery_code = request.getParameter("deliveryCode");
-		//int company_code = Integer.parseInt(request.getParameter("companyCode"));
-		//String delivery_status = request.getParameter("deliveryStatus");
-		System.out.println("delivery_code:"+delivery_code);
+		String delivery_code = request.getParameter("delivery_code");
+		int company_code = Integer.parseInt(request.getParameter("company_code"));
 		
 		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
@@ -1191,17 +1189,16 @@ public class AuctionController {
 		SuccessfulBidVO successfulbid = null;
 
 		try {
-			successfulbid = sbiz.get(auct_id);
-			//successfulbid.setCompany_code(company_code);
+			successfulbid = sbiz.oneSelectMySuccessfulBid(auct_id);
+			successfulbid.setCompany_code(company_code);
 			successfulbid.setDelivery_code(delivery_code);
-			//successfulbid.setDelivery_status(delivery_status);
 
+			System.out.println("택배 업데이트 ; "+successfulbid);
 			sbiz.modify(successfulbid);
-			//System.out.println("company_code:"+company_code);
+			System.out.println("company_code:"+company_code);
 			
-			//jo.put("company_code",company_code);
+			jo.put("company_code",company_code);
 			jo.put("delivery_code", delivery_code);
-			//jo.put("delivery_status", delivery_status);
 			
 			out = response.getWriter();
 

@@ -624,7 +624,7 @@ $(document).ready(function() {
 				<div class="modal-body">
 					<form action="" class="form-horizontal">
 						<div id="selectedDeliveryCompany">
-							<select>
+							<select id="companyCode">
 							  <option value="01">우체국택배 (01)</option>
 							  <option value="04">CJ대한통운 (04)</option>
 							  <option value="05">한진택배 (05)</option>
@@ -639,7 +639,7 @@ $(document).ready(function() {
 								name="invoice_num">
 						</div>
 						<input type= "hidden" name="successAuct_id" id="successAuct_id" value="">
-						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
+						<button type="button" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
 					</form>
 
