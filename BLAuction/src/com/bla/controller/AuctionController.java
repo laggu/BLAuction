@@ -4,6 +4,7 @@ package com.bla.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -298,9 +299,12 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 			//현재 내가 입찰한 최고가 
-			long memberMaxPrice = bbiz.selectMemberMaxPrice(map);
-			System.out.println("내 최고 입찰가"+memberMaxPrice);
-			
+			long memberMaxPrice = 0;
+			try {
+				memberMaxPrice = bbiz.selectMemberMaxPrice(map);
+			}catch(Exception e) {
+				
+			}
 			mv.addObject("memberMaxPrice",memberMaxPrice);
 			mv.addObject("name",name);
 			mv.addObject("auction", auction);
@@ -1186,7 +1190,10 @@ public class AuctionController {
 			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
 
-		} catch (Exception e) {
+		}catch(SQLIntegrityConstraintViolationException e) {
+			
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 

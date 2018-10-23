@@ -40,6 +40,19 @@
 	
 	
 %>
+
+<script type="text/javascript">
+$(document).ready(function(){	
+   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+	})
+	.ajaxStart(function(){
+		$('#load').show(); //ajax실행시 로딩바를 보여줌
+	})
+	.ajaxStop(function(){
+		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
+});
+</script>
+
 <script type="text/javascript">
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
 // (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
@@ -335,16 +348,11 @@ transition: .3s ease all;
                       <div class="ins">
                       <label class="write">거주지</label>
                          <div class="row">
-                            <div class="col-lg-11 col-md-11 col-xs-11">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
                                <input type="text" id="address" class="form-control registers" name="address" placeholder="Home address" autofocus required>
                             </div>
                             
-                            <button onClick="goPopup();" value="팝업"><img src="img/map.png"></button>
-                     		<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
-도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
-고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
-참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
-우편번호<input type="text" id="zipNo" name="zipNo" /> -->
+                 
                          
                          
                          </div>
@@ -363,7 +371,10 @@ transition: .3s ease all;
       </div>
    </div>
    
-
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
+</div>
 
 </body>
 </html>

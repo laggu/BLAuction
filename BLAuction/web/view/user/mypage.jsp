@@ -10,7 +10,17 @@
 
 <script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=2"></script>
-
+<script type="text/javascript">
+$(document).ready(function(){	
+   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+	})
+	.ajaxStart(function(){
+		$('#load').show(); //ajax실행시 로딩바를 보여줌
+	})
+	.ajaxStop(function(){
+		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
+});
+</script>
 <script type="text/javascript">
 
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
@@ -287,13 +297,13 @@ $(document).ready(function() {
 				}else{
 					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
 					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
-					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'></span>';
+					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'></span></div></div>';
 				}
 				var fee = 5;
 				if(end[i].delivery_status == '6'){
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button></div>';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
 				}
-				myauctionlist += '</div></div></div>';
+				myauctionlist += '</div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
 			}
 			
@@ -691,6 +701,11 @@ $(document).ready(function() {
 
 		</div>
 	</div>
+	
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
+</div>
 
 </body>
 </html>

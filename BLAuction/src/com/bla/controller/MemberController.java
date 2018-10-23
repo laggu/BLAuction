@@ -137,9 +137,10 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		ModelAndView mv2 = new ModelAndView("redirect:/main.bla");
 		MemberVO member = null;
-
+		System.out.println(member_account);
 		try {
 			member = mbiz.get(email);
+			System.out.println(member.getMember_account());
 			if(member == null)
 			{
 				//null�϶� ó�����ָ��
