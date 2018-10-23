@@ -263,7 +263,7 @@ $(document).ready(function() {
 				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(' + successfulBid[i].auct_id + ",\'" + successfulBid[i].auct_address +'\');">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
-				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
+				winningbidlist += '<span id="Delivery_Status'+ successfulBid[i].seller_id +'"></span></div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
