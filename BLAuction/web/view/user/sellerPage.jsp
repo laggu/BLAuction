@@ -7,17 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-<script type="text/javascript">
-$(document).ready(function(){	
-   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
-	})
-	.ajaxStart(function(){
-		$('#load').show(); //ajax실행시 로딩바를 보여줌
-	})
-	.ajaxStop(function(){
-		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
-});
-</script>
+
 <script>
 //Tab 전환
 $(document).ready(function(){
@@ -309,11 +299,7 @@ $(document).ready(function(){
 	    </div>
 	  </div>
 	    
-	    
-<!-- Loading bar -->
-<div id="load">
-	<img src="img/loading.gif" alt="loading">
-</div>
+
 	    
     
 </body>
