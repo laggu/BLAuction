@@ -4,9 +4,8 @@
 
 
 
-function getDeliveryStatus(index, auction_address){
-	var companyCode = $("#winnerDeliverycompany"+index).text();
-	var deliveryCode = $("#winnerInvoice"+index).text();
+function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
+	alert(companyCode + " " + deliveryCode);
 		
 	var params = {
 			"t_key": 'A4LwNiLjK5hB69I9mWEs1Q',
@@ -20,6 +19,7 @@ function getDeliveryStatus(index, auction_address){
 		datatype:'json',
 		success:function(data){
 			var s = '';
+			
 			var level = data.level;
 			//ajax로 택배 status 변경
 			$.ajax({
@@ -37,29 +37,30 @@ function getDeliveryStatus(index, auction_address){
 					alert('error');
 				}
 			})
-			
+
 			switch (data.level) {
 			  case 1:
-				  s = "배송준비중"
+				  s = "배송 준비중입니다."
 			    break;
 			  case 2:
-				  s = "집화완료"
+				  s = "집화 완료되었습니다."
 			    break;
 			  case 3:
-				  s = "배송중"
+				  s = "배송중입니다."
 			    break;
 			  case 4:
-				  s = "지점 도착"
+				  s = "지점에 도착하였습니다."
 			    break;
 			  case 5:
-				  s = "배송출발"
+				  s = "배송이 출발하였습니다."
 			    break;
 			  case 6:
-				  s = "배송 완료"
+				  s = "배송이 완료되었습니다."
 				  $("#Delivery_Status"+index).text(s);
 				  web3_setDeliveryStatus(auction_address);
 			    break;
 			}
+			alert(s);
 		},
 		error:function(data){
 			alert('error');

@@ -140,10 +140,9 @@ public class MemberController {
 		System.out.println(member_account);
 		try {
 			member = mbiz.get(email);
-			System.out.println(member.getMember_account());
+//			System.out.println(member.getMember_account());
 			if(member == null)
 			{
-				//null�϶� ó�����ָ��
 				mv.setViewName("main");
 				mv.addObject("centerpage", "user/fail");
 				mv.addObject("resultt", "asdd");
@@ -277,7 +276,7 @@ public class MemberController {
 			mv.addObject("member", member);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 
 		return mv;
@@ -298,7 +297,7 @@ public class MemberController {
 			mv.addObject("member", member);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 
 		return mv;
@@ -373,7 +372,7 @@ public class MemberController {
 			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 		return mv;
 	}

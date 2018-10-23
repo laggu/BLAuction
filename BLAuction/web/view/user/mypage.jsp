@@ -261,9 +261,9 @@ $(document).ready(function() {
 				winningbidlist += '<a href="sellerpage.bla?seller_id='+successfulBid[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
-				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
+				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(' + successfulBid[i].auct_id + ',\'' + successfulBid[i].auct_address +'\',\''+ successfulBid[i].delivery_code + '\',\'' + successfulBid[i].company_code + '\');">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
-				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
+				winningbidlist += '<span id="Delivery_Status'+successfulBid[i].auct_id+'"></span></div>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
@@ -322,8 +322,8 @@ $(document).ready(function() {
 					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>';	
 				}else{
 					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
-					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'"></span>';
+					myauctionlist += '<div><button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ',\'' + end[i].auct_address +'\',\''+ end[i].delivery_code + '\',\'' + end[i].company_code + '\');"><strong>택배 상태 확인</strong></button>';
+					myauctionlist += '<span id="Delivery_Status'+end[i].auct_id+'"></span></div>';
 					myauctionlist += '</div>';
 				} 
 				var fee = 5;

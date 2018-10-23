@@ -841,6 +841,7 @@ public class AuctionController {
 				System.out.println("successfulAuct_id: "+successfulAuct_id);
 				successfulJo.put("auct_id", successfulAuct_id);
 				successfulJo.put("title", auction.getAuct_title());
+				successfulJo.put("auct_address", auction.getAuction_address());
 				successfulJo.put("price", price);
 
 				int i = 0;
@@ -852,6 +853,7 @@ public class AuctionController {
 					successfulJo.put(nameKey, photoVO.getPhoto_name());
 					i++;
 				}
+				
 				successfulJo.put("seller_id", auct_member_id);
 				successfulJo.put("seller_name", sellerInfo.getName());
 				successfulJo.put("seller_phone", sellerInfo.getPhone());
