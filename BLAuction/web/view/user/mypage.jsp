@@ -322,8 +322,8 @@ $(document).ready(function() {
 					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>';	
 				}else{
 					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
-					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'"></span>';
+					myauctionlist += '<div><button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
+					myauctionlist += '<span id="Delivery_Status'+end[i].auct_id+'"></span></div>';
 					myauctionlist += '</div>';
 				} 
 				var fee = 5;
