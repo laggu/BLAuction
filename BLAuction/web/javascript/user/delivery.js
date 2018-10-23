@@ -5,11 +5,8 @@
 
 
 function getDeliveryStatus(index, auction_address){
-//	var companyCode = $("#winnerDeliverycompany"+index).text();
-//	var deliveryCode = $("#winnerInvoice"+index).text();
-
-	var companyCode = '04';
-	var deliveryCode = '346409383282';
+	var companyCode = $("#winnerDeliverycompany"+index).text();
+	var deliveryCode = $("#winnerInvoice"+index).text();
 		
 	var params = {
 			"t_key": 'A4LwNiLjK5hB69I9mWEs1Q',
@@ -23,8 +20,7 @@ function getDeliveryStatus(index, auction_address){
 		datatype:'json',
 		success:function(data){
 			var s = '';
-			alert(typeof data.level);
-			//alert(data.level + " " + typeof data.level + " " + data.level == "6");
+			
 			switch (data.level) {
 			  case 1:
 				  s = "배송준비중"
@@ -47,7 +43,6 @@ function getDeliveryStatus(index, auction_address){
 				  web3_setDeliveryStatus(auction_address);
 			    break;
 			}
-			alert(s);
 		},
 		error:function(data){
 			alert('error');
