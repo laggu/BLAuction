@@ -73,12 +73,9 @@ public class MemberController {
 		
 		try {
 			member = mbiz.get(email);
-			System.out.println("name: " + member.getName());
-			System.out.println("email: " + member.getEmail() );
 			
 			if(member == null || !(member.getEmail().equals(email))) {
-				mv.setViewName("main");
-				mv.addObject("centerpage","user/email");
+				mv.setViewName("user/email");
 				mv.addObject("resultt", "asdf");
 				
 				return mv; 
