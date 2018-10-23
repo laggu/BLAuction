@@ -576,7 +576,7 @@ public class AuctionController {
 			//listSize가 4이상일 때 
 //			if(listSize > 4)
 //				listSize = 4;
-
+			System.out.println(listSize);
 			for (int i = 0; i < listSize; i++) {
 				if(auction_list.get(i).getAuction_address() == null) {
 					continue;
@@ -1192,7 +1192,7 @@ public class AuctionController {
 		AuctionVO auction_update = new AuctionVO();
 		auction_update.setAuct_id(auct_id);
 		auction_update.setAuction_status("end");
-		
+		System.out.println(auct_id);
 		try {
 			bid = bbiz.selectBididByAuctId(auction_update.getAuct_id());
 			bid_id = bid.getBid_id();

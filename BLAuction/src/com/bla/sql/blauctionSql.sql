@@ -1,5 +1,6 @@
 DROP TABLE PHOTO;
 DROP TABLE SUCCESSFUL_BID;
+DROP TABLE DELIVERY;
 DROP TABLE BIDDING;
 DROP TABLE AUCTION;
 DROP TABLE CATEGORY_TYPE;
@@ -83,7 +84,7 @@ bid_id   number(5) not null,
 review   varchar2(255) null,
 delivery_code varchar2(50) null,
 delivery_status varchar2(10) null,
-company_code number(2) null,
+company_code varchar2(2) null,
 CONSTRAINT FK_SUCCESSFUL_BID_bid FOREIGN KEY(bid_id)
 REFERENCES BIDDING(bid_id),
 CONSTRAINT FK_SUCCESSFUL_BID_auct_id FOREIGN KEY(auct_id)
@@ -128,3 +129,4 @@ INSERT INTO AUCTION_TYPE VALUES(3,'secret');
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'crysis1@naver.com','1234','최다훈','서울특별시 관악구 봉천동 1523-25','01092557434','931217',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'kwla103@naver.com','1234','라구원','서울특별시 관악구 봉천동 1523-24','01092557431','921006',0,0,'0x273ff3d46cfd4efae550f24cefbdaffeaa5c53f0');
 COMMIT;
+

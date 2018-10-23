@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectAll" resultMap="auctList">
-		SELECT * FROM AUCTION ORDER BY AUCT_ID
+		SELECT * FROM AUCTION WHERE (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding') AND AUCTION_ADDRESS IS NOT NULL ORDER BY DUEDATE 
 	</select>
 	
 	<select id="selectByCategory" parameterType="Integer" resultMap="auctList">
