@@ -4,9 +4,8 @@
 
 
 
-function getDeliveryStatus(index, auction_address){
-	var companyCode = $("#winnerDeliverycompany"+index).text();
-	var deliveryCode = $("#winnerInvoice"+index).text();
+function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
+	alert(companyCode + " " + deliveryCode);
 		
 	var params = {
 			"t_key": 'A4LwNiLjK5hB69I9mWEs1Q',
@@ -20,7 +19,7 @@ function getDeliveryStatus(index, auction_address){
 		datatype:'json',
 		success:function(data){
 			var s = '';
-			
+			alert(data.level)
 			switch (data.level) {
 			  case 1:
 				  s = "배송 준비중입니다."
@@ -43,6 +42,7 @@ function getDeliveryStatus(index, auction_address){
 				  web3_setDeliveryStatus(auction_address);
 			    break;
 			}
+			alert(s);
 		},
 		error:function(data){
 			alert('error');
