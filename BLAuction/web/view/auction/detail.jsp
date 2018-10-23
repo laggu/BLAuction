@@ -149,7 +149,7 @@
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
 			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트
-			<span class="glyphicon glyphicon-refresh"></span></h3>
+			<button type="button" class="btn btn-default" id="refresh_btn"><span class="glyphicon glyphicon-refresh"></span></button></h3>
 			<div class="panel panel-default" id="biddingList_panel">
 	  			<div class="panel-body">
 	  				<div class="panel panel-default" id="DBlist">

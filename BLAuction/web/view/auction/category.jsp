@@ -7,6 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction 의류/잡화</title>
+<script>
+$(document).ready(function(){
+	$("#thelatest").on("click", function(event){
+	    alert("최신");
+	});
+	$("#closedeadline").on("click", function(event){
+	    alert("마감");
+	});
+});
+</script>
 </head>
 <body>
 
@@ -21,8 +31,8 @@
 					경매 정렬 기준 <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#">최신 등록순</a></li>
-					<li><a href="#">마감 입박순</a></li>
+					<li><a href="#" id="thelatest">최신 등록순</a></li>
+					<li><a href="#" id="closedeadline">마감 입박순</a></li>
 				</ul>
 			</div>
 
