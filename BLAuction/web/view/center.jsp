@@ -17,7 +17,7 @@
 					'<div class="card-body">' + 
 					'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
 					'제목 : ' + auct_title + '</a>' + 
-					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price + '</p>'+
+					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
 					'</div></div>')
 	}
 </script>

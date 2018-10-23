@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
 
-<script src="javascript/user/delivery.js?version=1"></script>
+<script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=1"></script>
 
 <script type="text/javascript">
@@ -140,6 +140,9 @@ document.form.zipNo.value = zipNo;
 function setAuctId(auct_id){
 		$('#auct_id').val(auct_id);
 	}
+function setSuccessAuctId(auct_id){
+	$('#successAuct_id').val(auct_id);
+}
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 
@@ -166,8 +169,7 @@ $(document).ready(function() {
 					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>';
-					mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
-					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw('+ data[i].auction_address +')" id="refund_btn"><strong>환불받기</strong></button>';
+					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
 					mybiddinglists.append(mybiddinglist);
 				}
@@ -278,8 +280,18 @@ $(document).ready(function() {
 				myauctionlist += '<div>낙찰가: <span id="myauctionPrice">'+end[i].successfulBidPrice * 0.001+' Ether</span></div>';
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
-				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';	
-				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+				
+				if(String(end[i].delivery_code) == 'null'){
+					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+				}else{
+					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
+					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'></span>';
+				}
+				var fee = 5;
+				if(end[i].delivery_status == '6'){
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button></div>';
+				}
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
 			}
@@ -621,27 +633,14 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="" class="form-horizontal">
-						<div>
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button"
-									id="selectedDeliveryCompany" data-toggle="dropdown"
-									aria-expanded="true">
-									택배사를 선택하세요 <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu1">
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">우체국택배 (01)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">CJ대한통운 (04)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">한진택배 (05)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">로젠택배 (06)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">롯데택배 (08)</a></li>
-								</ul>
-							</div>
+						<div id="selectedDeliveryCompany">
+							<select id="companyCode">
+							  <option value="01">우체국택배 (01)</option>
+							  <option value="04">CJ대한통운 (04)</option>
+							  <option value="05">한진택배 (05)</option>
+							  <option value="06">로젠택배 (06)</option>
+							  <option value="08">롯데택배 (08)</option>
+							</select>	
 						</div>
 
 						<div>
@@ -649,8 +648,8 @@ $(document).ready(function() {
 							<input type="text" class="form-control" id="invoiceNum"
 								name="invoice_num">
 						</div>
-
-						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
+						<input type= "hidden" name="successAuct_id" id="successAuct_id" value="">
+						<button type="button" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
 					</form>
 

@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</insert>
 
 	<update id="update" parameterType="successfulbid">
-		UPDATE SUCCESSFUL_BID SET REVIEW = #{review}, DELIVERY_CODE = #{delivery_code}, DELIVERY_STATUS = #{delivery_status}, COMPANY_CODE = #{company_code} WHERE AUCT_ID = #{auct_id} 
+		UPDATE SUCCESSFUL_BID SET DELIVERY_CODE = #{delivery_code}, COMPANY_CODE = #{company_code} WHERE AUCT_ID = #{auct_id} 
 	</update>
 	
 	<update id="updateReview" parameterType="successfulbid">
