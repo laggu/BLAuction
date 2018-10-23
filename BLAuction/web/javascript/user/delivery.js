@@ -2,31 +2,38 @@
  * 
  */
 
+
 function setDeliveryCode(){
 	//모달 보여주고
+	var auct_id = $("#successAuct_id").val();
+	var deliveryCode = $("#invoiceNum").text();
 	
+	
+	alert(auct_id);
 	var params = {
 			"deliveryCode ": deliveryCode,
-			"companyCode ": companyCode,
-			"deliveryStatus": deliveryStatus
+			//"companyCode ": companyCode,
+			//"deliveryStatus": deliveryStatus,
+			"auct_id": auct_id
 		}
 	
 	$.ajax({
 		type:'POST',
-		url:'jusoPopup.bla',
+		url:'deliveryimpl.bla',
 		data:params,
 		datatype:'json',
 		success:function(data){
 			var deliveryCode = $('#winnerInvoice'+data.auct_id);
-			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
+			//var companyCode = $('#winnerDeliverycompany'+data.auct_id);
+			
 			//var deliveryStatus = $('#winnerDeliverycompany'+data.auct_id);
 			
 			var deliveryCodeVal = data.delivery_code;
-			var companyCodeVal = data.company_code;
+			//var companyCodeVal = data.company_code;
 			//var deliveryStatusVal = data.delivery_status;
 			
 			companyCode.text(companyCodeVal);
-			deliveryCode.text(deliveryCodeVal);
+			//deliveryCode.text(deliveryCodeVal);
 		},
 		error:function(data){
 			alert("택배에러")

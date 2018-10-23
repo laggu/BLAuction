@@ -1179,11 +1179,12 @@ public class AuctionController {
 	@RequestMapping("/deliveryimpl.bla")
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		int auct_id = (Integer) session.getAttribute("auct_id");
+		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
 		String delivery_code = request.getParameter("deliveryCode");
-		int company_code = Integer.parseInt(request.getParameter("companyCode"));
-		String delivery_status = request.getParameter("deliveryStatus");
-
+		//int company_code = Integer.parseInt(request.getParameter("companyCode"));
+		//String delivery_status = request.getParameter("deliveryStatus");
+		System.out.println("delivery_code:"+delivery_code);
+		
 		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
 		PrintWriter out = null;
@@ -1191,15 +1192,16 @@ public class AuctionController {
 
 		try {
 			successfulbid = sbiz.get(auct_id);
-			successfulbid.setCompany_code(company_code);
+			//successfulbid.setCompany_code(company_code);
 			successfulbid.setDelivery_code(delivery_code);
-			successfulbid.setDelivery_status(delivery_status);
+			//successfulbid.setDelivery_status(delivery_status);
 
 			sbiz.modify(successfulbid);
+			//System.out.println("company_code:"+company_code);
 			
-			jo.put("company_code",company_code);
+			//jo.put("company_code",company_code);
 			jo.put("delivery_code", delivery_code);
-			jo.put("delivery_status", delivery_status);
+			//jo.put("delivery_status", delivery_status);
 			
 			out = response.getWriter();
 
