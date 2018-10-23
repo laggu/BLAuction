@@ -971,6 +971,7 @@ public class AuctionController {
 						i++;
 					}
 					endJo.put("auct_title", auction.getAuct_title());
+					endJo.put("auct_address", auction.getAuction_address());
 
 					// 낙찰가, 낙찰된 회원의 이름, 전화번호, 주소 가져오기
 					SuccessfulBidVO successfulBid = sbiz.oneSelectMySuccessfulBid(auct_id);

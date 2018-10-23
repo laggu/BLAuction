@@ -118,7 +118,11 @@ function getBidListFromDB(auction_id){
 				s += "<td id=BidderName" + i +"> "+ data[i].bid_member_name + "</td>";
 				s += "<td id=BiddersPrice" + i +"> "+ (data[i].bid_price * 0.001).toFixed(3) + "</td>";
 				s += "<td id=BiddingTimestamp" + i +"> "+ getTimeStamp(new Date(data[i].bid_time)) + "</td>";
-				s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				try {
+					s += "<td id=transactionStatus" + i +"> "+ data[i].bid_conf_status + "</td>";
+				}
+				catch(exception){
+				}
 				s += "</tr>";
 				
 				databaseTable.append(s);
@@ -140,13 +144,9 @@ function getBidListFromContract(auctionAddress){
 		contractTable.empty();
 		contractTable.append('<tr><th>입찰자</th><th>입찰가</th><th>입찰 시간</th></tr>');
 		
-		alert(bidList[0].time + "\n" +bidList[1].time + "\n" +bidList[2].time + "\n")
-		
 		bidList.sort(function (a, b) { 
 			return a.time < b.time ? -1 : a.time > b.time ? 1 : 0;  
 		});
-		
-		alert(bidList[0].time + "\n" +bidList[1].time + "\n" +bidList[2].time + "\n")
 		
 		for(var i = 0; i < bidList.length; ++i){
 			s = "<tr>";
@@ -205,7 +205,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 		return;
 	}
 	if(auct_type==1){
-		if(price < cur_price){
+		if(price <= cur_price){
 			alert("현재 가격보다 높은 가격을 입력하세요");
 			return;
 		}

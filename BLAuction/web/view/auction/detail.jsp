@@ -25,7 +25,7 @@
 	    }
 	});
 </script>
-<script src="javascript/auction/detail.js?version=1"></script>
+<script src="javascript/auction/detail.js"></script>
 </head>
 <script>
 	$(document).ready(function(){
@@ -106,11 +106,9 @@
 				        </div>
 				        
 				        <div class="modal-body">  
-				        	<c:if test="${auction.type eq 2}">
 							<div>
-							<c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
+							<c:if test="${auction.type eq 1}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
 							</div>
-							</c:if>
 							<div id="inputPriceArea">
 								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
