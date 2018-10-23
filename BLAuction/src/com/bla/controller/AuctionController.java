@@ -286,9 +286,12 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 			//현재 내가 입찰한 최고가 
-			long memberMaxPrice = bbiz.selectMemberMaxPrice(map);
-			System.out.println("내 최고 입찰가"+memberMaxPrice);
-			
+			long memberMaxPrice = 0;
+			try {
+				memberMaxPrice = bbiz.selectMemberMaxPrice(map);
+			}catch(Exception e) {
+				
+			}
 			mv.addObject("memberMaxPrice",memberMaxPrice);
 			mv.addObject("name",name);
 			mv.addObject("auction", auction);
