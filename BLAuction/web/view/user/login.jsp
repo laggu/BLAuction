@@ -54,6 +54,25 @@ $(function(){
 
 </script>
 
+<script type="text/javascript">
+    
+        var openWin;
+    
+        function openChild()
+        {
+            // window.name = "부모창 이름"; 
+            window.name = "parentForm";
+            // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+            openWin = window.open("email.bla",
+                    "childForm", "width=570, height=350, resizable = no, scrollbars = no");
+        }
+        
+        function setChildText(){
+            openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
+        }
+ 
+   </script>
+
 
 <style type="text/css">
 
@@ -116,6 +135,11 @@ height:500px;
 	                    <div class="ins">
 	                        <input type="button" id="registerBTN" class="form-control logins btn btn-danger" value="회원가입">
 	                    </div>
+	                    
+	                    <div class="ins">
+	                    	<input class="form-control logins btn btn-danger" type="button" value="아이디와 비밀번호를 잊어버리셨나요?" onclick="openChild()"><br>
+	                    </div>
+	                    
 	                    <input type="hidden" id="member_account" name="member_account">
 	                </form>
 	            </div>
