@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction 모든카테고리</title>
-</head>
 <script>
 	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, category_id) {
 		$("#list_div"+category_id).append(''+
@@ -18,10 +17,21 @@
 					'<div class="card-body">' + 
 					'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
 					'제목 : ' + auct_title + '</a>' + 
-					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price + '</p>'+
+					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
 					'</div></div>')
 	}
 </script>
+<script>
+$(document).ready(function(){
+	$("#thelatest").on("click", function(event){
+	    alert("최신");
+	});
+	$("#closedeadline").on("click", function(event){
+	    alert("마감");
+	});
+});
+</script>
+</head>
 <body>
 
 	<!-- Content -->
@@ -35,8 +45,8 @@
 					경매 정렬 기준 <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#">최신 등록순</a></li>
-					<li><a href="#">마감 입박순</a></li>
+					<li><a href="#" id="thelatest">최신 등록순</a></li>
+					<li><a href="#" id="closedeadline">마감 입박순</a></li>
 				</ul>
 			</div>
 

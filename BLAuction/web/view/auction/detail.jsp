@@ -25,7 +25,7 @@
 	    }
 	});
 </script>
-<script src="javascript/auction/detail.js?version=1"></script>
+<script src="javascript/auction/detail.js"></script>
 </head>
 <script>
 	$(document).ready(function(){
@@ -64,6 +64,12 @@
 	  					</div>
 	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
 	  					<!-- test --><span>${auction.auction_address}</span>
+	  					
+	  					<c:if test="${memberMaxPrice ne 0}">
+	  					<div>
+	  						<span>내 입찰가</span><span>${memberMaxPrice * 0.001}</span>	  					
+  						</div>
+	  					</c:if>
 	  					<c:if test="${auction.type eq 2}">
 	  					<div id="oneLine">	
 	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
@@ -106,11 +112,9 @@
 				        </div>
 				        
 				        <div class="modal-body">  
-				        	<c:if test="${auction.type eq 2}">
 							<div>
-							<c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
+							<c:if test="${auction.type eq 1}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
 							</div>
-							</c:if>
 							<div id="inputPriceArea">
 								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
@@ -149,7 +153,7 @@
 		<div class="col-sm-10 text-left">
 			<!-- Page Start -->
 			<h3 style="margin-left:2%;"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;입찰 리스트
-			<span class="glyphicon glyphicon-refresh"></span></h3>
+			<button type="button" class="btn btn-default" id="refresh_btn"><span class="glyphicon glyphicon-refresh"></span></button></h3>
 			<div class="panel panel-default" id="biddingList_panel">
 	  			<div class="panel-body">
 	  				<div class="panel panel-default" id="DBlist">
