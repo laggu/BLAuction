@@ -166,7 +166,6 @@ $(document).ready(function() {
 					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
 					mybiddinglist += '<div>';
-					mybiddinglist += '<button type="button" class="btn btn-danger" id="rebidding_btn" data-toggle="modal" data-target="#RebiddingModal"><strong>재입찰하기</strong></button>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw('+ data[i].auction_address +')" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
 					mybiddinglists.append(mybiddinglist);
@@ -621,27 +620,14 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="" class="form-horizontal">
-						<div>
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button"
-									id="selectedDeliveryCompany" data-toggle="dropdown"
-									aria-expanded="true">
-									택배사를 선택하세요 <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu1">
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">우체국택배 (01)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">CJ대한통운 (04)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">한진택배 (05)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">로젠택배 (06)</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1"
-										href="#">롯데택배 (08)</a></li>
-								</ul>
-							</div>
+						<div id="selectedDeliveryCompany">
+							<select>
+							  <option value="01">우체국택배 (01)</option>
+							  <option value="04">CJ대한통운 (04)</option>
+							  <option value="05">한진택배 (05)</option>
+							  <option value="06">로젠택배 (06)</option>
+							  <option value="08">롯데택배 (08)</option>
+							</select>	
 						</div>
 
 						<div>
@@ -650,7 +636,7 @@ $(document).ready(function() {
 								name="invoice_num">
 						</div>
 
-						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn">택배
+						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
 					</form>
 

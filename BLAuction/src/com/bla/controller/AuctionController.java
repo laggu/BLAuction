@@ -1204,9 +1204,9 @@ public class AuctionController {
 
 			sbiz.modify(successfulbid);
 			
-			jo.put("company_code","company_code");
-			jo.put("delivery_code", "delivery_code");
-			jo.put("delivery_status", "delivery_status");
+			jo.put("company_code",company_code);
+			jo.put("delivery_code", delivery_code);
+			jo.put("delivery_status", delivery_status);
 			
 			out = response.getWriter();
 
