@@ -56,11 +56,11 @@ $(document).ready(function(){
     </div>
     
     <div class="collapse navbar-collapse" id="myNavbar">     
-      <form class="navbar-form navbar-left" action="/search.bla">
 	  <div class="input-group" id="searchingbar_main">
-	  	<input type="text" class="form-control" placeholder="#">
+	  	<form method="post" action="searchimpl.bla">
+	  		<input type="text" class="form-control" placeholder="#" name="searchText">
+	  	</form>
 	  </div>
-	  </form>
 
       <ul class="nav navbar-nav navbar-right" id="rightNav">
       	
@@ -124,39 +124,8 @@ $(document).ready(function(){
   <p>created by Team20's designed by Eileen</p>
 </footer>
 
-<!-- Modal -->
-<!-- ********************************************************************************************* -->
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
-</button>
 
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
+<!-- Loading bar -->
 <div id="load">
 	<img src="img/loading.gif" alt="loading">
 </div>

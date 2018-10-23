@@ -78,4 +78,8 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectEndAuctionByMemberId(obj);
 	}
 	
+	public ArrayList<AuctionVO> searchTitleOrTag(String tag) throws Exception{
+		return amapper.searchTitleOrTag(tag);
+	}
+	
 }
