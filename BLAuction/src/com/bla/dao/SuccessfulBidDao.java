@@ -18,12 +18,13 @@ public class SuccessfulBidDao implements Dao<SuccessfulBidVO, Integer> {
 	@Override
 	public void insert(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
-
+		smapper.insert(t);
 	}
 
 	@Override
 	public void update(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
+		smapper.update(t);
 
 	}
 
@@ -51,5 +52,9 @@ public class SuccessfulBidDao implements Dao<SuccessfulBidVO, Integer> {
 
 	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id) throws Exception {
 		return smapper.oneSelectMySuccessfulBid(auct_id);
+	}
+	
+	public void updateReview(SuccessfulBidVO obj) throws Exception {
+		smapper.updateReview(obj);
 	}
 }

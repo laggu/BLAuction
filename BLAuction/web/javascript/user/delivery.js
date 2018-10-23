@@ -4,11 +4,11 @@
 
 function setDeliveryCode(){
 	//모달 보여주고
-	var deliveryCode = $('#???').text();
-	var companyCode = $('#???').text();
+	
 	var params = {
 			"deliveryCode ": deliveryCode,
 			"companyCode ": companyCode,
+			"deliveryStatus": deliveryStatus
 		}
 	
 	$.ajax({
@@ -17,10 +17,19 @@ function setDeliveryCode(){
 		data:params,
 		datatype:'json',
 		success:function(data){
-			alert(data)
+			var deliveryCode = $('#winnerInvoice'+data.auct_id);
+			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
+			//var deliveryStatus = $('#winnerDeliverycompany'+data.auct_id);
+			
+			var deliveryCodeVal = data.delivery_code;
+			var companyCodeVal = data.company_code;
+			//var deliveryStatusVal = data.delivery_status;
+			
+			companyCode.text(companyCodeVal);
+			deliveryCode.text(deliveryCodeVal);
 		},
 		error:function(data){
-			alert(data)
+			alert("택배에러")
 		}
 	})
 }

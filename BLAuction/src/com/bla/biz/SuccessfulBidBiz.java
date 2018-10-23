@@ -19,13 +19,13 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	@Override
 	public void register(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sdao.insert(t);
 	}
 
 	@Override
 	public void modify(SuccessfulBidVO t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sdao.update(t);
 	}
 
 	@Override
@@ -52,5 +52,9 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 	
 	public SuccessfulBidVO oneSelectMySuccessfulBid(Integer auct_id) throws Exception{
 		return sdao.oneSelectMySuccessfulBid(auct_id);
+	}
+	
+	public void updateReview(SuccessfulBidVO obj) throws Exception {
+		sdao.updateReview(obj);
 	}
 }

@@ -7,6 +7,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
+<script>
+	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, index) {
+		$("#list_div"+index).append(''+
+					'<div class="card" style="width: 18rem;">'+
+					'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+					'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+					'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+					'<div class="card-body">' + 
+					'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+					'제목 : ' + auct_title + '</a>' + 
+					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price + '</p>'+
+					'</div></div>')
+	}
+</script>
 </head>
 <body>
 
@@ -58,59 +72,28 @@
 			<!-- Cards -->
 
 			<div class="card group" id="card_group">
-
+			
+			<h2> DOWN AUCTION </h2>
+			<div id="list_div1" class="card-columns" style="height: 400px"></div>
+			
+			<h2> 마감임박 </h2>
+			<div id="list_div2" class="card-columns" style="height: 400px"></div>
+			
+				<c:forEach var="item" items="${down_list }">
 				
-
-					<!-- Row -->
-					<div class="card-columns">
-						<h2>Best of the week</h2>
-						<c:forEach var="item" items="${list }">
-						<div class="card" style="width: 18rem;">
-							<h5 class="card-title" id="time_limit">마감시간 :
-								${item.getDuedate() }</h5>
-							<a
-								href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"><img
-								class="card-img-top" src="${item.getPhoto_path_1() }"
-								alt="Card image cap"></a>
-							<div class="card-body">
-								<a
-									href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"
-									class="card-text" id="auction_name">제목 :
-									${item.getAuction().getAuct_title() }</a>
-								<p class="card-text" id="auction_price">현재 입찰가 :
-									${item.getMax_price() }</p>
-							</div>
-						</div>
-						</c:forEach>
-					</div>
-
+					<script>
+						print_category("${item.getDuedate() }", "${item.getAuction().getAuct_id() }", "${item.getPhoto_path_1() }", "${item.getAuction().getAuct_title() }", "${item.getMax_price() }", 1);
+					</script>
 				
-
+				</c:forEach>
 				
-
-					<!-- Row -->
-					<div class="card-columns">
-						<h2>Recommendation</h2>
-						<c:forEach var="item" items="${list }">
-						<div class="card" style="width: 18rem;">
-							<h5 class="card-title" id="time_limit">마감시간 :
-								${item.getDuedate() }</h5>
-							<a
-								href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"><img
-								class="card-img-top" src="${item.getPhoto_path_1() }"
-								alt="Card image cap"></a>
-							<div class="card-body">
-								<a
-									href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"
-									class="card-text" id="auction_name">제목 :
-									${item.getAuction().getAuct_title() }</a>
-								<p class="card-text" id="auction_price">현재 입찰가 :
-									${item.getMax_price() }</p>
-							</div>
-						</div>
-						</c:forEach>
-					</div>
-
+				<c:forEach var="item" items="${time_list }">
+				
+					<script>
+						print_category("${item.getDuedate() }", "${item.getAuction().getAuct_id() }", "${item.getPhoto_path_1() }", "${item.getAuction().getAuct_title() }", "${item.getMax_price() }", 2);
+					</script>
+				
+				</c:forEach>
 				
 			</div>
 		</div>

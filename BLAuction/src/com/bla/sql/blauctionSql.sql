@@ -1,5 +1,4 @@
 DROP TABLE PHOTO;
-DROP TABLE TAG;
 DROP TABLE SUCCESSFUL_BID;
 DROP TABLE DELIVERY;
 DROP TABLE BIDDING;
@@ -43,7 +42,7 @@ cate_type_id number(5) not null,
 description varchar2(255) not null,
 down_price number(20) null,
 down_term number(10) null,
-auction_status varchar2(10) default 'before' check(auction_status in ('before','proceeding','end','cancel')),
+auction_status varchar2(10) default 'before' check(auction_status in ('before','proceeding','end','cancel','failbid')),
 auction_address varchar2(160) null,
 tag varchar2(255) null,
 register_date number(20) not null,
@@ -70,7 +69,7 @@ bid_id      number(5) not null PRIMARY KEY,
 member_id   number(5) not null,
 auct_id      number(5) not null,
 price      number(20) not null,
-time      number(10) not null,
+time      number(20) not null,
 bidder_account   varchar2(160) not null,
 bid_conf_status	number(1) default 0 not null,
 CONSTRAINT FK_BIDDING_member FOREIGN KEY(member_id)
@@ -129,9 +128,4 @@ INSERT INTO AUCTION_TYPE VALUES(3,'secret');
 //테스트용 회원
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'crysis1@naver.com','1234','최다훈','서울특별시 관악구 봉천동 1523-25','01092557434','931217',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'kwla103@naver.com','1234','라구원','서울특별시 관악구 봉천동 1523-24','01092557431','921006',0,0,'0x273ff3d46cfd4efae550f24cefbdaffeaa5c53f0');
-INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'eileenkim1208@gmail.com','1234','김다은','서울특별시 관악구 봉천동 1523-23','01092557432','921208',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
-INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'kimsj9484@gmail.com','1234','김선재','서울특별시 관악구 봉천동 1523-22','01092557433','941015',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
-INSERT INTO MEMBER VALUES(SEQ_MEMBER.NEXTVAL,'hny4813@naver.com','1234','한나영','서울특별시 관악구 봉천동 1523-21','01092557435','950327',0,0,'0x9671652cf6fba11f7576b341b95bff03ad27d581');
 COMMIT;
-
-ALTER TABLE BIDDING MODIFY(TIME NUMBER(20));

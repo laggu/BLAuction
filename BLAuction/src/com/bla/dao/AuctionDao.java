@@ -1,6 +1,7 @@
 package com.bla.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -45,6 +46,10 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectAll();
 	}
 	
+	public ArrayList<AuctionVO> selectByDuedate() throws Exception {
+		return amapper.selectByDuedate();
+	}
+	
 	public int select(Long register_date) throws Exception {
 		return amapper.selectByRegdate(register_date);
 	}
@@ -53,16 +58,24 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectByCategory(category_id);
 	}
 	
+	public ArrayList<AuctionVO> selectByType(int type) throws Exception {
+		return amapper.selectByType(type);
+	}
+	
 	public void updateStatus(AuctionVO obj) throws Exception {
 		amapper.updateStatus(obj);
 	}
 	
-	public ArrayList<AuctionVO> selectAuctionByMember(int member_id) throws Exception{
-		return amapper.selectAuctionByMember(member_id);
+	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj) throws Exception{
+		return amapper.selectAuctionByMember(obj);
 	}
 	
 	public int selectMemberIdByAuct(Integer auct_id) throws Exception{//경매 올린 member_id 가져올려고 함
 		return amapper.selectMemberIdByAuct(auct_id);
+	}
+	
+	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj) throws Exception{
+		return amapper.selectEndAuctionByMemberId(obj);
 	}
 	
 }
