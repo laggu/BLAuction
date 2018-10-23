@@ -20,6 +20,23 @@ function getDeliveryStatus(index, auction_address){
 		datatype:'json',
 		success:function(data){
 			var s = '';
+			var level = data.level;
+			//ajax로 택배 status 변경
+			$.ajax({
+				type:'POST',
+				url:'updateDeliveryStatus.bla',
+				data:{
+					"level":level,
+					"auct_id":index
+				},
+				datatype:'json',
+				success:function(data){
+					alert("성공");
+				},
+				error:function(data){
+					alert('error');
+				}
+			})
 			
 			switch (data.level) {
 			  case 1:

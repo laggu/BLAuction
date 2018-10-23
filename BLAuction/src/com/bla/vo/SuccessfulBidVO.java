@@ -7,7 +7,7 @@ public class SuccessfulBidVO {
 	private String review;
 	private String delivery_code;
 	private String delivery_status;
-	private int company_code;
+	private String company_code;
 	
 	public SuccessfulBidVO() {
 		super();
@@ -59,11 +59,11 @@ public class SuccessfulBidVO {
 		this.delivery_status = delivery_status;
 	}
 
-	public int getCompany_code() {
+	public String getCompany_code() {
 		return company_code;
 	}
 
-	public void setCompany_code(int company_code) {
+	public void setCompany_code(String company_code) {
 		this.company_code = company_code;
 	}
 
@@ -73,7 +73,7 @@ public class SuccessfulBidVO {
 		int result = 1;
 		result = prime * result + auct_id;
 		result = prime * result + bid_id;
-		result = prime * result + company_code;
+		result = prime * result + ((company_code == null) ? 0 : company_code.hashCode());
 		result = prime * result + ((delivery_code == null) ? 0 : delivery_code.hashCode());
 		result = prime * result + ((delivery_status == null) ? 0 : delivery_status.hashCode());
 		result = prime * result + ((review == null) ? 0 : review.hashCode());
@@ -93,7 +93,10 @@ public class SuccessfulBidVO {
 			return false;
 		if (bid_id != other.bid_id)
 			return false;
-		if (company_code != other.company_code)
+		if (company_code == null) {
+			if (other.company_code != null)
+				return false;
+		} else if (!company_code.equals(other.company_code))
 			return false;
 		if (delivery_code == null) {
 			if (other.delivery_code != null)
@@ -118,5 +121,5 @@ public class SuccessfulBidVO {
 		return "SuccessfulBidVO [auct_id=" + auct_id + ", bid_id=" + bid_id + ", review=" + review + ", delivery_code="
 				+ delivery_code + ", delivery_status=" + delivery_status + ", company_code=" + company_code + "]";
 	}
-			
+				
 }

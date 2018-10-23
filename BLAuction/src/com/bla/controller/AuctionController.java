@@ -925,6 +925,7 @@ public class AuctionController {
 
 			for (AuctionVO auction : auctions) {
 				int auct_id = auction.getAuct_id();
+				System.out.println("내가 올린경매 auction: "+auction);
 				if (auction.getAuction_status().equals("before")) {
 					beforeJo = new JSONObject();
 					// 입찰전 => 취소하기 버튼
@@ -1200,7 +1201,13 @@ public class AuctionController {
 			abiz.updateStatus(auction_update);
 
 		}catch(SQLIntegrityConstraintViolationException e) {
-			
+			auction_update.setAuction_status("end");
+			try {
+				abiz.updateStatus(auction_update);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1224,7 +1231,7 @@ public class AuctionController {
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
 		String delivery_code = request.getParameter("delivery_code");
-		int company_code = Integer.parseInt(request.getParameter("company_code"));
+		String company_code = (String)request.getParameter("company_code");
 		
 		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
@@ -1452,6 +1459,24 @@ public class AuctionController {
 			out.close();
 		}
 
+	}
+	
+	// 택배 상태 변경하는 함수
+	@RequestMapping("/updateDeliveryStatus.bla")
+	public void updateDeliveryStatus(HttpServletRequest request, HttpServletResponse response) {// db의 정보와 smartcontract log를 비교
+		String status = request.getParameter("level");
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		
+		SuccessfulBidVO successfulBidVO = new SuccessfulBidVO();
+		successfulBidVO.setAuct_id(auct_id);
+		successfulBidVO.setDelivery_status(status);
+		System.out.println(successfulBidVO);
+		
+		try {
+			sbiz.updateDeliveryStatus(successfulBidVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
