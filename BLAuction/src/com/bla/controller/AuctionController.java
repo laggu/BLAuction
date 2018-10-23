@@ -680,7 +680,8 @@ public class AuctionController {
 				jo.put("title", auct.getAuct_title());
 				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
-				jo.put("auction_address", auct.getAuction_address());
+				jo.put("auction_address", (String)auct.getAuction_address());
+				System.out.println(auct.getAuction_address());
 				// 사진도 Photo테이블에서 경로랑 이름 들고와야함..
 				photos = pbiz.getAll(auct_id);
 

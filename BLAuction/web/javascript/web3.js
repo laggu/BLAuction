@@ -433,7 +433,7 @@ var bidder_id = 0
 	/* ********** Auction Manager ********** */
 	/* ************************************* */
 
-var auction_manager_address = '0x8dcd68955cbfd419668c5e0cc419c1e41c5b4252'
+var auction_manager_address = '0x91e62f2014cf23f6f37bc38a32818d8576e57cc7'
 var manager = web3.eth.contract(auction_manager_ABI).at(auction_manager_address)
 
 /**
@@ -585,6 +585,7 @@ function setDeliveryStatus(auctionAddress){
  */
 
 function web3_withdraw(auctionAddress){
+	alert(typeof auctionAddress);
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	auction.withdraw(function(err,res){
 	})
