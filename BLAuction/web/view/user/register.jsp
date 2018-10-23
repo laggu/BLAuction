@@ -65,6 +65,18 @@ document.form.zipNo.value = zipNo;
 </script>
 
 
+<script>
+$(document).ready(function() {
+	
+	$('#loginBTN').click(function(){
+		location.href="login.bla";
+	});
+	
+});
+
+
+
+</script>
 
 
 <script>
@@ -342,6 +354,9 @@ transition: .3s ease all;
                        <div class="ins">
                            <input type="submit" id="registerBTN" class="form-control registers btn btn-danger" value="회원가입">
                        </div>
+                       <div class="ins">
+	                        <button type="submit" id="loginBTN" class="form-control registers btn btn-danger">로그인</button>
+	                    </div>
                    </form>
                </div>
           </div>
