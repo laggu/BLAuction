@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="java.util.*,java.text.*" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +30,16 @@
 
 <link href="https://fonts.googleapis.com/css?family=Jua|Stylish" rel="stylesheet">
 
+<%
+	Date date = new Date();
+	SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+	String strdate = simpleDate.format(date);
+	
+	Calendar cal = Calendar.getInstance();
+	String rightNow=cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DATE);
+	
+	
+%>
 <script type="text/javascript">
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
 // (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
@@ -298,7 +311,7 @@ transition: .3s ease all;
                       
                       <div class="ins">
                       <label class="write">생년월일</label>
-                         <input type="date" id="birth" class="form-control registers" name="birth" placeholder="Birth" autofocus required>
+                         <input type="date" min="1977-01-01" max=<%=rightNow%> id="birth" class="form-control registers" name="birth" placeholder="Birth" autofocus required>
                       </div>
                       
                       <div class="ins">
