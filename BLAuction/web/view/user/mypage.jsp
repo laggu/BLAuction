@@ -7,22 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-
 <script src="javascript/user/delivery.js"></script>
 <script src="javascript/user/mypage.js?version=2"></script>
 <script type="text/javascript">
-$(document).ready(function(){	
-   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
-	})
-	.ajaxStart(function(){
-		$('#load').show(); //ajax실행시 로딩바를 보여줌
-	})
-	.ajaxStop(function(){
-		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
-});
-</script>
-<script type="text/javascript">
-
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
 // (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
 //document.domain = "abc.go.kr";
@@ -150,7 +137,7 @@ function setDeliveryCode(){
 	})
 }
 
-//Tab 전환
+
 	
 	function registerReview(){
 		//후기 등록하기
@@ -183,8 +170,12 @@ function setSuccessAuctId(auct_id){
 }
 
 $(document).ready(function() {
+	//Tab 전환
+	$(".nav-tabs a").click(function() {
+		$(this).tab('show');
+	});
+	$('#load').show();
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
-
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
@@ -241,7 +232,7 @@ $(document).ready(function() {
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div><button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
 				winningbidlist += '</div></div></div>';	
 				
 			}
@@ -378,27 +369,18 @@ $(document).ready(function() {
 			}
 			
 			myauctionlists.append(myauctionlist);
-			
+			$('#load').hide();
 		},
 		error : function(data) {
 			alert("경매를 불러오는데 실패했습니다.");
 		}
 	});
 	
-	$(".nav-tabs a").click(function() {
-		$(this).tab('show');
-
-	});
+	
 
 });
 </script>
-<style>
-#myauctionCancle{
-		position:absolute;
-		bottom:10px;
-		right:15px;
-	}
-</style>
+
 <body>
 
 	<!-- Content -->
@@ -440,16 +422,14 @@ $(document).ready(function() {
 							</div>
 							<div>
 								<strong>핸드폰 번호: </strong><span id="myphone">${member.phone }</span>
-								<button type="button" class="btn btn-warning"
-									id="changePhone_btn" data-toggle="modal"
-									data-target="#ChangePhoneModal">
-									<strong>번호 변경</strong>
+								<button type="button" class="btn btn-warning" id="changePhone_btn" data-toggle="modal"
+									data-target="#ChangePhoneModal"><strong>번호 변경</strong>
 								</button>
 							</div>
 							<div>
 								<strong>주소: </strong><span id="myaddress">${member.address }</span>
-								<button type="button" class="btn btn-warning"
-									id="changeAddress_btn" onClick="goPopup();" value="팝업">
+								<button type="button" class="btn btn-warning" 
+									id="changeAddress_btn" data-toggle="modal" data-target="#ChangeAddressModal">
 									<strong>주소 변경</strong>
 								</button>
 							</div>
@@ -491,8 +471,8 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
-
+	
+	
 	<!-- Modal -->
 
 	<!-- ChangePw Modal -->
@@ -586,18 +566,12 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="">
+						<div class="form-group">
 						<h4>변경된 주소 입력:</h4>
-						<input type="text" id="changedAddress" name="changed_address">
-						<button onClick="goPopup();" value="팝업">
-							<img src="img/map.png">
-						</button>
-						<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
-							도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
-							고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
-							참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
-							우편번호<input type="text" id="zipNo" name="zipNo" /> -->
+						<input type="text" id="changedAddress" name="changed_address" class="form-control">
 						<button type="submit" class="btn btn-danger"
 							id="changeAddress_Btn" onclick="registerAddress(this.form);">변경하기</button>
+						</div>
 					</form>
 				</div>
 
@@ -733,10 +707,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-<!-- Loading bar -->
-<div id="load">
-	<img src="img/loading.gif" alt="loading">
-</div>
+
 
 </body>
 </html>

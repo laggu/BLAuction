@@ -1195,7 +1195,11 @@ public class AuctionController {
 		System.out.println(auct_id);
 		try {
 			bid = bbiz.selectBididByAuctId(auction_update.getAuct_id());
+			System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+			System.out.println("==========================================================");
+			System.out.println(bid);
 			bid_id = bid.getBid_id();
+			System.out.println(bid_id);
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
 			System.out.println("낙찰 정보 : "+successfulBid);
 			sbiz.register(successfulBid);
