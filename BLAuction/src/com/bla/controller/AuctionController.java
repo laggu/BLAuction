@@ -60,11 +60,17 @@ public class AuctionController {
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
-	public ModelAndView createAuction() {
-
+	public ModelAndView createAuction(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-		mv.addObject("centerpage", "auction/register");
+		try {			
+			int member_id = (Integer)request.getSession().getAttribute("member_id");
+			
+			mv.setViewName("main");
+			mv.addObject("centerpage", "auction/register");
+		}catch(Exception e){
+			mv.setViewName("redirect:/login.bla");
+		}
+		
 		return mv;
 	}
 
@@ -220,8 +226,16 @@ public class AuctionController {
 	@RequestMapping("/auctiondetail.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request) {
 		//로그인된 멤버 아이디 가져오기
-		int member_id = (Integer)request.getSession().getAttribute("member_id");
-		
+		ModelAndView mv = new ModelAndView();
+		int member_id = 0;
+		try {			
+			member_id = (Integer)request.getSession().getAttribute("member_id");
+			
+			mv.setViewName("main");
+		}catch(Exception e){
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
 		Map<String, Integer> map = new HashMap<>();
 		map.put("member_id", member_id);
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
@@ -230,8 +244,7 @@ public class AuctionController {
 		ArrayList<PhotoVO> photos = null;
 		String name = (String)request.getSession().getAttribute("name");
 
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
+		
 		try {
 			auction = abiz.get(auct_id);
 			photos = pbiz.getAll(auct_id);
@@ -919,8 +932,13 @@ public class AuctionController {
 					// before이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
 					beforeJo.put("auct_id", auction.getAuct_id());
 					beforeJo.put("auction_status", auction.getAuction_status());
+					
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					beforeJo.put("auction_address", auction.getAuction_address());
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
-
+					
 					int i = 0;
 					for (PhotoVO photoVO : photos) {
 						String pathKey = "photoPath" + i;
@@ -943,7 +961,11 @@ public class AuctionController {
 						long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 						proceedingJo.put("bidMaxPrice", bidMaxPrice);
 					}
-
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					proceedingJo.put("auction_address", auction.getAuction_address());
+					
 					proceedingJo.put("auct_id", auction.getAuct_id());
 
 					// 경매 사진과 타이틀도 가져와야함
@@ -1432,15 +1454,4 @@ public class AuctionController {
 
 	}
 
-	// 사진 삭제하는 함수(Photo)
-	@RequestMapping("/photoDelete.bla")
-	public void photoDelete(@RequestParam("deletefile") MultipartFile file, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-
-		// 파일 이름 가져오기
-		String imgName = file.getOriginalFilename();
-		System.out.println("파일 이름 " + imgName);
-
-	}
 }
