@@ -2,6 +2,151 @@
 
 var auction_ABI = [
 	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBidCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAllData",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint8"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"name": "bid_id",
+						"type": "uint256"
+					},
+					{
+						"name": "bidder_id",
+						"type": "uint256"
+					},
+					{
+						"name": "bidder_name",
+						"type": "string"
+					},
+					{
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"name": "time",
+						"type": "uint256"
+					},
+					{
+						"name": "bidder_address",
+						"type": "address"
+					}
+				],
+				"name": "",
+				"type": "tuple[]"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "user_balances",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getBid",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"constant": false,
 		"inputs": [
 			{
@@ -27,20 +172,11 @@ var auction_ABI = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "status",
-				"type": "bool"
+				"name": "fee",
+				"type": "uint256"
 			}
 		],
-		"name": "set_delivery_status",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "withdraw",
+		"name": "withdraw_for_owner",
 		"outputs": [],
 		"payable": true,
 		"stateMutability": "payable",
@@ -50,14 +186,14 @@ var auction_ABI = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "fee",
-				"type": "uint256"
+				"name": "status",
+				"type": "bool"
 			}
 		],
-		"name": "withdraw_for_owner",
+		"name": "set_delivery_status",
 		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -150,142 +286,6 @@ var auction_ABI = [
 		"inputs": [],
 		"name": "auctionEndEvent",
 		"type": "event"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getAllData",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint8"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "address"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"components": [
-					{
-						"name": "bid_id",
-						"type": "uint256"
-					},
-					{
-						"name": "bidder_id",
-						"type": "uint256"
-					},
-					{
-						"name": "bidder_name",
-						"type": "string"
-					},
-					{
-						"name": "price",
-						"type": "uint256"
-					},
-					{
-						"name": "time",
-						"type": "uint256"
-					},
-					{
-						"name": "bidder_address",
-						"type": "address"
-					}
-				],
-				"name": "",
-				"type": "tuple[]"
-			},
-			{
-				"name": "",
-				"type": "address"
-			},
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "getBid",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getBidCount",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "user_balances",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
 	}
 ];
 var auction_manager_ABI = [
@@ -565,9 +565,11 @@ function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAd
 /** 
  * 낙찰 후 판매자 출금 함수 
  */
-function web3_withdraw_for_owner(fee){
-	auction.withdraw_for_owner(function(err,res){
-	}, fee)
+function web3_withdraw_for_owner(fee, auctionAddress){
+	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
+    
+	auction.withdraw_for_owner(fee, function(err,res){
+	})
 }
 
 function setDeliveryStatus(auctionAddress){
@@ -594,11 +596,12 @@ function web3_withdraw(auctionAddress){
 
 
 function web3_getBid(auction, index, bidList, printList, count){
+	tempList = []
 	auction.getBid(index, function(err,res){
 		var temp = {name:res[0], price:res[1], time:res[2]};
 		bidList.push(temp);
-		
-		if(Number(count) == index+1){
+		tempList.push(true);
+		if(Number(count) == tempList.length){
 			printList();
 		}
 	})

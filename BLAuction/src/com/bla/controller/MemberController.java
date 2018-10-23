@@ -159,6 +159,7 @@ public class MemberController {
 			session.setAttribute("member_id", member.getMember_id());
 			session.setAttribute("member_account", member.getMember_account());
 			session.setAttribute("loginStatus", "loginSuccess");
+			session.setAttribute("name", member.getName());
 			return mv;
 		} catch (Exception e) {
 			mv.setViewName("main");

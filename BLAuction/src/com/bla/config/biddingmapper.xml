@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectBidMaxPrice" parameterType="auction" resultType="Long">
-		SELECT MAX(price) FROM BIDDING GROUP BY AUCT_ID HAVING AUCT_ID = ${auct_id }
+		SELECT MAX(price) FROM BIDDING GROUP BY AUCT_ID HAVING AUCT_ID = #{auct_id }
 	</select>
 	
 	<select id="selectMemberBidMaxPrice" parameterType="Map" resultType="Long">
