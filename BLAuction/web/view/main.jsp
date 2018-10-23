@@ -2,12 +2,11 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
-
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -27,7 +26,6 @@
 <script src="javascript/web3.js"></script>
 
 <script type="text/javascript">
- 
 $(document).ready(function(){	
    $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
 	})
@@ -37,7 +35,6 @@ $(document).ready(function(){
 	.ajaxStop(function(){
 		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
 });
-
 </script>
 </head>
 
