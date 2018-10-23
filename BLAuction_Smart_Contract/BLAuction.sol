@@ -65,7 +65,7 @@ contract Auction{
         seller_id = _seller_id;
         auction_type = _auction_type;
         due_date = _due_date;
-        start_price = _start_price;
+        start_price = _start_price * 1 finney;
         delivery_completed = false;
         manager = _manager;
     }
@@ -102,13 +102,13 @@ contract Up_Auction is Auction{
         
     }
     
-    function bidding(string _bidder_name, uint bidder_id, uint _time) auction_progress(_time) notOwner minimum_measure start_price_check public payable {
+    function bidding(string _bidder_name, uint _bidder_id, uint _time) auction_progress(_time) notOwner minimum_measure public payable {
         require(current_price < msg.value);
         bid_number += 1;
         bid_list.push(Bid({
             bid_id: bid_number,
             bidder_name: _bidder_name,
-            bidder_id: bidder_id,
+            bidder_id: _bidder_id,
             price: msg.value,
             time: _time,
             bidder_address: msg.sender
@@ -117,7 +117,7 @@ contract Up_Auction is Auction{
         current_price = msg.value;
         current_winner = msg.sender;
         user_balances[owner] = current_price;
-        emit biddingEvent(bidder_id, auction_id, current_price, _time, _bidder_name);
+        emit biddingEvent(_bidder_id, auction_id, current_price, _time, _bidder_name);
     }
     
     function withdraw() notOwner public payable{

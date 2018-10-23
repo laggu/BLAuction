@@ -1065,12 +1065,61 @@ public class AuctionController {
 	@RequestMapping("/sellerReview.bla")
 	public void sellerReview(HttpServletRequest request, HttpServletResponse response) {
 		// 판매자 member_id를 들고온다.
+		int seller_id = Integer.parseInt(request.getParameter("seller_id"));
 		// member_id로 auct들을 가져오고,
+		ArrayList<AuctionVO> aucts = null;
 		// 해당 옥션의 auct_id, 사진, 타이틀 json화
 		// auct_id로 successfulbid 에서 review를 들고온다.
+		SuccessfulBidVO successfulBid = null;
 		// reveiw json화.
+		JSONArray ja = new JSONArray();
+		JSONObject jo = null;
+		
+		//map 선언
+		Map<String,Integer> map = new HashMap<>();
+		map.put("member_id", seller_id);
+		
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter out = null;
+		
 		try {
+			aucts = abiz.selectEndAuctionByMemberId(map);
+			
+			for(AuctionVO auct : aucts) {
+				successfulBid = sbiz.oneSelectMySuccessfulBid(auct.getAuct_id());
+				//bidid를 가져와서 bidding 테이블에서 member_id와 낙찰가를 가져오고,
+				//해당 member_id를 가져와서 낙찰자 이름 가져오기 
+				if(successfulBid.getReview() != null) {
+					jo = new JSONObject();
+					BiddingVO bid = bbiz.get(successfulBid.getBid_id());
+					System.out.println("판매자 리스트 - 낙찰자 정보"+bid);
+					
+					MemberVO reviewer = mbiz.get(bid.getMember_id());
+					System.out.println("낙찰자 정보 --- "+reviewer.getName());
+					
+					jo.put("name",reviewer.getName());
+					jo.put("price", bid.getPrice());
+					jo.put("auct_title",auct.getAuct_title());
+					jo.put("review", successfulBid.getReview());
+					ArrayList<PhotoVO> photos = pbiz.getAll(auct.getAuct_id());
+					
+					jo.put("auct_id", auct.getAuct_id());
 
+					int i = 0;
+					for (PhotoVO photoVO : photos) {
+						String pathKey = "photoPath" + i;
+						String nameKey = "photoName" + i;
+						jo.put(pathKey, photoVO.getPhoto_path());
+						jo.put(nameKey, photoVO.getPhoto_name());
+						i++;
+					}
+					ja.add(jo);
+				}
+				
+			}
+			out = response.getWriter();
+			System.out.println("판매자 후기 리스트 ::"+ja.toJSONString());
+			out.print(ja.toJSONString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
