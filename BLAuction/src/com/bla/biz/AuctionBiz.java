@@ -28,12 +28,12 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 
 	@Override
 	public void modify(AuctionVO t) throws Exception {
-		// TODO Auto-generated method stub
+		adao.update(t);
 	}
 
 	@Override
 	public void remove(Integer v) throws Exception {
-		// TODO Auto-generated method stub
+		adao.delete(v);
 	}
 
 	@Override
