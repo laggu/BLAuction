@@ -21,11 +21,9 @@ function setDeliveryCode(){
 			var deliveryCode = $('#winnerInvoice'+data.auct_id);
 			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
 			
-			//var deliveryStatus = $('#winnerDeliverycompany'+data.auct_id);
 			
 			var deliveryCodeVal = data.delivery_code;
 			var companyCodeVal = data.company_code;
-			//var deliveryStatusVal = data.delivery_status;
 			
 			companyCode.text(companyCodeVal);
 			deliveryCode.text(deliveryCodeVal);
