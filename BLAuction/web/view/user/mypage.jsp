@@ -140,6 +140,9 @@ document.form.zipNo.value = zipNo;
 function setAuctId(auct_id){
 		$('#auct_id').val(auct_id);
 	}
+function setSuccessAuctId(auct_id){
+	$('#successAuct_id').val(auct_id);
+}
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 
@@ -278,7 +281,7 @@ $(document).ready(function() {
 				myauctionlist += '<div>낙찰자 이름: <span id="winnerName">'+end[i].successfulBidMember_name+'</span> / 낙찰자 전화번호: <span id="winnerPhone">'+end[i].successfulBidMemberPhone+'</span></div>';		
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
 				myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';	
-				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+				myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
 			}
@@ -621,7 +624,7 @@ $(document).ready(function() {
 				<div class="modal-body">
 					<form action="" class="form-horizontal">
 						<div id="selectedDeliveryCompany">
-							<select>
+							<select id="companyCode">
 							  <option value="01">우체국택배 (01)</option>
 							  <option value="04">CJ대한통운 (04)</option>
 							  <option value="05">한진택배 (05)</option>
@@ -635,8 +638,8 @@ $(document).ready(function() {
 							<input type="text" class="form-control" id="invoiceNum"
 								name="invoice_num">
 						</div>
-
-						<button type="submit" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
+						<input type= "hidden" name="successAuct_id" id="successAuct_id" value="">
+						<button type="button" class="btn btn-danger" id="deliveryInfo_Btn" onclick = "setDeliveryCode();">택배
 							정보 등록</button>
 					</form>
 

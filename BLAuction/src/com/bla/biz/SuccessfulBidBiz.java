@@ -36,7 +36,6 @@ public class SuccessfulBidBiz implements Biz<SuccessfulBidVO,Integer>{
 
 	@Override
 	public SuccessfulBidVO get(Integer v) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
