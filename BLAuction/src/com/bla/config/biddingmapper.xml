@@ -34,8 +34,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM BIDDING WHERE BID_ID=#{bid_id}
 	</select>
 	
-	<select id="selectBididByAuctId" parameterType="Map" resultType="bidding">
-		SELECT * FROM BIDDING WHERE PRICE = (SELECT MAX(PRICE) FROM BIDDING WHERE AUCT_ID=#{auct_id}) AND MEMBER_ID=#{member_id}
+	<select id="selectBididByAuctId" parameterType="Integer" resultType="bidding">
+		SELECT * FROM BIDDING WHERE PRICE = (SELECT MAX(PRICE) FROM BIDDING WHERE AUCT_ID=#{auct_id}) AND AUCT_ID=#{auct_id}
 	</select>
 
 </mapper>

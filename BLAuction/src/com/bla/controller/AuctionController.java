@@ -218,9 +218,14 @@ public class AuctionController {
 
 	// 옥션 상세 페이지 넘기기
 	@RequestMapping("/auctiondetail.bla")
-	public ModelAndView auctiondetail(HttpServletRequest request, Map<String, String> map) {
-
+	public ModelAndView auctiondetail(HttpServletRequest request) {
+		//로그인된 멤버 아이디 가져오기
+		int member_id = (Integer)request.getSession().getAttribute("member_id");
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("member_id", member_id);
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
+		map.put("auct_id",auct_id);
 		AuctionVO auction = null;
 		ArrayList<PhotoVO> photos = null;
 		String name = (String)request.getSession().getAttribute("name");
@@ -280,7 +285,11 @@ public class AuctionController {
 			// 마감일자 구하기
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
+			//현재 내가 입찰한 최고가 
+			long memberMaxPrice = bbiz.selectMemberMaxPrice(map);
+			System.out.println("내 최고 입찰가"+memberMaxPrice);
 			
+			mv.addObject("memberMaxPrice",memberMaxPrice);
 			mv.addObject("name",name);
 			mv.addObject("auction", auction);
 			mv.addObject("cur_price", cur_price);
@@ -972,7 +981,7 @@ public class AuctionController {
 					endJo.put("successfulBidMember_name", successfulBidMember.getName());
 					endJo.put("successfulBidMemberPhone", successfulBidMember.getPhone());
 					endJo.put("successfulBidAddress", successfulBidMember.getAddress());
-
+					
 					// 택배 운송장 번호를 SUCCESSFULBID에서 가져오기 auct_id로
 					endJo.put("delivery_code", successfulBid.getDelivery_code());
 					endJo.put("delivery_status", successfulBid.getDelivery_status());
@@ -1138,8 +1147,7 @@ public class AuctionController {
 		int bid_id = 0;
 
 		int member_id = (Integer) request.getSession().getAttribute("member_id");
-		Map<String, Integer> map = new HashMap<>();
-		map.put("member_id", member_id);
+
 		
 		// auct_id, bid_id로만 insert 하기
 		SuccessfulBidVO successfulBid = null;
@@ -1150,11 +1158,10 @@ public class AuctionController {
 		auction_update.setAuction_status("end");
 		
 		try {
-			map.put("auct_id", auction_update.getAuct_id());
-			bid = bbiz.selectBididByAuctId(map);
+			bid = bbiz.selectBididByAuctId(auction_update.getAuct_id());
 			bid_id = bid.getBid_id();
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
-
+			System.out.println("낙찰 정보 : "+successfulBid);
 			sbiz.register(successfulBid);
 			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
@@ -1180,27 +1187,26 @@ public class AuctionController {
 	@RequestMapping("/deliveryimpl.bla")
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		int auct_id = (Integer) session.getAttribute("auct_id");
-		String delivery_code = request.getParameter("deliveryCode");
-		int company_code = Integer.parseInt(request.getParameter("companyCode"));
-		String delivery_status = request.getParameter("deliveryStatus");
-
+		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
+		String delivery_code = request.getParameter("delivery_code");
+		int company_code = Integer.parseInt(request.getParameter("company_code"));
+		
 		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
 		PrintWriter out = null;
 		SuccessfulBidVO successfulbid = null;
 
 		try {
-			successfulbid = sbiz.get(auct_id);
+			successfulbid = sbiz.oneSelectMySuccessfulBid(auct_id);
 			successfulbid.setCompany_code(company_code);
 			successfulbid.setDelivery_code(delivery_code);
-			successfulbid.setDelivery_status(delivery_status);
 
+			System.out.println("택배 업데이트 ; "+successfulbid);
 			sbiz.modify(successfulbid);
+			System.out.println("company_code:"+company_code);
 			
-			jo.put("company_code","company_code");
-			jo.put("delivery_code", "delivery_code");
-			jo.put("delivery_status", "delivery_status");
+			jo.put("company_code",company_code);
+			jo.put("delivery_code", delivery_code);
 			
 			out = response.getWriter();
 
