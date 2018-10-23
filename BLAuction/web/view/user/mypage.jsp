@@ -9,7 +9,7 @@
 <title>BLAuction_마이페이지</title>
 
 <script src="javascript/user/delivery.js"></script>
-<script src="javascript/user/mypage.js?version=1"></script>
+<script src="javascript/user/mypage.js?version=2"></script>
 
 <script type="text/javascript">
 
@@ -143,6 +143,7 @@ function setAuctId(auct_id){
 function setSuccessAuctId(auct_id){
 	$('#successAuct_id').val(auct_id);
 }
+
 $(document).ready(function() {
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 
@@ -265,7 +266,7 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionInfo">';
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
 				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price * 0.001+' Ether</span></div>';
-				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div></div></div></div>';
+				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle" onclick="auctionCancel('+before[i].auct_id+');">경매 취소</button></div></div></div></div>';
 				
 			}
 			
@@ -305,7 +306,7 @@ $(document).ready(function() {
 				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
 				if(proceeding[i].auct_type == 2){
 					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
-					myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div>';
+					myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle" onclick="auctionCancel('+proceeding[i].auct_id+');">경매 취소</button></div>';
 				}else{
 					myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
 					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
