@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -72,7 +75,9 @@
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                         <li><a data-toggle="tab" href="#Home"><i class="notika-icon notika-house"></i> Auction</a>
                         </li>
-                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i> List</a>
+                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i> Category</a>
+                        </li>
+                        <li><a data-toggle="tab" href="#new"><i class="notika-icon notika-mail"></i> Type</a>
                         </li>
                         <li><a data-toggle="tab" href="#Interface"><i class="notika-icon notika-edit"></i> Unconfirmed</a>
                         </li>
@@ -82,37 +87,57 @@
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane in notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="">All</a>
+                                <li><a href="admin.bla">All</a>
                                 </li>
-                                <li><a href="">Ended</a>
+                                <li><a href="admin_status.bla?status=end">Ended</a>
                                 </li>
-                                <li><a href="">Proceeding & Before</a>
+                                <li><a href="admin_status.bla?status=before">Before</a>
                                 </li>
-                                <li><a href="">Canceled</a>
+                                <li><a href="admin_status.bla?status=proceeding">Proceeding</a>
                                 </li>
-                                <li><a href="">Failed</a>
+                                <li><a href="admin_status.bla?status=cancel">Canceled</a>
+                                </li>
+                                <li><a href="admin_status.bla?status=failbid">Failed</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="mailbox" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="">Category</a>
+                                <li><a href="admin_category.bla?id=1">Clothing</a>
                                 </li>
-                                <li><a href="">Type</a>
+                                <li><a href="admin_category.bla?id=2">Beauty</a>
+                                </li>
+                                <li><a href="admin_category.bla?id=3">Sports</a>
+                                </li>
+                                <li><a href="admin_category.bla?id=4">Digital</a>
+                                </li>
+                                <li><a href="admin_category.bla?id=5">Furniture</a>
+                                </li>
+                                <li><a href="admin_category.bla?id=6">etc.</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="new" class="tab-pane notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li><a href="admin_type.bla?id=1">Up Auction</a>
+                                </li>
+                                <li><a href="admin_type.bla?id=2">Down Auction</a>
+                                </li>
+                                <li><a href="admin_type.bla?id=3">Secret Auction</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="">Auction</a>
+                                <li><a href="admin_unconfirmed_auction.bla">Auction</a>
                                 </li>
-                                <li><a href="">Bidding</a>
+                                <li><a href="bidding_unconfirmed_auction.bla">Bidding</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="Charts" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="">All</a>
+                                <li><a href="admin_member.bla">All</a>
                                 </li>
                             </ul>
                         </div>
@@ -122,72 +147,19 @@
         </div>
     </div>
     <!-- Main Menu area End-->
-	
-    <!-- Data Table area Start-->
-    <div class="data-table-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="data-table-list">
-                        <div class="basic-tb-hd">
-                            <h2>Basic Example</h2>
-                            <p>It's just that simple. Turn your simple table into a sophisticated data table and offer your users a nice experience and great features without any effort.</p>
-                        </div>
-                        <div class="table-responsive">
-                            <table id="data-table-basic" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Auction ID</th>
-                                        <th>Host ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
-                                        <th>Status</th>
-                                        <th>Contract Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Auction ID</th>
-                                        <th>Host ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
-                                        <th>Status</th>
-                                        <th>Contract Address</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Data Table area End-->
+    
+    <!-- Content -->
+    <!-- ***************************************************************************************** -->	
+    	<c:choose>
+    		<c:when test="${centerpage != null}">
+    			<jsp:include page="${centerpage }.jsp"></jsp:include>
+    		</c:when>
+    		<c:otherwise>
+    			<jsp:include page="admin/center.jsp"></jsp:include>
+    		</c:otherwise>
+    	</c:choose>
+    <!-- ***************************************************************************************** -->	 
+
     <!-- Start Footer area-->
     <div class="footer-copyright-area">
         <div class="container">
@@ -268,6 +240,7 @@
 	<!-- tawk chat JS
 		============================================ -->
     <script src="js/tawk-chat.js"></script>
+    <script src="javascript/admin.js?version=1"></script>
 </body>
 
 </html>

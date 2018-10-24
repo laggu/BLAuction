@@ -182,7 +182,7 @@ public class AuctionController {
 				break;
 			}
 			String typeName = fileName.substring(fileName.indexOf("."));
-			newFileName = auct_id + "_" + i + typeName;
+			newFileName = auct_id + "_" + i + typeName.toLowerCase();
 			try {
 				FileSave.save(path, mFile, newFileName);
 			} catch (Exception e) {
@@ -1219,10 +1219,10 @@ public class AuctionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
-			auction_update.setAuction_status("failbid");
+			//auction_update.setAuction_status("failbid");
 			// 입찰이 아무것도 없이 경매가 끝났을 경우 상태 변경
 			try {
-				abiz.updateStatus(auction_update);
+				//abiz.updateStatus(auction_update);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

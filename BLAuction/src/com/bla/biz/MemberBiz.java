@@ -44,8 +44,7 @@ public class MemberBiz implements Biz<MemberVO,Integer> {
 
 	@Override
 	public ArrayList<MemberVO> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.select();
 	}
 
 
