@@ -416,4 +416,92 @@ public class AdminController {
 		return mv;
 	}
 	
+	// Members
+	@RequestMapping("/admin_member_detail.bla")
+	@ResponseBody
+	public ModelAndView member_detail(HttpServletRequest request) {
+		int member_id = Integer.parseInt(request.getParameter("id"));
+		
+		ArrayList<ListVO> created_list = new ArrayList<ListVO>();
+		ArrayList<ListVO> bid_list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> all_list = new ArrayList<AuctionVO>();
+		ArrayList<Integer> biddings = new ArrayList<Integer>();
+	
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin");
+		try {
+			
+			// get member
+			MemberVO member = mbiz.get(member_id);
+			
+			// get created_list
+			all_list = abiz.get();
+			Iterator<AuctionVO> itr = all_list.iterator();
+			while (itr.hasNext()) {
+				AuctionVO auctionVO = (AuctionVO) itr.next();
+				if(auctionVO.getMember_id() == member_id) {
+					ListVO listVO = new ListVO();
+					listVO.setAuction(auctionVO);
+					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+							.format(new Date((Long) auctionVO.getDuedate()));
+					listVO.setAuction(auctionVO);
+					listVO.setDuedate(due_date);
+					listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+					if (listVO.getMax_price() == null) {
+						listVO.setMax_price(auctionVO.getStart_price());
+					}
+					created_list.add(listVO);
+				}
+			}
+			
+			// get bid_list
+			biddings = bbiz.selectAuctIdByMemberId(member_id);
+			Iterator<Integer> itr2 = biddings.iterator();
+			itr2 = biddings.iterator();
+			while (itr2.hasNext()) {
+				Integer integer = (Integer) itr2.next();
+				AuctionVO auctionVO = abiz.get(integer);
+				ListVO listVO = new ListVO();
+				listVO.setAuction(auctionVO);
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				listVO.setAuction(auctionVO);
+				listVO.setDuedate(due_date);
+				listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (listVO.getMax_price() == null) {
+					listVO.setMax_price(auctionVO.getStart_price());
+				}
+				bid_list.add(listVO);
+			}
+			
+			mv.addObject("member", member);
+			mv.addObject("created_list", created_list);
+			mv.addObject("bid_list", bid_list);
+			mv.addObject("centerpage", "admin/member_detail");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "admin/member_detail");
+		}
+		
+		System.out.println("###################### GET MEMBER_DETAIL ######################");
+	
+		return mv;
+	}
+	
+	// member rate 
+	@RequestMapping("/memberRateSet.bla")
+	@ResponseBody
+	public void memberRateSet(HttpServletRequest request) {
+		//전체 member 객체를 들고와서 id를 가져온다.
+		//그 회원 member_id에서 등록한 경매의 수를 가지고 온다. x10
+		//그 회원이 입찰한 bidding의 수를 가지고온다. x2
+		//그 회원이 입찰한 bidding에서 bid_id를 가지고오고,
+		//낙찰 테이블에서 bid_id를 비교하여 successfulBid 객체를 가지고온다.
+		//그 successfulBid의 review가 null인지 아닌지를 비교하여 개수를 가지고 온다.
+		//다 검사하고 회원의 score에 업데이트를 한다.
+		
+		ArrayList<MemberVO> members;
+		
+	}
 }

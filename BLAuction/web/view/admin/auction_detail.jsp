@@ -23,8 +23,7 @@
 											<tbody>
 												<tr>
 													<th>Host Account</th>
-													<td>${auction.getSeller_account() }</td>
-													
+													<td colspan="3">${auction.getSeller_account() }</td>
 												</tr>
 												<tr>
 													<th>Auction ID</th>

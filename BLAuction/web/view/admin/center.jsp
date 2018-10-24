@@ -43,16 +43,16 @@
                                 <tbody>
                                 <c:forEach var="item" items="${list }">
 	                                    <tr>
-	                                        <td>${item.getAuction().getAuct_id() }</td>
-	                                        <td>${item.getAuction().getMember_id() }</td>
+	                                        <td><a href="admin_auction_detail.bla?id=${item.getAuction().getAuct_id() }">${item.getAuction().getAuct_id() }</a></td>
+	                                        <td><a href="admin_member_detail.bla?id=${item.getAuction().getMember_id() }">${item.getAuction().getMember_id() }</a></td>
 	                                        <td>${item.getDuedate() }</td>
 	                                        <td>${item.getAuction().getType() }</td>
-	                                        <td>${item.getAuction().getCategory_id() }</td>
+	                                        <td><a href="admin_category.bla?id=${item.getAuction().getCategory_id() }">${item.getAuction().getCategory_id() }</a></td>
 	                                        <td>${item.getAuction().getStart_price() }</td>
 	                                        <td>${item.getMax_price() }</td>
 	                                        <td>${item.getAuction().getDown_price() }</td>
 	                                        <td>${item.getAuction().getDown_term() }</td>
-	                                        <td>${item.getAuction().getAuction_status() }</td>
+	                                        <td><a href="admin_status.bla?status=${item.getAuction().getAuction_status() }">${item.getAuction().getAuction_status() }</a></td>
                                         	<td>${item.getAuction().getAuction_address() }</td>
 	                                    </tr>
 	                             </c:forEach>  

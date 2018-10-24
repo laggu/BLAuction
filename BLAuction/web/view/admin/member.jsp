@@ -41,7 +41,7 @@
                                 <tbody>
                                 <c:forEach var="item" items="${list }">
 	                                    <tr>
-	                                        <td>${item.getMember_id() }</td>
+	                                        <td><a href="admin_member_detail.bla?id=${item.getMember_id() }">${item.getMember_id() }</a></td>
 	                                        <td>${item.getEmail() }</td>
 	                                        <td>${item.getName() }</td>
 	                                        <td>${item.getAddress() }</td>
