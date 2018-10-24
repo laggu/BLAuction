@@ -66,4 +66,9 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	public BiddingVO selectBididByAuctId(Integer auct_id) throws Exception{
 		return bdao.selectBididByAuctId(auct_id);
 	}
+	
+
+	public ArrayList<BiddingVO> selectBiddingByMemberId(Integer member_id) throws Exception{
+		return bdao.selectBiddingByMemberId(member_id);
+	}
 }

@@ -13,9 +13,6 @@ public interface MemberMapper {
 	public ArrayList<MemberVO> selectAll();
 	public void insert(MemberVO obj);
 	public void update(MemberVO obj);
-/*	public void updatePw(MemberVO obj);
-	public void updatePhone(MemberVO obj);
-	public void updateAddress(MemberVO obj);
 	public void updateScore(MemberVO obj);
-	public void updateLikes(MemberVO obj);*/
+/*public void updateLikes(MemberVO obj);*/
 }

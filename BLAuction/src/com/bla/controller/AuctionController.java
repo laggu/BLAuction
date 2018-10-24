@@ -381,12 +381,19 @@ public class AuctionController {
 	// 각종 카테고리 리스트 뿌려주기/////////////////////////////////
 	@RequestMapping("/main.bla")
 	public ModelAndView allCategory(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		mv.setViewName("main");
+		if(session.getAttribute("member_id") == null) {
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
 		ArrayList<ListVO> down_list = new ArrayList<ListVO>();
 		ArrayList<ListVO> time_list = new ArrayList<ListVO>();
 		ArrayList<AuctionVO> auction_list = null;
 
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
+		
+		
 		try {
 			// TIME_LIST 작업
 			auction_list = abiz.getByDuedate();

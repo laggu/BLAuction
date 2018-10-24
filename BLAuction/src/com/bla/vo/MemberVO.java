@@ -1,9 +1,5 @@
 package com.bla.vo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class MemberVO {
 	private int member_id;
 	private String email;

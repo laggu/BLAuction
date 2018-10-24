@@ -53,7 +53,6 @@
 	  </div>
 
       <ul class="nav navbar-nav navbar-right" id="rightNav">
-      	
       	<c:choose>
         	<c:when test="${loginStatus == null}">    		
         		<li><a href="login.bla"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -61,7 +60,22 @@
         	</c:when>
         	<c:otherwise>
         		<li><a href="createAuction.bla"><img src="img/auction.png"></img>경매등록</a></li>
-      			<li><a href="mypage.bla"><img src="img/info.png"></img>마이페이지</a></li>
+      			<li><a href="mypage.bla">
+      			<c:choose>
+      				<c:when test="${member_rate eq '3'}">
+      					<img src="img/info3.png"></img>
+      				</c:when>
+      				<c:when test="${member_rate eq '2'}">
+      					<img src="img/info2.png"></img>
+      				</c:when>
+      				<c:when test="${member_rate eq '1'}">
+      					<img src="img/info1.png"></img>
+      				</c:when>
+      				<c:otherwise>
+      					<img src="img/info.png"></img>
+      				</c:otherwise>
+      			</c:choose>
+      			마이페이지</a></li>
         		<li><a href="logout.bla"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         		<script>
         			var member_id_session = "${member_id}";

@@ -2,6 +2,7 @@ package com.bla.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -23,6 +24,7 @@ import com.bla.vo.BiddingVO;
 import com.bla.vo.ListVO;
 import com.bla.vo.MemberVO;
 import com.bla.vo.PhotoVO;
+import com.bla.vo.SuccessfulBidVO;
 
 @Controller
 public class AdminController {
@@ -493,15 +495,83 @@ public class AdminController {
 	@RequestMapping("/memberRateSet.bla")
 	@ResponseBody
 	public void memberRateSet(HttpServletRequest request) {
+		int score = 0;
 		//전체 member 객체를 들고와서 id를 가져온다.
+		ArrayList<MemberVO> members = null;
+		
 		//그 회원 member_id에서 등록한 경매의 수를 가지고 온다. x10
+		ArrayList<AuctionVO> aucts = null;
+		int auctsCount = 0;
 		//그 회원이 입찰한 bidding의 수를 가지고온다. x2
+		ArrayList<BiddingVO> biddings = null;
+		int bidCount = 0;
 		//그 회원이 입찰한 bidding에서 bid_id를 가지고오고,
 		//낙찰 테이블에서 bid_id를 비교하여 successfulBid 객체를 가지고온다.
 		//그 successfulBid의 review가 null인지 아닌지를 비교하여 개수를 가지고 온다.
+		int reviewCount = 0;
 		//다 검사하고 회원의 score에 업데이트를 한다.
 		
-		ArrayList<MemberVO> members;
-		
+		try {
+			members = mbiz.get();
+			System.out.println(members);
+			for(MemberVO member:members) {
+				int member_id = member.getMember_id();
+				score = 0;
+				auctsCount = 0;
+				bidCount = 0;
+				reviewCount = 0;
+				
+				AuctionVO memberAuct = new AuctionVO();
+				memberAuct.setMember_id(member_id);
+				aucts = abiz.selectAuctionByMember(memberAuct);
+				//3개월..?regdate가 현재 시간에서 3개월정도를 뺀 값보다 작을 때를 개수에서 제거..
+				Date today = new Date();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(today);
+				cal.add(Calendar.MONTH, -3);
+				Date before3Month = cal.getTime();
+				long before3MonthLong = before3Month.getTime();
+				System.out.println("before3MonthLong :"+before3MonthLong);
+				for(AuctionVO auct:aucts) {
+					System.out.println("register_date : "+auct.getRegister_date());
+					if(auct.getRegister_date() > before3MonthLong) {
+						auctsCount++;
+					}
+				}
+				//bidding도 마찬가지로 3개월 기준 개수 구하기, 후기 리스트 불러와서 개수 새기.
+
+				biddings = bbiz.selectBiddingByMemberId(member_id);
+				for(BiddingVO bid: biddings) {
+					SuccessfulBidVO successfulBid = null;
+					System.out.println("bid getTime : "+bid.getTime());
+					if(bid.getTime() > before3MonthLong) {
+						bidCount++;
+						successfulBid = sbiz.get(bid.getBid_id());
+						if(successfulBid !=null) {
+							if(successfulBid.getReview() != null) {
+								reviewCount++;
+							}
+						}
+					}
+				}
+				
+				System.out.println("auctsCount : "+auctsCount + ", bidCount : "+bidCount + ", reviewCount : "+reviewCount);
+				//점수 계산
+				score += auctsCount*10 + bidCount*2 + reviewCount*5;
+				if(auctsCount == 0) {
+					score -= 30;
+				}
+				if(bidCount == 0) {
+					score -= 20;
+				}
+				member.setScore(score);
+				//score update
+				mbiz.updateScore(member);
+				System.out.println("변경된 member ::: "+member);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

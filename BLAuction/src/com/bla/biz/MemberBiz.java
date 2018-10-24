@@ -47,5 +47,7 @@ public class MemberBiz implements Biz<MemberVO,Integer> {
 		return dao.select();
 	}
 
-
+	public void updateScore(MemberVO obj) throws Exception{
+		dao.updateScore(obj);
+	}
 }

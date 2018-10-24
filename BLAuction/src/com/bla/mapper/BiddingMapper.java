@@ -18,4 +18,5 @@ public interface BiddingMapper {
 	public BiddingVO select(Integer bid_id);
 	public BiddingVO selectBididByAuctId(Integer auct_id);
 	public ArrayList<BiddingVO> selectAll();
+	public ArrayList<BiddingVO> selectBiddingByMemberId(Integer member_id);
 }

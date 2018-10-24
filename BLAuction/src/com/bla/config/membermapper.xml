@@ -24,14 +24,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET PW=#{pw}, PHONE=#{phone}, ADDRESS=#{address}, SCORE=#{score}, LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
 	</update>
 	
-	<update id="updatePhone" parameterType="member">
-		UPDATE MEMBER SET PHONE=#{phone}  WHERE MEMBER_ID = #{member_id}
-	</update>
-	
-	<update id="updateAddress" parameterType="member">
-		UPDATE MEMBER SET ADDRESS=#{address}  WHERE MEMBER_ID = #{member_id}
-	</update>
-	
 	<update id="updateScore" parameterType="member">
 		UPDATE MEMBER SET SCORE=#{score}  WHERE MEMBER_ID = #{member_id}
 	</update>

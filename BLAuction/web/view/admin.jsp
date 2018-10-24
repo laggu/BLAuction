@@ -61,9 +61,27 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    
+    <script src="javascript/admin.js?version=1"></script>
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-
+<script>
+function resetScore(){
+	
+	$.ajax({
+		type:'POST',
+		url:'memberRateSet.bla',
+		datatype:'json',
+		success:function(data){
+			alert('점수 계산 성공');
+			window.location.reload();
+		},
+		error:function(data){
+			alert("점수계산 에러")
+		}
+	})
+}
+</script>
 <body>
 
     
@@ -139,7 +157,7 @@
                             <ul class="notika-main-menu-dropdown">
                                 <li><a href="admin_member.bla">All</a>
                                 </li>
-                                <li><a href="#">Score Update</a>
+                                <li><a href ="javascript:void(0);" onclick="resetScore();">Score Update</a>
                                 </li>
                             </ul>
                         </div>
@@ -242,7 +260,7 @@
 	<!-- tawk chat JS
 		============================================ -->
     <script src="js/tawk-chat.js"></script>
-    <script src="javascript/admin.js?version=1"></script>
+    
 </body>
 
 </html>

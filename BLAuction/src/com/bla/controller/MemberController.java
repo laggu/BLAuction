@@ -175,6 +175,20 @@ public class MemberController {
 		
 		mv2.addObject("centerpage", "center");
 		System.out.println("로그인성공");
+		System.out.println(member);
+		int member_score = member.getScore();
+		String member_rate = "0";
+		if(member_score >= 300) {
+			member_rate = "3";
+		}else if(member_score >= 200) {
+			member_rate = "2";
+		}else if(member_score >= 100) {
+			member_rate = "1";
+		}else {
+			member_rate = "0";
+		}
+		
+		session.setAttribute("member_rate",member_rate);
 		session.setAttribute("member_id", member.getMember_id());
 		session.setAttribute("name", member.getName());
 		session.setAttribute("address", member.getAddress());
@@ -264,13 +278,15 @@ public class MemberController {
 
 	@RequestMapping("/mypage.bla")
 	public ModelAndView mypage(HttpServletRequest request, MemberVO member) {
-
-		HttpSession session = request.getSession();
-		int member_id = (Integer) session.getAttribute("member_id");
-		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-
+		HttpSession session = request.getSession();
+		if(session.getAttribute("member_id") == null) {
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
+		int member_id = (Integer) session.getAttribute("member_id");
+		
 		try {
 			member = mbiz.get(member_id);
 			mv.addObject("member", member);
