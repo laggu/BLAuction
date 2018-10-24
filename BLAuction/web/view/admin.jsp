@@ -139,6 +139,8 @@
                             <ul class="notika-main-menu-dropdown">
                                 <li><a href="admin_member.bla">All</a>
                                 </li>
+                                <li><a href="#">Score Update</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
