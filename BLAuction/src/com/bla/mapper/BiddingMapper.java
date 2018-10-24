@@ -19,4 +19,6 @@ public interface BiddingMapper {
 	public BiddingVO selectBididByAuctId(Integer auct_id);
 	public ArrayList<BiddingVO> selectAll();
 	public ArrayList<BiddingVO> selectBiddingByMemberId(Integer member_id);
+	public ArrayList<BiddingVO> selectNull();
+	public Long deleteNull(Long register_date);
 }

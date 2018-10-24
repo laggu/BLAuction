@@ -87,7 +87,7 @@ public class AuctionController {
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl.bla")
 	@ResponseBody
-	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi, HttpServletResponse response) {// 원래면 매개변수로
+	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi) {// 원래면 매개변수로
 																											// 받음
 
 		System.out.println("###################### CREATING AUCTION !!! ######################");
@@ -718,6 +718,7 @@ public class AuctionController {
 				jo = new JSONObject();
 				jo.put("auct_id", auct_id);
 				jo.put("title", auct.getAuct_title());
+				jo.put("auction_type", auct.getType());
 				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
 				jo.put("auction_address", (String)auct.getAuction_address());
@@ -814,6 +815,7 @@ public class AuctionController {
 						i++;
 					}
 					failJo.put("auct_title", auction.getAuct_title());
+					failJo.put("auct_address", auction.getAuction_address());
 					failJo.put("my_bid_price", memberBidMaxPrice);
 					failJa.add(failJo);
 				}

@@ -29,13 +29,13 @@
 													<th>Auction ID</th>
 													<td>${auction.getAuct_id() }</td>
 													<th>Host ID</th>
-													<td>${auction.getMember_id() }</td>
+													<td><a href="admin_member_detail.bla?id=${auction.getMember_id() }">${auction.getMember_id() }</a></td>
 												</tr>
 												<tr>
 													<th>Type ID</th>
-													<td>${auction.getType() }</td>
+													<td><a href="admin_type.bla?id=${auction.getType() }">${auction.getType() }</a></td>
 													<th>Category ID</th>
-													<td>${auction.getCategory_id() }</td>
+													<td><a href="admin_category.bla?id=${auction.getCategory_id() }">${auction.getCategory_id() }</a></td>
 												</tr>
 												<tr>
 													<th>Due Date</th>
@@ -98,7 +98,7 @@
                                 <c:forEach var="item" items="${list }">
 	                                    <tr>
 	                                        <td>${item.getBidding().getBid_id() }</td>
-	                                        <td>${item.getBidding().getMember_id() }</td>
+	                                        <td><a href="admin_member_detail.bla?id=${item.getBidding().getMember_id() }">${item.getBidding().getMember_id() }</a></td>
 	                                        <td>${item.getBidding().getPrice() }</td>
 	                                        <td>${item.getDuedate() }</td>
 	                                        <td>${item.getBidding().getBid_conf_status() }</td>

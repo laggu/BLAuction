@@ -33,6 +33,11 @@ public class PhotoDao implements Dao<PhotoVO,Integer>{
 		// TODO Auto-generated method stub
 		pmapper.delete(v);
 	}
+	
+	public void deleteNull(Long register_date) throws Exception {
+		// TODO Auto-generated method stub
+		pmapper.deleteNull(register_date);
+	}
 
 	@Override
 	public PhotoVO select(Integer v) throws Exception {

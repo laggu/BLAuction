@@ -32,18 +32,38 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	}
 
 	@Override
-	public void delete(Integer v) throws Exception { // 삭제?
-		// TODO Auto-generated method stub
+	public void delete(Integer v) throws Exception {
+		amapper.delete(v);
+	}
+	
+	public void deleteAll(ArrayList<Integer> v) throws Exception {
+		amapper.deleteAll(v);
+	}
+	
+	public void deleteNull(Long register_date) throws Exception{
+		amapper.deleteNull(register_date);
 	}
 
 	@Override
 	public AuctionVO select(Integer v) throws Exception {
 		return amapper.select(v);
 	}
+	
+	public ArrayList<AuctionVO> selectByStatus(String status) throws Exception {
+		return amapper.selectByStatus(status);
+	}
 
 	@Override
 	public ArrayList<AuctionVO> select() throws Exception {
 		return amapper.selectAll();
+	}
+	
+	public ArrayList<AuctionVO> selectRealAll() throws Exception {
+		return amapper.selectRealAll();
+	}
+	
+	public ArrayList<AuctionVO> selectNull() throws Exception {
+		return amapper.selectNull();
 	}
 	
 	public ArrayList<AuctionVO> selectByDuedate() throws Exception {
@@ -62,6 +82,14 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 		return amapper.selectByType(type);
 	}
 	
+	public ArrayList<AuctionVO> selectByCategory_admin(int category_id) throws Exception {
+		return amapper.selectByCategory_admin(category_id);
+	}
+	
+	public ArrayList<AuctionVO> selectByType_admin(int type) throws Exception {
+		return amapper.selectByType_admin(type);
+	}
+	
 	public void updateStatus(AuctionVO obj) throws Exception {
 		amapper.updateStatus(obj);
 	}
@@ -76,6 +104,10 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	
 	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj) throws Exception{
 		return amapper.selectEndAuctionByMemberId(obj);
+	}
+	
+	public ArrayList<AuctionVO> selectFinishedAuctIDByCurrentTime(Long register_date) throws Exception {
+		return amapper.selectFinishedAuctIDByCurrentTime(register_date);
 	}
 	
 	public ArrayList<AuctionVO> searchTitleOrTag(String tag) throws Exception{

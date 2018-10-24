@@ -141,6 +141,7 @@ function setDeliveryCode(){
 	
 	function registerReview(){
 		//후기 등록하기
+		$("#createReviewModal").hide();
 		var review = $('#textReview').val();
 		var auct_id = $('#auct_id').val();
 		
@@ -153,11 +154,10 @@ function setDeliveryCode(){
 			},
 			datatype : 'json',
 			success : function(data) {
-				$("#createReviewModal").modal('hide');
-				alert(data.result);
+				$('#textReview').val("");
 			},
 			error : function(data) {
-				alert("biddingimpl.bla error")
+				alert("registerReview.bla error")
 			}
 		})
 	}
@@ -173,6 +173,7 @@ $(document).ready(function() {
 	//Tab 전환
 	$(".nav-tabs a").click(function() {
 		$(this).tab('show');
+		alert( $(e.target).closest('li').index() + 1 );
 	});
 	$('#load').show();
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
@@ -197,7 +198,9 @@ $(document).ready(function() {
 					mybiddinglist += '<button type="button" class="btn btn-link" id="mybidding_seller_btn"><strong>판매자 정보 확인</strong></button></a>';
 					mybiddinglist += '</div>';
 					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
-					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					if(data[i].auction_type != 3){
+						mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					}
 					mybiddinglist += '<div>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
@@ -232,7 +235,7 @@ $(document).ready(function() {
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ failBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
 				winningbidlist += '</div></div></div>';	
 				
 			}
@@ -255,6 +258,7 @@ $(document).ready(function() {
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(' + successfulBid[i].auct_id + ',\'' + successfulBid[i].auct_address +'\',\''+ successfulBid[i].delivery_code + '\',\'' + successfulBid[i].company_code + '\');">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
 				winningbidlist += '<span id="Delivery_Status'+successfulBid[i].auct_id+'"></span></div>';
+				winningbidlist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ successfulBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
@@ -319,7 +323,7 @@ $(document).ready(function() {
 				} 
 				var fee = 5;
 				if(end[i].delivery_status == '6'){
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + ${member_rate } + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
 				}
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?

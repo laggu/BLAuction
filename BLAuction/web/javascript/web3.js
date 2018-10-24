@@ -471,8 +471,8 @@ function makeAuction(){
 			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
-				$('#load').hide();
 				location.href="main.bla";
+				$('#load').hide();
 			});
 		},
 		error:function(data){
@@ -569,6 +569,7 @@ function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAd
  * 낙찰 후 판매자 출금 함수 
  */
 function web3_withdraw_for_owner(fee, auctionAddress){
+	alert(fee);
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	$('#load').show();
 	auction.withdraw_for_owner(fee, function(err,res){

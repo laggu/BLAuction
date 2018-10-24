@@ -20,6 +20,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM BIDDING ORDER BY BID_ID
 	</select>
 	
+	<select id="selectNull" resultType="bidding">
+		SELECT * FROM BIDDING WHERE BID_CONF_STATUS=0
+	</select>
+	
 	<select id="selectAuctionBiddingList" parameterType="Integer" resultType="bidding">
 		SELECT * FROM BIDDING WHERE AUCT_ID = #{auct_id} ORDER BY PRICE
 	</select>
@@ -41,5 +45,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectBiddingByMemberId" parameterType="Integer" resultType="bidding">
 		SELECT * FROM BIDDING WHERE MEMBER_ID = #{member_id}
 	</select>
+	
+	<delete id="deleteNull" parameterType="Long">
+		DELETE FROM BIDDING WHERE BID_CONF_STATUS=0<![CDATA[AND TIME <= #{register_date}]]>
+	</delete>
 
 </mapper>

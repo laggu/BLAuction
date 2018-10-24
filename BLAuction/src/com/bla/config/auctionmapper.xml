@@ -26,13 +26,33 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="select" parameterType="Integer" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCT_ID=#{id}
 	</select>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE * FROM AUCTION WHERE AUCT_ID =#{id}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="Integer">
+		DELETE * FROM AUCTION WHERE AUCT_ID =#{id}
+	</delete>
+	
+	<delete id="deleteNull" parameterType="Long">
+		DELETE FROM AUCTION WHERE AUCTION_ADDRESS IS NULL<![CDATA[AND REGISTER_DATE <= #{register_date}]]>
+	</delete>
 
 	<select id="selectAll" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding') AND AUCTION_ADDRESS IS NOT NULL ORDER BY DUEDATE 
 	</select>
 	
+	<select id="selectRealAll" resultMap="auctList">
+		SELECT * FROM AUCTION
+	</select>
+	
 	<select id="selectByCategory" parameterType="Integer" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding')
+	</select>
+	
+	<select id="selectByCategory_admin" parameterType="Integer" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id}
 	</select>
 	
 	<select id="selectByRegdate" parameterType="Long" resultType="Integer">
@@ -43,8 +63,20 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{type} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding') ORDER BY DUEDATE
 	</select>
 	
+	<select id="selectByType_admin" parameterType="Integer" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{type}
+	</select>
+	
 	<select id="selectByDuedate" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding' ORDER BY DUEDATE
+	</select>
+	
+	<select id="selectByStatus" parameterType="String" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCTION_STATUS=#{status}
+	</select>
+	
+	<select id="selectNull" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCTION_ADDRESS IS NULL
 	</select>
 
 	<insert id="insert" parameterType="auction">
@@ -75,6 +107,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM AUCTION WHERE MEMBER_ID = ${member_id} AND AUCTION_STATUS='end'
 	</select>
 	
+	<select id="selectFinishedAuctIDByCurrentTime" parameterType="Long" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE DUEDATE <![CDATA[ < ]]> #{current_time} AND (AUCTION_STATUS='before' or AUCTION_STATUS='proceeding')
+	</select>
+
 	<select id="searchTitleOrTag" parameterType="String" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE TAG LIKE '%'||#{tag}||'%' OR AUCT_TITLE LIKE '%'||#{tag}||'%' AND (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding')
 	</select>
