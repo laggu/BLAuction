@@ -807,6 +807,7 @@ public class AuctionController {
 						i++;
 					}
 					failJo.put("auct_title", auction.getAuct_title());
+					failJo.put("auct_address", auction.getAuction_address());
 					failJo.put("my_bid_price", memberBidMaxPrice);
 					failJa.add(failJo);
 				}
