@@ -112,6 +112,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="searchTitleOrTag" parameterType="String" resultMap="auctList">
-		SELECT * FROM AUCTION WHERE TAG LIKE '%'||#{tag}||'%' OR AUCT_TITLE LIKE '%'||#{tag}||'%' AND (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding')
+		SELECT * FROM AUCTION WHERE (TAG LIKE '%'||#{tag}||'%' OR AUCT_TITLE LIKE '%'||#{tag}||'%') AND (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding')
 	</select>
 </mapper>
