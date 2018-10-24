@@ -118,11 +118,6 @@
 
 }
 
-#northArea{
-
- 
-
-}
 
 #centerArea{
 
@@ -1182,7 +1177,7 @@ body
 
 		height:250px;
 
-		width:60%;
+		width:50%;
 
 	}
 
@@ -1246,42 +1241,45 @@ body
 
 	}
 
-	
 
 	#oneLine{
-
 		position:relative;
-
 		width:100%;
 
 	}
 
-	
-
 	#oneLine div{
-
 		display:inline;
-
 		float:left;
-
 		position:relative;
-
 		width:50%;
-
 		border-bottom:1px solid #A6A6A6;
 
 	}
-
 	
+	#timeLine{
+		position:relative;
+		width:100%;
+		display:none;
+	}
+	
+	#downLine{
+		position:relative;
+		width:100%;
+	}
+
+	#downLine div{
+		position:relative;
+		width:50%;
+		border-bottom:1px solid #A6A6A6;
+	}
 
 	
 
 	#bidding_btn{
 
 		position:relative;
-
 		width:300px;
-
 		margin:10% 35%;
 
 	}
@@ -1294,7 +1292,7 @@ body
 
 		width:300px;
 
-		margin:10% 35%;
+		margin:25% 35%;
 
 	}
 
@@ -1411,41 +1409,27 @@ body
 	/* bidding Modal */
 
 	#inputPriceArea h4{
-
 		position:relative;
-
 		display:inline;
-
 		float:left;
-
 	}
 
-	
 
 	#bidding_submit_btn{
-
 		margin:0 40%;
-
 		width:20%;
-
 	}
 
-	
 
 	#suggestedPrice{
-
 		width:80%;
-
 	}
 
 	
-
 	#biddingModal .modal-body div{
-
 		margin:3% 10%;
-
 	}
-
+	
 	
 
 /* register.jsp */
@@ -1491,33 +1475,21 @@ body
 	
 
 	#register_top{
-
 		position:relative;
-
 		width:100%;
-
 		height:270px;
-
 	}
 
 	
 
 	#register_pic1{
-
 		float:left;
-
 		display:inline;
-
 		position:relative;
-
 		width:290px;
-
 		height:250px;
-
 		border:1px solid #A6A6A6;
-
 		margin-left:4%;
-
 		margin-top:2%;	
 
 	}
@@ -1527,87 +1499,55 @@ body
 	#register_pic2{
 
 		float:left;
-
 		display:inline;
-
-		position:relative;
-
+		position:relative;		
 		width:290px;
-
 		height:250px;
-
 		border:1px solid #A6A6A6;
-
 		margin-left:4%;
-
-		margin-top:-0.5%;	
-
+		margin-top:-0.5%;
 	}
 
 	
-
 	#register_top button{
-
 		position:relative;
-
 		margin-top:50%;
-
 		margin-left:30%;
-
 		width:110px;
-
 	}
 
 	
 
 	#register_info1{
-
 		display:inline;
-
 		float:left;
-
 		height:250px;
-
 		width:250px;
-
 		margin-left:2%;
-
 		margin-top:-6%;
-
 	}
 
 	
 
 	#register_info1 div{
-
 		margin-top:20%;
-
-		margin-left:2%;
-
+		margin-left:2%;		
 	}
 
 	
 
 	#register_bottom{
-
 		position:relative;
-
 		width:80%;
-
 		height:460px;
-
 		margin-top:4%;
-
 		margin-left:7%;
-
 	}
 
 	
 
 	#register_bottom .form-group{		
-
 		margin-bottom:4%;
-
 	}
 
 	
@@ -1615,28 +1555,37 @@ body
 	
 
 	#register_title h4{
-
 		position:relative;
-
 		display:inline;
-
 		float:left;
 
 	}
 
+	#start_price{
 	
+		margin-left:-2px;
+		
+	}
 
 	#start_price h4{
 
 		position:relative;
-
 		display:inline;
-
 		float:left;
 
 	}
-
 	
+	#start_price div{
+		position:relative;
+		display:inline;
+		float:left;
+	}
+	
+	#start_price>div>input{
+		position:relative;
+		display:inline;
+		float:left;
+	}
 
 	#due_date h4{
 
@@ -1919,21 +1868,17 @@ body
 	
 
 	#winningbidImg img{	
-
 		width:220px;
-
 		height:200px;
-
 	}
 
 	
 
-	#myauctionImg img{	
-
+	#myauctionImg img{
+		position:relative;
 		width:220px;
-
 		height:200px;
-
+		float:left;
 	}
 
  
@@ -1941,25 +1886,17 @@ body
 	
 
 	#mybiddingInfo{
-
 		position:relative;
-
 		width:70%;
-
 		height:220px;
-
 		float:left;
-
 	}
 
 	
 
 	#mybiddingInfo div:first-child{
-
 		position:relative;
-
 		margin-bottom:4%;
-
 	}
 
 	

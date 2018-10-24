@@ -388,8 +388,6 @@ $(document).ready(function() {
 	<div id="mypage_area">
 		<div class="col-sm-10 text-left">
 
-
-
 			<!-- Page Start -->
 			<!-- Myinfo Panel -->
 			<div class="panel panel-default" id="myinfo_panel">

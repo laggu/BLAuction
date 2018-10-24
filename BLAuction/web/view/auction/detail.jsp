@@ -60,30 +60,38 @@
 	  					
 	  					<div id="oneLine">	
 	  						<!-- <div><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div> -->
-	  						<div><h4><c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001}</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPrice">${auction.start_price * 0.001 }</span></c:if><span> 이더</span></h4></div>
+	  						<div>
+	  						<h4><c:if test="${auction.type le 2}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001}</span></c:if>
+	  						<c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPrice">${auction.start_price * 0.001 }</span></c:if><img src="img/ether.png"></h4>
+	  						</div>
 	  						<c:if test="${memberMaxPrice ne 0}">
-		  					<div><h4><strong>내 입찰가</strong>: <span>${memberMaxPrice * 0.001}</span></h4></div>
+		  					<div><h4><strong>내 입찰가</strong>: <span>${memberMaxPrice * 0.001}</span><img src="img/ether.png"></h4></div>
 		  					</c:if>
 	  					</div>
-	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span style="visibility:hidden">경매등록시간 </span><span style="visibility:hidden" id="registerDate">${auction.register_date }</span>
-	  					<!-- test --><span style="visibility:hidden">${auction.auction_address}</span>
-	  					
 	  					
 	  					<c:if test="${auction.type eq 2}">
-	  					<div id="oneLine">	
-	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><span> 이더</span></h4></div>
+	  					<div id="downLine">	
+	  						<div><h4><strong>내림 가격</strong>: <span id="auctionDownPrice">${auction.down_price * 0.001 }</span><img src="img/ether.png"></h4></div>
 	  						<div><h4><strong>내림 시간 간격</strong>: <span id="auctionDownTerm">${auction.down_term }</span><span> 시간</span></h4></div>
 	  					</div>
 	  					</c:if>
-	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span><span hidden id='timestamp'>${timestamp }</span></h4></div>
+	  					
+	  					<div id="timeLine">
+	  					<!-- 다은이 마음대로 수정! 지우지만 말아줘요 --><span>경매등록시간 </span><span id="registerDate">${auction.register_date }</span>
+	  					<!-- test --><span>${auction.auction_address}</span>
+	  					</div>
+	  					
+	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>경매 마감 시간</strong>: <span id="auctionDuedate">${due_date }</span></h4><span style="display:none;" id='timestamp'>${timestamp }</span></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>마감까지 남은 시간</strong>: <span id="currentTimelimit"></span></h4></div>
 	  					<div style="border-bottom:1px solid #A6A6A6"><h4><strong>연관태그</strong>: <span id="relatedTags">${auction.tag }</span></h4></div>
+	  					
 	  					<div>
 	  						<div class="form-group">
 							  <h4><strong>상세 내용</strong></h4>
 							  <div class="form-control" rows="9" id="comment" disabled>${auction.description }</div>
 							</div>
 	  					</div>
+	  					
 	  				</div>
   				</div>
   				
@@ -113,15 +121,21 @@
 				        
 				        <div class="modal-body">  
 							
+							<div>
+									<c:if test="${auction.type eq 1}">
+									<h4><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span><img src="img/ether.png"></h4></c:if>
+									<c:if test="${auction.type eq 3}">
+									<h4><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span><img src="img/ether.png"></h4></c:if>
+							</div>
+							
 							<div id="inputPriceArea">
-								<div>
-								<c:if test="${auction.type eq 1}"><strong>현재 입찰가</strong>: <span id="currentPrice">${cur_price * 0.001 }</span></c:if><c:if test="${auction.type eq 3}"><strong>입찰 시작가</strong>: <span id="startPriceHidden">${auction.start_price * 0.001 }</span></c:if>
-								</div>
+								
 								<h4>입찰 제시 가격:&nbsp;</h4>
 								<div>
 									<input id="suggestedPrice" type="number" class="form-control" 
 									min="0.001"  step="0.001" name="suggested_price">
 								</div>
+								
 							</div>
 							
 							<div>
@@ -131,6 +145,8 @@
 							<div>
 								<h4>마감까지 남은 시간: <span id="currentTimelimitModal"></span></h4>
 							</div>
+							
+						
 						
 							<button class="btn btn-danger" id="bidding_submit_btn" onclick="makebidding(${auction.auct_id },${auction.type},'${name }',${member_id},'${auction.auction_address}' );">입찰하기</button>
 				        </div>
