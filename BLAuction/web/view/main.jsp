@@ -36,7 +36,8 @@
 <!-- ********************************************************************************************* -->
 <nav class="navbar navbar">
   <div class="container-fluid">
-    <div class="navbar-header">
+  
+    <div class="navbar-header" id="logoArea">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -45,7 +46,8 @@
       <a class="navbar-brand" href="main.bla"><img src="img/logo.PNG"></a>
     </div>
     
-    <div class="collapse navbar-collapse" id="myNavbar">     
+    <div class="collapse navbar-collapse" id="myNavbar">    
+     
 	  <div class="input-group" id="searchingbar_main">
 	  	<form method="post" action="searchimpl.bla">
 	  		<input type="text" class="form-control" placeholder="#" name="searchText">
