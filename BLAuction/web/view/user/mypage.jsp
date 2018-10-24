@@ -141,6 +141,7 @@ function setDeliveryCode(){
 	
 	function registerReview(){
 		//후기 등록하기
+		$("#createReviewModal").hide();
 		var review = $('#textReview').val();
 		var auct_id = $('#auct_id').val();
 		
@@ -153,11 +154,10 @@ function setDeliveryCode(){
 			},
 			datatype : 'json',
 			success : function(data) {
-				$("#createReviewModal").modal('hide');
-				alert(data.result);
+				$('#textReview').val("");
 			},
 			error : function(data) {
-				alert("biddingimpl.bla error")
+				alert("registerReview.bla error")
 			}
 		})
 	}
@@ -173,6 +173,7 @@ $(document).ready(function() {
 	//Tab 전환
 	$(".nav-tabs a").click(function() {
 		$(this).tab('show');
+		alert( $(e.target).closest('li').index() + 1 );
 	});
 	$('#load').show();
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
@@ -197,7 +198,9 @@ $(document).ready(function() {
 					mybiddinglist += '<button type="button" class="btn btn-link" id="mybidding_seller_btn"><strong>판매자 정보 확인</strong></button></a>';
 					mybiddinglist += '</div>';
 					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
-					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					if(data[i].auction_type != 3){
+						mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					}
 					mybiddinglist += '<div>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';

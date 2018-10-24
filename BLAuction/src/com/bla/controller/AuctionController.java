@@ -711,6 +711,7 @@ public class AuctionController {
 				jo = new JSONObject();
 				jo.put("auct_id", auct_id);
 				jo.put("title", auct.getAuct_title());
+				jo.put("auction_type", auct.getType());
 				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
 				jo.put("auction_address", (String)auct.getAuction_address());
