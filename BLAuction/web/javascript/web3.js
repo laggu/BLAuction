@@ -471,8 +471,8 @@ function makeAuction(){
 			
 			manager.makeAuction(data.auction_id, data.seller_id, data.due_date, data.start_price, data.auction_type, data.down_price, data.down_term, 
 					function(err,res){
-				$('#load').hide();
 				location.href="main.bla";
+				$('#load').hide();
 			});
 		},
 		error:function(data){

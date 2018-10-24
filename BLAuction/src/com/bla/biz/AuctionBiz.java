@@ -92,7 +92,9 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj) throws Exception{
 		return adao.selectEndAuctionByMemberId(obj);
 	}
-	
+	public ArrayList<AuctionVO> selectFinishedAuctIDByCurrentTime(Long current_time) throws Exception{
+		return adao.selectFinishedAuctIDByCurrentTime(current_time);
+	}
 	public ArrayList<AuctionVO> searchTitleOrTag(String tag) throws Exception{
 		return adao.searchTitleOrTag(tag);
 	}

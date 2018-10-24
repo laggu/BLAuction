@@ -519,4 +519,19 @@ public class AdminController {
 		}
 	}
 	
+	// member rate 
+	@RequestMapping("/memberRateSet.bla")
+	@ResponseBody
+	public void memberRateSet(HttpServletRequest request) {
+		//전체 member 객체를 들고와서 id를 가져온다.
+		//그 회원 member_id에서 등록한 경매의 수를 가지고 온다. x10
+		//그 회원이 입찰한 bidding의 수를 가지고온다. x2
+		//그 회원이 입찰한 bidding에서 bid_id를 가지고오고,
+		//낙찰 테이블에서 bid_id를 비교하여 successfulBid 객체를 가지고온다.
+		//그 successfulBid의 review가 null인지 아닌지를 비교하여 개수를 가지고 온다.
+		//다 검사하고 회원의 score에 업데이트를 한다.
+		
+		ArrayList<MemberVO> members;
+		
+	}
 }

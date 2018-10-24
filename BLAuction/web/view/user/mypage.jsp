@@ -232,7 +232,7 @@ $(document).ready(function() {
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ failBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
 				winningbidlist += '</div></div></div>';	
 				
 			}
@@ -255,6 +255,7 @@ $(document).ready(function() {
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(' + successfulBid[i].auct_id + ',\'' + successfulBid[i].auct_address +'\',\''+ successfulBid[i].delivery_code + '\',\'' + successfulBid[i].company_code + '\');">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
 				winningbidlist += '<span id="Delivery_Status'+successfulBid[i].auct_id+'"></span></div>';
+				winningbidlist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ successfulBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
