@@ -323,7 +323,7 @@ $(document).ready(function() {
 				} 
 				var fee = 5;
 				if(end[i].delivery_status == '6'){
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + ${member_rate } + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
 				}
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
