@@ -21,4 +21,5 @@ public interface AuctionMapper {
 	public ArrayList<AuctionVO> selectAuctionByMember(AuctionVO obj);//mypage 나의 경매 리스트
 	public int selectMemberIdByAuct(Integer auct_id);
 	public ArrayList<AuctionVO> selectEndAuctionByMemberId(Map<String,Integer> obj);
+	public ArrayList<AuctionVO> searchTitleOrTag(String tag);//타이틀 또는 태그 검색
 }

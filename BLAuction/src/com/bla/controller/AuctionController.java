@@ -4,6 +4,7 @@ package com.bla.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -60,11 +60,17 @@ public class AuctionController {
 
 	// 경매 등록 페이지 넘기기
 	@RequestMapping("/createAuction.bla")
-	public ModelAndView createAuction() {
-
+	public ModelAndView createAuction(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
-		mv.addObject("centerpage", "auction/register");
+		try {			
+			int member_id = (Integer)request.getSession().getAttribute("member_id");
+			
+			mv.setViewName("main");
+			mv.addObject("centerpage", "auction/register");
+		}catch(Exception e){
+			mv.setViewName("redirect:/login.bla");
+		}
+		
 		return mv;
 	}
 
@@ -220,8 +226,16 @@ public class AuctionController {
 	@RequestMapping("/auctiondetail.bla")
 	public ModelAndView auctiondetail(HttpServletRequest request) {
 		//로그인된 멤버 아이디 가져오기
-		int member_id = (Integer)request.getSession().getAttribute("member_id");
-		
+		ModelAndView mv = new ModelAndView();
+		int member_id = 0;
+		try {			
+			member_id = (Integer)request.getSession().getAttribute("member_id");
+			
+			mv.setViewName("main");
+		}catch(Exception e){
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
 		Map<String, Integer> map = new HashMap<>();
 		map.put("member_id", member_id);
 		Integer auct_id = Integer.parseInt(request.getParameter("auctionid"));
@@ -230,8 +244,7 @@ public class AuctionController {
 		ArrayList<PhotoVO> photos = null;
 		String name = (String)request.getSession().getAttribute("name");
 
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
+		
 		try {
 			auction = abiz.get(auct_id);
 			photos = pbiz.getAll(auct_id);
@@ -286,9 +299,12 @@ public class AuctionController {
 			String due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 			//현재 내가 입찰한 최고가 
-			long memberMaxPrice = bbiz.selectMemberMaxPrice(map);
-			System.out.println("내 최고 입찰가"+memberMaxPrice);
-			
+			long memberMaxPrice = 0;
+			try {
+				memberMaxPrice = bbiz.selectMemberMaxPrice(map);
+			}catch(Exception e) {
+				
+			}
 			mv.addObject("memberMaxPrice",memberMaxPrice);
 			mv.addObject("name",name);
 			mv.addObject("auction", auction);
@@ -476,6 +492,13 @@ public class AuctionController {
 
 	@RequestMapping("/category.bla")
 	public ModelAndView category(HttpServletRequest request) {
+		//마감임박, 등록 순서 데로 정렬
+		String listKind = request.getParameter("listKind");
+		if(listKind == null) {
+			
+		}
+		
+		
 		int category_id = Integer.parseInt(request.getParameter("category"));
 		ArrayList<ListVO> list = new ArrayList<ListVO>();
 		ArrayList<AuctionVO> auction_list = null;
@@ -536,6 +559,7 @@ public class AuctionController {
 		return mv;
 	}
 	
+	
 	@RequestMapping("/allCategory.bla")
 	public ModelAndView allcategory(HttpServletRequest request) {
 		ArrayList<ListVO> list = new ArrayList<ListVO>();
@@ -552,7 +576,7 @@ public class AuctionController {
 			//listSize가 4이상일 때 
 //			if(listSize > 4)
 //				listSize = 4;
-
+			System.out.println(listSize);
 			for (int i = 0; i < listSize; i++) {
 				if(auction_list.get(i).getAuction_address() == null) {
 					continue;
@@ -817,6 +841,7 @@ public class AuctionController {
 				System.out.println("successfulAuct_id: "+successfulAuct_id);
 				successfulJo.put("auct_id", successfulAuct_id);
 				successfulJo.put("title", auction.getAuct_title());
+				successfulJo.put("auct_address", auction.getAuction_address());
 				successfulJo.put("price", price);
 
 				int i = 0;
@@ -828,6 +853,7 @@ public class AuctionController {
 					successfulJo.put(nameKey, photoVO.getPhoto_name());
 					i++;
 				}
+				
 				successfulJo.put("seller_id", auct_member_id);
 				successfulJo.put("seller_name", sellerInfo.getName());
 				successfulJo.put("seller_phone", sellerInfo.getPhone());
@@ -901,6 +927,7 @@ public class AuctionController {
 
 			for (AuctionVO auction : auctions) {
 				int auct_id = auction.getAuct_id();
+				System.out.println("내가 올린경매 auction: "+auction);
 				if (auction.getAuction_status().equals("before")) {
 					beforeJo = new JSONObject();
 					// 입찰전 => 취소하기 버튼
@@ -908,8 +935,13 @@ public class AuctionController {
 					// before이라는 key로 JSON 배열에 JSON 객체를 넣는다.(status도)
 					beforeJo.put("auct_id", auction.getAuct_id());
 					beforeJo.put("auction_status", auction.getAuction_status());
+					
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					beforeJo.put("auction_address", auction.getAuction_address());
 					ArrayList<PhotoVO> photos = pbiz.getAll(auct_id);
-
+					
 					int i = 0;
 					for (PhotoVO photoVO : photos) {
 						String pathKey = "photoPath" + i;
@@ -932,7 +964,11 @@ public class AuctionController {
 						long bidMaxPrice = bbiz.selectBidMaxPrice(auction);
 						proceedingJo.put("bidMaxPrice", bidMaxPrice);
 					}
-
+					if(auction.getAuction_address() == null) {
+						auction.setAuction_address("null");
+					}
+					proceedingJo.put("auction_address", auction.getAuction_address());
+					
 					proceedingJo.put("auct_id", auction.getAuct_id());
 
 					// 경매 사진과 타이틀도 가져와야함
@@ -1156,17 +1192,30 @@ public class AuctionController {
 		AuctionVO auction_update = new AuctionVO();
 		auction_update.setAuct_id(auct_id);
 		auction_update.setAuction_status("end");
-		
+		System.out.println(auct_id);
 		try {
 			bid = bbiz.selectBididByAuctId(auction_update.getAuct_id());
+			System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+			System.out.println("==========================================================");
+			System.out.println(bid);
 			bid_id = bid.getBid_id();
+			System.out.println(bid_id);
 			successfulBid = new SuccessfulBidVO(auct_id, bid.getBid_id());
 			System.out.println("낙찰 정보 : "+successfulBid);
 			sbiz.register(successfulBid);
 			System.out.println(auction_update);
 			abiz.updateStatus(auction_update);
 
-		} catch (Exception e) {
+		}catch(SQLIntegrityConstraintViolationException e) {
+			auction_update.setAuction_status("end");
+			try {
+				abiz.updateStatus(auction_update);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
@@ -1188,7 +1237,7 @@ public class AuctionController {
 	public void deliveryimpl(HttpServletRequest request, HttpServletResponse response) {
 		int auct_id =Integer.parseInt(request.getParameter("auct_id"));
 		String delivery_code = request.getParameter("delivery_code");
-		int company_code = Integer.parseInt(request.getParameter("company_code"));
+		String company_code = (String)request.getParameter("company_code");
 		
 		response.setContentType("text/json;charset=utf-8");
 		JSONObject jo = new JSONObject();
@@ -1302,8 +1351,66 @@ public class AuctionController {
 
 	// 검색창에서 검색한 결과를 내보내는 함수
 	@RequestMapping("/searchimpl.bla")
-	public String searchimpl(HttpServletRequest request) {
-		return null;
+	public ModelAndView searchimpl(HttpServletRequest request) {
+		String searchText = request.getParameter("searchText");
+		
+		System.out.println(searchText);
+		
+		ArrayList<ListVO> searchList = new ArrayList<>();
+		
+		ArrayList<AuctionVO> aucts = null;
+		
+		ModelAndView mv = new ModelAndView("main");
+		
+		try {
+			aucts = abiz.searchTitleOrTag(searchText);
+			System.out.println(aucts);
+			
+			for(AuctionVO auct : aucts) {
+				ListVO newList = new ListVO();
+				if(auct.getTag() == null) {
+					auct.setTag("");
+				}
+				newList.setAuction(auct);
+				
+				ArrayList<PhotoVO> photos = pbiz.getAll(auct.getAuct_id());
+				String photo_path_1 = "";
+				String photo_path_2 ="";
+				for (int i = 0 ; i<photos.size();i++) {
+					if(i==0)
+						photo_path_1 = photos.get(i).getPhoto_path()+photos.get(i).getPhoto_name();
+					else
+						photo_path_2 = photos.get(i).getPhoto_path()+photos.get(i).getPhoto_name();
+
+				}
+				
+				newList.setPhoto_path_1(photo_path_1);
+				newList.setPhoto_path_2(photo_path_2);
+				
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auct.getDuedate()));
+				
+				newList.setDuedate(due_date);
+				long max_price = 0;
+				try {
+					max_price = bbiz.selectBidMaxPrice(auct);					
+				}catch(Exception e) {
+					max_price = auct.getStart_price();
+				}
+				newList.setMax_price(max_price);
+				searchList.add(newList);
+			}
+			
+			
+			mv.addObject("result","success");
+			mv.addObject("list",searchList);
+			mv.addObject("centerpage","auction/search");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mv.addObject("result","fail");
+		}
+		
+		return mv;
 	}
 
 	// 마지막에 낙찰 되었을 때 점검하는 함수
@@ -1359,16 +1466,23 @@ public class AuctionController {
 		}
 
 	}
-
-	// 사진 삭제하는 함수(Photo)
-	@RequestMapping("/photoDelete.bla")
-	public void photoDelete(@RequestParam("deletefile") MultipartFile file, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-
-		// 파일 이름 가져오기
-		String imgName = file.getOriginalFilename();
-		System.out.println("파일 이름 " + imgName);
-
+	
+	// 택배 상태 변경하는 함수
+	@RequestMapping("/updateDeliveryStatus.bla")
+	public void updateDeliveryStatus(HttpServletRequest request, HttpServletResponse response) {// db의 정보와 smartcontract log를 비교
+		String status = request.getParameter("level");
+		int auct_id = Integer.parseInt(request.getParameter("auct_id"));
+		
+		SuccessfulBidVO successfulBidVO = new SuccessfulBidVO();
+		successfulBidVO.setAuct_id(auct_id);
+		successfulBidVO.setDelivery_status(status);
+		System.out.println(successfulBidVO);
+		
+		try {
+			sbiz.updateDeliveryStatus(successfulBidVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 }

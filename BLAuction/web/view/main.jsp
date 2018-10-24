@@ -2,12 +2,11 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
-
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -25,19 +24,10 @@
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
-
-<script type="text/javascript">
- 
-$(document).ready(function(){	
-   $('#load').hide(); //첫 시작시 로딩바를 숨겨둠
+<script>
+	$(document).ready(function (){
+		$('#load').hide();
 	})
-	.ajaxStart(function(){
-		$('#load').show(); //ajax실행시 로딩바를 보여줌
-	})
-	.ajaxStop(function(){
-		$('#load').hide(); //ajax종료시 로딩바를 숨겨줌
-});
-
 </script>
 </head>
 
@@ -56,11 +46,11 @@ $(document).ready(function(){
     </div>
     
     <div class="collapse navbar-collapse" id="myNavbar">     
-      <form class="navbar-form navbar-left" action="/search.bla">
 	  <div class="input-group" id="searchingbar_main">
-	  	<input type="text" class="form-control" placeholder="#">
+	  	<form method="post" action="searchimpl.bla">
+	  		<input type="text" class="form-control" placeholder="#" name="searchText">
+	  	</form>
 	  </div>
-	  </form>
 
       <ul class="nav navbar-nav navbar-right" id="rightNav">
       	
@@ -124,39 +114,7 @@ $(document).ready(function(){
   <p>created by Team20's designed by Eileen</p>
 </footer>
 
-<!-- Modal -->
-<!-- ********************************************************************************************* -->
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
-</button>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
+<!-- Loading bar -->
 <div id="load">
 	<img src="img/loading.gif" alt="loading">
 </div>

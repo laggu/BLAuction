@@ -7,9 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
+</head>
 <script>
-//Tab 전환
-$(document).ready(function(){
+$(document).ready(function(){	
+	//Tab 전환
+	$(".nav-tabs a").click(function(){
+	        $(this).tab('show');
+	});
+	$('#load').show();
+	
 	var seller_id = '${seller_info.member_id}';
 	var salesAmount = 0;
 	var completeAmount = 0;
@@ -23,6 +29,7 @@ $(document).ready(function(){
 		},
 		datatype : 'json',
 		success : function(data) {
+			
 			var sellinglists = $('#sellinglists');
 				
 			var sellinglist = '';
@@ -102,6 +109,7 @@ $(document).ready(function(){
 			}
 			
 			sellinglists.append(sellinglist);
+			$('#load').hide();
 			
 			var numofRegauction = $('#numofRegauction');
 			numofRegauction.text(salesAmount);
@@ -137,6 +145,7 @@ $(document).ready(function(){
 			}
 			
 			reviewLists.append(reviewList);
+			
   			
 						
 		},
@@ -145,9 +154,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$(".nav-tabs a").click(function(){
-        $(this).tab('show');
-    });
+	
 	
 });
 </script>
@@ -297,8 +304,7 @@ $(document).ready(function(){
 	      
 	    </div>
 	  </div>
-	    
-	  
+
     
 </body>
 </html>

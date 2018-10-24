@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,26 +55,30 @@ $(document).ready(function(){
 			<!-- Cards -->
 
 			<div class="card group" id="category_group">
-
-				<c:forEach var="item" items="${list }">
-
-				<!-- Row -->
-				<div class="card-columns">
-
-					<div class="card" style="width: 18rem;">
-						<h5 class="card-title" id="time_limit">마감시간 : ${item.getDuedate() }</h5>
+				<c:if test="${fn:length(list) != 0}">
+					<c:forEach var="item" items="${list }">
+	
+					<!-- Row -->
+					<div class="card-columns">
+						<script>
+							console.log('${item}');
+						</script>
+						<div class="card" style="width: 18rem;">
+							<h5 class="card-title" id="time_limit">마감시간 : ${item.getDuedate() }</h5>
 						<a href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }"><img
 							class="card-img-top" src="${item.getPhoto_path_1() }" alt="Card image cap"></a>
 						<div class="card-body">
-							<a href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }" class="card-text"
-								id="auction_name">제목 : ${item.getAuction().getAuct_title() }</a>
-							<p class="card-text" id="auction_price"> 현재 입찰가 : ${item.getMax_price()*0.001 } Ether</p>
+							<div><a href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }" class="card-text"
+								id="auction_name">제목 : ${item.getAuction().getAuct_title() }</a></div>
+								<div><p class="card-text" id="auction_tag"> 태그 : ${item.getAuction().getTag() }</p></div>
+								<p class="card-text" id="auction_price"> 현재 입찰가 : ${item.getMax_price()*0.001 } Ether</p>
+							</div>
 						</div>
+						
 					</div>
 					
-				</div>
-				
-				</c:forEach>
+					</c:forEach>
+				</c:if>
 				
 			</div>
 		</div>
