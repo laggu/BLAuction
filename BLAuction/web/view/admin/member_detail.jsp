@@ -8,7 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_admin</title>
 <script>
-	
+	$(document).ready(function(){
+		$('#data-table-basic2').DataTable();
+	})
 </script>
 </head>
 <body>
@@ -67,7 +69,7 @@
                             <h2>Created Auction List</h2>
                         </div>
                         <div class="table-responsive">
-                            <table id="data-table-basic" class="table table-striped">
+                            <table id="data-table-basic2" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Auction ID</th>
