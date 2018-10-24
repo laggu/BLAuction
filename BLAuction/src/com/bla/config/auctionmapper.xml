@@ -75,10 +75,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM AUCTION WHERE MEMBER_ID = ${member_id} AND AUCTION_STATUS='end'
 	</select>
 	
-	<select id="selectFinishedAuctIDByCurrentTime" parameterType="Long" resultType="auctList">
+	<select id="selectFinishedAuctIDByCurrentTime" parameterType="Long" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE DUEDATE <![CDATA[ < ]]> #{current_time} AND (AUCTION_STATUS='before' or AUCTION_STATUS='proceeding')
 	</select>
-	
+
 	<select id="searchTitleOrTag" parameterType="String" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE TAG LIKE '%'||#{tag}||'%' OR AUCT_TITLE LIKE '%'||#{tag}||'%'
 	</select>

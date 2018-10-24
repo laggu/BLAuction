@@ -7,18 +7,20 @@ import javax.annotation.Resource;
 
 import com.bla.biz.AuctionBiz;
 import com.bla.biz.BiddingBiz;
+import com.bla.biz.PhotoBiz;
 import com.bla.biz.SuccessfulBidBiz;
+
 
 public class SuccessfulBiddingCheckThread extends Thread{
 	@Resource(name = "abiz")
 	AuctionBiz abiz;
-	
+
 	@Resource(name = "bbiz")
 	BiddingBiz bbiz;
 	
 	@Resource(name = "sbiz")
 	SuccessfulBidBiz sbiz;
-	
+
 	public void init() {
 		this.start();
 	}
@@ -30,7 +32,21 @@ public class SuccessfulBiddingCheckThread extends Thread{
 			Long current_time = System.currentTimeMillis();
 			ArrayList<AuctionVO> auctID_list = null;
 			try {
+				if(abiz == null) {
+					System.out.println("null");
+					continue;
+				}
 				auctID_list = abiz.selectFinishedAuctIDByCurrentTime(current_time);
+				
+				if(auctID_list == null) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					continue;
+				}
 				
 				Iterator it = auctID_list.iterator();
 				

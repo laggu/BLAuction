@@ -27,7 +27,6 @@
  		</property>
  	</bean>
  
-   <bean id="successfulBiddingCheckThread" class="com.bla.vo.SuccessfulBiddingCheckThread" init-method="init"/>
    
  
 </beans>
