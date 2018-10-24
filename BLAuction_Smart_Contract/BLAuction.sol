@@ -26,7 +26,7 @@ contract Auction{
     event auctionEndEvent();
     
     modifier auction_progress(uint _time){
-        require(due_date > _time * 1000);
+        require(due_date > _time);
         _;
     }
     
