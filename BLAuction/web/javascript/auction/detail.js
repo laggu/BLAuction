@@ -200,7 +200,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 	var price = $("#suggestedPrice").val();
 	var cur_price = Number($("#currentPrice").text()) * 1000;
 
-	$("#biddingModal").modal('hide');
+	$("#biddingModal").hide();
 	$('#load').show();
 	price *= 1000;
 	
