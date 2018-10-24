@@ -65,9 +65,8 @@
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     <!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- admin JS============================================ -->
-     <script src="javascript/admin.js?version=1"></script>
+    <script src="javascript/admin.js?version=1"></script>
 </head>
 <script>
 function resetScore(){
