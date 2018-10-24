@@ -87,7 +87,7 @@ public class AuctionController {
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl.bla")
 	@ResponseBody
-	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi, HttpServletResponse response) {// 원래면 매개변수로
+	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi) {// 원래면 매개변수로
 																											// 받음
 
 		System.out.println("###################### CREATING AUCTION !!! ######################");
@@ -381,12 +381,19 @@ public class AuctionController {
 	// 각종 카테고리 리스트 뿌려주기/////////////////////////////////
 	@RequestMapping("/main.bla")
 	public ModelAndView allCategory(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		mv.setViewName("main");
+		if(session.getAttribute("member_id") == null) {
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
 		ArrayList<ListVO> down_list = new ArrayList<ListVO>();
 		ArrayList<ListVO> time_list = new ArrayList<ListVO>();
 		ArrayList<AuctionVO> auction_list = null;
 
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main");
+		
+		
 		try {
 			// TIME_LIST 작업
 			auction_list = abiz.getByDuedate();
@@ -711,6 +718,7 @@ public class AuctionController {
 				jo = new JSONObject();
 				jo.put("auct_id", auct_id);
 				jo.put("title", auct.getAuct_title());
+				jo.put("auction_type", auct.getType());
 				jo.put("seller_id", auct.getMember_id());
 				jo.put("auction_status", auct.getAuction_status());
 				jo.put("auction_address", (String)auct.getAuction_address());

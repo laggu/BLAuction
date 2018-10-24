@@ -50,5 +50,9 @@ public class MemberDao implements Dao<MemberVO,Integer> {
 	public ArrayList<MemberVO> select() throws Exception {
 		return mapper.selectAll();
 	}
+	
+	public void updateScore(MemberVO obj) throws Exception{
+		mapper.updateScore(obj);
+	}
 
 }

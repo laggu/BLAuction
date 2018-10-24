@@ -35,15 +35,35 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public void remove(Integer v) throws Exception {
 		adao.delete(v);
 	}
+	
+	public void removeAll(ArrayList<Integer> v) throws Exception {
+		adao.deleteAll(v);
+	}
+	
+	public void removeNull(Long register_date) throws Exception{
+		adao.deleteNull(register_date);
+	}
 
 	@Override
 	public AuctionVO get(Integer v) throws Exception {
 		return adao.select(v);
 	}
+	
+	public ArrayList<AuctionVO> getByStatus(String status) throws Exception {
+		return adao.selectByStatus(status);
+	}
 
 	@Override
 	public ArrayList<AuctionVO> get() throws Exception {
 		return adao.select();
+	}
+	
+	public ArrayList<AuctionVO> getRealAll() throws Exception {
+		return adao.selectRealAll();
+	}
+	
+	public ArrayList<AuctionVO> getNull() throws Exception {
+		return adao.selectNull();
 	}
 	
 	public ArrayList<AuctionVO> getByDuedate() throws Exception {
@@ -60,6 +80,14 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	
 	public ArrayList<AuctionVO> getByType(int type) throws Exception {
 		return adao.selectByType(type);
+	}
+	
+	public ArrayList<AuctionVO> getByCategory_admin(int category_id) throws Exception {
+		return adao.selectByCategory_admin(category_id);
+	}
+	
+	public ArrayList<AuctionVO> getByType_admin(int type) throws Exception {
+		return adao.selectByType_admin(type);
 	}
 	
 	public void updateStatus(AuctionVO obj) throws Exception{

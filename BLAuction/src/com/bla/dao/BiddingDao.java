@@ -33,7 +33,10 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	@Override
 	public void delete(Integer v) throws Exception {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public void deleteNull(Long register_date) throws Exception {
+		bmapper.deleteNull(register_date);
 	}
 
 	@Override
@@ -45,6 +48,10 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	@Override
 	public ArrayList<BiddingVO> select() throws Exception {
 		return bmapper.selectAll();
+	}
+	
+	public ArrayList<BiddingVO> selectNull() throws Exception {
+		return bmapper.selectNull();
 	}
 
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
@@ -65,5 +72,9 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 	
 	public BiddingVO selectBididByAuctId(Integer auct_id) throws Exception{
 		return bmapper.selectBididByAuctId(auct_id);
+	}
+	
+	public ArrayList<BiddingVO> selectBiddingByMemberId(Integer member_id) throws Exception{
+		return bmapper.selectBiddingByMemberId(member_id);
 	}
 }
