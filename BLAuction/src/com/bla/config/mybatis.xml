@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		<typeAlias type="com.bla.vo.BiddingVO" alias="bidding"/>
 		<typeAlias type="com.bla.vo.PhotoVO" alias="photo"/>
 		<typeAlias type="com.bla.vo.SuccessfulBidVO" alias="successfulbid"/>
+		<typeAlias type="com.bla.vo.AdminVO" alias="admin"/>
 	</typeAliases>
 	
 	<mappers>

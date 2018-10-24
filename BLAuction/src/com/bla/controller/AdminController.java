@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,7 @@ import com.bla.biz.BiddingBiz;
 import com.bla.biz.MemberBiz;
 import com.bla.biz.PhotoBiz;
 import com.bla.biz.SuccessfulBidBiz;
+import com.bla.vo.AdminVO;
 import com.bla.vo.AuctionVO;
 import com.bla.vo.BiddingVO;
 import com.bla.vo.ListVO;
@@ -44,14 +45,94 @@ public class AdminController {
 	@Resource(name = "mbiz")
 	MemberBiz mbiz;
 	
-	// 전체리스트
+	public boolean admin_login_check(HttpServletRequest request) {
+		boolean loginStatus = false;
+		
+		try {
+			String admin_code = (String) request.getSession().getAttribute("admin_code");
+			System.out.println(admin_code);
+			if(admin_code == null) {
+				loginStatus = false;
+			}else {
+				loginStatus = true;
+			}
+		} catch(Exception e) {
+			loginStatus = false;
+		}
+		
+		return loginStatus;
+	}
+	
 	@RequestMapping("/admin.bla")
-	@ResponseBody
-	public ModelAndView allList(HttpServletRequest request) {
-		ArrayList<ListVO> list = new ArrayList<ListVO>();
-		ArrayList<AuctionVO> auction_list = null;
+	public ModelAndView admin(HttpServletRequest request) {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin");
+		mv.addObject("admin_status",1);
+		mv.addObject("centerpage", "admin/login");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/admin_loginimpl.bla")
+	public ModelAndView admin_loginimpl(HttpServletRequest request) {
+		String admin_code = request.getParameter("admin_code");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin");
+		if(admin_code == null || admin_code.equals("")) {
+			mv.addObject("admin_status",0);
+			mv.addObject("centerpage", "admin/login");
+			return mv;
+		}
+		HttpSession session = request.getSession();
+		String admin = null;
+		try {
+			AdminVO adminVO = new AdminVO(admin_code);
+			System.out.println(adminVO);
+			admin = mbiz.getAdmin(adminVO);
+			
+			if(admin != null) {
+				mv.setViewName("redirect:/admin_all.bla");
+				session.setAttribute("admin_code", admin_code);
+			}else {
+				mv.addObject("admin_status",0);
+				mv.addObject("centerpage", "admin/login");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "admin/login");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/admin_logout.bla")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		if (session != null) {
+			session.invalidate();
+		}
 
 		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin");
+		return "redirect:/admin.bla";
+	}
+	
+	// 전체리스트
+	@RequestMapping("/admin_all.bla")
+	@ResponseBody
+	public ModelAndView allList(HttpServletRequest request) {
+		
+		ArrayList<ListVO> list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> auction_list = null;
+		ModelAndView mv = new ModelAndView();
+		
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
+		
 		mv.setViewName("admin");
 		try {
 			auction_list = abiz.getRealAll();
@@ -99,6 +180,10 @@ public class AdminController {
 		ArrayList<AuctionVO> auction_list = null;
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			auction_list = abiz.getByStatus(status);
@@ -145,6 +230,10 @@ public class AdminController {
 		ArrayList<AuctionVO> auction_list = null;
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			auction_list = abiz.getByCategory_admin(category);
@@ -191,6 +280,10 @@ public class AdminController {
 		ArrayList<AuctionVO> auction_list = null;
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			auction_list = abiz.getByType_admin(type);
@@ -236,6 +329,10 @@ public class AdminController {
 		ArrayList<AuctionVO> auction_list = null;
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			auction_list = abiz.getNull();
@@ -282,6 +379,10 @@ public class AdminController {
 		ArrayList<ListVO> list = new ArrayList<ListVO>();
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			bidding_list = bbiz.getNull();
@@ -321,6 +422,10 @@ public class AdminController {
 			ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 
 			ModelAndView mv = new ModelAndView();
+			if(!admin_login_check(request)) {
+				mv.setViewName("redirect:/admin.bla");
+				return mv;
+			}
 			mv.setViewName("admin");
 			try {
 				list = mbiz.get();
@@ -352,6 +457,10 @@ public class AdminController {
 		AuctionVO auction = null;
 
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			auction = abiz.get(auction_id);
@@ -425,6 +534,10 @@ public class AdminController {
 		ArrayList<Integer> biddings = new ArrayList<Integer>();
 	
 		ModelAndView mv = new ModelAndView();
+		if(!admin_login_check(request)) {
+			mv.setViewName("redirect:/admin.bla");
+			return mv;
+		}
 		mv.setViewName("admin");
 		try {
 			
