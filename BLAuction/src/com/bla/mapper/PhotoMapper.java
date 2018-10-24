@@ -12,4 +12,5 @@ public interface PhotoMapper {
 	public void insert(PhotoVO obj);
 	public void update(PhotoVO obj);
 	public void delete(Integer photo_id);
+	public void deleteNull(Long register_date);
 }

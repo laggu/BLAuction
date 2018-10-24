@@ -32,8 +32,16 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	}
 
 	@Override
-	public void delete(Integer v) throws Exception { // 삭제?
-		// TODO Auto-generated method stub
+	public void delete(Integer v) throws Exception {
+		amapper.delete(v);
+	}
+	
+	public void deleteAll(ArrayList<Integer> v) throws Exception {
+		amapper.deleteAll(v);
+	}
+	
+	public void deleteNull(Long register_date) throws Exception{
+		amapper.deleteNull(register_date);
 	}
 
 	@Override
@@ -44,6 +52,14 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	@Override
 	public ArrayList<AuctionVO> select() throws Exception {
 		return amapper.selectAll();
+	}
+	
+	public ArrayList<AuctionVO> selectRealAll() throws Exception {
+		return amapper.selectRealAll();
+	}
+	
+	public ArrayList<AuctionVO> selectNull() throws Exception {
+		return amapper.selectNull();
 	}
 	
 	public ArrayList<AuctionVO> selectByDuedate() throws Exception {

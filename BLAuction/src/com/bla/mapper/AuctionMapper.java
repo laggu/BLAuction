@@ -10,10 +10,15 @@ import com.bla.vo.AuctionVO;
 @Repository("amapper")
 public interface AuctionMapper {
 	public AuctionVO select(Integer id);
+	public void delete(Integer id);
+	public void deleteAll(ArrayList<Integer> id);
+	public void deleteNull(Long register_date);
 	public int selectByRegdate(Long register_date);
 	public ArrayList<AuctionVO> selectByCategory(int category_id);
 	public ArrayList<AuctionVO> selectByType(int type);
 	public ArrayList<AuctionVO> selectAll();
+	public ArrayList<AuctionVO> selectRealAll();
+	public ArrayList<AuctionVO> selectNull();
 	public ArrayList<AuctionVO> selectByDuedate();
 	public void insert(AuctionVO obj);
 	public void insertDown(AuctionVO obj);

@@ -33,6 +33,10 @@ public class PhotoBiz implements Biz<PhotoVO,Integer>{
 		// TODO Auto-generated method stub
 		pdao.delete(v);
 	}
+	
+	public void removeNull(Long register_date) throws Exception {
+		pdao.deleteNull(register_date);
+	}
 
 	@Override
 	public PhotoVO get(Integer v) throws Exception {

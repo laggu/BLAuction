@@ -10,6 +10,9 @@
     <title>Admin</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jquery
+		============================================ -->
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <!-- favicon
 		============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
@@ -61,7 +64,9 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    
+    <!-- admin JS
+		============================================ -->
+    <script src="javascript/admin.js?version=1"></script>
 </head>
 
 <body>
@@ -73,15 +78,15 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-                        <li><a data-toggle="tab" href="#Home"><i class="notika-icon notika-house"></i> Auction</a>
+                        <li><a data-toggle="tab" href="#Home">Auction</a>
                         </li>
-                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i> Category</a>
+                        <li><a data-toggle="tab" href="#mailbox">Category</a>
                         </li>
-                        <li><a data-toggle="tab" href="#new"><i class="notika-icon notika-mail"></i> Type</a>
+                        <li><a data-toggle="tab" href="#new">Type</a>
                         </li>
-                        <li><a data-toggle="tab" href="#Interface"><i class="notika-icon notika-edit"></i> Unconfirmed</a>
+                        <li><a data-toggle="tab" href="#Interface">Unconfirmed</a>
                         </li>
-                        <li><a data-toggle="tab" href="#Charts"><i class="notika-icon notika-bar-chart"></i> Member</a>
+                        <li><a data-toggle="tab" href="#Charts">Member</a>
                         </li>
                     </ul>
                     <div class="tab-content custom-menu-content">
@@ -169,16 +174,13 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="footer-copy-right">
                         <p>Copyright © 2018 
-. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+. All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Footer area-->
-    <!-- jquery
-		============================================ -->
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <!-- bootstrap JS
 		============================================ -->
     <script src="js/bootstrap.min.js"></script>
@@ -242,7 +244,6 @@
 	<!-- tawk chat JS
 		============================================ -->
     <script src="js/tawk-chat.js"></script>
-    <script src="javascript/admin.js?version=1"></script>
 </body>
 
 </html>
