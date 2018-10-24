@@ -176,7 +176,7 @@ public class AuctionController {
 				break;
 			}
 			String typeName = fileName.substring(fileName.indexOf("."));
-			newFileName = auct_id + "_" + i + typeName;
+			newFileName = auct_id + "_" + i + typeName.toLowerCase();
 			try {
 				FileSave.save(path, mFile, newFileName);
 			} catch (Exception e) {

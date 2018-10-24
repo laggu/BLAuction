@@ -44,8 +44,7 @@ public class BiddingDao implements Dao<BiddingVO,Integer>{
 
 	@Override
 	public ArrayList<BiddingVO> select() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return bmapper.selectAll();
 	}
 
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{

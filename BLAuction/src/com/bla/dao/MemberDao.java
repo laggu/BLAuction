@@ -48,8 +48,7 @@ public class MemberDao implements Dao<MemberVO,Integer> {
 	
 	@Override
 	public ArrayList<MemberVO> select() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.selectAll();
 	}
 
 }

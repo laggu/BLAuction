@@ -44,8 +44,7 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 
 	@Override
 	public ArrayList<BiddingVO> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return bdao.select();
 	}
 
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
