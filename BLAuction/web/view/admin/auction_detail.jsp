@@ -12,13 +12,20 @@
 </head>
 <body>
 	<!-- Breadcomb area Start-->
-	<div class="breadcomb-area">
+	<div class="data-table-area">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="data-table-list">
 										<h2>${auction.getAuct_title() }</h2>
+										<hr>
 										<table class="table table-striped">
 											<tbody>
+												<tr>
+													<th>Host Account</th>
+													<td>${auction.getSeller_account() }</td>
+													
+												</tr>
 												<tr>
 													<th>Auction ID</th>
 													<td>${auction.getAuct_id() }</td>
@@ -26,22 +33,16 @@
 													<td>${auction.getMember_id() }</td>
 												</tr>
 												<tr>
-													<th>Host Account</th>
-													<td>${auction.getSeller_account() }</td>
+													<th>Type ID</th>
+													<td>${auction.getType() }</td>
 													<th>Category ID</th>
 													<td>${auction.getCategory_id() }</td>
 												</tr>
 												<tr>
-													<th>Type ID</th>
-													<td>${auction.getType() }</td>
-													<th>Register Date</th>
-													<td>${register_date }</td>
-												</tr>
-												<tr>
 													<th>Due Date</th>
 													<td>${due_date }</td>
-													<th>Start Price</th>
-													<td>${auction.getStart_price() }</td>
+													<th>Register Date</th>
+													<td>${register_date }</td>
 												</tr>
 												<c:if test="${auction.getCategory_id() == 2 }">
 												<tr>
@@ -54,15 +55,18 @@
 												<tr>
 													<th>Current Price</th>
 													<td>${cur_price }</td>
+													<th>Start Price</th>
+													<td>${auction.getStart_price() }</td>
 												</tr>
 											</tbody>
 										</table>
 										<div>${auction.getDescription() }</div>
 										<p>Tag : ${auction.getTag() }</p>
-									</div>
 										<br>
-										<div id="detail_pic"><img src="resources/thumbnail/0_0.jpg"></div>
+										<div id="detail_pic"><img src="${photo1 }"></div>
 										<div id="detail_pic"><img src="${photo2 }"></div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
