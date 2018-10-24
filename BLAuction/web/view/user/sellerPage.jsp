@@ -54,7 +54,7 @@ $(document).ready(function(){
 				
 				sellinglist += '<div id="sellingInfo">';
 				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="sellingbidStatus" disabled>입찰전</button></div>';
-				sellinglist += '<div>입찰 시작가: <span id="sellingbidPrice">'+before[i].start_price+' Ether</span></div>';
+				sellinglist += '<div>입찰 시작가: <span id="sellingbidPrice">'+before[i].start_price*0.001+' Ether</span></div>';
 				sellinglist += '</div></div></div>';
 			}
 			
@@ -79,7 +79,7 @@ $(document).ready(function(){
 				sellinglist += '<div id="sellingInfo">';		
 				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
 				sellinglist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
-				sellinglist += '<div>현재 최고가: <span id="sellingbidPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				sellinglist += '<div>현재 최고가: <span id="sellingbidPrice">'+proceeding[i].bidMaxPrice*0.001+' Ether</span></div>';	
 				sellinglist += '<div>경매 마감 시간: <span id="sellingbidDuedate">'+proceeding[i].dueDate+'</span></div>';
 				sellinglist += '</div></div></div>';
 				
