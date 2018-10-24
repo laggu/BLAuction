@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.get();
+			auction_list = abiz.getRealAll();
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
@@ -146,24 +147,22 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.get();
+			auction_list = abiz.getByCategory(category);
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				if(auctionVO.getCategory_id() == category) {
-					ListVO newlist = new ListVO();
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) auctionVO.getDuedate()));
-					newlist.setAuction(auctionVO);
-					newlist.setDuedate(due_date);
-					newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
-					if (newlist.getMax_price() == null) {
-						newlist.setMax_price(auctionVO.getStart_price());
-					}
-					list.add(newlist);
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				newlist.setAuction(auctionVO);
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auctionVO.getStart_price());
 				}
+				list.add(newlist);
 			}
 
 			mv.addObject("list", list);
@@ -194,24 +193,22 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.get();
+			auction_list = abiz.getByType(type);
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				if(auctionVO.getType() == type) {
-					ListVO newlist = new ListVO();
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) auctionVO.getDuedate()));
-					newlist.setAuction(auctionVO);
-					newlist.setDuedate(due_date);
-					newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
-					if (newlist.getMax_price() == null) {
-						newlist.setMax_price(auctionVO.getStart_price());
-					}
-					list.add(newlist);
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				newlist.setAuction(auctionVO);
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auctionVO.getStart_price());
 				}
+				list.add(newlist);
 			}
 
 			mv.addObject("list", list);
@@ -241,27 +238,26 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.get();
+			auction_list = abiz.getNull();
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				if(auctionVO.getAuction_address() == null) {
-					ListVO newlist = new ListVO();
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) auctionVO.getDuedate()));
-					newlist.setAuction(auctionVO);
-					newlist.setDuedate(due_date);
-					newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
-					if (newlist.getMax_price() == null) {
-						newlist.setMax_price(auctionVO.getStart_price());
-					}
-					list.add(newlist);
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				newlist.setAuction(auctionVO);
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auctionVO.getStart_price());
 				}
+				list.add(newlist);
 			}
 
 			mv.addObject("list", list);
+			mv.addObject("unconfirmed", "unconfirmed");
 			mv.addObject("centerpage", "admin/center");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,17 +284,17 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			bidding_list = bbiz.get();
+			bidding_list = bbiz.getNull();
+			System.out.println(bidding_list);
 			Iterator<BiddingVO> itr = bidding_list.iterator();
 			while (itr.hasNext()) {
 				BiddingVO biddingVO = (BiddingVO) itr.next();
-				if(biddingVO.getBid_conf_status() == 0) {
-					ListVO listVO = new ListVO();
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) biddingVO.getTime()));
-					listVO.setDuedate(due_date);
-					listVO.setBidding(biddingVO);
-				}
+				ListVO listVO = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) biddingVO.getTime()));
+				listVO.setDuedate(due_date);
+				listVO.setBidding(biddingVO);
+				list.add(listVO);
 			}
 
 			mv.addObject("list", list);
@@ -364,7 +360,7 @@ public class AdminController {
 			String auction_due_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getDuedate()));
 			
-			// Getting Due Date
+			// Getting Register Date
 			String auction_register_date = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
 					.format(new Date((Long) auction.getRegister_date()));
 			
@@ -386,6 +382,7 @@ public class AdminController {
 						.format(new Date((Long) biddingVO.getTime()));
 				listVO.setDuedate(due_date);
 				listVO.setBidding(biddingVO);
+				list.add(listVO);
 			}
 			
 			photos = pbiz.getAll(auction_id);
@@ -416,7 +413,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	// Members
+	// Member Detail
 	@RequestMapping("/admin_member_detail.bla")
 	@ResponseBody
 	public ModelAndView member_detail(HttpServletRequest request) {
@@ -487,6 +484,39 @@ public class AdminController {
 		System.out.println("###################### GET MEMBER_DETAIL ######################");
 	
 		return mv;
+	}
+	
+	// Delete_null_auction
+	@RequestMapping("/admin_delete_null_auction.bla")
+	@ResponseBody
+	public void delete_null_auction(HttpServletRequest request) {
+		Long aday= 86400000L;
+		Long aday_before = System.currentTimeMillis() - aday;
+		System.out.println("###################### Delete Null Auction ######################");
+		System.out.println("A Day Before : " + aday_before);
+	
+		try {
+			pbiz.removeNull(aday_before);
+			abiz.removeNull(aday_before);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Delete_null_bidding
+	@RequestMapping("/admin_delete_null_bidding.bla")
+	@ResponseBody
+	public void delete_null_bidding(HttpServletRequest request) {
+		Long aday= 86400000L;
+		Long aday_before = System.currentTimeMillis() - aday;
+		System.out.println("###################### Delete Null Auction ######################");
+		System.out.println("A Day Before : " + aday_before);
+	
+		try {
+			bbiz.removeNull(aday_before);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

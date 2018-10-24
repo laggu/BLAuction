@@ -22,5 +22,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="Integer">
 		DELETE * FROM PHOTO WHERE PHOTO_ID =#{photo_id}
 	</delete>
+	
+	<delete id="deleteNull" parameterType="Long">
+		DELETE FROM PHOTO WHERE AUCT_ID IN (SELECT AUCT_ID FROM AUCTION WHERE AUCTION_ADDRESS IS NULL<![CDATA[AND REGISTER_DATE <= #{register_date}]]>)
+	</delete>
 
 </mapper>

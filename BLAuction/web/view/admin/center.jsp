@@ -8,6 +8,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_admin</title>
 <script>
+$(document).ready(function(){
+	$("#delete_null_auction").click(function(){
+		deleteNullAuction();
+	})		
+})
+
+function deleteNullAuction(){
+	console.log("deleteNull()")
+	$.ajax({
+		type:'POST',
+		url:'/BLAuction/admin_delete_null_auction.bla',
+		processData: false,
+        contentType: false,
+		success:function(data){
+			alert("Successfully Deleted");
+			location.reload();
+		},
+		error:function(data){
+			alert("Failed");
+		}
+	})
+}
 </script>
 </head>
 <body>
@@ -19,8 +41,12 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h2>Basic Example</h2>
-                            <p>It's just that simple. Turn your simple table into a sophisticated data table and offer your users a nice experience and great features without any effort.</p>
+                            <h2>Auction List</h2>
+                            <c:if test="${unconfirmed != null}">
+                            	<hr>
+                            	<button id="delete_null_auction" class="btn">DELETE</button>
+                            	<p><span style="color:red;">Delete</span> the auctions unconfirmed in 24 hrs</p>
+                            </c:if>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
@@ -46,7 +72,7 @@
 	                                        <td><a href="admin_auction_detail.bla?id=${item.getAuction().getAuct_id() }">${item.getAuction().getAuct_id() }</a></td>
 	                                        <td><a href="admin_member_detail.bla?id=${item.getAuction().getMember_id() }">${item.getAuction().getMember_id() }</a></td>
 	                                        <td>${item.getDuedate() }</td>
-	                                        <td>${item.getAuction().getType() }</td>
+	                                        <td><a href="admin_type.bla?id=${item.getAuction().getType() }">${item.getAuction().getType() }</a></td>
 	                                        <td><a href="admin_category.bla?id=${item.getAuction().getCategory_id() }">${item.getAuction().getCategory_id() }</a></td>
 	                                        <td>${item.getAuction().getStart_price() }</td>
 	                                        <td>${item.getMax_price() }</td>

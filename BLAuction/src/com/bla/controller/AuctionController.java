@@ -87,7 +87,7 @@ public class AuctionController {
 	// 경매 등록 실시
 	@RequestMapping("/createAuctionimpl.bla")
 	@ResponseBody
-	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi, HttpServletResponse response) {// 원래면 매개변수로
+	public JSONObject createAuctionimpl(MultipartHttpServletRequest multi) {// 원래면 매개변수로
 																											// 받음
 
 		System.out.println("###################### CREATING AUCTION !!! ######################");

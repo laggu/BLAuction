@@ -61,7 +61,7 @@
 	<div class="data-table-area">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-right:0;">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
                             <h2>Created Auction List</h2>
@@ -71,13 +71,6 @@
                                 <thead>
                                     <tr>
                                         <th>Auction ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
                                         <th>Status</th>
                                         <th>Contract Address</th>
                                     </tr>
@@ -87,13 +80,6 @@
                                 <c:forEach var="item" items="${created_list }">
 	                                    <tr>
 	                                        <td><a href="admin_auction_detail.bla?id=${item.getAuction().getAuct_id() }">${item.getAuction().getAuct_id() }</a></td>
-	                                        <td>${item.getDuedate() }</td>
-	                                        <td>${item.getAuction().getType() }</td>
-	                                        <td><a href="admin_category.bla?id=${item.getAuction().getCategory_id() }">${item.getAuction().getCategory_id() }</a></td>
-	                                        <td>${item.getAuction().getStart_price() }</td>
-	                                        <td>${item.getMax_price() }</td>
-	                                        <td>${item.getAuction().getDown_price() }</td>
-	                                        <td>${item.getAuction().getDown_term() }</td>
 	                                        <td><a href="admin_status.bla?status=${item.getAuction().getAuction_status() }">${item.getAuction().getAuction_status() }</a></td>
                                         	<td>${item.getAuction().getAuction_address() }</td>
 	                                    </tr>
@@ -103,13 +89,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>Auction ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
                                         <th>Status</th>
                                         <th>Contract Address</th>
                                     </tr>
@@ -118,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-left:0;">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
                             <h2>Bid Auction List</h2>
@@ -128,13 +107,6 @@
                                 <thead>
                                     <tr>
                                         <th>Auction ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
                                         <th>Status</th>
                                         <th>Contract Address</th>
                                     </tr>
@@ -144,13 +116,6 @@
                                 <c:forEach var="item" items="${bid_list }">
 	                                    <tr>
 	                                        <td><a href="admin_auction_detail.bla?id=${item.getAuction().getAuct_id() }">${item.getAuction().getAuct_id() }</a></td>
-	                                        <td>${item.getDuedate() }</td>
-	                                        <td>${item.getAuction().getType() }</td>
-	                                        <td><a href="admin_category.bla?id=${item.getAuction().getCategory_id() }">${item.getAuction().getCategory_id() }</a></td>
-	                                        <td>${item.getAuction().getStart_price() }</td>
-	                                        <td>${item.getMax_price() }</td>
-	                                        <td>${item.getAuction().getDown_price() }</td>
-	                                        <td>${item.getAuction().getDown_term() }</td>
 	                                        <td><a href="admin_status.bla?status=${item.getAuction().getAuction_status() }">${item.getAuction().getAuction_status() }</a></td>
                                         	<td>${item.getAuction().getAuction_address() }</td>
 	                                    </tr>
@@ -160,13 +125,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>Auction ID</th>
-                                        <th>Due date</th>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Start Price</th>
-                                        <th>Current Price</th>
-                                        <th>Down Price</th>
-                                        <th>Down Term</th>
                                         <th>Status</th>
                                         <th>Contract Address</th>
                                     </tr>

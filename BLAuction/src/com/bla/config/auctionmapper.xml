@@ -26,9 +26,25 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="select" parameterType="Integer" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCT_ID=#{id}
 	</select>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE * FROM AUCTION WHERE AUCT_ID =#{id}
+	</delete>
+	
+	<delete id="deleteAll" parameterType="Integer">
+		DELETE * FROM AUCTION WHERE AUCT_ID =#{id}
+	</delete>
+	
+	<delete id="deleteNull" parameterType="Long">
+		DELETE FROM AUCTION WHERE AUCTION_ADDRESS IS NULL<![CDATA[AND REGISTER_DATE <= #{register_date}]]>
+	</delete>
 
 	<select id="selectAll" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE (AUCTION_STATUS = 'before' OR AUCTION_STATUS = 'proceeding') AND AUCTION_ADDRESS IS NOT NULL ORDER BY DUEDATE 
+	</select>
+	
+	<select id="selectRealAll" resultMap="auctList">
+		SELECT * FROM AUCTION
 	</select>
 	
 	<select id="selectByCategory" parameterType="Integer" resultMap="auctList">
@@ -45,6 +61,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<select id="selectByDuedate" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding' ORDER BY DUEDATE
+	</select>
+	
+	<select id="selectNull" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCTION_ADDRESS IS NULL
 	</select>
 
 	<insert id="insert" parameterType="auction">

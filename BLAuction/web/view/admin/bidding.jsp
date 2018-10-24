@@ -8,6 +8,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_admin</title>
 <script>
+$(document).ready(function(){
+	$("#delete_null_bidding").click(function(){
+		deleteNullBidding();
+	})		
+})
+
+function deleteNullBidding(){
+	console.log("deleteNull()")
+	$.ajax({
+		type:'POST',
+		url:'/BLAuction/admin_delete_null_bidding.bla',
+		processData: false,
+        contentType: false,
+		success:function(data){
+			alert("Successfully Deleted");
+			location.reload();
+		},
+		error:function(data){
+			alert("Failed");
+		}
+	})
+}
 </script>
 </head>
 <body>
@@ -19,8 +41,10 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
-                            <h2>Basic Example</h2>
-                            <p>It's just that simple. Turn your simple table into a sophisticated data table and offer your users a nice experience and great features without any effort.</p>
+                            <h2>Bidding List</h2>
+                            <hr>
+                          	<button id="delete_null_bidding" class="btn">DELETE</button>
+                          	<p><span style="color:red;">Delete</span> the biddings unconfirmed in 24 hrs</p>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
@@ -40,9 +64,9 @@
                                 <c:forEach var="item" items="${list }">
 	                                    <tr>
 	                                        <td>${item.getBidding().getBid_id() }</td>
-	                                        <td>${item.getBidding().getMember_id() }</td>
+	                                        <td><a href="admin_member_detail.bla?id=${item.getBidding().getMember_id() }">${item.getBidding().getMember_id() }</a></td>
 	                                        <td>${item.getBidding().getBidder_account() }</td>
-	                                        <td>${item.getBidding().getAuct_id() }</td>
+	                                        <td><a href="admin_auction_detail.bla?id=${item.getBidding().getBidder_account() }">${item.getBidding().getAuct_id() }</a></td>
 	                                        <td>${item.getBidding().getPrice() }</td>
 	                                        <td>${item.getDuedate() }</td>
 	                                        <td>${item.getBidding().getBid_conf_status() }</td>
