@@ -103,8 +103,6 @@ function resetScore(){
                         </li>
                         <li><a data-toggle="tab" href="#Charts">Member</a>
                         </li>
-                        <li><a data-toggle="tab" href="#Charts">Member</a>
-                        </li>
                         <c:if test="${admin_code != null }">
 	                        <li><a href="admin_logout.bla">Logout</a>
 	                        </li>

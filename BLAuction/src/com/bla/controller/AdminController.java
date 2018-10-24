@@ -604,6 +604,9 @@ public class AdminController {
 	@RequestMapping("/admin_delete_null_auction.bla")
 	@ResponseBody
 	public void delete_null_auction(HttpServletRequest request) {
+		if(!admin_login_check(request)) {
+			return;
+		}
 		Long aday= 86400000L;
 		Long aday_before = System.currentTimeMillis() - aday;
 		System.out.println("###################### Delete Null Auction ######################");
@@ -621,6 +624,9 @@ public class AdminController {
 	@RequestMapping("/admin_delete_null_bidding.bla")
 	@ResponseBody
 	public void delete_null_bidding(HttpServletRequest request) {
+		if(!admin_login_check(request)) {
+			return;
+		}
 		Long aday= 86400000L;
 		Long aday_before = System.currentTimeMillis() - aday;
 		System.out.println("###################### Delete Null Auction ######################");
@@ -637,6 +643,9 @@ public class AdminController {
 	@RequestMapping("/memberRateSet.bla")
 	@ResponseBody
 	public void memberRateSet(HttpServletRequest request) {
+		if(!admin_login_check(request)) {
+			return;
+		}
 		int score = 0;
 		//전체 member 객체를 들고와서 id를 가져온다.
 		ArrayList<MemberVO> members = null;
