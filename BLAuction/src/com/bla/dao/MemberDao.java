@@ -2,13 +2,12 @@ package com.bla.dao;
 
 import java.util.ArrayList;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bla.frame.Dao;
 import com.bla.mapper.MemberMapper;
+import com.bla.vo.AdminVO;
 import com.bla.vo.MemberVO;
 
 @Repository("mdao")
@@ -45,6 +44,10 @@ public class MemberDao implements Dao<MemberVO,Integer> {
 	public MemberVO select(String v) throws Exception {
 		return mapper.selectbyemail(v);
 	}//email
+	
+	public String selectAdmin(AdminVO admin) throws Exception {
+		return mapper.selectAdmin(admin);
+	}
 	
 	@Override
 	public ArrayList<MemberVO> select() throws Exception {

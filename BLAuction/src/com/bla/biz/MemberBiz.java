@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bla.dao.MemberDao;
 import com.bla.frame.Biz;
-import com.bla.frame.Dao;
+import com.bla.vo.AdminVO;
 import com.bla.vo.MemberVO;
 
 @Repository("mbiz")
@@ -41,6 +41,10 @@ public class MemberBiz implements Biz<MemberVO,Integer> {
 	public MemberVO get(String v) throws Exception {
 		return dao.select(v);
 	}//email 
+	
+	public String getAdmin(AdminVO admin) throws Exception {
+		return dao.selectAdmin(admin);
+	}
 
 	@Override
 	public ArrayList<MemberVO> get() throws Exception {

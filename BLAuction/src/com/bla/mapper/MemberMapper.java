@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.bla.vo.AdminVO;
 import com.bla.vo.MemberVO;
 
 @Repository("mmapper")
 public interface MemberMapper {
 	public MemberVO select(Integer member_id);
 	public MemberVO selectbyemail(String email);
+	public String selectAdmin(AdminVO admin);
 	public ArrayList<MemberVO> selectAll();
 	public void insert(MemberVO obj);
 	public void update(MemberVO obj);

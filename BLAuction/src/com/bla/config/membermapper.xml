@@ -32,4 +32,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
 	</update>
 	
+	<select id="selectAdmin" parameterType="admin" resultType="String">
+		SELECT * FROM ADMIN_DB WHERE ADMIN_CODE='${admin_code}'
+	</select>
+	
 </mapper>

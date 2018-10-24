@@ -86,7 +86,6 @@ function resetScore(){
 }
 </script>
 <body>
-
     
     <!-- Main Menu area start-->
     <div class="main-menu-area mg-tb-40">
@@ -104,11 +103,15 @@ function resetScore(){
                         </li>
                         <li><a data-toggle="tab" href="#Charts">Member</a>
                         </li>
+                        <c:if test="${admin_code != null }">
+	                        <li><a href="admin_logout.bla">Logout</a>
+	                        </li>
+                        </c:if>
                     </ul>
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane in notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="admin.bla">All</a>
+                                <li><a href="admin_all.bla">All</a>
                                 </li>
                                 <li><a href="admin_status.bla?status=end">Ended</a>
                                 </li>
