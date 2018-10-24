@@ -51,6 +51,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding')
 	</select>
 	
+	<select id="selectByCategory_admin" parameterType="Integer" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE CATE_TYPE_ID=#{category_id}
+	</select>
+	
 	<select id="selectByRegdate" parameterType="Long" resultType="Integer">
 		SELECT AUCT_ID FROM AUCTION WHERE REGISTER_DATE=#{register_date}
 	</select>
@@ -59,8 +63,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{type} AND (AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding') ORDER BY DUEDATE
 	</select>
 	
+	<select id="selectByType_admin" parameterType="Integer" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCT_TYPE_ID=#{type}
+	</select>
+	
 	<select id="selectByDuedate" resultMap="auctList">
 		SELECT * FROM AUCTION WHERE AUCTION_STATUS='before' OR AUCTION_STATUS='proceeding' ORDER BY DUEDATE
+	</select>
+	
+	<select id="selectByStatus" parameterType="String" resultMap="auctList">
+		SELECT * FROM AUCTION WHERE AUCTION_STATUS=#{status}
 	</select>
 	
 	<select id="selectNull" resultMap="auctList">

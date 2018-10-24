@@ -48,6 +48,10 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	public AuctionVO get(Integer v) throws Exception {
 		return adao.select(v);
 	}
+	
+	public ArrayList<AuctionVO> getByStatus(String status) throws Exception {
+		return adao.selectByStatus(status);
+	}
 
 	@Override
 	public ArrayList<AuctionVO> get() throws Exception {
@@ -76,6 +80,14 @@ public class AuctionBiz implements Biz<AuctionVO, Integer>{
 	
 	public ArrayList<AuctionVO> getByType(int type) throws Exception {
 		return adao.selectByType(type);
+	}
+	
+	public ArrayList<AuctionVO> getByCategory_admin(int category_id) throws Exception {
+		return adao.selectByCategory_admin(category_id);
+	}
+	
+	public ArrayList<AuctionVO> getByType_admin(int type) throws Exception {
+		return adao.selectByType_admin(type);
 	}
 	
 	public void updateStatus(AuctionVO obj) throws Exception{

@@ -99,24 +99,22 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.get();
+			auction_list = abiz.getByStatus(status);
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				if(auctionVO.getAuction_status().equals(status)) {
-					ListVO newlist = new ListVO();
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) auctionVO.getDuedate()));
-					newlist.setAuction(auctionVO);
-					newlist.setDuedate(due_date);
-					newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
-					if (newlist.getMax_price() == null) {
-						newlist.setMax_price(auctionVO.getStart_price());
-					}
-					list.add(newlist);
+				ListVO newlist = new ListVO();
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				newlist.setAuction(auctionVO);
+				newlist.setDuedate(due_date);
+				newlist.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (newlist.getMax_price() == null) {
+					newlist.setMax_price(auctionVO.getStart_price());
 				}
+				list.add(newlist);
 			}
 
 			mv.addObject("list", list);
@@ -147,7 +145,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.getByCategory(category);
+			auction_list = abiz.getByCategory_admin(category);
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
@@ -193,7 +191,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin");
 		try {
-			auction_list = abiz.getByType(type);
+			auction_list = abiz.getByType_admin(type);
 			
 			Iterator<AuctionVO> itr = auction_list.iterator();
 			
@@ -432,23 +430,24 @@ public class AdminController {
 			MemberVO member = mbiz.get(member_id);
 			
 			// get created_list
-			all_list = abiz.get();
+			
+			AuctionVO auction_member = new AuctionVO();
+			auction_member.setMember_id(member_id);
+			all_list = abiz.selectAuctionByMember(auction_member);
 			Iterator<AuctionVO> itr = all_list.iterator();
 			while (itr.hasNext()) {
 				AuctionVO auctionVO = (AuctionVO) itr.next();
-				if(auctionVO.getMember_id() == member_id) {
-					ListVO listVO = new ListVO();
-					listVO.setAuction(auctionVO);
-					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
-							.format(new Date((Long) auctionVO.getDuedate()));
-					listVO.setAuction(auctionVO);
-					listVO.setDuedate(due_date);
-					listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
-					if (listVO.getMax_price() == null) {
-						listVO.setMax_price(auctionVO.getStart_price());
-					}
-					created_list.add(listVO);
+				ListVO listVO = new ListVO();
+				listVO.setAuction(auctionVO);
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				listVO.setAuction(auctionVO);
+				listVO.setDuedate(due_date);
+				listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (listVO.getMax_price() == null) {
+					listVO.setMax_price(auctionVO.getStart_price());
 				}
+				created_list.add(listVO);
 			}
 			
 			// get bid_list

@@ -48,6 +48,10 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	public AuctionVO select(Integer v) throws Exception {
 		return amapper.select(v);
 	}
+	
+	public ArrayList<AuctionVO> selectByStatus(String status) throws Exception {
+		return amapper.selectByStatus(status);
+	}
 
 	@Override
 	public ArrayList<AuctionVO> select() throws Exception {
@@ -76,6 +80,14 @@ public class AuctionDao implements Dao<AuctionVO, Integer>{
 	
 	public ArrayList<AuctionVO> selectByType(int type) throws Exception {
 		return amapper.selectByType(type);
+	}
+	
+	public ArrayList<AuctionVO> selectByCategory_admin(int category_id) throws Exception {
+		return amapper.selectByCategory_admin(category_id);
+	}
+	
+	public ArrayList<AuctionVO> selectByType_admin(int type) throws Exception {
+		return amapper.selectByType_admin(type);
 	}
 	
 	public void updateStatus(AuctionVO obj) throws Exception {
