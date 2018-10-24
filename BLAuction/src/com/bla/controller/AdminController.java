@@ -415,6 +415,80 @@ public class AdminController {
 
 		return mv;
 	}
+	
+	// Members
+	@RequestMapping("/admin_member_detail.bla")
+	@ResponseBody
+	public ModelAndView member_detail(HttpServletRequest request) {
+		int member_id = Integer.parseInt(request.getParameter("id"));
+		
+		ArrayList<ListVO> created_list = new ArrayList<ListVO>();
+		ArrayList<ListVO> bid_list = new ArrayList<ListVO>();
+		ArrayList<AuctionVO> all_list = new ArrayList<AuctionVO>();
+		ArrayList<Integer> biddings = new ArrayList<Integer>();
+	
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("admin");
+		try {
+			
+			// get member
+			MemberVO member = mbiz.get(member_id);
+			
+			// get created_list
+			all_list = abiz.get();
+			Iterator<AuctionVO> itr = all_list.iterator();
+			while (itr.hasNext()) {
+				AuctionVO auctionVO = (AuctionVO) itr.next();
+				if(auctionVO.getMember_id() == member_id) {
+					ListVO listVO = new ListVO();
+					listVO.setAuction(auctionVO);
+					String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+							.format(new Date((Long) auctionVO.getDuedate()));
+					listVO.setAuction(auctionVO);
+					listVO.setDuedate(due_date);
+					listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+					if (listVO.getMax_price() == null) {
+						listVO.setMax_price(auctionVO.getStart_price());
+					}
+					created_list.add(listVO);
+				}
+			}
+			
+			// get bid_list
+			biddings = bbiz.selectAuctIdByMemberId(member_id);
+			Iterator<Integer> itr2 = biddings.iterator();
+			itr2 = biddings.iterator();
+			while (itr2.hasNext()) {
+				Integer integer = (Integer) itr2.next();
+				AuctionVO auctionVO = abiz.get(integer);
+				ListVO listVO = new ListVO();
+				listVO.setAuction(auctionVO);
+				String due_date = new SimpleDateFormat("MM월 dd일 HH:mm")
+						.format(new Date((Long) auctionVO.getDuedate()));
+				listVO.setAuction(auctionVO);
+				listVO.setDuedate(due_date);
+				listVO.setMax_price(bbiz.selectBidMaxPrice(auctionVO));
+				if (listVO.getMax_price() == null) {
+					listVO.setMax_price(auctionVO.getStart_price());
+				}
+				bid_list.add(listVO);
+			}
+			
+			mv.addObject("member", member);
+			mv.addObject("created_list", created_list);
+			mv.addObject("bid_list", bid_list);
+			mv.addObject("centerpage", "admin/member_detail");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("centerpage", "admin/member_detail");
+		}
+		
+		System.out.println("###################### GET MEMBER_DETAIL ######################");
+	
+		return mv;
+	}
+	
 	// member rate 
 	@RequestMapping("/memberRateSet.bla")
 	@ResponseBody
