@@ -24,6 +24,8 @@
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
+
+<link rel="shortcut icon" type="image/x-icon" href="img/small_logo.png" />
 <script>
 	$(document).ready(function (){
 		$('#load').hide();
