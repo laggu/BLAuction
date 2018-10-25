@@ -24,6 +24,10 @@
 >+ 오라클 11g
 <br/>
 
+IDE
+>+ Webstorm
+<br/>
+
 ## 실행방법
 1. auction.js 파일 410 line var auction_manager_address 변수 주소를 배포한 auction_manager contract 주소로 수정
 2. node app.js 로 서버 실행
