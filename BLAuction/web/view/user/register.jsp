@@ -172,7 +172,6 @@ function autoHypenPhone(str){
 
 function check() {		
 
-	alert(document.getElementById("email").value);
 
 	var email = document.getElementById("email").value;
 

@@ -17,10 +17,9 @@ function auctionCancel(auct_id){
 		datatype:'json',
 		success:function(data){
 			window.location.reload();
-			alert("정상적으로 취소되었습니다");
 		},
 		error:function(data){
-			arlert("에러났다");
+			arlert("auctionCancel error");
 		}
 	})
 }

@@ -117,7 +117,7 @@ $(document).ready(function(){
 			numofComplitedauction.text(completeAmount);
 		},
 		error : function(data) {
-			alert("낙찰된 경매물품이 없습니다.");
+			alert("판매 리스트를 불러오는데 실패했습니다. 새로고침 해주세요");
 		}
 	});
 	
@@ -150,7 +150,7 @@ $(document).ready(function(){
 						
 		},
 		error : function(data) {
-			alert("후기리스트 띄우는데 문제생김.");
+			alert("후기리스트를 불러오는데 문제가 생겼습니다. 새로고침 해주세요");
 		}
 	});
 	

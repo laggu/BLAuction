@@ -29,7 +29,6 @@ $(document).ready(function(){
 		})
 	});
 	$("#closedeadline").on("click", function(event){
-	    alert("마감");
 	});
 });
 </script>

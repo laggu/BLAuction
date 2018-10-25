@@ -5,7 +5,6 @@
 
 
 function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
-	alert(companyCode + " " + deliveryCode);
 		
 	var params = {
 			"t_key": 'A4LwNiLjK5hB69I9mWEs1Q',
@@ -31,10 +30,9 @@ function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
 				},
 				datatype:'json',
 				success:function(data){
-					alert("성공");
 				},
 				error:function(data){
-					alert('error');
+					alert('택배 상태 변경 error');
 				}
 			})
 
@@ -60,7 +58,6 @@ function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
 				  web3_setDeliveryStatus(auction_address);
 			    break;
 			}
-			alert(s);
 		},
 		error:function(data){
 			alert('error');

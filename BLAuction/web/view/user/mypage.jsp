@@ -173,7 +173,6 @@ $(document).ready(function() {
 	//Tab 전환
 	$(".nav-tabs a").click(function() {
 		$(this).tab('show');
-		alert( $(e.target).closest('li').index() + 1 );
 	});
 	$('#load').show();
 	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
@@ -265,7 +264,8 @@ $(document).ready(function() {
 			winningbidlists.append(winningbidlist);
 		},
 		error : function(data) {
-			alert("낙찰된 경매물품이 없습니다.");
+			alert("list 불러오기 실패 - 새로고침 해주세요");
+			
 		}
 	});
 	

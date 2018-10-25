@@ -572,7 +572,6 @@ function web3_bidding(auction_id, price, time, bidder_name, bidder_id, auctionAd
  * 낙찰 후 판매자 출금 함수 
  */
 function web3_withdraw_for_owner(fee, auctionAddress){
-	alert(fee);
 	var auction = web3.eth.contract(auction_ABI).at(auctionAddress);
 	$('#load').show();
 	auction.withdraw_for_owner(fee, function(err,res){

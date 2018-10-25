@@ -27,24 +27,6 @@ function srvTime(auct_id) {
 	      
 	      if(timediff <= 0){
 	          $("#currentTimelimit").text('경매완료');
-	          
-//	          var params = {
-//	      			"auct_id":auct_id
-//	      		}
-//	          
-//	          $.ajax({
-//	      		type:'POST',
-//	      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
-//	      		data:params,
-//	      		datatype:'json',
-//	      		success:function(data){
-//	      			window.clearInterval(timeInterval);
-//	    			window.location.reload();
-//      			},
-//	      		error:function(data){
-//	      			alert('successfulbiddingimpl error')
-//	      		}
-//	      	  })
 	          window.clearInterval(timeInterval);
   			  window.location.reload();
   			  

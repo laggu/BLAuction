@@ -108,10 +108,8 @@
 <script>
 $(document).ready(function(){
 	$("#thelatest").on("click", function(event){
-	    alert("최신");
 	});
 	$("#closedeadline").on("click", function(event){
-	    alert("마감");
 	});
 });
 </script>
