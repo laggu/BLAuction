@@ -682,7 +682,6 @@ public class AdminController {
 				cal.add(Calendar.MONTH, -3);
 				Date before3Month = cal.getTime();
 				long before3MonthLong = before3Month.getTime();
-				System.out.println("before3MonthLong :"+before3MonthLong);
 				for(AuctionVO auct:aucts) {
 					System.out.println("register_date : "+auct.getRegister_date());
 					if(auct.getRegister_date() > before3MonthLong) {
@@ -694,7 +693,6 @@ public class AdminController {
 				biddings = bbiz.selectBiddingByMemberId(member_id);
 				for(BiddingVO bid: biddings) {
 					SuccessfulBidVO successfulBid = null;
-					System.out.println("bid getTime : "+bid.getTime());
 					if(bid.getTime() > before3MonthLong) {
 						bidCount++;
 						successfulBid = sbiz.get(bid.getBid_id());
@@ -718,7 +716,6 @@ public class AdminController {
 				member.setScore(score);
 				//score update
 				mbiz.updateScore(member);
-				System.out.println("변경된 member ::: "+member);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

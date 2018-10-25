@@ -137,7 +137,6 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		ModelAndView mv2 = new ModelAndView("redirect:/main.bla");
 		MemberVO member = null;
-		System.out.println(member_account);
 		try {
 			member = mbiz.get(email);
 //			System.out.println(member.getMember_account());
@@ -174,8 +173,6 @@ public class MemberController {
 		
 		
 		mv2.addObject("centerpage", "center");
-		System.out.println("로그인성공");
-		System.out.println(member);
 		int member_score = member.getScore();
 		String member_rate = "0";
 		if(member_score >= 300) {
@@ -248,17 +245,13 @@ public class MemberController {
 		member.setName(request.getParameter("name"));
 		member.setAddress(request.getParameter("address"));
 		member.setPhone(request.getParameter("phone"));
-		System.out.println("date : " + request.getParameter("birth"));
 		String bi = request.getParameter("birth").replace("-", "").substring(2, 8);
-		System.out.println("bi:" + bi);
 		member.setBirth(bi);
 		member.setMember_account(request.getParameter("member_account"));
 
 		try {
 			biz.register(member);
-			System.out.println(member.getEmail());
 			member = mbiz.get(member.getEmail());
-			System.out.println(member);
 			mv.addObject("centerpage", "center");
 			session.setAttribute("member_id", member.getMember_id());
 			session.setAttribute("member_account", member.getMember_account());
@@ -303,7 +296,6 @@ public class MemberController {
 		// memeberid를 가져와서 회원 정보 select한 정보 mv.addObject로 추가
 		HttpSession session = request.getSession();
 		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
-		System.out.println("meber_id"+member_id);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
