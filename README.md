@@ -39,3 +39,6 @@
 
 ## Epilogue
 지금까지 배웠던 기술들과 이론들(Java, HTML5, Javascript, Python, Spring Framework, Ethereum Platform, Solidity 등)을 활용할 수 있었던 프로젝트였습니다. 또한 프로젝트를 기획부터 설계,분석,구현, 테스트까지 모든 과정을 거치면서 했었던 것이 저에겐 값진 경험이라고 생각합니다. 그리고 무엇보다 팀원들과 git, google doc, 카카오톡을 활용하면서 많은 의사소통을 했습니다. 그럼으로써 팀워크가 향상되면서 프로젝트 수행에 많은 도움이 되었습니다. 또한 처음 세운 목표를 이루었다는 것에 뿌듯했습니다. 마지막으로 함께한 팀원들에게 감사의 말을 전하고 싶습니다.
+
+## Copyright
+ <strong><p>created by team20's</p></strong>
