@@ -150,10 +150,11 @@ public class AuctionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		// 사진 저장 경로 설정
-		String root = multi.getSession().getServletContext().getRealPath("/");
-		String path = root + "resources/thumbnail/";
+		String root = multi.getSession().getServletContext().getRealPath(File.separator);
+		
+		String path = root + "resources"+File.separator+"thumbnail"+File.separator;
 		String newFileName = ""; // 업로드 되는 파일명
 
 		// 경로 폴더 없을 시 폴더 생성
@@ -187,7 +188,7 @@ public class AuctionController {
 			PhotoVO photo = new PhotoVO();
 			photo.setAuct_id(auct_id);
 			photo.setPhoto_name(newFileName);
-			photo.setPhoto_path("resources/thumbnail/");
+			photo.setPhoto_path("resources"+File.separator+"thumbnail"+File.separator);
 			System.out.println("PHOTO : " + photo);
 
 			try {
