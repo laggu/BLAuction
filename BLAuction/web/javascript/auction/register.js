@@ -211,31 +211,7 @@ function sendFile(file, el) {
         $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
       },
       error: function(data){
-    	  alert(data);
-      }
-    });
-  }
-
-function deleteFile(file, el) {
-    var form_data = new FormData();
-    form_data.append('deletefile', file);
-    $.ajax({
-      data: form_data,
-      type: "POST",
-      url: '/BLAuction/photoDelete.bla',
-      cache: false,
-      contentType: false,
-      enctype: 'multipart/form-data',
-      processData: false,
-      success: function(data) {
-    	  console.log(data);/*
-    	  photo_id.push(data.photo_id);
-    	  var url = data.photo_path+'\\'+data.photo_name;
-        $(el).summernote('editor.insertImage', url);
-        $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');*/
-      },
-      error: function(data){
-    	  alert('오류'+data);
+    	  alert('파일 업로드 실패');
       }
     });
   }
@@ -253,14 +229,6 @@ function verifyData(){
 	var due_date = new Date($('#dueDate').val());
 	var current_time = new Date();
 	
-//	if(due_date != null){
-//		alert("마감시간을 입력하세요");
-//		return false;
-//	}
-//	if(due_date.getTime() - current_time.getTime() > 0){
-//		alert("과거 시간은 입력할 수 없습니다.");
-//		return false;
-//	}
 	
 	if(!timeFlag){
 		alert("시간을 입력하세요");

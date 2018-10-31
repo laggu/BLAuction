@@ -7,12 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
-
 <script src="javascript/user/delivery.js"></script>
-<script src="javascript/user/mypage.js?version=1"></script>
-
+<script src="javascript/user/mypage.js?version=2"></script>
 <script type="text/javascript">
-
 // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다.
 // (＂팝업 API 호출 소스"도 동일하게 적용시켜야 합니다.)
 //document.domain = "abc.go.kr";
@@ -35,7 +32,7 @@ document.form.roadAddrPart2.value = roadAddrPart2;
 documentform.addrDetail.value = addrDetail;
 document.form.zipNo.value = zipNo;
 }
-
+</script>
 </head>
 
 <script>
@@ -108,14 +105,43 @@ document.form.zipNo.value = zipNo;
 
 	};
 
-	
-</script>
+function setDeliveryCode(){
+	//모달 보여주고
+	var auct_id = $("#successAuct_id").val();
+	var deliveryCode = $("#invoiceNum").val();
+	var companyCode = $("#companyCode").val();
+	$.ajax({
+		type:'POST',
+		url:'deliveryimpl.bla',
+		data:{
+			"delivery_code": deliveryCode,
+			"company_code": companyCode,
+			"auct_id": auct_id
+		},
+		datatype:'json',
+		success:function(data){
+			var deliveryCode = $('#winnerInvoice'+data.auct_id);
+			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
+			
+			var deliveryCodeVal = data.delivery_code;
+			var companyCodeVal = data.company_code;
+			
+			companyCode.text(companyCodeVal);
+			deliveryCode.text(deliveryCodeVal);
+			
+			$('#deliveryInfoModal').modal('hide');
+		},
+		error:function(data){
+			alert("택배에러")
+		}
+	})
+}
 
-<script>
-//Tab 전환
+
 	
 	function registerReview(){
 		//후기 등록하기
+		$("#createReviewModal").hide();
 		var review = $('#textReview').val();
 		var auct_id = $('#auct_id').val();
 		
@@ -128,11 +154,10 @@ document.form.zipNo.value = zipNo;
 			},
 			datatype : 'json',
 			success : function(data) {
-				$("#createReviewModal").modal('hide');
-				alert(data.result);
+				$('#textReview').val("");
 			},
 			error : function(data) {
-				alert("biddingimpl.bla error")
+				alert("registerReview.bla error")
 			}
 		})
 	}
@@ -143,9 +168,14 @@ function setAuctId(auct_id){
 function setSuccessAuctId(auct_id){
 	$('#successAuct_id').val(auct_id);
 }
-$(document).ready(function() {
-	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 
+$(document).ready(function() {
+	//Tab 전환
+	$(".nav-tabs a").click(function() {
+		$(this).tab('show');
+	});
+	$('#load').show();
+	//ajax 3개 실행! myBidList, successfulbidlist, myAuctionList
 	//내가 입찰한 경매 리스트
 	$.ajax({
 		type : 'POST',
@@ -167,7 +197,9 @@ $(document).ready(function() {
 					mybiddinglist += '<button type="button" class="btn btn-link" id="mybidding_seller_btn"><strong>판매자 정보 확인</strong></button></a>';
 					mybiddinglist += '</div>';
 					mybiddinglist += '<div>내 입찰가: <span id="mybiddingPrice">' + data[i].memberMaxPrice * 0.001 + ' Ether</span></div>';
-					mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					if(data[i].auction_type != 3){
+						mybiddinglist += '<div>현재 최고가: <span id="currenthighestPrice">' + data[i].bidMaxPrice * 0.001 + ' Ether</span></div>';
+					}
 					mybiddinglist += '<div>';
 					mybiddinglist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ data[i].auction_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 					mybiddinglist += '</div></div></div></div>';
@@ -202,7 +234,7 @@ $(document).ready(function() {
 				winningbidlist += '<button type="button" class="btn btn-default" id="winningbidStatus" disabled>유찰된 경매</button>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>환불가: <span id="winningbidPrice">' + failBid[i].my_bid_price * 0.001 + ' Ether</span></div>';
-				winningbidlist += '<div><button type="button" class="btn btn-danger" id="refund_btn"><strong>환불받기</strong></button></div>';	
+				winningbidlist += '<div><button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ failBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button></div>';	
 				winningbidlist += '</div></div></div>';	
 				
 			}
@@ -222,16 +254,18 @@ $(document).ready(function() {
 				winningbidlist += '<a href="sellerpage.bla?seller_id='+successfulBid[i].seller_id+'"><button type="button" class="btn btn-link" id="winningbidding_seller_btn"> <strong>판매자 정보 확인</strong> </button></a>';
 				winningbidlist += '</div>';
 				winningbidlist += '<div>택배사: <span id="deliverycompany">'+successfulBid[i].company_code+'</span> / 운송장 번호: <span id="invoice">'+successfulBid[i].delivery_code+'</span> </div>';
-				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(index,auction_address);">';
+				winningbidlist += '<div><button type="button" class="btn btn-warning" id="deliveryStatus_Btn" onclick="getDeliveryStatus(' + successfulBid[i].auct_id + ',\'' + successfulBid[i].auct_address +'\',\''+ successfulBid[i].delivery_code + '\',\'' + successfulBid[i].company_code + '\');">';
 				winningbidlist += '<strong>택배 상태 조회</strong></button>';				
-				winningbidlist += '<span id="Delivery_Status" +index></span></div>';
+				winningbidlist += '<span id="Delivery_Status'+successfulBid[i].auct_id+'"></span></div>';
+				winningbidlist += '<button type="button" class="btn btn-danger" onclick="web3_withdraw(\''+ successfulBid[i].auct_address+'\');" id="refund_btn"><strong>환불받기</strong></button>';
 				winningbidlist += '<div><button type="button" class="btn btn-warning" id="createReview_btn" onclick="setAuctId('+successfulBid[i].auct_id+')" data-toggle="modal" data-target="#createReviewModal"><strong>후기 작성</strong> </button></div></div></div></div>';
 				
 			}
 			winningbidlists.append(winningbidlist);
 		},
 		error : function(data) {
-			alert("낙찰된 경매물품이 없습니다.");
+			alert("list 불러오기 실패 - 새로고침 해주세요");
+			
 		}
 	});
 	
@@ -255,17 +289,15 @@ $(document).ready(function() {
 				myauctionlist += '<div class="panel panel-default" id="myauction_panel">';
 				myauctionlist += '<div class="panel-body">';
 				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+before[i].auct_id+'" id="beforeA'+i+'"><img id="beforeImg'+i+'" src="'+before[i].photoPath0+before[i].photoName0+'"></a></div>';
-				
-				if(before[i].photoPath1 != 'undefined'){
-					$('#beforeA'+i).on('hover',function(){
-						$('#beforeImg'+i).attr("src",before[i].photoPath1+before[i].photoName1);
-					});
+				if(before[i].auction_status == 'null'){
+					myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>컨펌이 안된 경매</button></div>';
+					myauctionlist += '</div></div></div>';
+				}else{
+					myauctionlist += '<div id="myauctionInfo">';
+					myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
+					myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price * 0.001+' Ether</span></div>';
+					myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle" onclick="auctionCancel('+before[i].auct_id+');">경매 취소</button></div></div></div></div>';
 				}
-				
-				myauctionlist += '<div id="myauctionInfo">';
-				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
-				myauctionlist += '<div>입찰 시작가: <span id="myauctionPrice">'+before[i].start_price * 0.001+' Ether</span></div>';
-				myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div></div></div></div>';
 				
 			}
 			
@@ -282,15 +314,16 @@ $(document).ready(function() {
 				myauctionlist += '<div>낙찰자 주소: <span id="winnerAddress">'+end[i].successfulBidAddress+'</span></div>';	
 				
 				if(String(end[i].delivery_code) == 'null'){
-					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button></div>';	
+					myauctionlist += '<button type="button" class="btn btn-warning" id="deliveryInfo_btn" onclick="setSuccessAuctId('+end[i].auct_id+')" data-toggle="modal" data-target="#deliveryInfoModal"><strong>택배 정보 입력</strong></button>';	
 				}else{
 					myauctionlist += '<div>운송장 정보: <span id="winnerInvoice'+end[i].auct_id+'">'+end[i].delivery_code+'</span>&nbsp;(<span id="winnerDeliverycompany'+end[i].auct_id+'">'+end[i].company_code+'</span>)';
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ",\'" + end[i].auct_address +'\');"><strong>택배 상태 확인</strong></button>';
-					myauctionlist += '<span>택배 상태</span><span id="Delivery_Status'+end[i].auct_id+'></span>';
-				}
+					myauctionlist += '<div><button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="getDeliveryStatus(' + end[i].auct_id + ',\'' + end[i].auct_address +'\',\''+ end[i].delivery_code + '\',\'' + end[i].company_code + '\');"><strong>택배 상태 확인</strong></button>';
+					myauctionlist += '<span id="Delivery_Status'+end[i].auct_id+'"></span></div>';
+					myauctionlist += '</div>';
+				} 
 				var fee = 5;
 				if(end[i].delivery_status == '6'){
-					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + fee + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button></div>';
+					myauctionlist += '<button type="button" class="btn btn-warning" id="ownerWithdraw_btn" onclick="web3_withdraw_for_owner(' + ${member_rate } + ",\'" + end[i].auct_address +'\');"><strong>판매금 받기</strong></button>';
 				}
 				myauctionlist += '</div></div></div>';
 				//택배 운송 번호를 입력한 뒤에 환불받기 버튼이 필요한것인가..?
@@ -302,10 +335,14 @@ $(document).ready(function() {
 				myauctionlist += '<div id="myauctionImg"><a href="auctiondetail.bla?auctionid='+proceeding[i].auct_id+'"><img src="'+proceeding[i].photoPath0+proceeding[i].photoName0+'"></a></div>';
 				myauctionlist += '<div id="myauctionInfo">';		
 				myauctionlist += '<div id="myauctionTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
-				myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
 				if(proceeding[i].auct_type == 2){
 					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
-					myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle">경매 취소</button></div>';
+					if(proceeding[i].auction_address == 'null'){
+						myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>컨펌이 안된 경매</button></div>';
+					}else{
+						myauctionlist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰전</button></div>';
+						myauctionlist += '<div><button type="button" class="btn btn-danger" id="myauctionCancle" onclick="auctionCancel('+proceeding[i].auct_id+');">경매 취소</button></div></div></div></div>';
+					}
 				}else{
 					myauctionlist += '<div>현재 최고가: <span id="myauctionPrice">'+proceeding[i].bidMaxPrice * 0.001+' Ether</span></div>';	
 					myauctionlist += '<div>경매 마감 시간: <span id="myauctionDuedate">'+proceeding[i].dueDate+'</span></div>';
@@ -336,34 +373,23 @@ $(document).ready(function() {
 			}
 			
 			myauctionlists.append(myauctionlist);
-			
+			$('#load').hide();
 		},
 		error : function(data) {
 			alert("경매를 불러오는데 실패했습니다.");
 		}
 	});
 	
-	$(".nav-tabs a").click(function() {
-		$(this).tab('show');
-
-	});
+	
 
 });
 </script>
-<style>
-#myauctionCancle{
-		position:absolute;
-		bottom:10px;
-		right:15px;
-	}
-</style>
+
 <body>
 
 	<!-- Content -->
 	<div id="mypage_area">
 		<div class="col-sm-10 text-left">
-
-
 
 			<!-- Page Start -->
 			<!-- Myinfo Panel -->
@@ -398,16 +424,14 @@ $(document).ready(function() {
 							</div>
 							<div>
 								<strong>핸드폰 번호: </strong><span id="myphone">${member.phone }</span>
-								<button type="button" class="btn btn-warning"
-									id="changePhone_btn" data-toggle="modal"
-									data-target="#ChangePhoneModal">
-									<strong>번호 변경</strong>
+								<button type="button" class="btn btn-warning" id="changePhone_btn" data-toggle="modal"
+									data-target="#ChangePhoneModal"><strong>번호 변경</strong>
 								</button>
 							</div>
 							<div>
 								<strong>주소: </strong><span id="myaddress">${member.address }</span>
-								<button type="button" class="btn btn-warning"
-									id="changeAddress_btn" onClick="goPopup();" value="팝업">
+								<button type="button" class="btn btn-warning" 
+									id="changeAddress_btn" data-toggle="modal" data-target="#ChangeAddressModal">
 									<strong>주소 변경</strong>
 								</button>
 							</div>
@@ -449,8 +473,8 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
-
+	
+	
 	<!-- Modal -->
 
 	<!-- ChangePw Modal -->
@@ -465,23 +489,16 @@ $(document).ready(function() {
 				</div>
 
 				<div class="modal-body">
-					<form action="pwdupdateimpl.bla" method="post" name="frmm"
-						id="frmm">
-						<div>
-							<h4>현재 비밀번호:</h4>
-							<input type="text" id="currentPw" name="userPasswd"
-								onblur="checkPwd();">
-							<div id="spwd"></div>
-						</div>
-						<div>
-							<h4>변경할 비밀번호:</h4>
-							<input type="text" id="changedPw" name="changed_Pw">
+					<form action="pwdupdateimpl.bla" method="post" name="frmm" id="frmm">
+						
+						<div class="form-group">
+							<h4 style="display:inline">변경할 비밀번호:</h4>
+							<input type="text" id="changedPw" name="changed_Pw" class="form-control">
 						</div>
 
-						<div>
-							<h4>비밀번호 확인:</h4>
-							<input type="text" id="rechangedPw" name="rechanged_Pw"
-								onblur="newCheckPwd();">
+						<div class="form-group">
+							<h4 style="display:inline">비밀번호 확인:</h4>
+							<input type="text" id="rechangedPw" name="rechanged_Pw" class="form-control" onblur="newCheckPwd();">
 						</div>
 
 						<div id="spwdCheck"></div>
@@ -518,11 +535,13 @@ $(document).ready(function() {
 				</div>
 
 				<div class="modal-body">
-					<form action="">
+					<form action="phoneupdateimpl.bla" method="post" name="frmm2" id="frmm2">
+						<div class="form-group">
 						<h4>변경된 핸드폰 번호:</h4>
-						<input type="text" id="changedPhone" name="changed_phone">
+						<input type="tel" id="changedPhone" name="changed_phone" class="form-control" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required/>
 						<button type="submit" class="btn btn-danger" id="changePhone_Btn"
 							onclick="registerPhone(this.form);">변경하기</button>
+						</div>
 					</form>
 
 				</div>
@@ -549,18 +568,12 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					<form action="">
+						<div class="form-group">
 						<h4>변경된 주소 입력:</h4>
-						<input type="text" id="changedAddress" name="changed_address">
-						<button onClick="goPopup();" value="팝업">
-							<img src="img/map.png">
-						</button>
-						<!--도로명주소 전체(포맷)<input type="text" id="roadFullAddr" name="roadFullAddr" /><br>
-							도로명주소 <input type="text" id="roadAddrPart1" name="roadAddrPart1" /><br>
-							고객입력 상세주소<input type="text" id="addrDetail" name="addrDetail" /><br>
-							참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>
-							우편번호<input type="text" id="zipNo" name="zipNo" /> -->
+						<input type="text" id="changedAddress" name="changed_address" class="form-control">
 						<button type="submit" class="btn btn-danger"
 							id="changeAddress_Btn" onclick="registerAddress(this.form);">변경하기</button>
+						</div>
 					</form>
 				</div>
 
@@ -695,6 +708,8 @@ $(document).ready(function() {
 
 		</div>
 	</div>
+	
+
 
 </body>
 </html>

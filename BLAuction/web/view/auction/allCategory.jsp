@@ -8,26 +8,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction 모든카테고리</title>
 <script>
+	var clothing = 0;
+	var beauty = 0;
+	var sports = 0;
+	var digital = 0;
+	var furniture = 0;
+	var enc = 0;
+	
 	function print_category(due_date, auct_id, photo_path_1, auct_title, max_price, category_id) {
-		$("#list_div"+category_id).append(''+
-					'<div class="card" style="width: 18rem;">'+
-					'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
-					'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
-					'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
-					'<div class="card-body">' + 
-					'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
-					'제목 : ' + auct_title + '</a>' + 
-					'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price + '</p>'+
-					'</div></div>')
+		if(category_id == 1){
+			clothing++;
+			if(clothing < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}else if(category_id == 2){
+			beauty++;
+			if(beauty < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}else if(category_id == 3){
+			sports++;
+			if(sports < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}else if(category_id == 4){
+			digital++;
+			if(digital < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}else if(category_id == 5){
+			furniture++;
+			if(furniture < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}else if(category_id == 6){
+			enc++;
+			if(enc < 5){
+				$("#list_div"+category_id).append(''+
+						'<div class="card" style="width: 18rem;">'+
+						'<h5 class="card-title" id="time_limit">마감시간 : '+ due_date + '</h5>' +
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '">' + 
+						'<img class="card-img-top" src="' + photo_path_1 + '" alt="Card image cap"></a>'+
+						'<div class="card-body">' + 
+						'<a href="auctiondetail.bla?auctionid=' + auct_id + '" class="card-text" id="auction_name">' +
+						'제목 : ' + auct_title + '</a>' + 
+						'<p class="card-text" id="auction_price">현재 입찰가 : ' + max_price*0.001 + ' Ether</p>'+
+						'</div></div>')
+			}
+		}
+		
+		
 	}
 </script>
 <script>
 $(document).ready(function(){
 	$("#thelatest").on("click", function(event){
-	    alert("최신");
 	});
 	$("#closedeadline").on("click", function(event){
-	    alert("마감");
 	});
 });
 </script>

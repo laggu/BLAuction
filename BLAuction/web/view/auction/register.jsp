@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<script src="js/bootstrap.min.js"></script>
 <!-- Summernote API -->
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css"
@@ -64,6 +64,8 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 							</div>
 								<input type="file" class="upload2" id="upload2" name="upload2">
 							
+							
+								
 							<div id="register_info1">
 								<div>
 									<div class="form-group">
@@ -90,10 +92,16 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 										</select>
 									</div>
 								</div>
+							
+							
+							
+							
 							</div>
 						</div>
 
 						<div id="register_bottom">
+							
+							
 							<div class="form-group" id="register_title">
 								<h4>경매 제목:</h4>
 								<div class="col-sm-10">
@@ -102,16 +110,17 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								</div>
 							</div>
 
-							<div style="margin-left: -2%; margin-bottom: 4%;"
-								class="form-group" id="start_price">
+							<div style="margin-left: -2%; margin-bottom: 4%;" class="col-sm-12" id="start_price">
 								<h4>경매 시작 가격:</h4>
-								<div class="col-sm-6">
-									<input type="number" class="form-control" id="startPrice" min="0.001" step="0.001">
-									<span>Ether</span>
+								<div class="col-sm-4">
+									<input type="number" class="form-control" id="startPrice" min="0.001" step="0.001"><span>Ether</span>
 								</div>
-								<input type="number" class="form-control" name="start_price" id="startPriceFinney">
-								<span>Finney</span>
+								<div class="col-sm-4">				
+									<input type="number" class="form-control" name="start_price" id="startPriceFinney"><span>Finney</span>
+								</div>
+								
 							</div>
+
 							
 							<div style="margin-left: -2%; margin-bottom: 4%;"
 								class="form-group" id="due_date">
@@ -119,7 +128,7 @@ button#replace2 { /*button tag 에 원하는 스타일 적용*/
 								<div class="col-sm-8">
 									<div class="col-sm-4">
 										<input type="datetime-local" class="form-control" id="dueDate" name="due_date" style="width:250px">
-										<input type="number" id='dueDateLong' name='dueDateLong'>
+										<input type="number" id='dueDateLong' name='dueDateLong' style="display:none;">
 									</div>
 									<!-- <div class="col-sm-4">
 										<input type="time" class="form-control" id="dueTime" name="due_time">

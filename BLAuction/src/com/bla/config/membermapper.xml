@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id}
 	</select>
 	
-	<select id="selectall" resultType="member">
+	<select id="selectAll" resultType="member">
 		SELECT * FROM MEMBER ORDER BY MEMBER_ID
 	</select>
 	
@@ -24,14 +24,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET PW=#{pw}, PHONE=#{phone}, ADDRESS=#{address}, SCORE=#{score}, LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
 	</update>
 	
-	<update id="updatePhone" parameterType="member">
-		UPDATE MEMBER SET PHONE=#{phone}  WHERE MEMBER_ID = #{member_id}
-	</update>
-	
-	<update id="updateAddress" parameterType="member">
-		UPDATE MEMBER SET ADDRESS=#{address}  WHERE MEMBER_ID = #{member_id}
-	</update>
-	
 	<update id="updateScore" parameterType="member">
 		UPDATE MEMBER SET SCORE=#{score}  WHERE MEMBER_ID = #{member_id}
 	</update>
@@ -39,5 +31,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<update id="updateLikes" parameterType="member">
 		UPDATE MEMBER SET LIKES=#{likes}  WHERE MEMBER_ID = #{member_id}
 	</update>
+	
+	<select id="selectAdmin" parameterType="admin" resultType="String">
+		SELECT * FROM ADMIN_DB WHERE ADMIN_CODE='${admin_code}'
+	</select>
 	
 </mapper>

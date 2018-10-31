@@ -7,9 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction_마이페이지</title>
+</head>
 <script>
-//Tab 전환
-$(document).ready(function(){
+$(document).ready(function(){	
+	//Tab 전환
+	$(".nav-tabs a").click(function(){
+	        $(this).tab('show');
+	});
+	$('#load').show();
+	
 	var seller_id = '${seller_info.member_id}';
 	var salesAmount = 0;
 	var completeAmount = 0;
@@ -23,6 +29,7 @@ $(document).ready(function(){
 		},
 		datatype : 'json',
 		success : function(data) {
+			
 			var sellinglists = $('#sellinglists');
 				
 			var sellinglist = '';
@@ -47,7 +54,7 @@ $(document).ready(function(){
 				
 				sellinglist += '<div id="sellingInfo">';
 				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+before[i].auct_title+'</strong></h4><button type="button" class="btn btn-default" id="sellingbidStatus" disabled>입찰전</button></div>';
-				sellinglist += '<div>입찰 시작가: <span id="sellingbidPrice">'+before[i].start_price+' Ether</span></div>';
+				sellinglist += '<div>입찰 시작가: <span id="sellingbidPrice">'+before[i].start_price*0.001+' Ether</span></div>';
 				sellinglist += '</div></div></div>';
 			}
 			
@@ -72,7 +79,7 @@ $(document).ready(function(){
 				sellinglist += '<div id="sellingInfo">';		
 				sellinglist += '<div id="sellingInfoTitle"><h4><strong>'+proceeding[i].auct_title+'</strong></h4>';
 				sellinglist += '<button type="button" class="btn btn-default" id="myauctionbidStatus" disabled>입찰 중</button></div>';
-				sellinglist += '<div>현재 최고가: <span id="sellingbidPrice">'+proceeding[i].bidMaxPrice+' Ether</span></div>';	
+				sellinglist += '<div>현재 최고가: <span id="sellingbidPrice">'+proceeding[i].bidMaxPrice*0.001+' Ether</span></div>';	
 				sellinglist += '<div>경매 마감 시간: <span id="sellingbidDuedate">'+proceeding[i].dueDate+'</span></div>';
 				sellinglist += '</div></div></div>';
 				
@@ -102,6 +109,7 @@ $(document).ready(function(){
 			}
 			
 			sellinglists.append(sellinglist);
+			$('#load').hide();
 			
 			var numofRegauction = $('#numofRegauction');
 			numofRegauction.text(salesAmount);
@@ -109,7 +117,7 @@ $(document).ready(function(){
 			numofComplitedauction.text(completeAmount);
 		},
 		error : function(data) {
-			alert("낙찰된 경매물품이 없습니다.");
+			alert("판매 리스트를 불러오는데 실패했습니다. 새로고침 해주세요");
 		}
 	});
 	
@@ -137,17 +145,16 @@ $(document).ready(function(){
 			}
 			
 			reviewLists.append(reviewList);
+			
   			
 						
 		},
 		error : function(data) {
-			alert("후기리스트 띄우는데 문제생김.");
+			alert("후기리스트를 불러오는데 문제가 생겼습니다. 새로고침 해주세요");
 		}
 	});
 	
-	$(".nav-tabs a").click(function(){
-        $(this).tab('show');
-    });
+	
 	
 });
 </script>
@@ -297,8 +304,7 @@ $(document).ready(function(){
 	      
 	    </div>
 	  </div>
-	    
-	  
+
     
 </body>
 </html>

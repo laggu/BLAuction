@@ -2,12 +2,11 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BLAuction</title>
-
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -17,11 +16,21 @@
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
+<!-- Latest JQuery -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- Web3.js -->
 <script src="javascript/web3.js"></script>
+
+<link rel="shortcut icon" type="image/x-icon" href="img/small_logo.png" />
+<script>
+	$(document).ready(function (){
+		$('#load').hide();
+	})
+</script>
 </head>
 
 <body>
@@ -29,7 +38,8 @@
 <!-- ********************************************************************************************* -->
 <nav class="navbar navbar">
   <div class="container-fluid">
-    <div class="navbar-header">
+  
+    <div class="navbar-header" id="logoArea">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -38,15 +48,15 @@
       <a class="navbar-brand" href="main.bla"><img src="img/logo.PNG"></a>
     </div>
     
-    <div class="collapse navbar-collapse" id="myNavbar">     
-      <form class="navbar-form navbar-left" action="/search.bla">
+    <div class="collapse navbar-collapse" id="myNavbar">    
+     
 	  <div class="input-group" id="searchingbar_main">
-	  	<input type="text" class="form-control" placeholder="#">
+	  	<form method="post" action="searchimpl.bla">
+	  		<input type="text" class="form-control" placeholder="#" name="searchText">
+	  	</form>
 	  </div>
-	  </form>
 
       <ul class="nav navbar-nav navbar-right" id="rightNav">
-      	
       	<c:choose>
         	<c:when test="${loginStatus == null}">    		
         		<li><a href="login.bla"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -54,7 +64,22 @@
         	</c:when>
         	<c:otherwise>
         		<li><a href="createAuction.bla"><img src="img/auction.png"></img>경매등록</a></li>
-      			<li><a href="mypage.bla"><img src="img/info.png"></img>마이페이지</a></li>
+      			<li><a href="mypage.bla">
+      			<c:choose>
+      				<c:when test="${member_rate eq '3'}">
+      					<img src="img/info3.png"></img>
+      				</c:when>
+      				<c:when test="${member_rate eq '2'}">
+      					<img src="img/info2.png"></img>
+      				</c:when>
+      				<c:when test="${member_rate eq '1'}">
+      					<img src="img/info1.png"></img>
+      				</c:when>
+      				<c:otherwise>
+      					<img src="img/info.png"></img>
+      				</c:otherwise>
+      			</c:choose>
+      			마이페이지</a></li>
         		<li><a href="logout.bla"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         		<script>
         			var member_id_session = "${member_id}";
@@ -107,36 +132,9 @@
   <p>created by Team20's designed by Eileen</p>
 </footer>
 
-<!-- Modal -->
-<!-- ********************************************************************************************* -->
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
-</button>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
+<!-- Loading bar -->
+<div id="load">
+	<img src="img/loading.gif" alt="loading">
 </div>
 
 </body>

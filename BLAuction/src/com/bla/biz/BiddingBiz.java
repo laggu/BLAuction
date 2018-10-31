@@ -33,7 +33,10 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	@Override
 	public void remove(Integer v) throws Exception {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public void removeNull(Long register_date) throws Exception {
+		bdao.deleteNull(register_date);
 	}
 
 	@Override
@@ -44,8 +47,11 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 
 	@Override
 	public ArrayList<BiddingVO> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return bdao.select();
+	}
+	
+	public ArrayList<BiddingVO> getNull() throws Exception {
+		return bdao.selectNull();
 	}
 
 	public ArrayList<Integer> selectAuctIdByMemberId(Integer member_id) throws Exception{
@@ -66,5 +72,10 @@ public class BiddingBiz implements Biz<BiddingVO,Integer>{
 	
 	public BiddingVO selectBididByAuctId(Integer auct_id) throws Exception{
 		return bdao.selectBididByAuctId(auct_id);
+	}
+	
+
+	public ArrayList<BiddingVO> selectBiddingByMemberId(Integer member_id) throws Exception{
+		return bdao.selectBiddingByMemberId(member_id);
 	}
 }

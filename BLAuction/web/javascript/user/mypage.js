@@ -6,7 +6,21 @@
 //     -----  아니면 둘다 만들어서 하는것도 나을듯. 내정보와 다른 사람 정보는 보여질 태그가 다름
 // 4. 주소, 핸드폰, 비밀번호 변경 ajax 처리. 모달 띄어줘야 할거같음.
 
-function auctionCancel(){
+function auctionCancel(auct_id){
 	
+	$.ajax({
+		type:'POST',
+		url:'auctioncancel.bla',
+		data:{
+			"auct_id":auct_id
+		},
+		datatype:'json',
+		success:function(data){
+			window.location.reload();
+		},
+		error:function(data){
+			arlert("auctionCancel error");
+		}
+	})
 }
 

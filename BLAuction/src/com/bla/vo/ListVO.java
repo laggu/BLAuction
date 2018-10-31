@@ -2,6 +2,7 @@ package com.bla.vo;
 
 public class ListVO {
 	private AuctionVO auction;
+	private BiddingVO bidding;
 	private String photo_path_1;
 	private String photo_path_2;
 	private Long max_price;
@@ -10,6 +11,13 @@ public class ListVO {
 	public ListVO() {
 	}
 	
+	
+	public BiddingVO getBidding() {
+		return bidding;
+	}
+	public void setBidding(BiddingVO bidding) {
+		this.bidding = bidding;
+	}
 	public String getDuedate() {
 		return duedate;
 	}
@@ -43,10 +51,18 @@ public class ListVO {
 
 
 	@Override
+	public String toString() {
+		return "ListVO [auction=" + auction + ", bidding=" + bidding + ", photo_path_1=" + photo_path_1
+				+ ", photo_path_2=" + photo_path_2 + ", max_price=" + max_price + ", duedate=" + duedate + "]";
+	}
+
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((auction == null) ? 0 : auction.hashCode());
+		result = prime * result + ((bidding == null) ? 0 : bidding.hashCode());
 		result = prime * result + ((duedate == null) ? 0 : duedate.hashCode());
 		result = prime * result + ((max_price == null) ? 0 : max_price.hashCode());
 		result = prime * result + ((photo_path_1 == null) ? 0 : photo_path_1.hashCode());
@@ -68,6 +84,11 @@ public class ListVO {
 			if (other.auction != null)
 				return false;
 		} else if (!auction.equals(other.auction))
+			return false;
+		if (bidding == null) {
+			if (other.bidding != null)
+				return false;
+		} else if (!bidding.equals(other.bidding))
 			return false;
 		if (duedate == null) {
 			if (other.duedate != null)
@@ -92,13 +113,5 @@ public class ListVO {
 		return true;
 	}
 
-
-	@Override
-	public String toString() {
-		return "ListVO [auction=" + auction + ", photo_path_1=" + photo_path_1 + ", photo_path_2=" + photo_path_2
-				+ ", max_price=" + max_price + ", duedate=" + duedate + "]";
-	}
-
-	
 	
 }

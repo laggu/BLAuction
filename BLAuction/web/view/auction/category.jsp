@@ -10,10 +10,24 @@
 <script>
 $(document).ready(function(){
 	$("#thelatest").on("click", function(event){
-	    alert("최신");
+		var thelatest = 'latest';
+		
+		$.ajax({
+			type : 'POST',
+			url : 'category.bla', /* DB로 접근 */
+			data : {
+				"listKind":thelatest
+			},
+			datatype : 'json',
+			success : function(data) {
+				
+			},
+			error : function(data) {
+				alert("biddingimpl.bla error")
+			}
+		})
 	});
 	$("#closedeadline").on("click", function(event){
-	    alert("마감");
 	});
 });
 </script>
@@ -40,9 +54,6 @@ $(document).ready(function(){
 
 			<div class="card group" id="category_group">
 
-
-
-
 				<c:forEach var="item" items="${list }">
 
 				<!-- Row -->
@@ -55,7 +66,7 @@ $(document).ready(function(){
 						<div class="card-body">
 							<a href="auctiondetail.bla?auctionid=${item.getAuction().getAuct_id() }" class="card-text"
 								id="auction_name">제목 : ${item.getAuction().getAuct_title() }</a>
-							<p class="card-text" id="auction_price"> 현재 입찰가 : ${item.getMax_price() }</p>
+							<p class="card-text" id="auction_price"> 현재 입찰가 : ${item.getMax_price()*0.001 } Ether</p>
 						</div>
 					</div>
 					
@@ -63,17 +74,6 @@ $(document).ready(function(){
 				
 				</c:forEach>
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-
 			</div>
 		</div>
 		</div>

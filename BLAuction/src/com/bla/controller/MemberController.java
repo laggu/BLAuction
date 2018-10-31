@@ -1,13 +1,23 @@
 package com.bla.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +47,86 @@ public class MemberController {
 	public String failMeta() {
 		return "user/failMeta";
 	}
+	
+	@RequestMapping("/email.bla")
+	public String email(HttpServletRequest request) {
+		
+		System.out.println("email In");
+		return "user/email";
+		
+	}
+	
+	@RequestMapping("/emailimpl.bla")
+	public ModelAndView emailimpl(HttpServletRequest request, ModelMap mo) throws AddressException, MessagingException{
+		String name	 = request.getParameter("names");
+		String email = request.getParameter("email");
+		ModelAndView mv = new ModelAndView();
+		MemberVO member = null;
+		
+		String host = "smtp.naver.com";
+		
+		final String username = "hny4813@naver.com";
+		final String password = "rnjs20110821!!"; 
+		int port=587; 
+
+		
+		
+		try {
+			member = mbiz.get(email);
+			
+			if(member == null || !(member.getEmail().equals(email))) {
+				mv.setViewName("user/email");
+				mv.addObject("resultt", "asdf");
+				
+				return mv; 
+			}
+			else if(member != null && member.getEmail().equals(email))
+			{
+				String recipient = email; 
+				String subject = "[BLAuction 회원정보] "+member.getName()+"님, password를 전달해 드립니다."; 
+				System.out.println("user.getName():"+ member.getName());
+				String body = member.getName()+"님, "+ member.getEmail()+" 계정의 비밀번호는 "
+						+ member.getPw()+"입니다."; 
+				Properties props = System.getProperties(); 
+
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.smtp.host", host); 
+				props.put("mail.smtp.auth", "true"); 
+				props.put("mail.smtp.port", port); 
+				
+				Session session = Session.getDefaultInstance(
+						props, new javax.mail.Authenticator() { 
+							String un=username; 
+							String pw=password; 
+							protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+								
+								return new javax.mail.PasswordAuthentication(un, pw); 
+								} 
+							}); 
+				session.setDebug(true); //for debug 
+				Message mimeMessage = new MimeMessage(session); 
+				mimeMessage.setFrom(new InternetAddress("hny4813@naver.com")); 
+				mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); 
+		
+				mimeMessage.setSubject(MimeUtility.encodeText(subject,"UTF-8", "B")); 
+				mimeMessage.setContent(body, "text/html; charset=UTF-8");
+
+				mimeMessage.setText(body); 
+
+				Transport.send(mimeMessage); 
+
+				
+				mv.setViewName("user/email");
+				mv.addObject("resultt", "asdd");
+				
+				return mv;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@RequestMapping("/loginimpl.bla")
 	public ModelAndView loginimpl(HttpServletRequest request) {
@@ -47,12 +137,11 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		ModelAndView mv2 = new ModelAndView("redirect:/main.bla");
 		MemberVO member = null;
-
 		try {
 			member = mbiz.get(email);
+//			System.out.println(member.getMember_account());
 			if(member == null)
 			{
-				//null�϶� ó�����ָ��
 				mv.setViewName("main");
 				mv.addObject("centerpage", "user/fail");
 				mv.addObject("resultt", "asdd");
@@ -84,7 +173,19 @@ public class MemberController {
 		
 		
 		mv2.addObject("centerpage", "center");
-		System.out.println("로그인성공");
+		int member_score = member.getScore();
+		String member_rate = "0";
+		if(member_score >= 300) {
+			member_rate = "3";
+		}else if(member_score >= 200) {
+			member_rate = "2";
+		}else if(member_score >= 100) {
+			member_rate = "1";
+		}else {
+			member_rate = "0";
+		}
+		
+		session.setAttribute("member_rate",member_rate);
 		session.setAttribute("member_id", member.getMember_id());
 		session.setAttribute("name", member.getName());
 		session.setAttribute("address", member.getAddress());
@@ -144,17 +245,13 @@ public class MemberController {
 		member.setName(request.getParameter("name"));
 		member.setAddress(request.getParameter("address"));
 		member.setPhone(request.getParameter("phone"));
-		System.out.println("date : " + request.getParameter("birth"));
 		String bi = request.getParameter("birth").replace("-", "").substring(2, 8);
-		System.out.println("bi:" + bi);
 		member.setBirth(bi);
 		member.setMember_account(request.getParameter("member_account"));
 
 		try {
 			biz.register(member);
-			System.out.println(member.getEmail());
 			member = mbiz.get(member.getEmail());
-			System.out.println(member);
 			mv.addObject("centerpage", "center");
 			session.setAttribute("member_id", member.getMember_id());
 			session.setAttribute("member_account", member.getMember_account());
@@ -174,19 +271,21 @@ public class MemberController {
 
 	@RequestMapping("/mypage.bla")
 	public ModelAndView mypage(HttpServletRequest request, MemberVO member) {
-
-		HttpSession session = request.getSession();
-		int member_id = (Integer) session.getAttribute("member_id");
-		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
-
+		HttpSession session = request.getSession();
+		if(session.getAttribute("member_id") == null) {
+			mv.setViewName("redirect:/login.bla");
+			return mv;
+		}
+		int member_id = (Integer) session.getAttribute("member_id");
+		
 		try {
 			member = mbiz.get(member_id);
 			mv.addObject("member", member);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 
 		return mv;
@@ -197,7 +296,6 @@ public class MemberController {
 		// memeberid를 가져와서 회원 정보 select한 정보 mv.addObject로 추가
 		HttpSession session = request.getSession();
 		int member_id = Integer.parseInt((String) session.getAttribute("member_id"));
-		System.out.println("meber_id"+member_id);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("main");
@@ -207,7 +305,7 @@ public class MemberController {
 			mv.addObject("member", member);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 
 		return mv;
@@ -282,7 +380,7 @@ public class MemberController {
 			mv.addObject("member", user);
 			mv.addObject("centerpage", "user/mypage");
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.setViewName("redirect:/login.bla");
 		}
 		return mv;
 	}

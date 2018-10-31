@@ -27,24 +27,9 @@ function srvTime(auct_id) {
 	      
 	      if(timediff <= 0){
 	          $("#currentTimelimit").text('경매완료');
-	          
-	          var params = {
-	      			"auct_id":auct_id
-	      		}
-	          
-	          $.ajax({
-	      		type:'POST',
-	      		url:'successfulbiddingimpl.bla', /* DB로 접근 */
-	      		data:params,
-	      		datatype:'json',
-	      		success:function(data){
-	      			window.clearInterval(timeInterval);
-	    			window.location.reload();
-      			},
-	      		error:function(data){
-	      			alert('successfulbiddingimpl error')
-	      		}
-	      	  })
+	          window.clearInterval(timeInterval);
+  			  window.location.reload();
+  			  
 	          return;
 	      }
 	      
@@ -103,7 +88,7 @@ function getBidListFromDB(auction_id){
 	var params = {
 			"auction_id":Number(auction_id)
 		}
-	
+	$('#load').show();
 	$.ajax({
 		type:'POST',
 		url:'auctionbidlist.bla', /* DB로 접근 */
@@ -127,7 +112,7 @@ function getBidListFromDB(auction_id){
 				
 				databaseTable.append(s);
 			}
-			
+			$('#load').hide();
 		},
 		error:function(data){
 			alert('auctionbidlist.bla error')
@@ -139,6 +124,7 @@ function getBidListFromDB(auction_id){
 	
 function getBidListFromContract(auctionAddress){
 	bidList = [];
+	$('#load').show();
 	var printList = function(){
 		var contractTable = $("#contractTable");
 		contractTable.empty();
@@ -156,6 +142,7 @@ function getBidListFromContract(auctionAddress){
 			s += "</tr>"
 			contractTable.append(s);
 		}
+		$('#load').hide();
 	}
 	web3_getBidList(auctionAddress, bidList, printList);
 }
@@ -197,7 +184,9 @@ function setDownPrice(){
 function makebidding(auction_id, auct_type, user_name, user_id, auction_address){
 	var price = $("#suggestedPrice").val();
 	var cur_price = Number($("#currentPrice").text()) * 1000;
-	
+
+	$("#biddingModal").hide();
+	$('#load').show();
 	price *= 1000;
 	
 	if(price ==0){
@@ -218,7 +207,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 			data:params,
 			datatype:'json',
 			success:function(data){
-				$("#biddingModal").modal('hide');
+				$('#load').hide();
 				window.location.reload();
 			},
 			error:function(data){
@@ -232,7 +221,7 @@ function makebidding(auction_id, auct_type, user_name, user_id, auction_address)
 
 function makebiddingDown(auction_id, user_name, user_id, auctionAddress){
 	price = getDownPrice()*1000;
-	
+	$('#load').show();
 	var callback = function(params){
 		$.ajax({
 			type:'POST',
@@ -251,6 +240,7 @@ function makebiddingDown(auction_id, user_name, user_id, auctionAddress){
 		      		datatype:'json',
 		      		success:function(data){
 		      			window.clearInterval(timeInterval);
+		      			$('#load').hide();
 		    			window.location.reload();
 	      			},
 		      		error:function(data){

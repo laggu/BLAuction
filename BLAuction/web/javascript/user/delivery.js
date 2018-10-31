@@ -3,48 +3,8 @@
  */
 
 
-function setDeliveryCode(){
-	//모달 보여주고
-	var auct_id = $("#successAuct_id").val();
-	var deliveryCode = $("#invoiceNum").val();
-	var companyCode = $("#companyCode").val();
-	$.ajax({
-		type:'POST',
-		url:'deliveryimpl.bla',
-		data:{
-			"delivery_code": deliveryCode,
-			"company_code": companyCode,
-			"auct_id": auct_id
-		},
-		datatype:'json',
-		success:function(data){
-			var deliveryCode = $('#winnerInvoice'+data.auct_id);
-			var companyCode = $('#winnerDeliverycompany'+data.auct_id);
-			
-			//var deliveryStatus = $('#winnerDeliverycompany'+data.auct_id);
-			
-			var deliveryCodeVal = data.delivery_code;
-			var companyCodeVal = data.company_code;
-			//var deliveryStatusVal = data.delivery_status;
-			
-			companyCode.text(companyCodeVal);
-			deliveryCode.text(deliveryCodeVal);
-			
-			$('#deliveryInfoModal').modal('hide');
-		},
-		error:function(data){
-			alert("택배에러")
-		}
-	})
-}
 
-
-function getDeliveryStatus(index, auction_address){
-//	var companyCode = $("#winnerDeliverycompany"+index).text();
-//	var deliveryCode = $("#winnerInvoice"+index).text();
-
-	var companyCode = '04';
-	var deliveryCode = '346409383282';
+function getDeliveryStatus(index, auction_address, deliveryCode, companyCode){
 		
 	var params = {
 			"t_key": 'A4LwNiLjK5hB69I9mWEs1Q',
@@ -58,31 +18,46 @@ function getDeliveryStatus(index, auction_address){
 		datatype:'json',
 		success:function(data){
 			var s = '';
-			alert(typeof data.level);
-			//alert(data.level + " " + typeof data.level + " " + data.level == "6");
+			
+			var level = data.level;
+			//ajax로 택배 status 변경
+			$.ajax({
+				type:'POST',
+				url:'updateDeliveryStatus.bla',
+				data:{
+					"level":level,
+					"auct_id":index
+				},
+				datatype:'json',
+				success:function(data){
+				},
+				error:function(data){
+					alert('택배 상태 변경 error');
+				}
+			})
+
 			switch (data.level) {
 			  case 1:
-				  s = "배송준비중"
+				  s = "배송 준비중입니다."
 			    break;
 			  case 2:
-				  s = "집화완료"
+				  s = "집화 완료되었습니다."
 			    break;
 			  case 3:
-				  s = "배송중"
+				  s = "배송중입니다."
 			    break;
 			  case 4:
-				  s = "지점 도착"
+				  s = "지점에 도착하였습니다."
 			    break;
 			  case 5:
-				  s = "배송출발"
+				  s = "배송이 출발하였습니다."
 			    break;
 			  case 6:
-				  s = "배송 완료"
+				  s = "배송이 완료되었습니다."
 				  $("#Delivery_Status"+index).text(s);
 				  web3_setDeliveryStatus(auction_address);
 			    break;
 			}
-			alert(s);
 		},
 		error:function(data){
 			alert('error');
