@@ -14,7 +14,7 @@ public class FileSave {
 			if(!f.exists()) {
 				f.mkdirs();
 			}
-			File f2 = new File(dir+"\\"+imgname);
+			File f2 = new File(dir+File.separator+imgname);
 			FileOutputStream out = new FileOutputStream(f2);
 			out.write(data);
 			out.close();
